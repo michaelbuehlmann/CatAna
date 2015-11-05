@@ -18,7 +18,7 @@ if (PYTHON)
     add_custom_command(OUTPUT ${OUTPUT}
             COMMAND ${PYTHON} ${SETUP_PY} build
             COMMAND ${CMAKE_COMMAND} -E touch ${OUTPUT}
-            DEPENDS "pycatana.pyx")
+            DEPENDS "pycatana.pyx" "setup.py.in")
 
     add_custom_target(pycatana ALL DEPENDS ${OUTPUT})
     add_dependencies(pycatana besseltools)

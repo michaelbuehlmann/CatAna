@@ -2,6 +2,7 @@
 # distutils: library_dirs = ${library_dir}
 # distutils: include_dirs = ${include_dir}
 
+__version__ = "${catana_VERSION}"
 from cython.operator cimport dereference as deref
 
 cdef extern from "catana/tools/besseltools.hpp":
@@ -22,4 +23,4 @@ cdef class BesselZeros:
         self.thisptr.compute_up_to(z_max)
         
     def __getitem__(self, unsigned int n):
-        return deref(self.thisptr)[n] 
+        return deref(self.thisptr)[n]

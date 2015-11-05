@@ -8,6 +8,6 @@ ext_modules = cythonize(
 
 
 setup(  name='pycatana',
-        version = '$(PACKAGE_VERSION)',
+        version = '${catana_VERSION}',
         ext_modules = ext_modules
 )
