@@ -1,0 +1,13 @@
+from distutils.core import setup
+from Cython.Build import cythonize
+
+ext_modules = cythonize(
+    "pycatana.pyx",
+    language="c++",
+)
+
+
+setup(  name='pycatana',
+        version = '$(PACKAGE_VERSION)',
+        ext_modules = ext_modules
+)
