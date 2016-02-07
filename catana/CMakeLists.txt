@@ -1,24 +1,56 @@
 project(catana)
-include_directories(include)
 
-set(besseltools_SOURCES src/tools/besseltools.cpp include/catana/tools/besseltools.hpp)
-set(catalog_SOURCES src/catalog.cpp include/catana/catalog.hpp)
-set(field_SOURCES src/field.cpp include/catana/field.hpp)
+# SOURCE FILES
+set(besseltools_SOURCES
+        src/besseltools/besseltools.cpp include/catana/besseltools.hpp
+        include/catana/tools/gsl_function_wrapper.hpp)
 
+set(returntypes_SOURCES
+        include/catana/tools/return_types.hpp src/tools/return_types.cpp)
+
+set(iotools_SOURCES
+        include/catana/tools/object_types.hpp
+        include/catana/tools/string_format.hpp
+        include/catana/io_tools/record_types.hpp
+        include/catana/io_tools/read_gadget.hpp src/io_tools/read_gadget.cpp
+        include/catana/io_tools/read_hdf5.hpp include/catana/io_tools/read_hdf5.ipp)
+
+set(window_SOURCES
+        include/catana/Window.hpp src/Window.cpp
+        include/catana/tools/gsl_function_wrapper.hpp)
+
+set(decomposition_SOURCES
+        ${returntypes_SOURCES}
+        include/catana/decomposition/sfb_decomposition.hpp src/decomposition/sfb_decomposition.cpp)
+
+set(catalog_SOURCES
+        include/catana/tools/object_types.hpp
+        src/catalog.cpp include/catana/catalog.hpp
+        ${window_SOURCES} ${decomposition_SOURCES})
+
+set(field_SOURCES
+        src/Field.cpp include/catana/Field.hpp
+        include/catana/tools/fftw_field.hpp
+        ${decomposition_SOURCES})
+
+# COMPILE AS STATIC LIBRARY
+add_library(iotools STATIC ${iotools_SOURCES})
 add_library(besseltools STATIC ${besseltools_SOURCES})
+add_library(catana STATIC
+        ${catalog_SOURCES}
+        ${field_SOURCES}
+        ${window_SOURCES}
+        ${iotools_SOURCES}
+        ${decomposition_SOURCES})
+
+# LINK TOGETHER
+target_link_libraries(iotools healpix_cxx hdf5 hdf5_hl)
 target_link_libraries(besseltools gsl)
-
-add_library(catalog STATIC ${catalog_SOURCES})
-add_library(field STATIC ${field_SOURCES})
-
-#set(BESSEL_TEST_SOURCES
-#        ../test/tools_tester.cpp
-#        src/tools/besseltools.cpp
-#        include/catana/tools/besseltools.hpp
-#        include/catana/tools/timer.hpp
-#        src/tools/timer.cpp
-#        )
-#add_executable(BesselTester ${BESSEL_TEST_SOURCES})
-#target_link_libraries(BesselTester gsl)
+target_link_libraries(catana besseltools iotools fftw3 healpix_cxx)
 
 
+#add_library(catalog STATIC ${catalog_SOURCES})
+#add_library(field STATIC ${field_SOURCES})
+#
+#target_link_libraries(field fftw3 besseltools healpix_cxx)
+#target_link_libraries(catalog healpix_cxx besseltools healpix_cxx)

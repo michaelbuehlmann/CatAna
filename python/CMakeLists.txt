@@ -1,29 +1,53 @@
-if(NOT PYTHON)
-    find_program(PYTHON "python")
+include_directories(../catana/include)
+include_directories(../external/pybind11/include)
+include_directories(${PYTHON_INCLUDE_DIR})
+
+# Use this later, when setup.py works...
+#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/CatAna)
+#configure_file(setup.py setup.py)
+#configure_file(CatAna/__init__.py CatAna/__init__.py)
+#configure_file(MANIFEST.in MANIFEST.in)
+#configure_file(README.rst README.rst)
+
+# Just write files to top_dir/build...
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/python/CatAna)
+configure_file(CatAna/__init__.py ${CMAKE_SOURCE_DIR}/build/python/CatAna/__init__.py)
+
+# The actual python library
+add_library(pybesseltools SHARED CatAna/py_besseltools.cpp)
+target_link_libraries(pybesseltools besseltools)
+target_link_libraries(pybesseltools cblas)
+
+set_target_properties(pybesseltools PROPERTIES PREFIX "")  # No 'libname.so' but 'name.so'
+
+if (UNIX)
+    # It's quite common to have multiple copies of the same Python version
+    # installed on one's system. E.g.: one copy from the OS and another copy
+    # that's statically linked into an application like Blender or Maya.
+    # If we link our plugin library against the OS Python here and import it
+    # into Blender or Maya later on, this will cause segfaults when multiple
+    # conflicting Python instances are active at the same time (even when they
+    # are of the same version).
+
+    # Windows is not affected by this issue since it handles DLL imports
+    # differently. The solution for Linux and Mac OS is simple: we just don't
+    # link against the Python library. The resulting shared library will have
+    # missing symbols, but that's perfectly fine -- they will be resolved at
+    # import time.
+
+    # .SO file extension on Linux/Mac OS
+    set_target_properties(pybesseltools PROPERTIES SUFFIX ".so")
+
+    # Strip unnecessary sections of the binary on Linux/Mac OS
+    if(APPLE)
+        set_target_properties(pybesseltools PROPERTIES MACOSX_RPATH ".")
+        set_target_properties(pybesseltools PROPERTIES LINK_FLAGS "-undefined dynamic_lookup ")
+        if (NOT ${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
+            add_custom_command(TARGET pybesseltools POST_BUILD COMMAND strip -u -r ${PROJECT_BINARY_DIR}/pybesseltools.so)
+        endif()
+    else()
+        if (NOT ${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
+            add_custom_command(TARGET pybesseltools POST_BUILD COMMAND strip ${PROJECT_BINARY_DIR}/pybesseltools.so)
+        endif()
+    endif()
 endif()
-
-if (PYTHON)
-#
-    set(SETUP_PY_IN "${CMAKE_CURRENT_SOURCE_DIR}/setup.py.in")
-    set(SETUP_PY "${CMAKE_CURRENT_BINARY_DIR}/setup.py")
-    set(DEPS "${CMAKE_CURRENT_SOURCE_DIR}/pycatana.pyx")
-    set(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/build/timestamp")
-
-    get_property(include_dir DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
-    set(library_dir ${CMAKE_BINARY_DIR}/catana)
-
-    configure_file(pycatana.pyx pycatana.pyx)
-    configure_file(${SETUP_PY_IN} ${SETUP_PY})
-
-    add_custom_command(OUTPUT ${OUTPUT}
-            COMMAND ${PYTHON} ${SETUP_PY} build
-            COMMAND ${CMAKE_COMMAND} -E touch ${OUTPUT}
-            DEPENDS "pycatana.pyx" "setup.py.in")
-
-    add_custom_target(pycatana ALL DEPENDS ${OUTPUT})
-    add_dependencies(pycatana besseltools)
-
-    install(CODE "execute_process(
-        COMMAND ${PYTHON} ${SETUP_PY} install)"
-            )
-endif ()

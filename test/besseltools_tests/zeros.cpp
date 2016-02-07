@@ -4,7 +4,7 @@
 
 #include <cmath>
 #include "gtest/gtest.h"
-#include "catana/tools/besseltools.hpp"
+#include "catana/besseltools.hpp"
 
 
 class BesselZerosTest : public ::testing::Test {

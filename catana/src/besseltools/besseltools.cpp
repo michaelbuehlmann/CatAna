@@ -2,7 +2,8 @@
 // Created by Michael Bühlmann on 01/11/15.
 //
 
-#include "catana/tools/besseltools.hpp"
+#include "catana/besseltools.hpp"
+#include "catana/tools/gsl_function_wrapper.hpp"
 #include <utility>
 #include <boost/math/special_functions/bessel.hpp>
 #include <iostream>
@@ -50,6 +51,7 @@ double_t BesselZeros::second_zero() {
     return z;
 }
 
+
 double_t BesselZeros::newton_iterate(double_t z) {
     double_t z_old;
     double_t delta;
@@ -71,17 +73,20 @@ double_t BesselZeros::newton_iterate(double_t z) {
     return z;
 }
 
+
 double_t BesselZeros::next() {
     double_t z = 2 * zeros.rbegin()[0] - zeros.rbegin()[1];
     z = newton_iterate(z);
     return z;
 }
 
+
 void BesselZeros::compute_up_to(double_t z_max) {
     while(zeros.back() < z_max){
         zeros.push_back(next());
     }
 }
+
 
 double_t BesselZeros::operator[](unsigned int n) {
     while (zeros.size() <= n) {
@@ -90,22 +95,25 @@ double_t BesselZeros::operator[](unsigned int n) {
     return zeros[n];
 }
 
-// Some wrapper for function -> gsl_function pointers
-template< typename F >  class gsl_function_pp : public gsl_function {
-public:
-    gsl_function_pp(const F& func) : _func(func) {
-        function = &gsl_function_pp::invoke;
-        params=this;
-    }
-private:
-    const F& _func;
-    static double invoke(double x, void *params) {
-        return static_cast<gsl_function_pp*>(params)->_func(x);
-    }
-};
+
+SphericalBesselZeros::SphericalBesselZeros(unsigned int l)
+        :BesselZeros(l+0.5)
+{}
 
 
-double_t double_sbessel_integrator(std::function<double_t(double_t)> f, unsigned int l, double_t Rmax, double_t k1, double_t k2) {
+double_t double_sbessel_integrator(std::function<double_t(double_t)> f, const unsigned int& l,
+        const double_t& Rmax,
+        double_t k1, double_t k2) {
+    SphericalBesselZeros bz(l);
+    return double_sbessel_integrator_bz(f, l, bz, Rmax, k1, k2);
+}
+
+
+double_t double_sbessel_integrator_bz(std::function<double_t(double_t)> f, const unsigned int& l,
+        SphericalBesselZeros& bz,
+        const double_t& Rmax,
+        double_t k1, double_t k2)
+{
     gsl_set_error_handler_off();
 
     auto integrand = [&](double_t r){
@@ -126,9 +134,6 @@ double_t double_sbessel_integrator(std::function<double_t(double_t)> f, unsigned
     double_t lower_z = 0;
     double_t upper_z, upper_z_large;
 
-    // Compute all Bessel Zeros we will need
-    BesselZeros bz(l+0.5);
-
     unsigned int i=0;
     unsigned int j=0;
 
@@ -139,10 +144,10 @@ double_t double_sbessel_integrator(std::function<double_t(double_t)> f, unsigned
             upper_z = (bz[j]/k2 > upper_z_large) ? upper_z_large : bz[j++]/k2;
 //                std::cout << "\t " << lower_z << ",\t" << upper_z << ": ";
             exit_code = gsl_integration_qag(F, lower_z, upper_z, 0, 100 * double_t_lim::epsilon(), 1000, 2, workspace, &temp,
-                                &error);
+                    &error);
             if(exit_code==GSL_EROUND){
                 std::cout << "round-off error for integration between "
-                << lower_z << ", " << upper_z << std::endl;
+                        << lower_z << ", " << upper_z << std::endl;
             } else {
 //                    std::cout << temp << " += " << error << std::endl;
                 result_intermediate += temp;
@@ -154,8 +159,20 @@ double_t double_sbessel_integrator(std::function<double_t(double_t)> f, unsigned
         result += result_intermediate;
         ++i;
     } while (result_old != result && upper_z < Rmax);
-
+    gsl_integration_workspace_free(workspace);
     return result;
 }
 
 
+SBesselTransformedFunction::SBesselTransformedFunction(std::function<double_t(double_t)> f, unsigned int l,
+        double_t Rmax)
+        : function(f), l(l), bz(l), Rmax(Rmax)
+{}
+
+double_t SBesselTransformedFunction::operator()(const double_t& k1, const double_t& k2)
+{
+    auto fct = [&](double_t r) {
+      return 2./M_PI * std::pow(r,2) * function(r);
+    };
+    return double_sbessel_integrator_bz(fct, l, bz, Rmax, k1, k2);
+}
