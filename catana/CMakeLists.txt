@@ -13,7 +13,8 @@ set(iotools_SOURCES
         include/catana/tools/string_format.hpp
         include/catana/io_tools/record_types.hpp
         include/catana/io_tools/read_gadget.hpp src/io_tools/read_gadget.cpp
-        include/catana/io_tools/read_hdf5.hpp include/catana/io_tools/read_hdf5.ipp)
+        include/catana/io_tools/read_hdf5.hpp include/catana/io_tools/read_hdf5.ipp
+        include/catana/io_tools/write_hdf5.hpp include/catana/io_tools/write_hdf5.ipp src/io_tools/record_type.cpp)
 
 set(window_SOURCES
         include/catana/Window.hpp src/Window.cpp
@@ -44,7 +45,7 @@ add_library(catana STATIC
         ${decomposition_SOURCES})
 
 # LINK TOGETHER
-target_link_libraries(iotools healpix_cxx hdf5 hdf5_hl)
+target_link_libraries(iotools healpix_cxx hdf5 hdf5_hl boost_system boost_filesystem)
 target_link_libraries(besseltools gsl)
 target_link_libraries(catana besseltools iotools fftw3 healpix_cxx)
 

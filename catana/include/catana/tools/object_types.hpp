@@ -5,7 +5,8 @@
 #ifndef CATANA_APP_OBJECT_TYPES_HPP
 #define CATANA_APP_OBJECT_TYPES_HPP
 
-#include <healpix_cxx/healpix_base.h>
+#include <healpix_cxx/pointing.h>
+#include <vector>
 
 //! Catalog Object with position in 3d space
 struct Object {

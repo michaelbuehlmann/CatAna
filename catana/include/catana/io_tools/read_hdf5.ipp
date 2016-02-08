@@ -2,6 +2,14 @@
 #include "read_hdf5.hpp"
 #endif
 
+
+
+#include <hdf5.h>
+#include <hdf5_hl.h>
+#include <algorithm>
+#include <iostream>
+
+
 template <class RecordType>
 HDF5Source<RecordType>::HDF5Source(
         const std::string& filename, const std::string& dataset_name,
