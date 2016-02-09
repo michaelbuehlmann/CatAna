@@ -14,7 +14,7 @@ set(iotools_SOURCES
         include/catana/io_tools/record_types.hpp
         include/catana/io_tools/read_gadget.hpp src/io_tools/read_gadget.cpp
         include/catana/io_tools/read_hdf5.hpp include/catana/io_tools/read_hdf5.ipp
-        include/catana/io_tools/write_hdf5.hpp include/catana/io_tools/write_hdf5.ipp src/io_tools/record_type.cpp)
+        include/catana/io_tools/write_hdf5.hpp include/catana/io_tools/write_hdf5.ipp src/io_tools/record_type.cpp include/catana/io_tools/filters.hpp)
 
 set(window_SOURCES
         include/catana/Window.hpp src/Window.cpp

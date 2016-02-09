@@ -5,7 +5,7 @@
 #include <catana/decomposition/sfb_decomposition.hpp>
 #include <boost/math/special_functions/spherical_harmonic.hpp>
 #include <boost/math/special_functions/bessel.hpp>
-#include <healpix_cxx>
+#include <healpix_cxx/healpix_base.h>
 
 #include <iostream>
 
