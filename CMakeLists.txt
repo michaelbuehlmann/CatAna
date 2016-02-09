@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.3)
 project(catana)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -std=c++11 -fPIC")
 
 if(EXISTS "${PROJECT_SOURCE_DIR}/config.cmake")
     message(STATUS "Loaded external config file")
@@ -22,7 +22,7 @@ include_directories(${HEALPIX_DIR}/include)
 link_directories(${HEALPIX_DIR}/lib)
 # HDF5 Library
 set(HDF5_USE_STATIC_LIBRARIES)
-find_package(HDF5)
+find_package(HDF5 REQUIRED)
 include_directories(${HDF5_INCLUDE_DIRS})
 link_directories(${HDF5_LIBRARY_DIRS})
 

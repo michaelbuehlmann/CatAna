@@ -18,4 +18,7 @@ file(GLOB TEST_SOURCES
         io_tests/*.cpp
         object_types_tests/*.cpp)
 add_executable(GTESTS main.cpp ${TEST_SOURCES})
-target_link_libraries(GTESTS gtest gtest_main iotools catana besseltools)
+target_link_libraries(GTESTS
+        gtest gtest_main
+        iotools catana besseltools
+        cblas healpix_cxx)

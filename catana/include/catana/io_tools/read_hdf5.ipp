@@ -8,6 +8,7 @@
 #include <hdf5_hl.h>
 #include <algorithm>
 #include <iostream>
+#include <cstring>
 
 
 template <class RecordType>
@@ -30,7 +31,7 @@ HDF5Source<RecordType>::HDF5Source(
     std::vector<char*> field_names_ptr;
     for (int i = 0; i<nfields; ++i) {
         field_names_ptr.push_back(new char[255]);
-        memset(field_names_ptr[i], 0, 255);
+        std::memset(field_names_ptr[i], 0, 255);
     }
     field_sizes.resize(nfields);
     field_offsets.resize(nfields);

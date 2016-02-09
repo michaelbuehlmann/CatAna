@@ -38,12 +38,12 @@ TEST(ReadGadgetStream, AllObjects) {
 
 
     filename = "/Users/michael/Documents/ETH/2015HS/MasterThesis/Data/lpicola/test2/output/testrun_z0p000.3";
-    input = GadgetSource(filename, false);
+    GadgetSource input2(filename, false);
     ObjectContainer oc2;
     returned_values = 0;
     do {
             std::copy(&tmp_objects[0], &tmp_objects[returned_values], std::back_inserter(oc2));
-            returned_values = input.read(tmp_objects, 10000);
+            returned_values = input2.read(tmp_objects, 10000);
     } while(returned_values != -1);
     EXPECT_EQ(16777216, oc2.size());
 
