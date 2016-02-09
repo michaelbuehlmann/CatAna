@@ -2,6 +2,7 @@ include(ExternalProject)
 
 ####################
 # FETCH EIGEN3 LIB #
+# TODO: use git submodule
 if(NOT EIGEN3_INCLUDE_DIR)
     set(source_dir ${CMAKE_BINARY_DIR}/external/eigen/cmake)
     ExternalProject_Add(
@@ -13,23 +14,30 @@ if(NOT EIGEN3_INCLUDE_DIR)
             INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory "${source_dir}/src/eigen/Eigen" "${CMAKE_BINARY_DIR}/external/eigen/include/Eigen"
     )
     set(EIGEN3_INCLUDE_DIR ${CMAKE_BINARY_DIR}/external/eigen/include/)
+#    set(EIGEN3_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/external/eigen/include)
 endif()
 
 ######################
 # FETCH Pybind11 LIB #
 if(NOT PYBIND11_INCLUDE_DIR)
-    set(source_dir ${CMAKE_BINARY_DIR}/external/pybind11/cmake)
-    ExternalProject_Add(
-            pybind11
-            PREFIX ${source_dir}
-            GIT_REPOSITORY https://github.com/wjakob/pybind11.git
-            CONFIGURE_COMMAND ""
-            BUILD_COMMAND ""
-            INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory "${source_dir}/src/pybind11/include" "${CMAKE_BINARY_DIR}/external/pybind11/include"
-    )
-    set(PYBIND11_INCLUDE_DIR ${CMAKE_BINARY_DIR}/external/pybind11/include/)
+#    set(source_dir ${CMAKE_BINARY_DIR}/external/pybind11/cmake)
+#    ExternalProject_Add(
+#            pybind11
+#            PREFIX ${source_dir}
+#            GIT_REPOSITORY https://github.com/wjakob/pybind11.git
+#            CONFIGURE_COMMAND ""
+#            BUILD_COMMAND ""
+#            INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory "${source_dir}/src/pybind11/include" "${CMAKE_BINARY_DIR}/external/pybind11/include"
+#    )
+#    set(PYBIND11_INCLUDE_DIR ${CMAKE_BINARY_DIR}/external/pybind11/include/)
+    set(PYBIND11_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/external/pybind11/include/)
 endif()
 
+######################
+# GOOGLE TESTS
+if(NOT GOOGLETEST_DIR)
+    set(GOOGLETEST_DIR ${PROJECT_SOURCE_DIR}/external/googletest/googletest)
+endif()
 
 ############################
 # GIT versioning

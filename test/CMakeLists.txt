@@ -1,7 +1,7 @@
 # #######################
 # GOOGLE TEST LIBRARY
 # #######################
-add_subdirectory(gtest-1.7.0)
+add_subdirectory(${GOOGLETEST_DIR} ${CMAKE_CURRENT_BINARY_DIR}/googletest)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 project(catana_tests)
