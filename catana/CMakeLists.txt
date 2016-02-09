@@ -48,10 +48,4 @@ add_library(catana STATIC
 target_link_libraries(iotools healpix_cxx hdf5 hdf5_hl boost_system boost_filesystem)
 target_link_libraries(besseltools gsl)
 target_link_libraries(catana besseltools iotools fftw3 healpix_cxx)
-
-
-#add_library(catalog STATIC ${catalog_SOURCES})
-#add_library(field STATIC ${field_SOURCES})
-#
-#target_link_libraries(field fftw3 besseltools healpix_cxx)
-#target_link_libraries(catalog healpix_cxx besseltools healpix_cxx)
+add_dependencies(catana eigen)

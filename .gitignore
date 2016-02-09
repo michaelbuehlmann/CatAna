@@ -4,3 +4,4 @@ python_old
 .idea
 test/gtest*
 *.DS_Store
+config.cmake

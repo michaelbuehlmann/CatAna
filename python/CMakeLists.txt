@@ -1,5 +1,4 @@
 include_directories(../catana/include)
-include_directories(../external/pybind11/include)
 include_directories(${PYTHON_INCLUDE_DIR})
 
 # Use this later, when setup.py works...
@@ -17,6 +16,7 @@ configure_file(CatAna/__init__.py ${CMAKE_SOURCE_DIR}/build/python/CatAna/__init
 add_library(pybesseltools SHARED CatAna/py_besseltools.cpp)
 target_link_libraries(pybesseltools besseltools)
 target_link_libraries(pybesseltools cblas)
+add_dependencies(pybesseltools pybind11)
 
 set_target_properties(pybesseltools PROPERTIES PREFIX "")  # No 'libname.so' but 'name.so'
 
