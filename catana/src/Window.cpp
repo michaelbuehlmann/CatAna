@@ -6,9 +6,13 @@
 #include <catana/tools/gsl_function_wrapper.hpp>
 
 #include <cmath>
+#include <limits>
 #include <gsl/gsl_integration.h>
 #include <gsl/gsl_errno.h>
-typedef std::numeric_limits< double_t > double_t_lim;
+
+
+
+typedef std::numeric_limits<double_t> double_t_lim;
 
 Window::Window()
         : windowtype(WindowType::numeric), scale_factor(0), window_function([](double_t r){return 1.;}), r_max(0)

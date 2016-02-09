@@ -2,8 +2,13 @@
 # Rename this file to config.cmake (it will not be overwritten by git)
 
 # Example configuration:
+
 set(HEALPIX_DIR /usr/local/Cellar/healpix/3.30)
+# set(HEALPIX_DIR /users/buehmich/Build/Healpix_3.30/src/cxx/basic_gcc)
 
 set(PYTHON /Users/michael/.virtualenvs/MT/bin/python)
 set(PYTHON_INCLUDE_DIR /Users/michael/.virtualenvs/MT/include/python2.7/)
 set(PYTHON_LIBRARY_DIR /Users/michael/.virtualenvs/MT/lib/python2.7/)
+
+# Enable test (needs gtest-1.7.0 within test folder)
+set(TEST 1)

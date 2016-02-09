@@ -26,7 +26,7 @@ set(decomposition_SOURCES
 
 set(catalog_SOURCES
         include/catana/tools/object_types.hpp
-        src/catalog.cpp include/catana/catalog.hpp
+        src/Catalog.cpp include/catana/Catalog.hpp
         ${window_SOURCES} ${decomposition_SOURCES})
 
 set(field_SOURCES

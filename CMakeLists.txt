@@ -3,9 +3,9 @@ project(catana)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -std=c++11")
 
-if(EXISTS ${CMAKE_SOURCE_DIR}/config.cmake)
+if(EXISTS "${PROJECT_SOURCE_DIR}/config.cmake")
     message(STATUS "Loaded external config file")
-    include(${CMAKE_SOURCE_DIR}/config.cmake)
+    include(${PROJECT_SOURCE_DIR}/config.cmake)
 endif()
 
 # Load/download external modules
