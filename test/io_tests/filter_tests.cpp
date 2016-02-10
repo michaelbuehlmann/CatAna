@@ -8,6 +8,11 @@
 #include "catana/tools/object_types.hpp"
 #include "catana/io_tools/filters.hpp"
 
+// Load data directory
+#include "config.hpp"
+const std::string test_data_dir(TEST_DATA_DIR);
+
+
 std::mt19937 rng;
 
 TEST(Filter, TopHat) {
@@ -74,16 +79,17 @@ TEST(Filter, Subset) {
 
 TEST(Filter, AngularMask) {
     ObjectContainer object_container;
-    object_container.push_back(object_from_spherical_position(1,0,1));  // should be accepted
-    object_container.push_back(object_from_spherical_position(1,0,-1));  // should be removed
+    object_container.push_back(object_from_spherical_position(1,0,-1));  // should be accepted
+    object_container.push_back(object_from_spherical_position(1,0,1));  // should be removed
 
-    std::string dir = "${CMAKE_BINARY_DIR}";
+
+
+    // Map is true almost everywhere, false in the region around (theta=0, phi=1)
     std::string filename = "testmap.fits";
-    std::cout << dir+filename << std::endl;
 
-    AngularMaskFilter filter(filename);
+    AngularMaskFilter filter(test_data_dir+filename);
 
     filter(object_container);
     ASSERT_EQ(1, object_container.size());
-    EXPECT_FLOAT_EQ(1, object_container[0].p.phi);
+    EXPECT_FLOAT_EQ(-1, object_container[0].p.phi);
 }

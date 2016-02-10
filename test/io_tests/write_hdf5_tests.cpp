@@ -6,8 +6,13 @@
 #include "catana/io_tools/write_hdf5.hpp"
 #include "catana/io_tools/read_hdf5.hpp"
 
+// Load data directory
+#include "config.hpp"
+const std::string test_data_dir(TEST_DATA_DIR);
+
+
 TEST(SmallSink, Cartesian) {
-    std::string filename = "/Users/michael/Documents/ETH/2015HS/MasterThesis/Data/sdss_lpicola/test_0.hdf";
+    std::string filename = "write_test_1.hdf5";
     std::string dataset_name = "/tpart";
 
     ObjectContainer oc;
@@ -16,12 +21,12 @@ TEST(SmallSink, Cartesian) {
     oc.push_back(Object(100,1,100));
 
     {
-        HDF5Sink<CartesianRecord<float>> hdf5_sink(filename, dataset_name, 1, 0, true, false);
+        HDF5Sink<CartesianRecord<float>> hdf5_sink(test_data_dir + filename, dataset_name, 1, 0, true, false);
         auto records = hdf5_sink.write(oc.begin(), oc.size());
         EXPECT_EQ(oc.size(), records);
     }
 
-    HDF5Source<CartesianRecord<float>> hdf5_source(filename, dataset_name, 1, 0, true);
+    HDF5Source<CartesianRecord<float>> hdf5_source(test_data_dir + filename, dataset_name, 1, 0, false);
     EXPECT_EQ(oc.size(), hdf5_source.get_nobjects());
     ObjectContainer oc_read(hdf5_source.get_nobjects());
 
@@ -36,7 +41,7 @@ TEST(SmallSink, Cartesian) {
 }
 
 TEST(SmallSink, Spherical) {
-    std::string filename = "/Users/michael/Documents/ETH/2015HS/MasterThesis/Data/sdss_lpicola/test_1.hdf";
+    std::string filename = "write_test_2.hdf5";
     std::string dataset_name = "/tpart";
 
     ObjectContainer oc;
@@ -45,12 +50,12 @@ TEST(SmallSink, Spherical) {
     oc.push_back(Object(100,1,100));
 
     {
-        HDF5Sink<SphericalRecord<float>> hdf5_sink(filename, dataset_name, 1, 0, true, false);
+        HDF5Sink<SphericalRecord<float>> hdf5_sink(test_data_dir + filename, dataset_name, 1, 0, true, false);
         auto records = hdf5_sink.write(oc.begin(), oc.size());
         EXPECT_EQ(oc.size(), records);
     }
 
-    HDF5Source<SphericalRecord<float>> hdf5_source(filename, dataset_name, 1, 0, false);
+    HDF5Source<SphericalRecord<float>> hdf5_source(test_data_dir + filename, dataset_name, 1, 0, false);
     EXPECT_EQ(oc.size(), hdf5_source.get_nobjects());
     ObjectContainer oc_read(hdf5_source.get_nobjects());
 
