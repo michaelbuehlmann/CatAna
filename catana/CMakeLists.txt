@@ -45,7 +45,7 @@ add_library(catana STATIC
         ${decomposition_SOURCES})
 
 # LINK TOGETHER
-target_link_libraries(iotools healpix_cxx hdf5 hdf5_hl boost_system boost_filesystem)
+target_link_libraries(iotools ${HEALPIX_LIB} hdf5 hdf5_hl boost_system boost_filesystem)
 target_link_libraries(besseltools gsl)
-target_link_libraries(catana besseltools iotools fftw3 healpix_cxx)
+target_link_libraries(catana besseltools iotools fftw3 ${HEALPIX_LIB})
 add_dependencies(catana eigen)

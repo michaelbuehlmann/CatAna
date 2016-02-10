@@ -20,6 +20,14 @@ include_directories(${PYBIND11_INCLUDE_DIR})
 # HEALPix Library
 include_directories(${HEALPIX_DIR}/include)
 link_directories(${HEALPIX_DIR}/lib)
+if(EXISTS ${HEALPIX_DIR}/lib/libcxxsupport.a)
+    set(HEALPIX_LIB healpix_cxx cxxsupport)
+    message(STATUS "HEALPix Library consists of multiple files")
+else()
+    set(HEALPIX_LIB healpix_cxx)
+    message(STATUS "HEALPix Library is single file")
+endif()
+
 # HDF5 Library
 set(HDF5_USE_STATIC_LIBRARIES)
 find_package(HDF5 REQUIRED)

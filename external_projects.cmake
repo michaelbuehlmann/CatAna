@@ -4,14 +4,22 @@ include(ExternalProject)
 # FETCH EIGEN3 LIB #
 # TODO: use git submodule
 if(NOT EIGEN3_INCLUDE_DIR)
-    set(source_dir ${CMAKE_BINARY_DIR}/external/eigen/cmake)
+#    set(source_dir ${CMAKE_BINARY_DIR}/external/eigen/cmake)
+#    ExternalProject_Add(
+#            eigen
+#            PREFIX ${source_dir}
+#            HG_REPOSITORY https://bitbucket.org/eigen/eigen/
+#            CONFIGURE_COMMAND ""
+#            BUILD_COMMAND ""
+#            INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory "${source_dir}/src/eigen/Eigen" "${CMAKE_BINARY_DIR}/external/eigen/include/Eigen"
+#    )
+#    set(EIGEN3_INCLUDE_DIR ${CMAKE_BINARY_DIR}/external/eigen/include/)
     ExternalProject_Add(
             eigen
-            PREFIX ${source_dir}
-            HG_REPOSITORY https://bitbucket.org/eigen/eigen/
+            DOWNLOAD_COMMAND ""
             CONFIGURE_COMMAND ""
             BUILD_COMMAND ""
-            INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory "${source_dir}/src/eigen/Eigen" "${CMAKE_BINARY_DIR}/external/eigen/include/Eigen"
+            INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory "${PROJECT_SOURCE_DIR}/external/eigen/Eigen" "${CMAKE_BINARY_DIR}/external/eigen/include/Eigen"
     )
     set(EIGEN3_INCLUDE_DIR ${CMAKE_BINARY_DIR}/external/eigen/include/)
 #    set(EIGEN3_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/external/eigen/include)
@@ -36,7 +44,7 @@ endif()
 ######################
 # GOOGLE TESTS
 if(NOT GOOGLETEST_DIR)
-    set(GOOGLETEST_DIR ${PROJECT_SOURCE_DIR}/external/googletest/googletest)
+    set(GOOGLETEST_DIR ${PROJECT_SOURCE_DIR}/external/googletest)
 endif()
 
 ############################
