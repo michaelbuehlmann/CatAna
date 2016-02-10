@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.3)
 project(catana)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -std=c++11 -fPIC")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules")
+message(STATUS "module path: ${CMAKE_MODULE_PATH}")
 
 if(EXISTS "${PROJECT_SOURCE_DIR}/config.cmake")
     message(STATUS "Loaded external config file")
@@ -27,6 +29,13 @@ else()
     set(HEALPIX_LIB healpix_cxx)
     message(STATUS "HEALPix Library is single file")
 endif()
+
+# CBLAS Library
+set(CBLAS_FIND_QUIETLY)
+find_package(CBLAS REQUIRED)
+include_directories(${CBLAS_INCLUDE_DIR})
+message(STATUS "CBLAS Libraries: ${CBLAS_LIBRARIES}")
+
 
 # HDF5 Library
 set(HDF5_USE_STATIC_LIBRARIES)
