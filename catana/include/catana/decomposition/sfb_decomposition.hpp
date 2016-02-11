@@ -5,8 +5,7 @@
 #ifndef CATANA_APP_SFB_DECOMPOSITION_HPP
 #define CATANA_APP_SFB_DECOMPOSITION_HPP
 
-#include "catana/tools/return_types.hpp"
-#include "catana/tools/object_types.hpp"
+#include <catana/types.hpp>
 
 KClkk decomp_SFB_raw(
         const ObjectContainer& objects,

@@ -5,7 +5,7 @@
 #include <gtest/gtest.h>
 #include <random>
 #include <cmath>
-#include "catana/tools/object_types.hpp"
+#include <catana/types.hpp>
 #include "catana/io_tools/filters.hpp"
 
 // Load data directory
@@ -56,26 +56,7 @@ TEST(Filter, Gaussian) {
     EXPECT_NEAR(object_container.size(), N_exp, 0.1*N_exp);
 }
 
-TEST(Filter, Subset) {
-    size_t N(1<<20);
-    ObjectContainer object_container;
-    for(size_t i=0; i<N/2; ++i) {
-        object_container.push_back(Object(1, 0, 0));
-    }
-    for(size_t i=0; i<N/2; ++i) {
-        object_container.push_back(Object(2, 0, 0));
-    }
-    ASSERT_EQ(N, object_container.size());
 
-    SubsetFilter filter(N/2);
-    filter(object_container);
-    ASSERT_EQ(N/2, object_container.size());
-
-    size_t objects_with_r2 = 0;
-    std::for_each(object_container.begin(), object_container.end(), [&](Object obj){if(obj.r > 1.5) ++objects_with_r2;});
-
-    EXPECT_NEAR(N/4, objects_with_r2, 0.1*N/4);
-}
 
 TEST(Filter, AngularMask) {
     ObjectContainer object_container;

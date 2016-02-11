@@ -6,7 +6,6 @@
 #define CATANA_APP_OBJECT_TYPES_HPP
 
 #include <healpix_cxx/pointing.h>
-#include <vector>
 
 //! Catalog Object with position in 3d space
 struct Object {
@@ -60,7 +59,5 @@ Object object_from_spherical_position(const FLOAT_TYPE* pos_rtf, const double& h
 }
 
 
-//! Catalog representation
-using ObjectContainer = std::vector<Object>;
 
 #endif //CATANA_APP_OBJECT_TYPES_HPP

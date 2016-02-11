@@ -7,8 +7,7 @@
 
 #include "Field.hpp"
 #include "Window.hpp"
-#include "catana/tools/return_types.hpp"
-#include "catana/tools/object_types.hpp"
+#include <catana/types.hpp>
 
 class Catalog {
 public:

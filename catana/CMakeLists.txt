@@ -5,16 +5,19 @@ set(besseltools_SOURCES
         src/besseltools/besseltools.cpp include/catana/besseltools.hpp
         include/catana/tools/gsl_function_wrapper.hpp)
 
-set(returntypes_SOURCES
-        include/catana/tools/return_types.hpp src/tools/return_types.cpp)
+set(basictypes_SOURCES
+        include/catana/tools/Object.hpp include/catana/tools/ObjectContainer.hpp
+        include/catana/tools/return_types.hpp src/tools/return_types.cpp src/tools/ObjectContainer.cpp)
 
 set(iotools_SOURCES
-        include/catana/tools/object_types.hpp
+        ${basictypes_SOURCES}
         include/catana/tools/string_format.hpp
         include/catana/io_tools/record_types.hpp
+        include/catana/io_tools/Source.hpp include/catana/io_tools/Sink.hpp
         include/catana/io_tools/read_gadget.hpp src/io_tools/read_gadget.cpp
         include/catana/io_tools/read_hdf5.hpp include/catana/io_tools/read_hdf5.ipp
-        include/catana/io_tools/write_hdf5.hpp include/catana/io_tools/write_hdf5.ipp src/io_tools/record_type.cpp include/catana/io_tools/filters.hpp)
+        include/catana/io_tools/write_hdf5.hpp include/catana/io_tools/write_hdf5.ipp src/io_tools/record_type.cpp include/catana/io_tools/filters.hpp
+        include/catana/io_tools/FilterStream.hpp)
 
 set(window_SOURCES
         include/catana/Window.hpp src/Window.cpp
@@ -25,7 +28,7 @@ set(decomposition_SOURCES
         include/catana/decomposition/sfb_decomposition.hpp src/decomposition/sfb_decomposition.cpp)
 
 set(catalog_SOURCES
-        include/catana/tools/object_types.hpp
+        ${basictypes_SOURCES}
         src/Catalog.cpp include/catana/Catalog.hpp
         ${window_SOURCES} ${decomposition_SOURCES})
 

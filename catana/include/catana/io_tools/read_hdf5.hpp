@@ -6,7 +6,7 @@
 #define CATANA_APP_READ_HDF5_HPP
 
 
-#include "catana/tools/object_types.hpp"
+#include "Source.hpp"
 #include "record_types.hpp"
 
 #include <string>
@@ -35,7 +35,7 @@ ObjectContainer read_hdf5_positions(const std::string& filename, const std::stri
  * dataset_name is absolute path in the HDF5 file to the table to read
  */
 template<class RecordType>
-class HDF5Source {
+class HDF5Source : public Source {
 public:
     typedef RecordType record_t;
     HDF5Source(
@@ -55,11 +55,16 @@ public:
      * (ObjectIterator, ObjectIterator+n) must be a valid range.
      * Returns number of objects put into object_s. -1 if EOF.
     */
+
+    long long int read(ObjectContainer::iterator write_iterator, size_t n) override;
+    long long int read(Object* write_iterator, size_t n) override;
+
+
+    size_t get_nobjects() override;
+
+private:
     template<class ObjectIterator>
-    long long int read(ObjectIterator write_iterator, size_t n);
-
-    size_t get_nobjects();
-
+    long long int read_template(ObjectIterator write_iterator, size_t n);
 private:
     std::string filename;
     std::string dataset_name;

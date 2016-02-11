@@ -72,7 +72,7 @@ GadgetSource::GadgetSource(std::string filename, bool verbose)
 }
 
 template<class ObjectIterator>
-long long int GadgetSource::read(ObjectIterator write_iterator, size_t n)
+long long int GadgetSource::read_template(ObjectIterator write_iterator, size_t n)
 {
     CartesianRecord<float> record;
 
@@ -108,9 +108,13 @@ long long int GadgetSource::read(ObjectIterator write_iterator, size_t n)
     return loaded;
 }
 
-// Explicit instantiation of ObjectIterators
-template long long int GadgetSource::read(ObjectContainer::iterator, size_t);
-template long long int GadgetSource::read(Object*, size_t);
+
+long long int GadgetSource::read(ObjectContainer::iterator write_iterator, size_t n)  {
+    return read_template(write_iterator, n);
+}
+long long int GadgetSource::read(Object* write_iterator, size_t n) {
+    return read_template(write_iterator, n);
+}
 
 size_t GadgetSource::get_nobjects()
 {

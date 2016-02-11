@@ -20,7 +20,7 @@
 #ifndef CATANA_APP_HDF5_RECORD_TYPES_HPP
 #define CATANA_APP_HDF5_RECORD_TYPES_HPP
 
-#include "catana/tools/object_types.hpp"
+#include <catana/types.hpp>
 #include "hdf5.h"
 
 template<class FLOAT_TYPE>

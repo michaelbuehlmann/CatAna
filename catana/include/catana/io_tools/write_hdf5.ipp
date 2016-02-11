@@ -41,7 +41,7 @@ HDF5Sink<RecordType>::~HDF5Sink()
 }
 
 template<class RecordType> template<class ObjectIterator>
-long long int HDF5Sink<RecordType>::write(ObjectIterator read_iterator, size_t n)
+long long int HDF5Sink<RecordType>::write_template(ObjectIterator read_iterator, size_t n)
 {
     RecordType* record_temp = new RecordType[n];
     std::transform(
@@ -55,4 +55,16 @@ long long int HDF5Sink<RecordType>::write(ObjectIterator read_iterator, size_t n
     );
     delete[] record_temp;
     return n;
+}
+
+template<class RecordType>
+long long int HDF5Sink<RecordType>::write(Object* read_iterator, size_t n)
+{
+    return write_template(read_iterator, n);
+}
+
+template<class RecordType>
+long long int HDF5Sink<RecordType>::write(ObjectContainer::iterator read_iterator, size_t n)
+{
+    return write_template(read_iterator, n);
 }

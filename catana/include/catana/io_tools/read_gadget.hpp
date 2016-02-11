@@ -5,7 +5,8 @@
 #ifndef CATANA_APP_READ_GADGET_HPP
 #define CATANA_APP_READ_GADGET_HPP
 
-#include "catana/tools/object_types.hpp"
+
+#include "Source.hpp"
 #include <string>
 
 #include <iosfwd>
@@ -15,20 +16,24 @@
 ObjectContainer read_gadget_halo_positions(const std::string& filename, bool verbose=true);
 
 //! A source which can be read sequentially
-class GadgetSource {
+class GadgetSource : public Source{
 public:
     GadgetSource(std::string filename, bool verbose=false);
 
     //!Returns number of objects put into object_s. -1 if EOF.
     // Implemented are Iterators of type ObjectContainer::iterator and Object*
-    template<class ObjectIterator>
-    long long int read(ObjectIterator write_iterator, size_t n);
+
+    long long int read(ObjectContainer::iterator write_iterator, size_t n) override;
+    long long int read(Object* write_iterator, size_t n) override;
 
     //!Total number of objects which can be read
-    size_t get_nobjects();
+    size_t get_nobjects() override;
 
     static const int skipsize;
 private:
+    template<class ObjectIterator>
+    long long int read_template(ObjectIterator write_iterator, size_t n);
+
     void load_file(std::string fname, bool initial_file=false);
     void load_file(unsigned int filenum);
 private:

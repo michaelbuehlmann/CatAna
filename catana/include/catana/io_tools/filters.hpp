@@ -5,7 +5,7 @@
 #ifndef CATANA_APP_FILTERS_HPP
 #define CATANA_APP_FILTERS_HPP
 
-#include "catana/tools/object_types.hpp"
+#include <catana/types.hpp>
 #include <functional>
 #include <cmath>
 #include <random>
@@ -22,7 +22,7 @@ extern std::mt19937 rng;
 class Filter {
 public:
     virtual bool filter(Object& object) = 0;
-    virtual void operator()(ObjectContainer& object_container){
+    size_t operator()(ObjectContainer& object_container, bool resize=true){
         // end always points behind last element
         auto end = object_container.end();
         // current always points at the element currently beeing evaluated
@@ -34,7 +34,22 @@ public:
                 std::swap(*current, *(--end));
             }
         }
-        object_container.resize(static_cast<size_t>(std::distance(object_container.begin(), end)));
+        size_t new_size = static_cast<size_t>(std::distance(object_container.begin(), end));
+        if(resize)
+            object_container.resize(new_size);
+        return new_size;
+    }
+
+    size_t operator()(Object* begin, Object* end){
+        Object* current = begin;
+        while(current != end){
+            if(filter(*current)){  // object is accepted
+                ++current;
+            } else {  // object is rejected
+                std::swap(*current, *(--end));
+            }
+        }
+        return end-begin;
     }
 };
 
@@ -78,36 +93,6 @@ private:
 
 };
 
-//! Creates a random subset of the Object Container such that N objects remain.
-/*
- * This is a Fisher-Yates shuffle (stopped after N iterations).
- * See: https://en.wikipedia.org/wiki/Fisher–Yates_shuffle
- */
-class SubsetFilter : public Filter {
-public:
-    SubsetFilter(size_t N) : N(N) {}
-
-    bool filter(Object& object) override {return true;}  // This function is not needed
-    void operator()(ObjectContainer& object_container) override {
-        std::uniform_int_distribution<size_t> dist;  // default: (0, max(numeric type)
-
-        auto current = object_container.begin();
-        size_t obj_remaining = object_container.size();
-        size_t obj_toadd = N;
-
-        while(obj_toadd--) {
-            auto random_pick = current + (dist(rng)%obj_remaining);
-            std::swap(*current, *random_pick);
-            ++current;
-            --obj_remaining;
-        }
-
-        object_container.resize(N);
-    }
-private:
-    size_t N;
-};
-
 //! Applies an angular mask (float healpix map)
 /*
  * MASK==1: keep object at this pixel
@@ -126,6 +111,5 @@ public:
 private:
     Healpix_Map<float> map;
 };
-
 #endif //CATANA_APP_FILTERS_HPP
 
