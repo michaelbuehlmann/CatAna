@@ -52,3 +52,4 @@ target_link_libraries(iotools ${HEALPIX_LIB} hdf5 hdf5_hl boost_system boost_fil
 target_link_libraries(besseltools gsl ${CBLAS_LIBRARIES})
 target_link_libraries(catana besseltools iotools fftw3 ${HEALPIX_LIB})
 add_dependencies(catana eigen)
+add_dependencies(iotools eigen)

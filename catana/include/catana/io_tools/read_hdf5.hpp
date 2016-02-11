@@ -35,7 +35,7 @@ ObjectContainer read_hdf5_positions(const std::string& filename, const std::stri
  * dataset_name is absolute path in the HDF5 file to the table to read
  */
 template<class RecordType>
-class HDF5Source : public Source {
+class HDF5Source : Source {
 public:
     typedef RecordType record_t;
     HDF5Source(
@@ -58,7 +58,6 @@ public:
 
     long long int read(ObjectContainer::iterator write_iterator, size_t n) override;
     long long int read(Object* write_iterator, size_t n) override;
-
 
     size_t get_nobjects() override;
 

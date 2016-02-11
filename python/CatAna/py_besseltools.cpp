@@ -11,8 +11,8 @@
 
 namespace py = pybind11;
 
-PYBIND11_PLUGIN(pybesseltools) {
-    py::module m("pybesseltools", "python binding to besseltools library (part of CatAna)");
+PYBIND11_PLUGIN(besseltools) {
+    py::module m("besseltools", "python binding to besseltools library (part of CatAna)");
 
     py::class_<BesselZeros>(m, "BesselZeros")
             .def(py::init<const double&>())
