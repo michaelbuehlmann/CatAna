@@ -19,6 +19,7 @@ ObjectContainer read_gadget_halo_positions(const std::string& filename, bool ver
 class GadgetSource : public Source{
 public:
     GadgetSource(std::string filename, bool verbose=false);
+    // TODO: Destructor closes file
 
     //!Returns number of objects put into object_s. -1 if EOF.
     // Implemented are Iterators of type ObjectContainer::iterator and Object*

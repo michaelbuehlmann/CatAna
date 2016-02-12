@@ -10,7 +10,7 @@ import PyCosmo
 
 # TODO: more generic to add sources/sinks/filters
 
-buffer_size = 10000000
+buffer_size = 100000
 valid_filters = ["tophat", "gauss", "CMASS", "AngMask"]
 
 class GenericRedshiftWindowFunction(object):

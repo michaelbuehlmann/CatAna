@@ -18,3 +18,6 @@ add_executable(filter_stream_tests filter_stream_test.cpp)
 target_link_libraries(filter_stream_tests gtest gtest_main)
 target_link_libraries(filter_stream_tests iotools)
 
+add_executable(monch_gadget2hdf5test monch_gadget2hdf5test.cpp)
+target_link_libraries(monch_gadget2hdf5test iotools)
+

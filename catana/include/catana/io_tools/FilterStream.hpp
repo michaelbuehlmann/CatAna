@@ -40,10 +40,10 @@ public:
         size_t n_tot = 0;
         size_t n_read = 0;
         while((n = source->read(buffer.get(), buffer_size)) != -1){ // Read until nothing left to read
-            if(verbose)
+            if(verbose) {
                 n_read += n;
                 std::cout << "\tObjects read: " << n_read << std::endl;
-
+            }
             assert(n<=buffer_size);
             for(auto& filter_p: filters_p) {
                 n = (*filter_p)(buffer.get(), buffer.get()+n);

@@ -53,6 +53,8 @@ long long int HDF5Sink<RecordType>::write_template(ObjectIterator read_iterator,
             file_id, dataset_name.c_str(), n, sizeof(record_t),
             record_t::field_offsets, record_t::field_sizes, record_temp
     );
+    H5Fflush(file_id, H5F_SCOPE_GLOBAL);
+
     delete[] record_temp;
     return n;
 }
