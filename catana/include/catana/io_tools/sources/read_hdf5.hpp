@@ -6,8 +6,8 @@
 #define CATANA_APP_READ_HDF5_HPP
 
 
-#include "Source.hpp"
-#include "record_types.hpp"
+#include "catana/io_tools/Source.hpp"
+#include "catana/io_tools/record_types.hpp"
 
 #include <string>
 #include <vector>
@@ -82,8 +82,5 @@ private:
     double hubble_parameter;
     bool verbose;
 };
-
-// Implementations
-#include "read_hdf5.ipp"
 
 #endif //CATANA_APP_READ_HDF5_HPP

@@ -5,13 +5,10 @@
 #ifndef CATANA_APP_WRITE_HDF5_HPP_HPP
 #define CATANA_APP_WRITE_HDF5_HPP_HPP
 
-
-
 #include <hdf5.h>
 
-#include "record_types.hpp"
-#include "Sink.hpp"
-
+#include "catana/io_tools/record_types.hpp"
+#include "catana/io_tools/Sink.hpp"
 
 //! A sink to write to HDF5 table filename/dataset_name.
 /*
@@ -54,8 +51,5 @@ private:
     double hubble_parameter;
     bool verbose;
 };
-
-#include "write_hdf5.ipp"
-
 
 #endif //CATANA_APP_WRITE_HDF5_HPP_HPP

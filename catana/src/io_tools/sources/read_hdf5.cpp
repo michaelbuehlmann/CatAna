@@ -1,8 +1,8 @@
-#ifndef CATANA_APP_READ_HDF5_HPP
-#include "read_hdf5.hpp"
-#endif
+//
+// Created by Michael Bühlmann on 13/02/16.
+//
 
-
+#include <catana/io_tools/sources/read_hdf5.hpp>
 
 #include <hdf5.h>
 #include <hdf5_hl.h>
@@ -118,3 +118,15 @@ ObjectContainer read_hdf5_positions(const std::string& filename, const std::stri
         object_container.resize(static_cast<size_t>(nrecords));
     return object_container;
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// IMPLICIT INSTANTIATION (add needed cases)
+template class HDF5Source<CartesianRecord<float>>;
+template class HDF5Source<CartesianRecord<double>>;
+template class HDF5Source<SphericalRecord<float>>;
+template class HDF5Source<SphericalRecord<double>>;
+
+template ObjectContainer read_hdf5_positions<CartesianRecord<float>>(const std::string&, const std::string&, double, double, bool);
+template ObjectContainer read_hdf5_positions<CartesianRecord<double>>(const std::string&, const std::string&, double, double, bool);;
+template ObjectContainer read_hdf5_positions<SphericalRecord<float>>(const std::string&, const std::string&, double, double, bool);;
+template ObjectContainer read_hdf5_positions<SphericalRecord<double>>(const std::string&, const std::string&, double, double, bool);;

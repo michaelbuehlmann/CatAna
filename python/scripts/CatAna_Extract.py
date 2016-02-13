@@ -10,7 +10,7 @@ import PyCosmo
 
 # TODO: more generic to add sources/sinks/filters
 
-buffer_size = 100000
+buffer_size = 100000  # Uses ca 500MB memory (measured)
 valid_filters = ["tophat", "gauss", "CMASS", "AngMask"]
 
 class GenericRedshiftWindowFunction(object):
@@ -34,17 +34,15 @@ class GenericRedshiftWindowFunction(object):
         )
         cosmo.set(**cosmo_kwargs)
         redshift2distance = lambda z: cosmo.background.dist_rad_a(1./(1+z))
-        test_z = np.linspace(0,10,100000)
-        test_r = redshift2distance(test_z)
+        test_z = np.linspace(0,10,20000)
+        test_r = redshift2distance(test_z)*coord_hubble_param
         self.redshift2distance = lambda z: sinterpol.interp1d(test_z, test_r)(z)
         self.distance2redshift = lambda r: sinterpol.interp1d(test_r, test_z)(r)
-        self.coord_hubble_param = coord_hubble_param
 
     def window_function(self, z):
         if hasattr(z, "__len__"): return np.ones_like(z)
         else: return 1.
     def __call__(self, r):
-        r /= self.coord_hubble_param
         z = self.distance2redshift(r)
         return self.window_function(z)
 
@@ -174,13 +172,17 @@ class Extractor(object):
             for f in filter:
                 assert(isinstance(f, Filter))
                 if f.filter == 'tophat':
+                    print("Added tophat window function with radius {}".format(f.option))
                     self.filter_instances.append(io.TophatRadialWindowFunctionFilter(f.option))
                 if f.filter == 'gauss':
+                    print("Added gaussian window function with scale {}".format(f.option))
                     self.filter_instances.append(io.GaussianRadialWindowFunctionFilter(f.option))
-                if f.filter == 'cmass':
+                if f.filter == 'CMASS':
+                    print("Added CMASS window function. Coordinates -> Mpc: /({})".format(hubble_param))
                     wfct = CMASSWindowFunction(hubble_param)
-                    self.filter_instances.append(io.GenericRadialWindowFunctionFilter(wfct))
+                    self.filter_instances.append(io.GenericRadialWindowFunctionFilter(lambda r: wfct(r)))
                 if f.filter == 'AngMask':
+                    print("Added Angular Mask from file {}".format(f.option))
                     self.filter_instances.append(io.AngularMaskFilter(f.option))
 
         for f in self.filter_instances:
@@ -223,6 +225,9 @@ if __name__ == "__main__":
     parser.add_argument("--box_center", type=float, default=0,
                         help="If the input coordinates are cartesian in range [0, L], this will tell the program "
                              "where the center is (i.e. specify L/2)")
+    parser.add_argument("--hubble_param", type=float, default=1,
+                        help="If the input is in Mpc/h, use this parameter to transform coordinates to Mpc. Set to 1"
+                             "if units are in Mpc")
     parser.add_argument("--filter", nargs='*', action=ValidateFilter,
                         metavar="filtername {} [scale]".format(valid_filters),
                         help="Filters to apply to data")

@@ -1,6 +1,8 @@
-#ifndef CATANA_APP_WRITE_HDF5_HPP
-#include "write_hdf5.hpp"
-#endif
+//
+// Created by Michael Bühlmann on 13/02/16.
+//
+
+#include <catana/io_tools/sinks/write_hdf5.hpp>
 
 #include <hdf5_hl.h>
 #include <iostream>
@@ -11,7 +13,7 @@
 
 template<class RecordType>
 HDF5Sink<RecordType>::HDF5Sink(const std::string& filename, const std::string& dataset_name,
-            double hubble_parameter, double box_size, bool overwrite_file, bool verbose)
+        double hubble_parameter, double box_size, bool overwrite_file, bool verbose)
         :filename(filename), dataset_name(dataset_name), box_size(box_size),
          hubble_parameter(hubble_parameter), verbose(verbose)
 {
@@ -70,3 +72,10 @@ long long int HDF5Sink<RecordType>::write(ObjectContainer::iterator read_iterato
 {
     return write_template(read_iterator, n);
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// IMPLICIT INSTANTIATION (add needed cases)
+template class HDF5Sink<CartesianRecord<float>>;
+template class HDF5Sink<CartesianRecord<double>>;
+template class HDF5Sink<SphericalRecord<float>>;
+template class HDF5Sink<SphericalRecord<double>>;

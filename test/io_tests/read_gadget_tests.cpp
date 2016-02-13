@@ -3,7 +3,7 @@
 //
 
 #include <catana/types.hpp>
-#include "catana/io_tools/read_gadget.hpp"
+#include "catana/io_tools/sources/read_gadget.hpp"
 #include "gtest/gtest.h"
 
 #include <string>

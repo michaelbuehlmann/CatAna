@@ -1,7 +1,7 @@
 //
 // Created by Michael Bühlmann on 02/02/16.
 //
-#include "catana/io_tools/read_gadget.hpp"
+#include "catana/io_tools/sources/read_gadget.hpp"
 #include "catana/io_tools/record_types.hpp"
 #include "catana/tools/string_format.hpp"
 
