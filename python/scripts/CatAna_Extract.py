@@ -169,7 +169,7 @@ class Extractor(object):
 
         if not hasattr(filter, '__len__'):
             filter = [filter]
-        filter.insert(Filter('tophat', max_dist), 0)  # Assert that no object is further away than max_dist.
+        filter.insert(0, Filter('tophat', max_dist))  # Assert that no object is further away than max_dist.
         for f in filter:
             assert(isinstance(f, Filter))
             if f.filter == 'tophat':
@@ -182,7 +182,7 @@ class Extractor(object):
                 print("Added CMASS window function. Coordinates -> Mpc: /({})".format(hubble_param))
                 wfct = CMASSWindowFunction(hubble_param)
                 self.filter_instances.append(io.GenericRadialWindowFunctionFilter(
-                        lambda r: wfct(r)), function_interpolation_points, 0, max_dist)
+                        lambda r: wfct(r), function_interpolation_points, 0, max_dist))
             if f.filter == 'AngMask':
                 print("Added Angular Mask from file {}".format(f.option))
                 self.filter_instances.append(io.AngularMaskFilter(f.option))

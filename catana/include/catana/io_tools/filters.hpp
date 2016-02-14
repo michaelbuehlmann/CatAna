@@ -10,6 +10,7 @@
 #include <functional>
 #include <cmath>
 #include <random>
+#include <memory>
 #include <healpix_cxx/healpix_map.h>
 #include <healpix_cxx/healpix_map_fitsio.h>
 
