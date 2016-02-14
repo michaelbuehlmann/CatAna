@@ -8,7 +8,7 @@
 #include "filters.hpp"
 #include "Source.hpp"
 #include "Sink.hpp"
-#include <catana/types.hpp>
+#include "../types.hpp"
 
 #include <vector>
 #include <memory>

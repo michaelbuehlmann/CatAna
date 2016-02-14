@@ -9,9 +9,11 @@
 #include "io_tools/Source.hpp"
 #include "io_tools/Sink.hpp"
 
-#include "catana/io_tools/sources/read_hdf5.hpp"
-#include "catana/io_tools/sources/read_gadget.hpp"
-#include "catana/io_tools/sinks/write_hdf5.hpp"
-#include "catana/io_tools/FilterStream.hpp"
+#include "io_tools/sources/read_hdf5.hpp"
+#include "io_tools/sinks/write_hdf5.hpp"
+#include "io_tools/sources/read_gadget.hpp"
+#include "io_tools/sources/read_rawbinary.hpp"
+#include "io_tools/sinks/write_rawbinary.hpp"
+#include "io_tools/FilterStream.hpp"
 
 #endif //CATANA_APP_IO_TOOLS_HPP

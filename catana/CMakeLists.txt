@@ -3,7 +3,7 @@ project(catana)
 # SOURCE FILES
 set(besseltools_SOURCES
         src/besseltools/besseltools.cpp include/catana/besseltools.hpp
-        include/catana/tools/gsl_function_wrapper.hpp src/io_tools/sinks/write_hdf5.cpp)
+        include/catana/tools/gsl_function_wrapper.hpp)
 
 set(basictypes_SOURCES
         include/catana/tools/Object.hpp include/catana/tools/ObjectContainer.hpp
@@ -17,8 +17,10 @@ set(iotools_SOURCES
         include/catana/io_tools/sources/read_gadget.hpp src/io_tools/sources/read_gadget.cpp
         include/catana/io_tools/sources/read_hdf5.hpp src/io_tools/sources/read_hdf5.cpp
         include/catana/io_tools/sinks/write_hdf5.hpp src/io_tools/sinks/write_hdf5.cpp
+        include/catana/io_tools/sinks/write_rawbinary.hpp src/io_tools/sinks/write_rawbinary.cpp
+        include/catana/io_tools/sources/read_rawbinary.hpp src/io_tools/sources/read_rawbinary.cpp
         src/io_tools/record_type.cpp include/catana/io_tools/filters.hpp
-        include/catana/io_tools/FilterStream.hpp )
+        include/catana/io_tools/FilterStream.hpp)
 
 set(window_SOURCES
         include/catana/Window.hpp src/Window.cpp

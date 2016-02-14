@@ -7,8 +7,8 @@
 
 #include <hdf5.h>
 
-#include "catana/io_tools/record_types.hpp"
-#include "catana/io_tools/Sink.hpp"
+#include "../record_types.hpp"
+#include "../Sink.hpp"
 
 //! A sink to write to HDF5 table filename/dataset_name.
 /*

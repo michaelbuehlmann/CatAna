@@ -5,7 +5,7 @@
 #ifndef CATANA_SINK_HPP
 #define CATANA_SINK_HPP
 
-#include <catana/types.hpp>
+#include "../types.hpp"
 
 class Sink {
 public:

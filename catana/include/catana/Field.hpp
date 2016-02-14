@@ -7,8 +7,8 @@
 
 #include <functional>
 #include <complex>
-#include "catana/tools/fftw_field.hpp"
-#include "catana/tools/return_types.hpp"
+#include "tools/fftw_field.hpp"
+#include "tools/return_types.hpp"
 #include "Window.hpp"
 
 class Catalog;

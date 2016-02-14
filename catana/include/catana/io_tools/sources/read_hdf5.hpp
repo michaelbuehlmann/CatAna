@@ -6,8 +6,8 @@
 #define CATANA_APP_READ_HDF5_HPP
 
 
-#include "catana/io_tools/Source.hpp"
-#include "catana/io_tools/record_types.hpp"
+#include "../Source.hpp"
+#include "../record_types.hpp"
 
 #include <string>
 #include <vector>

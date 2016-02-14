@@ -5,7 +5,7 @@
 #ifndef CATANA_SOURCE_HPP
 #define CATANA_SOURCE_HPP
 
-#include <catana/types.hpp>
+#include "../types.hpp"
 #include <algorithm>
 
 //! Parent Class Source to read data of type "Object".

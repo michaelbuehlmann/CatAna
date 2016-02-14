@@ -5,7 +5,7 @@
 #ifndef CATANA_APP_FILTERS_HPP
 #define CATANA_APP_FILTERS_HPP
 
-#include <catana/types.hpp>
+#include "../types.hpp"
 #include <functional>
 #include <cmath>
 #include <random>

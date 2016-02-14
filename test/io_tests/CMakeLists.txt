@@ -10,6 +10,10 @@ add_executable(write_hdf5_tests write_hdf5_tests.cpp)
 target_link_libraries(write_hdf5_tests gtest gtest_main)
 target_link_libraries(write_hdf5_tests iotools)
 
+add_executable(write_rawdata_tests write_rawdata_tests.cpp)
+target_link_libraries(write_rawdata_tests gtest gtest_main)
+target_link_libraries(write_rawdata_tests iotools)
+
 add_executable(filter_tests filter_tests.cpp)
 target_link_libraries(filter_tests gtest gtest_main)
 target_link_libraries(filter_tests iotools)

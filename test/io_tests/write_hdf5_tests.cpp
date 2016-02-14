@@ -3,8 +3,8 @@
 //
 
 #include "gtest/gtest.h"
-#include "catana/io_tools/sinks/write_hdf5.hpp"
-#include "catana/io_tools/sources/read_hdf5.hpp"
+#include <catana/io_tools/sinks/write_hdf5.hpp>
+#include <catana/io_tools/sources/read_hdf5.hpp>
 
 // Load data directory
 #include "config.hpp"
