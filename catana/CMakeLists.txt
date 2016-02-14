@@ -48,7 +48,6 @@ add_library(catana STATIC
         ${catalog_SOURCES}
         ${field_SOURCES}
         ${window_SOURCES}
-        ${iotools_SOURCES}
         ${decomposition_SOURCES})
 
 # LINK TOGETHER
