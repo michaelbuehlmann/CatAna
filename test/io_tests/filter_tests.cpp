@@ -56,6 +56,32 @@ TEST(Filter, Gaussian) {
     EXPECT_NEAR(object_container.size(), N_exp, 0.1*N_exp);
 }
 
+TEST(Filter, GaussianInterpolated) {
+    std::uniform_real_distribution<float> dist(-1000, 1000);
+    size_t N = (1 << 24);
+    size_t N_exp = N;
+
+    ObjectContainer object_container;
+    object_container.reserve(N);
+    for(size_t i=0; i<N; ++i) {
+        object_container.push_back(Object(dist(rng), dist(rng), dist(rng)));
+    }
+    ASSERT_EQ(N_exp, object_container.size()) << "Wrong number of objects generated";
+
+    TophatRadialWindowFunctionFilter<float> filter_tophat(1000.f);
+    filter_tophat(object_container);
+
+    N_exp *= 0.5235987756;
+    EXPECT_NEAR(object_container.size(), N_exp, 0.1*N_exp);
+
+    auto window_function = [](double r){return std::exp(-std::pow(r/100., 2));};
+    GenericRadialWindowFunctionFilter<float> filter_gauss(window_function, 10000, 0, 1000.);
+    filter_gauss(object_container);
+
+    N_exp *=0.001329340388;
+    EXPECT_NEAR(object_container.size(), N_exp, 0.1*N_exp);
+}
+
 
 
 TEST(Filter, AngularMask) {

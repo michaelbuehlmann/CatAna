@@ -12,6 +12,7 @@ set(basictypes_SOURCES
 set(iotools_SOURCES
         ${basictypes_SOURCES}
         include/catana/tools/string_format.hpp
+        include/catana/tools/gsl_function_interpolate.hpp src/tools/gsl_function_interpolate.cpp
         include/catana/io_tools/record_types.hpp
         include/catana/io_tools/Source.hpp include/catana/io_tools/Sink.hpp
         include/catana/io_tools/sources/read_gadget.hpp src/io_tools/sources/read_gadget.cpp
@@ -51,7 +52,7 @@ add_library(catana STATIC
         ${decomposition_SOURCES})
 
 # LINK TOGETHER
-target_link_libraries(iotools ${HEALPIX_LIB} hdf5 hdf5_hl boost_system boost_filesystem)
+target_link_libraries(iotools ${HEALPIX_LIB} hdf5 hdf5_hl boost_system boost_filesystem gsl ${CBLAS_LIBRARIES})
 target_link_libraries(besseltools gsl ${CBLAS_LIBRARIES})
 target_link_libraries(catana besseltools iotools fftw3 ${HEALPIX_LIB})
 add_dependencies(catana eigen)

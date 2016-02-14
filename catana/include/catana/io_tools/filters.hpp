@@ -6,6 +6,7 @@
 #define CATANA_APP_FILTERS_HPP
 
 #include "../types.hpp"
+#include "../tools/gsl_function_interpolate.hpp"
 #include <functional>
 #include <cmath>
 #include <random>
@@ -58,13 +59,27 @@ template<class FLOAT_TYPE>
 class GenericRadialWindowFunctionFilter : public Filter{
 public:
     GenericRadialWindowFunctionFilter(std::function<FLOAT_TYPE(FLOAT_TYPE)> window_function)
-            : window_function(window_function), random_dist(0, 1) {}
+            : window_function(window_function), random_dist(0, 1)
+    {}
+
+    GenericRadialWindowFunctionFilter(
+            std::function<FLOAT_TYPE(FLOAT_TYPE)> window_function,
+            size_t interpolation_points, double min, double max
+    )
+            : window_function(window_function), random_dist(0, 1)
+    {
+        auto interp_p = new FunctionInterpolator(window_function, interpolation_points, min, max);
+        wfct_interp.reset(interp_p);
+        window_function = [=](FLOAT_TYPE r){ return wfct_interp->operator()(r);};
+    }
+
     bool filter(Object& object) override {
         return (window_function(object.r) > random_dist(rng));
     }
 private:
     std::function<FLOAT_TYPE(FLOAT_TYPE)> window_function;
     std::uniform_real_distribution<FLOAT_TYPE> random_dist;
+    std::unique_ptr<FunctionInterpolator> wfct_interp;
 };
 
 //! A Gaussian window function with scale R0.
@@ -72,9 +87,8 @@ template<class FLOAT_TYPE>
 class GaussianRadialWindowFunctionFilter : public GenericRadialWindowFunctionFilter<FLOAT_TYPE> {
 public:
     GaussianRadialWindowFunctionFilter(FLOAT_TYPE R0)
-            : GenericRadialWindowFunctionFilter<FLOAT_TYPE>(
-                [R0](FLOAT_TYPE r){return std::exp(-std::pow(r/R0, 2));}
-            ) {}
+            :GenericRadialWindowFunctionFilter<FLOAT_TYPE>([R0](FLOAT_TYPE r) { return std::exp(-std::pow(r/R0, 2)); })
+    {}
 };
 
 //! A radial tophat window function, only keeps objects within R0

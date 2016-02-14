@@ -11,6 +11,7 @@ import PyCosmo
 # TODO: more generic to add sources/sinks/filters
 
 buffer_size = 100000  # Uses ca 500MB memory (measured)
+function_interpolation_points = 100000
 valid_filters = ["tophat", "gauss", "CMASS", "AngMask"]
 
 class GenericRedshiftWindowFunction(object):
@@ -34,7 +35,7 @@ class GenericRedshiftWindowFunction(object):
         )
         cosmo.set(**cosmo_kwargs)
         redshift2distance = lambda z: cosmo.background.dist_rad_a(1./(1+z))
-        test_z = np.linspace(0,10,20000)
+        test_z = np.linspace(0,10,function_interpolation_points, endpoint=True)
         test_r = redshift2distance(test_z)*coord_hubble_param
         self.redshift2distance = lambda z: sinterpol.interp1d(test_z, test_r)(z)
         self.distance2redshift = lambda r: sinterpol.interp1d(test_r, test_z)(r)
@@ -105,9 +106,9 @@ class ValidateFile(argparse.Action):
 
 
 class Extractor(object):
-    def __init__(self, infile, outfile, intype='HDF5', intable=None, outtable=None, precision='float',
-                 incoord='cartesian', outcoord='cartesian', hubble_param=1., box_center=0.,
-                 filter = None, subsample_size=None, verbose=True):
+    def __init__(self, infile, outfile, intype, max_dist, intable=None, outtable=None, precision='float',
+                 incoord='cartesian', outcoord='cartesian', hubble_param=1., box_origin=0.,
+                 filter = [], subsample_size=None, verbose=True):
 
         #  Prepare Sink
         if outcoord == 'cartesian':
@@ -137,9 +138,9 @@ class Extractor(object):
                 if intable is None:
                     intable = 'particle_pos_cartesian'
                 if precision=='float':
-                    self.source = io.HDF5Source_cartesian_float(infile, intable, hubble_param, box_center*2, verbose)
+                    self.source = io.HDF5Source_cartesian_float(infile, intable, hubble_param, box_origin*2, verbose)
                 elif precision=='double':
-                    self.source = io.HDF5Source_cartesian_double(infile, intable, hubble_param, box_center*2, verbose)
+                    self.source = io.HDF5Source_cartesian_double(infile, intable, hubble_param, box_origin*2, verbose)
                 else:
                     raise ValueError("unknown precision")
 
@@ -147,9 +148,9 @@ class Extractor(object):
                 if intable is None:
                     intable = 'particle_pos_spherical'
                 if precision=='float':
-                    self.source = io.HDF5Source_spherical_float(infile, intable, hubble_param, box_center*2, verbose)
+                    self.source = io.HDF5Source_spherical_float(infile, intable, hubble_param, box_origin*2, verbose)
                 elif precision=='double':
-                    self.source = io.HDF5Source_spherical_double(infile, intable, hubble_param, box_center*2, verbose)
+                    self.source = io.HDF5Source_spherical_double(infile, intable, hubble_param, box_origin*2, verbose)
                 else:
                     raise ValueError("unknown precision")
         elif intype == 'Gadget':
@@ -166,24 +167,25 @@ class Extractor(object):
         self.filter_instances = []
 
 
-        if filter is not None:
-            if not hasattr(filter, '__len__'):
-                filter = [filter]
-            for f in filter:
-                assert(isinstance(f, Filter))
-                if f.filter == 'tophat':
-                    print("Added tophat window function with radius {}".format(f.option))
-                    self.filter_instances.append(io.TophatRadialWindowFunctionFilter(f.option))
-                if f.filter == 'gauss':
-                    print("Added gaussian window function with scale {}".format(f.option))
-                    self.filter_instances.append(io.GaussianRadialWindowFunctionFilter(f.option))
-                if f.filter == 'CMASS':
-                    print("Added CMASS window function. Coordinates -> Mpc: /({})".format(hubble_param))
-                    wfct = CMASSWindowFunction(hubble_param)
-                    self.filter_instances.append(io.GenericRadialWindowFunctionFilter(lambda r: wfct(r)))
-                if f.filter == 'AngMask':
-                    print("Added Angular Mask from file {}".format(f.option))
-                    self.filter_instances.append(io.AngularMaskFilter(f.option))
+        if not hasattr(filter, '__len__'):
+            filter = [filter]
+        filter.insert(Filter('tophat', max_dist), 0)  # Assert that no object is further away than max_dist.
+        for f in filter:
+            assert(isinstance(f, Filter))
+            if f.filter == 'tophat':
+                print("Added tophat window function with radius {}".format(f.option))
+                self.filter_instances.append(io.TophatRadialWindowFunctionFilter(f.option))
+            if f.filter == 'gauss':
+                print("Added gaussian window function with scale {}".format(f.option))
+                self.filter_instances.append(io.GaussianRadialWindowFunctionFilter(f.option))
+            if f.filter == 'CMASS':
+                print("Added CMASS window function. Coordinates -> Mpc: /({})".format(hubble_param))
+                wfct = CMASSWindowFunction(hubble_param)
+                self.filter_instances.append(io.GenericRadialWindowFunctionFilter(
+                        lambda r: wfct(r)), function_interpolation_points, 0, max_dist)
+            if f.filter == 'AngMask':
+                print("Added Angular Mask from file {}".format(f.option))
+                self.filter_instances.append(io.AngularMaskFilter(f.option))
 
         for f in self.filter_instances:
             self.filter_stream.add_filter(f)
@@ -222,9 +224,11 @@ if __name__ == "__main__":
                         help="Coordinate system used in the input file (only HDF5)")
     parser.add_argument("--outcoord", type=str, choices=["cartesian", "spherical"], default="cartesian",
                         help="Coordinate system used for the output file")
-    parser.add_argument("--box_center", type=float, default=0,
-                        help="If the input coordinates are cartesian in range [0, L], this will tell the program "
-                             "where the center is (i.e. specify L/2)")
+    parser.add_argument("--max_dist", type=float, required=True,
+                        help="The maximal distance of objects from the origin.")
+    parser.add_argument("--box_origin", type=float, default=0,
+                        help="Coordinate location of the box center (only cartesian coords) "
+                             "(e.g. if box coordinates from [0,L] -> specify L/2)")
     parser.add_argument("--hubble_param", type=float, default=1,
                         help="If the input is in Mpc/h, use this parameter to transform coordinates to Mpc. Set to 1"
                              "if units are in Mpc")

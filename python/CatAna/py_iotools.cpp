@@ -99,7 +99,9 @@ PYBIND11_PLUGIN(iotools) {
             .def(py::init<double>(), py::arg("R0"));
     py::class_<GenericRadialWindowFunctionFilter<double>>(m, "GenericRadialWindowFunctionFilter", filter,
             "Radial WindowFunction Filter")
-            .def(py::init<std::function<double(double)>>(), py::arg("function"));
+            .def(py::init<std::function<double(double)>>(), py::arg("function"))
+            .def(py::init<std::function<double(double)>, size_t, double, double>(),
+                    py::arg("function"), py::arg("interpolation_points"), py::arg("min"), py::arg("max"));;
     py::class_<AngularMaskFilter>(m, "AngularMaskFilter", filter,
             "Healpix Angular Mask Filter. 1->keep, 0->delete")
             .def(py::init<std::string>(), py::arg("mask_file"));
