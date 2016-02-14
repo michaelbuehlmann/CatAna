@@ -6,6 +6,11 @@
 #include <catana/types.hpp>
 #include "gtest/gtest.h"
 
+#ifndef ALL_TESTS
+#include<random>
+std::mt19937 rng;
+#endif //ALL_TESTS
+
 TEST(RawData, IO) {
     ObjectContainer oc;
     oc.push_back(object_from_spherical_position(1., 1. , 3.));
@@ -43,4 +48,34 @@ TEST(RawData, IO) {
         EXPECT_FLOAT_EQ(oc[i].p.theta, oc2[i].p.theta) << "at i=="<<i;
         EXPECT_FLOAT_EQ(oc[i].p.phi, oc2[i].p.phi) << "at i=="<<i;
     }
+}
+
+
+TEST(RawData, IOLarge) {
+    ObjectContainer oc;
+    for(size_t i=0; i<(1<<12); ++i){
+        oc.push_back(object_from_spherical_position(1000./i, 1., 2.));
+    }
+
+    std::string filename = "RawIOLargeTest.dat";
+    using record_t = SphericalRecord<float>;
+    long long int n;
+
+    // Writing
+    RawBinarySink<record_t> sink(filename, false);
+    n = sink.write(oc.begin(), oc.size());
+
+
+    // Reading
+    Object buffer[100];
+    size_t read = 0;
+    n = 0;
+    RawBinarySource<record_t> source(filename, false);
+
+    do {
+        read += n;
+        n = source.read(buffer, 100);
+    } while(n != -1);
+
+    EXPECT_EQ(oc.size(), read);
 }

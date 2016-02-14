@@ -11,16 +11,16 @@ import PyCosmo
 # TODO: more generic to add sources/sinks/filters
 
 buffer_size = 100000  # Uses ca 500MB memory (measured)
-function_interpolation_points = 100000
+function_interpolation_points = 10000
 valid_filters = ["tophat", "gauss", "CMASS", "AngMask"]
 
 class GenericRedshiftWindowFunction(object):
     """
     Inherit from this class if the window function is defined in redshift space. Override the window_function
+    It is assumed that the function __call__ is called with radial distances measured in Mpc (NOT Mpc/h)
     """
-    def __init__(self, coord_hubble_param, **cosmo_kwargs):
+    def __init__(self, **cosmo_kwargs):
         """
-        :param coord_hubble_param: Defines the conversion to input distances (Mpc/h) to distances measured in Mpc
         :param cosmo_kwargs: These arguments are passed to the PyCosmo .set function
         """
         cosmo = PyCosmo.Cosmo()
@@ -36,21 +36,22 @@ class GenericRedshiftWindowFunction(object):
         cosmo.set(**cosmo_kwargs)
         redshift2distance = lambda z: cosmo.background.dist_rad_a(1./(1+z))
         test_z = np.linspace(0,10,function_interpolation_points, endpoint=True)
-        test_r = redshift2distance(test_z)*coord_hubble_param
+        test_r = redshift2distance(test_z)
         self.redshift2distance = lambda z: sinterpol.interp1d(test_z, test_r)(z)
         self.distance2redshift = lambda r: sinterpol.interp1d(test_r, test_z)(r)
 
     def window_function(self, z):
         if hasattr(z, "__len__"): return np.ones_like(z)
         else: return 1.
-    def __call__(self, r):
+
+    def __call__(self, r):  # Note: r in units Mpc
         z = self.distance2redshift(r)
         return self.window_function(z)
 
 
 class CMASSWindowFunction(GenericRedshiftWindowFunction):
-    def __init__(self, coord_hubble_param, **cosmo_kwargs):
-        super(CMASSWindowFunction, self).__init__(coord_hubble_param, **cosmo_kwargs)
+    def __init__(self, **cosmo_kwargs):
+        super(CMASSWindowFunction, self).__init__(**cosmo_kwargs)
         self.p = np.poly1d([-850.25811069,1038.88332489,-288.1960283])
     def window_function(self, z):
         if not hasattr(z, "__len__"):
@@ -108,7 +109,7 @@ class ValidateFile(argparse.Action):
 class Extractor(object):
     def __init__(self, infile, outfile, intype, max_dist, intable=None, outtable=None, precision='float',
                  incoord='cartesian', outcoord='cartesian', hubble_param=1., box_origin=0.,
-                 filter = [], subsample_size=None, verbose=True):
+                 filter = [], subsample_size=None, temp_file=None, verbose=True):
 
         #  Prepare Sink
         if outcoord == 'cartesian':
@@ -159,7 +160,11 @@ class Extractor(object):
             raise ValueError("Unknown input file type")
 
         # Prepare filters
-        self.filter_stream = io.FilterStream(self.source, self.sink, buffer_size, verbose)
+        if subsample_size is None:
+            self.filter_stream = io.FilterStream(self.source, self.sink, buffer_size, verbose)
+        else:
+            assert(os.path.isdir(os.path.dirname(temp_file)))
+            self.filter_stream = io.FilterStream(self.source, self.sink, buffer_size, subsample_size, temp_file, verbose)
 
         # Need to store filter instances, otherwise they are killed and FilterStream contains pointers
         # pointing to anything.
@@ -169,18 +174,19 @@ class Extractor(object):
 
         if not hasattr(filter, '__len__'):
             filter = [filter]
-        filter.insert(0, Filter('tophat', max_dist))  # Assert that no object is further away than max_dist.
+        filter.insert(0, Filter('tophat', max_dist/hubble_param))  # Assert that no object is further away than max_dist.
+        print("Filters:", filter)
         for f in filter:
             assert(isinstance(f, Filter))
             if f.filter == 'tophat':
-                print("Added tophat window function with radius {}".format(f.option))
+                print("Added tophat window function with radius {}".format(f.option/hubble_param))
                 self.filter_instances.append(io.TophatRadialWindowFunctionFilter(f.option))
             if f.filter == 'gauss':
-                print("Added gaussian window function with scale {}".format(f.option))
+                print("Added gaussian window function with scale {}".format(f.option/hubble_param))
                 self.filter_instances.append(io.GaussianRadialWindowFunctionFilter(f.option))
             if f.filter == 'CMASS':
-                print("Added CMASS window function. Coordinates -> Mpc: /({})".format(hubble_param))
-                wfct = CMASSWindowFunction(hubble_param)
+                print("Added CMASS window function.")
+                wfct = CMASSWindowFunction()
                 self.filter_instances.append(io.GenericRadialWindowFunctionFilter(
                         lambda r: wfct(r), function_interpolation_points, 0, max_dist))
             if f.filter == 'AngMask':
@@ -189,9 +195,6 @@ class Extractor(object):
 
         for f in self.filter_instances:
             self.filter_stream.add_filter(f)
-
-        if subsample_size is not None:
-            raise NotImplementedError
 
         self.initialized = True
 
@@ -202,7 +205,6 @@ class Extractor(object):
             self.initialized = False
         else:
             raise Exception("Extractor has already run. Please reinitialize this class.")
-
 
 
 if __name__ == "__main__":
@@ -233,13 +235,18 @@ if __name__ == "__main__":
                         help="If the input is in Mpc/h, use this parameter to transform coordinates to Mpc. Set to 1"
                              "if units are in Mpc")
     parser.add_argument("--filter", nargs='*', action=ValidateFilter,
-                        metavar="filtername {} [scale]".format(valid_filters),
-                        help="Filters to apply to data")
+                        metavar="name [scale/option]".format(valid_filters),
+                        help="Filters to apply to data. Scales in input coordinates (eg Mpc/h). Valid filters: {}".format(valid_filters))
     parser.add_argument("--subsample_size", type=int,
                         help="Size of the output catalog which is randomly subsampled after filtering")
+    parser.add_argument("--temp_file", type=str,
+                        help="Path to the temporary file which will be created if subsample_size is set")
     parser.add_argument("--verbose", action='store_true')
-
     args = parser.parse_args()
+
+    if args.subsample_size is not None:
+        assert args.temp_file is not None, "Need to specify path to a valid temporary file, if subsample_size is set."
+
     kwargs = vars(args)
     print(kwargs)
 

@@ -110,6 +110,9 @@ PYBIND11_PLUGIN(iotools) {
     py::class_<FilterStream>(m, "FilterStream", "A Stream which needs a source and a sink. Can add Filters")
             .def(py::init<Source*, Sink*, size_t, bool>(),
                     py::arg("source"), py::arg("sink"), py::arg("buffer_size")=1000000, py::arg("verbose")=true)
+            .def(py::init<Source*, Sink*, size_t, size_t, std::string, bool>(),
+                    py::arg("source"), py::arg("sink"), py::arg("buffer_size"), py::arg("subset_size"),
+                    py::arg("temporary_filename"), py::arg("verbose")=true)
             .def("add_filter", &FilterStream::add_filter, "Add a Filter to process", py::arg("filter"))
             .def("run", &FilterStream::run, "Run the pipeline");
     return m.ptr();

@@ -42,7 +42,7 @@ public:
         return new_size;
     }
 
-    size_t operator()(Object* begin, Object* end){
+    virtual size_t operator()(Object* begin, Object* end){
         Object* current = begin;
         while(current != end){
             if(filter(*current)){  // object is accepted
@@ -67,11 +67,11 @@ public:
             std::function<FLOAT_TYPE(FLOAT_TYPE)> window_function,
             size_t interpolation_points, double min, double max
     )
-            : window_function(window_function), random_dist(0, 1)
+            : random_dist(0, 1)
     {
         auto interp_p = new FunctionInterpolator(window_function, interpolation_points, min, max);
         wfct_interp.reset(interp_p);
-        window_function = [=](FLOAT_TYPE r){ return wfct_interp->operator()(r);};
+        this->window_function = [=](FLOAT_TYPE r){ return wfct_interp->operator()(r);};
     }
 
     bool filter(Object& object) override {
