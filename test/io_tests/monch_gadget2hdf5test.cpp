@@ -15,8 +15,8 @@ int main() {
                                             "test", 1, 0, true, true);
 
     FilterStream fs(&source, &sink, 1000000, true);
-    TophatRadialWindowFunctionFilter<float> tophat(2500/0.7);
-    GaussianRadialWindowFunctionFilter<float> gauss(1000/0.7);
+    TophatRadialWindowFunctionFilter tophat(2500/0.7);
+    GaussianRadialWindowFunctionFilter gauss(1000/0.7);
 
     fs.add_filter(&tophat);
     fs.add_filter(&gauss);

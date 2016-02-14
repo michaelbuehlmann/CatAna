@@ -14,6 +14,11 @@
 #include "io_tools/sources/read_gadget.hpp"
 #include "io_tools/sources/read_rawbinary.hpp"
 #include "io_tools/sinks/write_rawbinary.hpp"
+
+#include "io_tools/Filter.hpp"
+#include "io_tools/filters/angular_filters.hpp"
+#include "io_tools/filters/radial_filters.hpp"
+
 #include "io_tools/FilterStream.hpp"
 
 #endif //CATANA_APP_IO_TOOLS_HPP

@@ -12,6 +12,7 @@
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>
+
 namespace py = pybind11;
 
 
@@ -91,13 +92,13 @@ PYBIND11_PLUGIN(iotools) {
                     py::arg("new_file")=true, py::arg("verbose")=true);
 
     // Add Filter classes here
-    py::class_<TophatRadialWindowFunctionFilter<double>>(m, "TophatRadialWindowFunctionFilter", filter,
+    py::class_<TophatRadialWindowFunctionFilter>(m, "TophatRadialWindowFunctionFilter", filter,
             "TopHat Radial WindowFunction Filter")
             .def(py::init<double>(), py::arg("R0"));
-    py::class_<GaussianRadialWindowFunctionFilter<double>>(m, "GaussianRadialWindowFunctionFilter", filter,
+    py::class_<GaussianRadialWindowFunctionFilter>(m, "GaussianRadialWindowFunctionFilter", filter,
             "Gaussian Radial WindowFunction Filter")
             .def(py::init<double>(), py::arg("R0"));
-    py::class_<GenericRadialWindowFunctionFilter<double>>(m, "GenericRadialWindowFunctionFilter", filter,
+    py::class_<GenericRadialWindowFunctionFilter>(m, "GenericRadialWindowFunctionFilter", filter,
             "Radial WindowFunction Filter")
             .def(py::init<std::function<double(double)>>(), py::arg("function"))
             .def(py::init<std::function<double(double)>, size_t, double, double>(),

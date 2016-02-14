@@ -188,7 +188,7 @@ class Extractor(object):
                 print("Added CMASS window function.")
                 wfct = CMASSWindowFunction()
                 self.filter_instances.append(io.GenericRadialWindowFunctionFilter(
-                        lambda r: wfct(r), function_interpolation_points, 0, max_dist))
+                        lambda r: wfct(r), function_interpolation_points, 0, max_dist/hubble_param))
             if f.filter == 'AngMask':
                 print("Added Angular Mask from file {}".format(f.option))
                 self.filter_instances.append(io.AngularMaskFilter(f.option))
@@ -227,7 +227,8 @@ if __name__ == "__main__":
     parser.add_argument("--outcoord", type=str, choices=["cartesian", "spherical"], default="cartesian",
                         help="Coordinate system used for the output file")
     parser.add_argument("--max_dist", type=float, required=True,
-                        help="The maximal distance of objects from the origin.")
+                        help="The maximal distance of objects from the origin, in input coordinates."
+                             "Automatically adds tophat filter to ensure.")
     parser.add_argument("--box_origin", type=float, default=0,
                         help="Coordinate location of the box center (only cartesian coords) "
                              "(e.g. if box coordinates from [0,L] -> specify L/2)")

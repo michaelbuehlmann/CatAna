@@ -3,13 +3,15 @@
 //
 
 #include <catana/types.hpp>
-#include <catana/io_tools/filters.hpp>
+#include <catana/io_tools/Filter.hpp>
 #include <catana/io_tools/FilterStream.hpp>
 
 #include <gtest/gtest.h>
 
 // Load data directory
 #include "config.hpp"
+#include <catana/iotools.hpp>
+
 const std::string test_data_dir(TEST_DATA_DIR);
 
 #ifndef ALL_TESTS
@@ -31,7 +33,7 @@ TEST(FilterStream, SmallTophat)
     ObjectContainerSink sink(object_container_result);
 
     FilterStream filter_stream(&source, &sink, 10, false);
-    TophatRadialWindowFunctionFilter<float> filter(1.);
+    TophatRadialWindowFunctionFilter filter(1.);
     filter_stream.add_filter(&filter);
     filter_stream.run();
 
@@ -46,7 +48,7 @@ TEST(FilterStream, LargeTophat)
     ObjectContainer object_container;
     int N = 1<<11;
     for(int i=0; i<N; ++i){
-        object_container.push_back(object_from_spherical_position<float>((2.f*i)/N, 0.f, 0.f));
+        object_container.push_back(object_from_spherical_position((2.f*i)/N, 0.f, 0.f));
     }
 
     ObjectContainer object_container_result;
@@ -55,7 +57,7 @@ TEST(FilterStream, LargeTophat)
     ObjectContainerSink sink(object_container_result);
 
     FilterStream filter_stream(&source, &sink, 100, false);
-    TophatRadialWindowFunctionFilter<float> filter(1.);
+    TophatRadialWindowFunctionFilter filter(1.);
     filter_stream.add_filter(&filter);
     filter_stream.run();
 

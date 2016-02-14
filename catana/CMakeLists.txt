@@ -13,15 +13,17 @@ set(iotools_SOURCES
         ${basictypes_SOURCES}
         include/catana/tools/string_format.hpp
         include/catana/tools/gsl_function_interpolate.hpp src/tools/gsl_function_interpolate.cpp
-        include/catana/io_tools/record_types.hpp
+        include/catana/io_tools/record_types.hpp src/io_tools/record_type.cpp
         include/catana/io_tools/Source.hpp include/catana/io_tools/Sink.hpp
         include/catana/io_tools/sources/read_gadget.hpp src/io_tools/sources/read_gadget.cpp
         include/catana/io_tools/sources/read_hdf5.hpp src/io_tools/sources/read_hdf5.cpp
         include/catana/io_tools/sinks/write_hdf5.hpp src/io_tools/sinks/write_hdf5.cpp
         include/catana/io_tools/sinks/write_rawbinary.hpp src/io_tools/sinks/write_rawbinary.cpp
         include/catana/io_tools/sources/read_rawbinary.hpp src/io_tools/sources/read_rawbinary.cpp
-        src/io_tools/record_type.cpp include/catana/io_tools/filters.hpp
-        include/catana/io_tools/FilterStream.hpp)
+        include/catana/io_tools/Filter.hpp src/io_tools/Filter.cpp
+        include/catana/io_tools/filters/radial_filters.hpp src/io_tools/filters/radial_filters.cpp
+        include/catana/io_tools/filters/angular_filters.hpp src/io_tools/filters/angular_filters.cpp
+        include/catana/io_tools/FilterStream.hpp src/io_tools/FilterStream.cpp)
 
 set(window_SOURCES
         include/catana/Window.hpp src/Window.cpp

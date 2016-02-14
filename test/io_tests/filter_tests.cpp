@@ -6,10 +6,12 @@
 #include <random>
 #include <cmath>
 #include <catana/types.hpp>
-#include "catana/io_tools/filters.hpp"
+#include "catana/io_tools/Filter.hpp"
 
 // Load data directory
 #include "config.hpp"
+#include <catana/iotools.hpp>
+
 const std::string test_data_dir(TEST_DATA_DIR);
 
 
@@ -23,7 +25,7 @@ TEST(Filter, TopHat) {
     object_container.push_back(Object(0.5,0.5,0.5));
     ASSERT_EQ(4, object_container.size());
 
-    TophatRadialWindowFunctionFilter<float> filter(1.);
+    TophatRadialWindowFunctionFilter filter(1.);
     filter(object_container);
     EXPECT_EQ(2, object_container.size());
     EXPECT_FLOAT_EQ(0.8, object_container[0].r);
@@ -42,14 +44,14 @@ TEST(Filter, Gaussian) {
     }
     ASSERT_EQ(N_exp, object_container.size()) << "Wrong number of objects generated";
 
-    TophatRadialWindowFunctionFilter<float> filter_tophat(1000.f);
+    TophatRadialWindowFunctionFilter filter_tophat(1000.);
     filter_tophat(object_container);
 
     N_exp *= 0.5235987756;
     EXPECT_NEAR(object_container.size(), N_exp, 0.1*N_exp);
 
     float R0(100.f);
-    GaussianRadialWindowFunctionFilter<float> filter_gauss(R0);
+    GaussianRadialWindowFunctionFilter filter_gauss(R0);
     filter_gauss(object_container);
 
     N_exp *=0.001329340388;
@@ -68,14 +70,14 @@ TEST(Filter, GaussianInterpolated) {
     }
     ASSERT_EQ(N_exp, object_container.size()) << "Wrong number of objects generated";
 
-    TophatRadialWindowFunctionFilter<float> filter_tophat(1000.f);
+    TophatRadialWindowFunctionFilter filter_tophat(1000.f);
     filter_tophat(object_container);
 
     N_exp *= 0.5235987756;
     EXPECT_NEAR(object_container.size(), N_exp, 0.1*N_exp);
 
     auto window_function = [](double r){return std::exp(-std::pow(r/100., 2));};
-    GenericRadialWindowFunctionFilter<float> filter_gauss(window_function, 10000, 0, 1000.);
+    GenericRadialWindowFunctionFilter filter_gauss(window_function, 10000, 0, 1000.);
     filter_gauss(object_container);
 
     N_exp *=0.001329340388;
