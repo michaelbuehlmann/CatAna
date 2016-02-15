@@ -1,6 +1,8 @@
 from __future__ import division, print_function, absolute_import
 
 import CatAna.iotools as io
+io.init_random()
+
 import argparse
 import os
 import collections
@@ -108,40 +110,53 @@ class ValidateFile(argparse.Action):
 
 class Extractor(object):
     def __init__(self, infile, outfile, intype, max_dist, intable=None, outtable=None, precision='float',
-                 incoord='cartesian', outcoord='cartesian', hubble_param=1., box_origin=0.,
-                 filter = [], subsample_size=None, temp_file=None, verbose=True):
+                 incoord='cartesian', incoord_unit='Mpc', outcoord='cartesian', outcoord_unit='Mpc',
+                 hubble_param=1., box_origin=0., filter = [], subsample_size=None, temp_file=None, verbose=True):
 
+        #
         #  Prepare Sink
+        assert outcoord_unit in ['Mpc', 'Mpc/h']
+        if outcoord_unit == 'Mpc':
+            output_hubble_param = 1.
+        else:
+            output_hubble_param = hubble_param
+
         if outcoord == 'cartesian':
             if outtable is None:
                 outtable = 'particle_pos_cartesian'
             if precision == 'float':
-                self.sink = io.HDF5Sink_cartesian_float(outfile, outtable, hubble_param, 0, True, verbose)
+                self.sink = io.HDF5Sink_cartesian_float(outfile, outtable, output_hubble_param, 0, True, verbose)
             elif precision == 'double':
-                self.sink = io.HDF5Sink_cartesian_double(outfile, outtable, hubble_param, 0, True, verbose)
+                self.sink = io.HDF5Sink_cartesian_double(outfile, outtable, output_hubble_param, 0, True, verbose)
             else:
                 raise ValueError("unknown precision")
         elif outcoord == 'spherical':
             if outtable is None:
                 outtable = 'particle_pos_spherical'
             if precision == 'float':
-                self.sink = io.HDF5Sink_spherical_float(outfile, outtable, hubble_param, 0, True, verbose)
+                self.sink = io.HDF5Sink_spherical_float(outfile, outtable, output_hubble_param, 0, True, verbose)
             elif precision == 'double':
-                self.sink = io.HDF5Sink_spherical_double(outfile, outtable, hubble_param, 0, True, verbose)
+                self.sink = io.HDF5Sink_spherical_double(outfile, outtable, output_hubble_param, 0, True, verbose)
             else:
                 raise ValueError("unknown precision")
         else:
             raise ValueError("unknown coordinate system")
 
+        #
         #  Prepare Source
+        assert incoord_unit in ['Mpc', 'Mpc/h']
+        if incoord_unit == 'Mpc':
+            input_hubble_param = 1.
+        else:
+            input_hubble_param = hubble_param
         if intype == 'HDF5':
             if incoord=='cartesian':
                 if intable is None:
                     intable = 'particle_pos_cartesian'
                 if precision=='float':
-                    self.source = io.HDF5Source_cartesian_float(infile, intable, hubble_param, box_origin*2, verbose)
+                    self.source = io.HDF5Source_cartesian_float(infile, intable, input_hubble_param, box_origin*2, verbose)
                 elif precision=='double':
-                    self.source = io.HDF5Source_cartesian_double(infile, intable, hubble_param, box_origin*2, verbose)
+                    self.source = io.HDF5Source_cartesian_double(infile, intable, input_hubble_param, box_origin*2, verbose)
                 else:
                     raise ValueError("unknown precision")
 
@@ -149,9 +164,9 @@ class Extractor(object):
                 if intable is None:
                     intable = 'particle_pos_spherical'
                 if precision=='float':
-                    self.source = io.HDF5Source_spherical_float(infile, intable, hubble_param, box_origin*2, verbose)
+                    self.source = io.HDF5Source_spherical_float(infile, intable, input_hubble_param, box_origin*2, verbose)
                 elif precision=='double':
-                    self.source = io.HDF5Source_spherical_double(infile, intable, hubble_param, box_origin*2, verbose)
+                    self.source = io.HDF5Source_spherical_double(infile, intable, input_hubble_param, box_origin*2, verbose)
                 else:
                     raise ValueError("unknown precision")
         elif intype == 'Gadget':
@@ -201,10 +216,11 @@ class Extractor(object):
     def run(self):
         if self.initialized:
             n = self.filter_stream.run()
+            print("Done :). Objects remained: {}".format(n))
             del self.filter_stream  # This closes the opened files
             self.initialized = False
         else:
-            raise Exception("Extractor has already run. Please reinitialize this class.")
+            raise Exception("Extractor has already run. Please reinitialize this class first.")
 
 
 if __name__ == "__main__":
@@ -224,15 +240,17 @@ if __name__ == "__main__":
                         help="Data precision in input file (only HDF5)")
     parser.add_argument("--incoord", type=str, choices=["cartesian", "spherical"], default="cartesian",
                         help="Coordinate system used in the input file (only HDF5)")
+    parser.add_argument("--incoord_unit", type=str, choices=["Mpc", "Mpc/h"], default="Mpc")
     parser.add_argument("--outcoord", type=str, choices=["cartesian", "spherical"], default="cartesian",
                         help="Coordinate system used for the output file")
+    parser.add_argument("--outcoord_unit", type=str, choices=["Mpc", "Mpc/h"], default="Mpc")
     parser.add_argument("--max_dist", type=float, required=True,
                         help="The maximal distance of objects from the origin, in input coordinates."
                              "Automatically adds tophat filter to ensure.")
     parser.add_argument("--box_origin", type=float, default=0,
                         help="Coordinate location of the box center (only cartesian coords) "
                              "(e.g. if box coordinates from [0,L] -> specify L/2)")
-    parser.add_argument("--hubble_param", type=float, default=1,
+    parser.add_argument("--hubble_param", type=float, default=0.7,
                         help="If the input is in Mpc/h, use this parameter to transform coordinates to Mpc. Set to 1"
                              "if units are in Mpc")
     parser.add_argument("--filter", nargs='*', action=ValidateFilter,

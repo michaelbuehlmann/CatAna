@@ -6,6 +6,8 @@
 #define CATANA_APP_DECOMP_OBJECTS_HPP
 
 #include <Eigen/Dense>
+#include <string>
+#include <ostream>
 //! Return Type of SFB decomposition methods
 /*
  * k_ln contains the k at which C_l(k,k) is evaluated
@@ -14,9 +16,11 @@
  *  index 1: 0<n<nmax)
  */
 struct KClkk {
-    KClkk(unsigned short lmax, unsigned short nmax, double Rmax);
+    KClkk(unsigned short lmax, unsigned short nmax, double rmax);
     Eigen::ArrayXXd k_ln;
     Eigen::ArrayXXd c_ln;
+    //! Save k_ln and c_ln to files '{filename_base}.(k_ln/c_ln) respectively. Rows are l, columns are n.
+    void savetxt(std::string filename_base);
 };
 
 
@@ -26,5 +30,7 @@ struct KPkk {
     Eigen::ArrayXd pkk;
     Eigen::Array<unsigned int, Eigen::Dynamic, 1> bin_count;
     Eigen::ArrayXd k_binedges;
+    //! k, pkk to file '{filename_base}.pkk' (each row of format (k_i, pkk_i))
+    void savetxt(std::string filename_base);
 };
 #endif //CATANA_APP_DECOMP_OBJECTS_HPP

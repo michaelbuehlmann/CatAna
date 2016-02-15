@@ -8,6 +8,7 @@
 #include "../Filter.hpp"
 #include <functional>
 #include <catana/tools/gsl_function_interpolate.hpp>
+#include <memory>
 
 //! A generic radial filter. Window functionreturns the probability of object beeing accepted.
 class GenericRadialWindowFunctionFilter : public Filter{
@@ -15,7 +16,7 @@ public:
     GenericRadialWindowFunctionFilter(std::function<double(double)> window_function);
     GenericRadialWindowFunctionFilter(
             std::function<double(double)> window_function,
-            __darwin_size_t interpolation_points, double min, double max
+            size_t interpolation_points, double min, double max
     );
     bool filter(Object& object) override;
 private:

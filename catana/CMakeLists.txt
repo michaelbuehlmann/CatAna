@@ -6,23 +6,38 @@ set(besseltools_SOURCES
         include/catana/tools/gsl_function_wrapper.hpp)
 
 set(basictypes_SOURCES
-        include/catana/tools/Object.hpp include/catana/tools/ObjectContainer.hpp
-        include/catana/tools/return_types.hpp src/tools/return_types.cpp src/tools/ObjectContainer.cpp)
+        include/catana/tools/Object.hpp
+        include/catana/tools/ObjectContainer.hpp src/tools/ObjectContainer.cpp)
+
+set(returntypes_SOURCES
+        include/catana/tools/return_types.hpp src/tools/return_types.cpp)
+
+set(iotools_sources_SOURCES
+        include/catana/io_tools/Source.hpp
+        include/catana/io_tools/sources/read_gadget.hpp src/io_tools/sources/read_gadget.cpp
+        include/catana/io_tools/sources/read_hdf5.hpp src/io_tools/sources/read_hdf5.cpp
+        include/catana/io_tools/sources/read_rawbinary.hpp src/io_tools/sources/read_rawbinary.cpp)
+
+set(iotools_sinks_SOURCES
+        include/catana/io_tools/Sink.hpp
+        include/catana/io_tools/sinks/write_hdf5.hpp src/io_tools/sinks/write_hdf5.cpp
+        include/catana/io_tools/sinks/write_rawbinary.hpp src/io_tools/sinks/write_rawbinary.cpp
+        )
+
+set(iotools_filters_SOURCES
+        include/catana/io_tools/Filter.hpp src/io_tools/Filter.cpp
+        include/catana/io_tools/filters/radial_filters.hpp src/io_tools/filters/radial_filters.cpp
+        include/catana/io_tools/filters/angular_filters.hpp src/io_tools/filters/angular_filters.cpp
+        )
 
 set(iotools_SOURCES
         ${basictypes_SOURCES}
         include/catana/tools/string_format.hpp
         include/catana/tools/gsl_function_interpolate.hpp src/tools/gsl_function_interpolate.cpp
         include/catana/io_tools/record_types.hpp src/io_tools/record_type.cpp
-        include/catana/io_tools/Source.hpp include/catana/io_tools/Sink.hpp
-        include/catana/io_tools/sources/read_gadget.hpp src/io_tools/sources/read_gadget.cpp
-        include/catana/io_tools/sources/read_hdf5.hpp src/io_tools/sources/read_hdf5.cpp
-        include/catana/io_tools/sinks/write_hdf5.hpp src/io_tools/sinks/write_hdf5.cpp
-        include/catana/io_tools/sinks/write_rawbinary.hpp src/io_tools/sinks/write_rawbinary.cpp
-        include/catana/io_tools/sources/read_rawbinary.hpp src/io_tools/sources/read_rawbinary.cpp
-        include/catana/io_tools/Filter.hpp src/io_tools/Filter.cpp
-        include/catana/io_tools/filters/radial_filters.hpp src/io_tools/filters/radial_filters.cpp
-        include/catana/io_tools/filters/angular_filters.hpp src/io_tools/filters/angular_filters.cpp
+        ${iotools_sources_SOURCES}
+        ${iotools_sinks_SOURCES}
+        ${iotools_filters_SOURCES}
         include/catana/io_tools/FilterStream.hpp src/io_tools/FilterStream.cpp)
 
 set(window_SOURCES
@@ -35,6 +50,7 @@ set(decomposition_SOURCES
 
 set(catalog_SOURCES
         ${basictypes_SOURCES}
+        ${returntypes_SOURCES}
         src/Catalog.cpp include/catana/Catalog.hpp
         ${window_SOURCES} ${decomposition_SOURCES})
 
@@ -53,8 +69,8 @@ add_library(catana STATIC
         ${decomposition_SOURCES})
 
 # LINK TOGETHER
-target_link_libraries(iotools ${HEALPIX_LIB} hdf5 hdf5_hl boost_system boost_filesystem gsl ${CBLAS_LIBRARIES})
 target_link_libraries(besseltools gsl ${CBLAS_LIBRARIES})
+target_link_libraries(iotools ${HEALPIX_LIB} hdf5 hdf5_hl boost_system boost_filesystem gsl ${CBLAS_LIBRARIES})
 target_link_libraries(catana besseltools iotools fftw3 ${HEALPIX_LIB})
 add_dependencies(catana eigen)
 add_dependencies(iotools eigen)

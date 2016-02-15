@@ -59,7 +59,7 @@ struct SphericalRecord {
     FLOAT_TYPE pos_phi;
     SphericalRecord() : pos_r(0), pos_theta(0), pos_phi(0) {}
     SphericalRecord(const Object& object, const double& box_size, const double& hubble_param)
-            : pos_r(object.r), pos_theta(object.p.theta), pos_phi(object.p.phi) {}
+            : pos_r(object.r*hubble_param), pos_theta(object.p.theta), pos_phi(object.p.phi) {}
     Object object(const double& box_size, const double& hubble_param){
         return object_from_spherical_position(pos_r, pos_theta, pos_phi, hubble_param);
     }

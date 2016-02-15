@@ -8,6 +8,7 @@
 #include <functional>
 #include <gsl/gsl_interp.h>
 
+// TODO: fix default GSL errorhandler (i.e. force interpolation to die outside of valid range)
 
 class FunctionInterpolator{
 public:

@@ -2,19 +2,21 @@
 # GOOGLE TEST LIBRARY
 # #######################
 project(catana_tests)
+
+# Moving some test data for IO Tests
 file(COPY test_data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-#add_definitions(-DTEST_DATA_DIR="\\"${CMAKE_CURRENT_BINARY_DIR}/test_data/\\"")
 configure_file(config.hpp.in ${CMAKE_CURRENT_BINARY_DIR}/include/config.hpp)
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
-
 
 add_subdirectory(${GOOGLETEST_DIR} ${CMAKE_CURRENT_BINARY_DIR}/googletest)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 add_subdirectory(besseltools_tests)
+add_subdirectory(tools_tests)
 add_subdirectory(field_tests)
 add_subdirectory(io_tests)
 add_subdirectory(object_types_tests)
+
 
 # ALL TESTS:
 file(GLOB TEST_SOURCES

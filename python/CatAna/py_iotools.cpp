@@ -6,6 +6,8 @@
 #include <catana/iotools.hpp>
 
 #include <tuple>
+#include <array>
+#include <algorithm>
 #include <string>
 #include <functional>
 #include <random>
@@ -15,19 +17,31 @@
 
 namespace py = pybind11;
 
-
 // Which records will we use for HDF5 files?
 using record_cf = CartesianRecord<float>;
 using record_cd = CartesianRecord<double>;
 using record_sf = SphericalRecord<float>;
 using record_sd = SphericalRecord<double>;
+
 // Provide a random number generator
+std::random_device rand_dev;
 std::mt19937 rng;
 
 
 PYBIND11_PLUGIN(iotools) {
     py::module m("iotools", "python binding for in/output of particle positions (part of CatAna)");
 
+    // Initialization of random numbers. Once with given seed, once random seed
+    m.def("init_random", [&](unsigned int seed){
+        rng.seed(seed); },
+        py::arg("seed"));
+    m.def("init_random", [&](){
+        std::array<int, 624> seed_data;
+        std::generate(seed_data.begin(), seed_data.end(), std::ref(rand_dev));
+        std::seed_seq seq(std::begin(seed_data), std::end(seed_data));
+        rng.seed(seq); });
+
+    // Binding for the "Object" class, with cartesian and spherical output methods
     py::class_<Object>(m, "Object")
             .def(py::init<>())
             .def(py::init<double, double, double>())

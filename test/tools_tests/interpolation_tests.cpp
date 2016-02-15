@@ -6,7 +6,6 @@
 #include <catana/tools/gsl_function_interpolate.hpp>
 #include <cmath>
 
-
 TEST(Interpolation, Basic){
     auto fct = [](double x){return std::sin(x);};
     FunctionInterpolator fct_interp(fct, 10000, 0, 10);
@@ -16,6 +15,6 @@ TEST(Interpolation, Basic){
         EXPECT_FLOAT_EQ(fct(x), fct_interp(x)) << "at x=" << x;
     }
 
-    ASSERT_DEATH(double t = fct_interp(10.1), "");
+    ASSERT_DEATH(double t = fct_interp(10.5), "");
     ASSERT_DEATH(double t = fct_interp(-0.1), "");
 }

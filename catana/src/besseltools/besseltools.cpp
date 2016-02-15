@@ -2,8 +2,8 @@
 // Created by Michael Bühlmann on 01/11/15.
 //
 
-#include "catana/besseltools.hpp"
-#include "catana/tools/gsl_function_wrapper.hpp"
+#include <catana/besseltools.hpp>
+#include <catana/tools/gsl_function_wrapper.hpp>
 #include <utility>
 #include <boost/math/special_functions/bessel.hpp>
 #include <iostream>

@@ -12,7 +12,7 @@ GenericRadialWindowFunctionFilter::GenericRadialWindowFunctionFilter(std::functi
 
 GenericRadialWindowFunctionFilter::GenericRadialWindowFunctionFilter(
         std::function<double(double)> window_function,
-        __darwin_size_t interpolation_points, double min, double max)
+        size_t interpolation_points, double min, double max)
         : random_dist(0, 1)
 {
     auto interp_p = new FunctionInterpolator(window_function, interpolation_points, min, max);

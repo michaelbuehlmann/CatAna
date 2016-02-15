@@ -1,0 +1,7 @@
+add_executable(interpolation_tests interpolation_tests.cpp)
+target_link_libraries(interpolation_tests gtest gtest_main)
+target_link_libraries(interpolation_tests iotools)
+
+add_executable(return_types_test return_types_test.cpp)
+target_link_libraries(return_types_test gtest gtest_main)
+target_link_libraries(return_types_test catana)
