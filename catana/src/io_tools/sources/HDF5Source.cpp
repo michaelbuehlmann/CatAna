@@ -2,7 +2,7 @@
 // Created by Michael Bühlmann on 13/02/16.
 //
 
-#include <catana/io_tools/sources/read_hdf5.hpp>
+#include <catana/io_tools/sources/HDF5Source.hpp>
 
 #include <hdf5.h>
 #include <hdf5_hl.h>

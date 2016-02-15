@@ -8,8 +8,8 @@
 #include "Filter.hpp"
 #include "Source.hpp"
 #include "Sink.hpp"
-#include "sinks/write_rawbinary.hpp"
-#include "sources/read_rawbinary.hpp"
+#include "sinks/RawBinarySink.hpp"
+#include "sources/RawBinarySource.hpp"
 #include "../types.hpp"
 
 #include <memory>

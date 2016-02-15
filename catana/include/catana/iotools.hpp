@@ -9,11 +9,13 @@
 #include "io_tools/Source.hpp"
 #include "io_tools/Sink.hpp"
 
-#include "io_tools/sources/read_hdf5.hpp"
-#include "io_tools/sinks/write_hdf5.hpp"
-#include "io_tools/sources/read_gadget.hpp"
-#include "io_tools/sources/read_rawbinary.hpp"
-#include "io_tools/sinks/write_rawbinary.hpp"
+#include "io_tools/sources/HDF5Source.hpp"
+#include "io_tools/sources/GadgetSource.hpp"
+#include "io_tools/sources/RawBinarySource.hpp"
+
+#include "io_tools/sinks/ObjectContainerSink.hpp"
+#include "io_tools/sinks/HDF5Sink.hpp"
+#include "io_tools/sinks/RawBinarySink.hpp"
 
 #include "io_tools/Filter.hpp"
 #include "io_tools/filters/angular_filters.hpp"

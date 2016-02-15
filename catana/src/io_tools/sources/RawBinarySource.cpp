@@ -2,7 +2,7 @@
 // Created by Michael Bühlmann on 14/02/16.
 //
 
-#include <catana/io_tools/sources/read_rawbinary.hpp>
+#include <catana/io_tools/sources/RawBinarySource.hpp>
 #include <algorithm>
 
 template<class RecordType>

@@ -2,7 +2,7 @@
 // Created by Michael Bühlmann on 13/02/16.
 //
 
-#include <catana/io_tools/sinks/write_rawbinary.hpp>
+#include <catana/io_tools/sinks/RawBinarySink.hpp>
 
 template<class RecordType>
 long long int RawBinarySink<RecordType>::write(ObjectContainer::iterator read_iterator, size_t n)

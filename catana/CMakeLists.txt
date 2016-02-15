@@ -14,14 +14,15 @@ set(returntypes_SOURCES
 
 set(iotools_sources_SOURCES
         include/catana/io_tools/Source.hpp
-        include/catana/io_tools/sources/read_gadget.hpp src/io_tools/sources/read_gadget.cpp
-        include/catana/io_tools/sources/read_hdf5.hpp src/io_tools/sources/read_hdf5.cpp
-        include/catana/io_tools/sources/read_rawbinary.hpp src/io_tools/sources/read_rawbinary.cpp)
+        include/catana/io_tools/sources/GadgetSource.hpp src/io_tools/sources/GadgetSource.cpp
+        include/catana/io_tools/sources/HDF5Source.hpp src/io_tools/sources/HDF5Source.cpp
+        include/catana/io_tools/sources/RawBinarySource.hpp src/io_tools/sources/RawBinarySource.cpp)
 
 set(iotools_sinks_SOURCES
         include/catana/io_tools/Sink.hpp
-        include/catana/io_tools/sinks/write_hdf5.hpp src/io_tools/sinks/write_hdf5.cpp
-        include/catana/io_tools/sinks/write_rawbinary.hpp src/io_tools/sinks/write_rawbinary.cpp
+        include/catana/io_tools/sinks/ObjectContainerSink.hpp
+        include/catana/io_tools/sinks/HDF5Sink.hpp src/io_tools/sinks/HDF5Sink.cpp
+        include/catana/io_tools/sinks/RawBinarySink.hpp src/io_tools/sinks/RawBinarySink.cpp
         )
 
 set(iotools_filters_SOURCES

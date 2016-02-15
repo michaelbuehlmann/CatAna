@@ -2,7 +2,7 @@
 // Created by Michael Bühlmann on 13/02/16.
 //
 
-#include <catana/io_tools/sinks/write_hdf5.hpp>
+#include <catana/io_tools/sinks/HDF5Sink.hpp>
 
 #include <hdf5_hl.h>
 #include <iostream>
