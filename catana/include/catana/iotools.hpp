@@ -14,6 +14,7 @@
 #include "io_tools/sources/RawBinarySource.hpp"
 
 #include "io_tools/sinks/ObjectContainerSink.hpp"
+#include "io_tools/sinks/PixelizedObjectContainerSink.hpp"
 #include "io_tools/sinks/HDF5Sink.hpp"
 #include "io_tools/sinks/RawBinarySink.hpp"
 

@@ -7,6 +7,7 @@
 
 #include "tools/Object.hpp"
 #include "tools/ObjectContainer.hpp"
+#include "tools/PixelizedObjectContainer.hpp"
 #include "tools/return_types.hpp"
 
 #endif //CATANA_TYPES_HPP

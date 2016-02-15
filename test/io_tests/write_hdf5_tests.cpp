@@ -11,7 +11,7 @@
 const std::string test_data_dir(TEST_DATA_DIR);
 
 
-TEST(SmallSink, Cartesian) {
+TEST(HDF5SmallSink, Cartesian) {
     std::string filename = "write_test_1.hdf5";
     std::string dataset_name = "/tpart";
 
@@ -40,7 +40,7 @@ TEST(SmallSink, Cartesian) {
     }
 }
 
-TEST(SmallSink, Spherical) {
+TEST(HDF5SmallSink, Spherical) {
     std::string filename = "write_test_2.hdf5";
     std::string dataset_name = "/tpart";
 

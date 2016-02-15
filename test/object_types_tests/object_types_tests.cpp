@@ -48,3 +48,32 @@ TEST(ObjectContainer, Subset) {
 
     EXPECT_NEAR(N/4, objects_with_r2, 0.1*N/4);
 }
+
+TEST(PixelizedObjectContainer, Creation) {
+    PixelizedObjectContainer pix1;
+    EXPECT_EQ(0, pix1.size());
+
+    PixelizedObjectContainer pix2(256);
+    EXPECT_EQ(12*256*256, pix2.size());
+
+    ASSERT_DEATH(PixelizedObjectContainer pix3(255);, " ");
+}
+
+TEST(PixelizedObjectContainer, AddingObjects) {
+    PixelizedObjectContainer pix(256);
+    Object obj = object_from_spherical_position(10., 1.2, 0.4);
+    pix.add_object(obj);
+    EXPECT_EQ(1, pix.get_nobjects());
+
+    int found = 0;
+    for(int i=0; i<pix.size(); ++i){
+        PixelObjects pix_objs = pix[i];
+        if(pix_objs.size() > 0) {
+            found += pix_objs.size();
+            EXPECT_DOUBLE_EQ(pix_objs[0], obj.r);
+            EXPECT_NEAR(pix_objs.p.theta, obj.p.theta, 1e-2);
+            EXPECT_NEAR(pix_objs.p.phi, obj.p.phi, 1e-2);
+        }
+    }
+    EXPECT_EQ(1, found);
+}

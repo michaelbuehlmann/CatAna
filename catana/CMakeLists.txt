@@ -7,7 +7,8 @@ set(besseltools_SOURCES
 
 set(basictypes_SOURCES
         include/catana/tools/Object.hpp
-        include/catana/tools/ObjectContainer.hpp src/tools/ObjectContainer.cpp)
+        include/catana/tools/ObjectContainer.hpp src/tools/ObjectContainer.cpp
+        include/catana/tools/PixelizedObjectContainer.hpp src/tools/PixelizedObjectContainer.cpp)
 
 set(returntypes_SOURCES
         include/catana/tools/return_types.hpp src/tools/return_types.cpp)
@@ -21,6 +22,7 @@ set(iotools_sources_SOURCES
 set(iotools_sinks_SOURCES
         include/catana/io_tools/Sink.hpp
         include/catana/io_tools/sinks/ObjectContainerSink.hpp
+        include/catana/io_tools/sinks/PixelizedObjectContainerSink.hpp
         include/catana/io_tools/sinks/HDF5Sink.hpp src/io_tools/sinks/HDF5Sink.cpp
         include/catana/io_tools/sinks/RawBinarySink.hpp src/io_tools/sinks/RawBinarySink.cpp
         )
