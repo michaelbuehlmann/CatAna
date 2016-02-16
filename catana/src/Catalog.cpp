@@ -2,8 +2,9 @@
 // Created by Michael Bühlmann on 01/11/15.
 //
 
-#include "catana/Catalog.hpp"
-#include "catana/decomposition/sfb_decomposition.hpp"
+#include <catana/iotools.hpp>
+#include <catana/Catalog.hpp>
+#include <catana/decomposition/sfb_decomposition.hpp>
 
 unsigned long Catalog::size() const
 {
@@ -12,12 +13,19 @@ unsigned long Catalog::size() const
 
 KClkk Catalog::compute_SFB_raw(unsigned short lmax, unsigned short nmax) const
 {
-    return decomp_SFB_raw(cat_rtp, lmax, nmax, window.get_Rmax(), window.volume());
+    return decomp_SFB(cat_rtp, lmax, nmax, window.get_Rmax(), window.volume());
 }
 
 KClkk Catalog::compute_SFB_reverse(unsigned short lmax, unsigned short nmax, unsigned int NSide) const
 {
-    return decomp_SFB_reverse(cat_rtp, lmax, nmax, window.get_Rmax(), window.volume(), NSide);
+    PixelizedObjectContainer cat_pix(NSide);
+    {
+        ObjectContainerSource source(cat_rtp);
+        PixelizedObjectContainerSink sink(cat_pix);
+        FilterStream fs(&source, &sink, 1000000, false);
+        fs.run();
+    }
+    return decomp_SFB(cat_pix, lmax, nmax, window.get_Rmax(), window.volume());
 }
 
 void Catalog::add_object(const Object& object)

@@ -2,7 +2,7 @@
 // Created by Michael Bühlmann on 11/02/16.
 //
 
-#include <catana/tools/ObjectContainer.hpp>
+#include <catana/objects/ObjectContainer.hpp>
 
 void create_object_container_subset(ObjectContainer& object_container, const size_t& n)
 {

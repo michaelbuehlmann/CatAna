@@ -5,18 +5,18 @@
 #ifndef CATANA_APP_SFB_DECOMPOSITION_HPP
 #define CATANA_APP_SFB_DECOMPOSITION_HPP
 
-#include <catana/types.hpp>
+#include "../types.hpp"
 
-KClkk decomp_SFB_raw(
+KClkk decomp_SFB(
         const ObjectContainer& objects,
         unsigned short lmax, unsigned short nmax,
-        double rmax, double window_volume
+        double rmax, double window_volume, bool verbose=true, bool parallel=false
 );
 
-KClkk decomp_SFB_reverse(const ObjectContainer& objects,
+KClkk decomp_SFB(
+        const PixelizedObjectContainer& pix_obj_cont,
         unsigned short lmax, unsigned short nmax,
-        double rmax, double window_volume,
-        unsigned int nside
+        double rmax, double window_volume, bool verbose=true, bool parallel=false
 );
 
 

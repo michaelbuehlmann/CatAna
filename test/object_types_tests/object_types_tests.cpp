@@ -33,10 +33,10 @@ TEST(ObjectContainer, Subset) {
     size_t N(1<<20);
     ObjectContainer object_container;
     for(size_t i=0; i<N/2; ++i) {
-        object_container.push_back(Object(1, 0, 0));
+        object_container.add_object(Object(1, 0, 0));
     }
     for(size_t i=0; i<N/2; ++i) {
-        object_container.push_back(Object(2, 0, 0));
+        object_container.add_object(Object(2, 0, 0));
     }
     ASSERT_EQ(N, object_container.size());
 
@@ -50,9 +50,6 @@ TEST(ObjectContainer, Subset) {
 }
 
 TEST(PixelizedObjectContainer, Creation) {
-    PixelizedObjectContainer pix1;
-    EXPECT_EQ(0, pix1.size());
-
     PixelizedObjectContainer pix2(256);
     EXPECT_EQ(12*256*256, pix2.size());
 
@@ -76,4 +73,23 @@ TEST(PixelizedObjectContainer, AddingObjects) {
         }
     }
     EXPECT_EQ(1, found);
+}
+
+TEST(PixelizedObjectContainer, CreateFromObjectContainer) {
+    ObjectContainer oc;
+    oc.add_object(Object(-1,2,3));
+    oc.add_object(Object(-4,1,0));
+    oc.add_object(Object(0,1,2));
+    oc.add_object(Object(1,4,0));
+    oc.add_object(Object(1,2,3));
+
+    PixelizedObjectContainer pix_oc(16, oc);
+    EXPECT_EQ(oc.size(), pix_oc.get_nobjects());
+
+}
+
+TEST(PixelizedObjectContainer, FailNumber) {
+    PixelizedObjectContainer pix(256);
+    Object obj = object_from_spherical_position(2362.3327257083387849,1.3251209168969042551,3.3517098661766109302);
+    pix.add_object(obj);
 }

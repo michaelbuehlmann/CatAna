@@ -9,7 +9,7 @@
 #include <string>
 
 // Load data directory
-#include "config.hpp"
+#include <catana/config.hpp>
 const std::string test_data_dir(TEST_DATA_DIR);
 
 // Some known values:

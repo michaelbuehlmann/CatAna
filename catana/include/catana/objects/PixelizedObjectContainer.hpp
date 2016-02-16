@@ -5,7 +5,8 @@
 #ifndef CATANA_PIXELIZEDOBJECTCONTAINER_HPP
 #define CATANA_PIXELIZEDOBJECTCONTAINER_HPP
 
-#include "../tools/Object.hpp"
+#include "Object.hpp"
+#include "ObjectContainer.hpp"
 #include <healpix_cxx/healpix_base.h>
 #include <healpix_cxx/pointing.h>
 #include <vector>
@@ -16,18 +17,19 @@ public:
 };
 
 
-class PixelizedObjectContainer : private std::vector<PixelObjects> {
+class PixelizedObjectContainer : public std::vector<PixelObjects> {
 public:
-    PixelizedObjectContainer() = default;
+//    PixelizedObjectContainer() = default;
     PixelizedObjectContainer(unsigned int nside);
+    PixelizedObjectContainer(unsigned int nside, const ObjectContainer& oc);
     void add_object(const Object&);
-    unsigned int get_nside();
-    size_t get_nobjects();
+    unsigned int get_nside() const;
+    size_t get_nobjects() const;
 
-    using std::vector<PixelObjects>::operator[];
-    using std::vector<PixelObjects>::size;
-    using std::vector<PixelObjects>::begin;
-    using std::vector<PixelObjects>::end;
+//    using std::vector<PixelObjects>::operator[];
+//    using std::vector<PixelObjects>::size;
+//    using std::vector<PixelObjects>::begin;
+//    using std::vector<PixelObjects>::end;
 
 private:
     Healpix_Base hp_base;

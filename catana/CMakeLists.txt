@@ -6,9 +6,9 @@ set(besseltools_SOURCES
         include/catana/tools/gsl_function_wrapper.hpp)
 
 set(basictypes_SOURCES
-        include/catana/tools/Object.hpp
-        include/catana/tools/ObjectContainer.hpp src/tools/ObjectContainer.cpp
-        include/catana/tools/PixelizedObjectContainer.hpp src/tools/PixelizedObjectContainer.cpp)
+        include/catana/objects/Object.hpp
+        include/catana/objects/ObjectContainer.hpp src/objects/ObjectContainer.cpp
+        include/catana/objects/PixelizedObjectContainer.hpp src/objects/PixelizedObjectContainer.cpp)
 
 set(returntypes_SOURCES
         include/catana/tools/return_types.hpp src/tools/return_types.cpp)
@@ -55,7 +55,8 @@ set(catalog_SOURCES
         ${basictypes_SOURCES}
         ${returntypes_SOURCES}
         src/Catalog.cpp include/catana/Catalog.hpp
-        ${window_SOURCES} ${decomposition_SOURCES})
+        ${window_SOURCES}
+        ${decomposition_SOURCES})
 
 set(field_SOURCES
         src/Field.cpp include/catana/Field.hpp

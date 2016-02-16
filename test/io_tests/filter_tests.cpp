@@ -9,7 +9,7 @@
 #include "catana/io_tools/Filter.hpp"
 
 // Load data directory
-#include "config.hpp"
+#include <catana/config.hpp>
 #include <catana/iotools.hpp>
 
 const std::string test_data_dir(TEST_DATA_DIR);

@@ -13,7 +13,14 @@
 extern std::mt19937 rng;
 
 //! Catalog representation
-using ObjectContainer = std::vector<Object>;
+class ObjectContainer : public std::vector<Object>{
+    // Inheriting constructors
+    using std::vector<Object>::vector;
+public:
+    void add_object(const Object& object){
+        push_back(object);
+    }
+};
 
 //! Creates a random subset of the Object Container such that N objects remain.
 /*

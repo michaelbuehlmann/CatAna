@@ -43,7 +43,19 @@ find_package(HDF5 REQUIRED)
 include_directories(${HDF5_INCLUDE_DIRS})
 link_directories(${HDF5_LIBRARY_DIRS})
 
+# OpenMP
+find_package(OpenMP)
+if(OPENMP_FOUND)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
+endif()
+
+# Setting up include files from CatAna
+#if(CATANA_CONFIG_DIR)
+configure_file(catana/include/catana/config.hpp.in catana/include/catana/config.hpp)
 include_directories(catana/include)
+include_directories(${CMAKE_BINARY_DIR}/catana/include)
 
 add_subdirectory(catana)
 add_subdirectory(python)

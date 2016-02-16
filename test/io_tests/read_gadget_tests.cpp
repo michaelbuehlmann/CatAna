@@ -7,12 +7,11 @@
 #include "gtest/gtest.h"
 
 #include <string>
-#include <boost/iostreams/stream_buffer.hpp>
 #include <algorithm>
 
 
 // Load data directory
-#include "config.hpp"
+#include <catana/config.hpp>
 const std::string test_data_dir(TEST_DATA_DIR);
 
 
