@@ -7,6 +7,7 @@
 #include <iostream>
 #include <random>
 #include <cmath>
+#include <string>
 #include "timer.hpp"
 
 std::mt19937 rng;
@@ -26,10 +27,17 @@ ObjectContainer random_objects(size_t n, double box_size, bool tophat) {
     return oc;
 }
 
-int main() {
-    int nside = 64;
-    int lmax = 10;
-    int nmax = 50;
+int main(int argc, char* argv[]) {
+    if(argc != 4){
+        std::cout << "Arguments: lmax, nmax, nside" << std::endl;
+        std::cout << "Got " << argc << " arguments." << std::endl;
+        return -1;
+    }
+
+    int nside = std::stoi(argv[3]);
+    int lmax = std::stoi(argv[1]);
+    int nmax = std::stoi(argv[2]);
+
     std::vector<std::pair<size_t, size_t>> runs = {
             {1<<10, 20},
             {1<<14, 10},
@@ -47,14 +55,6 @@ int main() {
 
         std::cout << oc.size() << " ";
 
-        // Raw
-//        time.start();
-//        for(size_t i=0; i<r.second; ++i){
-//            auto kclkk = decomp_SFB(oc, lmax, nmax, box_size/2., window_volume, false, false);
-//        }
-//        time.stop();
-//        std::cout << time.duration<timer::milliseconds>()/r.second << " ";
-
         // Raw Parallel
         time.start();
         for(size_t i=0; i<r.second; ++i){
@@ -63,13 +63,6 @@ int main() {
         time.stop();
         std::cout << time.duration<timer::milliseconds>()/r.second << " ";
 
-        // Reverse
-//        time.start();
-//        for(size_t i=0; i<r.second; ++i){
-//            auto kclkk = decomp_SFB(pix_oc, lmax, nmax, box_size/2., window_volume, false, false);
-//        }
-//        time.stop();
-//        std::cout << time.duration<timer::milliseconds>()/r.second << " ";
 
         // Reverse, Parallel
         time.start();
