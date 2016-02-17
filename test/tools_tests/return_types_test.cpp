@@ -32,12 +32,11 @@ TEST(ReturnTypes, KCLKK){
     int line_count = 0;
     int word_count;
     double nbr;
-    std::istringstream iss;
 
     std::ifstream fs_kln("test.k_ln");
     ASSERT_TRUE(fs_kln.good());
     for(std::string line; std::getline(fs_kln, line); ){
-        iss = std::istringstream(line);
+        std::istringstream iss(line);
         word_count = 0;
         while(iss>>nbr) {
             EXPECT_FLOAT_EQ(kclkk.k_ln(line_count, word_count), nbr) << "l=" << line_count << " n=" << word_count;
@@ -53,7 +52,7 @@ TEST(ReturnTypes, KCLKK){
     ASSERT_TRUE(fs_cln.good());
     line_count = 0;
     for(std::string line; std::getline(fs_cln, line); ){
-        iss = std::istringstream(line);
+        std::istringstream iss(line);
         word_count = 0;
         while(iss>>nbr) {
             EXPECT_FLOAT_EQ(kclkk.c_ln(line_count, word_count), nbr) << "l=" << line_count << " n=" << word_count;

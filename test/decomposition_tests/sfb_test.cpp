@@ -9,17 +9,22 @@
 #include <fstream>
 #include <sstream>
 
+// Provide rng (GCC otherwise complains when linking iotools library)
+#ifndef ALL_TESTS
+#include <random>
+std::mt19937 rng;
+#endif //ALL_TESTS
+
 // LOAD TEST_DATA_DIR
 #include <catana/config.hpp>
 const std::string test_data_dir(TEST_DATA_DIR);
 
 Eigen::ArrayXXd read_python_cln(int lmax, int nmax){
     std::ifstream f(test_data_dir+"gaussian_catalog.python.c_ln", std::ios::in);
-    std::istringstream iss;
     Eigen::ArrayXXd c_ln(lmax, nmax);
     int i=0;
     for(std::string line; std::getline(f, line); ){
-        iss = std::istringstream(line);
+        std::istringstream iss(line);
         int j=0;
         double cln;
         while(iss>>cln) {
