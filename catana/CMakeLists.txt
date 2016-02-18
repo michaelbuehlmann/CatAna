@@ -49,7 +49,7 @@ set(window_SOURCES
 
 set(decomposition_SOURCES
         ${returntypes_SOURCES}
-        include/catana/decomposition/sfb_decomposition.hpp src/decomposition/sfb_decomposition.cpp)
+        include/catana/decomposition/sfb_decomposition.hpp src/decomposition/sfb_decomposition.cpp src/decomposition/Analyzer.cpp include/catana/decomposition/Analyzer.hpp)
 
 set(catalog_SOURCES
         ${basictypes_SOURCES}
