@@ -106,47 +106,44 @@ KClkk decomp_SFB(const PixelizedObjectContainer& pix_obj_cont,
     /////////////////////
     // Computing f_lmn //
     for(unsigned short l=0; l<lmax; ++l) {
-        if(verbose)
-            std::cout << "\tl = " << l << ": spherical harmonics ... ";
-
-        // Spherical harmonics decomposition
-        // TODO: save spherical harmonics in external file, load if needed.
-        Eigen::MatrixXcd y_l_mi(l+1, npix);
-#pragma omp parallel for if(parallel)
-        for(int i=0; i<npix; ++i) {
-            const pointing& p = pix_obj_cont[i].p;
-            for(auto m=0; m<=l; ++m) {
-                y_l_mi(m,i) = std::conj(boost::math::spherical_harmonic(l, m, p.theta, p.phi));
-            }
+        if(verbose) {
+            std::cout << "\tl = " << l << " ...";
+            std::cout.flush();
         }
-
-        // Bessel decomposition.
-        if(verbose)
-            std::cout << "Done. Bessel decomposition ... ";
+        // Allocate space for spherical harmonics
+        Eigen::MatrixXcd y_l_mi(l+1, npix);
         // Allocate space for f_lmn and f_ln
         Eigen::MatrixXcd f_l_mn = Eigen::MatrixXcd::Zero(l+1, nmax);
         Eigen::MatrixXd f_l_in = Eigen::MatrixXd::Zero(npix, nmax);
 
-        // Loop over all pixels and do Bessel decomposition:
-#pragma omp parallel for if(parallel)
-        for (int i = 0; i<npix; ++i) {
-            for (unsigned short n = 0; n<nmax; ++n) {
-                const auto& k = kclkk.k_ln(l,n);
-                for(const auto& r: pix_obj_cont[i]){
-                    f_l_in(i, n) += boost::math::sph_bessel(l, k*r);
+#pragma omp parallel if(parallel)
+        {
+            // Spherical harmonics decomposition
+            // TODO: save spherical harmonics in external file, load if needed.
+#pragma omp for nowait
+            for (int i = 0; i<npix; ++i) {
+                const pointing& p = pix_obj_cont[i].p;
+                for (unsigned short m = 0; m<=l; ++m) {
+                    y_l_mi(m, i) = std::conj(boost::math::spherical_harmonic(l, m, p.theta, p.phi));
                 }
-                f_l_in(i, n) *= k;
+            }
+
+            // Loop over all pixels and do Bessel decomposition:
+#pragma omp for
+            for (int i = 0; i<npix; ++i) {
+                for (unsigned short n = 0; n<nmax; ++n) {
+                    const auto& k = kclkk.k_ln(l, n);
+                    for (const auto& r: pix_obj_cont[i]) {
+                        f_l_in(i, n) += boost::math::sph_bessel(l, k*r);
+                    }
+                    f_l_in(i, n) *= k;
+                }
             }
         }
-
         // Obtain full decomposition
-        if(verbose)
-            std::cout << "Done. Combining ... ";
         f_l_mn = y_l_mi*f_l_in;
 
         // Norming and computing C_l(k,k)
-        if(verbose)
-            std::cout << "Done. C_l(k,k) ... ";
         f_l_mn *= norm_factor;
         for (unsigned short n=0; n<nmax; ++n){
             for (int m=-l; m<=l; ++m) {

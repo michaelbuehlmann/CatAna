@@ -34,6 +34,14 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
+#pragma omp parallel
+    {
+#pragma omp master
+        {
+            std::cout << "Using " << omp_get_num_threads() << " of max " << omp_get_max_threads() << std::endl;
+        }
+    }
+
     int nside = std::stoi(argv[3]);
     int lmax = std::stoi(argv[1]);
     int nmax = std::stoi(argv[2]);
