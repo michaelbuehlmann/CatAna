@@ -87,9 +87,3 @@ TEST(PixelizedObjectContainer, CreateFromObjectContainer) {
     EXPECT_EQ(oc.size(), pix_oc.get_nobjects());
 
 }
-
-TEST(PixelizedObjectContainer, FailNumber) {
-    PixelizedObjectContainer pix(256);
-    Object obj = object_from_spherical_position(2362.3327257083387849,1.3251209168969042551,3.3517098661766109302);
-    pix.add_object(obj);
-}

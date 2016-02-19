@@ -2,8 +2,11 @@ project(catana)
 
 # SOURCE FILES
 set(besseltools_SOURCES
-        src/besseltools/besselzeros.cpp include/catana/besseltools/besselzeros.hpp
-        include/catana/tools/gsl_function_wrapper.hpp include/catana/besseltools/sbessel_integrator.hpp)
+        include/catana/besseltools.hpp
+        include/catana/besseltools/BesselZeros.hpp src/besseltools/BesselZeros.cpp
+        include/catana/tools/gsl_function_wrapper.hpp
+        include/catana/besseltools/sbessel_integrator_test.hpp src/besseltools/sbessel_integrator.cpp
+        include/catana/besseltools/SBesselLookUp.hpp src/besseltools/SBesselLookUp.cpp )
 
 set(basictypes_SOURCES
         include/catana/objects/Object.hpp
@@ -43,33 +46,33 @@ set(iotools_SOURCES
         ${iotools_filters_SOURCES}
         include/catana/io_tools/FilterStream.hpp src/io_tools/FilterStream.cpp)
 
-set(window_SOURCES
-        include/catana/Window.hpp src/Window.cpp
-        include/catana/tools/gsl_function_wrapper.hpp)
+#set(window_SOURCES
+#        include/catana/Window.hpp src/Window.cpp
+#        include/catana/tools/gsl_function_wrapper.hpp)
 
 set(decomposition_SOURCES
         ${returntypes_SOURCES}
-        include/catana/decomposition/sfb_decomposition.hpp src/decomposition/sfb_decomposition.cpp src/decomposition/Analyzer.cpp include/catana/decomposition/Analyzer.hpp)
+        include/catana/decomposition/sfb_decomposition.hpp src/decomposition/sfb_decomposition.cpp
+        src/decomposition/Analyzer.cpp include/catana/decomposition/Analyzer.hpp)
 
-set(catalog_SOURCES
-        ${basictypes_SOURCES}
-        ${returntypes_SOURCES}
-        src/Catalog.cpp include/catana/Catalog.hpp
-        ${window_SOURCES}
-        ${decomposition_SOURCES})
+#set(catalog_SOURCES
+#        ${basictypes_SOURCES}
+#        ${returntypes_SOURCES}
+#        src/Catalog.cpp include/catana/Catalog.hpp
+#        ${window_SOURCES}
+#        ${decomposition_SOURCES})
 
-set(field_SOURCES
-        src/Field.cpp include/catana/Field.hpp
-        include/catana/tools/fftw_field.hpp
-        ${decomposition_SOURCES})
+#set(field_SOURCES
+#        src/Field.cpp include/catana/Field.hpp
+#        include/catana/tools/fftw_field.hpp)
 
 # COMPILE AS STATIC LIBRARY
 add_library(iotools STATIC ${iotools_SOURCES})
 add_library(besseltools STATIC ${besseltools_SOURCES})
 add_library(catana STATIC
-        ${catalog_SOURCES}
-        ${field_SOURCES}
-        ${window_SOURCES}
+#        ${catalog_SOURCES}
+#        ${field_SOURCES}
+#        ${window_SOURCES}
         ${decomposition_SOURCES})
 
 # LINK TOGETHER

@@ -1,5 +1,11 @@
-add_executable(runBesselZerosCheck
-        zeros.cpp)
+add_executable(BesselZeros_test BesselZeros_test.cpp)
+target_link_libraries(BesselZeros_test gtest gtest_main)
+target_link_libraries(BesselZeros_test besseltools)
 
-target_link_libraries(runBesselZerosCheck gtest gtest_main)
-target_link_libraries(runBesselZerosCheck besseltools)
+add_executable(sbessel_integrator_test sbessel_integrator_test.cpp)
+target_link_libraries(sbessel_integrator_test gtest gtest_main)
+target_link_libraries(sbessel_integrator_test besseltools)
+
+add_executable(SBesselLookUp_test SBesselLookUp_test.cpp)
+target_link_libraries(SBesselLookUp_test gtest gtest_main)
+target_link_libraries(SBesselLookUp_test besseltools)

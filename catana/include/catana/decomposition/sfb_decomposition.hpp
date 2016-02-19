@@ -7,33 +7,43 @@
 
 #include "../types.hpp"
 
-KClkk decomp_SFB(
+////////////////////////////////////////////////////////////////////////////////
+// Convenience wrappers ////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+KClkk compute_SFB(const ObjectContainer& objects,
+        unsigned short lmax, unsigned short nmax,
+        double rmax, double window_volume, bool verbose=true);
+
+KClkk compute_SFB(PixelizedObjectContainer& pix_obj_cont,
+        unsigned short lmax, unsigned short nmax,
+        double rmax, double window_volume, bool verbose=true);
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Implementation //////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+//! Decomposition of ObjectContainer
+KClkk _decomp_SFB(
         const ObjectContainer& objects,
         unsigned short lmax, unsigned short nmax,
-        double rmax, double window_volume, bool verbose=true, bool parallel=false
+        double rmax, double window_volume, bool verbose = true, bool parallel = false, bool interpolated = false
 );
 
-KClkk decomp_SFB(
+//! Decomposition of PixelizedObjectContainer
+KClkk _decomp_SFB(
         const PixelizedObjectContainer& pix_obj_cont,
         unsigned short lmax, unsigned short nmax,
-        double rmax, double window_volume, bool verbose=true, bool parallel=false
+        double rmax, double window_volume, bool verbose = true, bool parallel = false, bool interpolated = false
 );
 
-KClkk decomp_SFB_FFT(
+//! Decomposition of PixelizedObjectContainer using FFTs
+KClkk _decomp_SFB_FFT(
         const PixelizedObjectContainer& pix_obj_cont,
         unsigned short lmax, unsigned short nmax,
-        double rmax, double window_volume, bool verbose=true, bool parallel=false
+        double rmax, double window_volume, bool verbose = true, bool parallel = false, bool interpolated = false
 );
-
-//KClkk decomp_SFB_FFT_v2(
-//        const PixelizedObjectContainer& pix_obj_cont,
-//        unsigned short lmax, unsigned short nmax,
-//        double rmax, double window_volume, bool verbose=true, bool parallel=false
-//);
-//
-//KClkk decomp_SFB_FFT_v3(
-//        const PixelizedObjectContainer& pix_obj_cont,
-//        unsigned short lmax, unsigned short nmax,
-//        double rmax, double window_volume, bool verbose=true, bool parallel=false
-//);
 #endif //CATANA_APP_SFB_DECOMPOSITION_HPP

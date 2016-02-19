@@ -5,7 +5,10 @@
 #include <catana/decomposition/sfb_decomposition.hpp>
 //#include <catana/tools/SphericalHarmonicsLoader.hpp>
 #include <boost/math/special_functions/spherical_harmonic.hpp>
+
 #include <boost/math/special_functions/bessel.hpp>
+#include <catana/besseltools.hpp>
+
 #include <Eigen/Dense>
 
 #include <fftw3.h>
@@ -15,15 +18,41 @@
 #include <iostream>
 #include <iomanip>
 
-// TODO: logging/output class/library
+//! For the spherical bessel function interpolation: #interpolation points per n
+//  Total interpolation points: nmax*BESSELINTERPOLATIONPOINTS_PER_ZERO
+#define BESSELINTERPOLATIONPOINTS_PER_ZERO 1000
 
+
+////////////////////////////////////////////////////////////////////////////////
+// Convenience wrappers ////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+KClkk compute_SFB(const ObjectContainer& objects, unsigned short lmax, unsigned short nmax, double rmax,
+        double window_volume, bool verbose)
+{
+    bool interpolated = (objects.size()>BESSELINTERPOLATIONPOINTS_PER_ZERO);
+    return _decomp_SFB(objects, lmax, nmax, rmax, window_volume, verbose, true, interpolated);
+}
+
+KClkk compute_SFB(PixelizedObjectContainer& pix_obj_cont, unsigned short lmax, unsigned short nmax, double rmax,
+        double window_volume, bool verbose)
+{
+    bool interpolated = (pix_obj_cont.get_nobjects()>BESSELINTERPOLATIONPOINTS_PER_ZERO);
+    return _decomp_SFB(pix_obj_cont, lmax, nmax, rmax, window_volume, verbose, true, interpolated);
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Implementation //////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 using complex = std::complex<double_t>;
 
-KClkk decomp_SFB(
+KClkk _decomp_SFB(
         const ObjectContainer& objects,
         unsigned short lmax, unsigned short nmax,
-        double rmax, double window_volume, bool verbose, bool parallel)
+        double rmax, double window_volume, bool verbose, bool parallel, bool interpolated)
 {
     size_t container_size = size_t(std::distance(std::begin(objects), std::end(objects)));
     if(verbose) {
@@ -38,9 +67,25 @@ KClkk decomp_SFB(
     double_t norm_factor = std::sqrt(2/M_PI) * window_volume/container_size;
     KClkk kclkk(lmax, nmax, rmax);
 
-    for (unsigned short l = 0; l<lmax; ++l) {
-        if(verbose)
-            std::cout << "\tl = " << l << ": Computing f_lmn ... ";
+    // This will be a nullptr if !interpolated, otherwise we will assign it within the l-for loop
+    std::unique_ptr<SBesselLookUp> sblu;
+    std::function <double(double)> sph_bessel_l;
+
+    // Actual decomposition
+    for(unsigned short l=0; l<lmax; ++l){
+
+        if(verbose) {
+            std::cout << "\tl = " << l << " ...";
+            std::cout.flush();
+        }
+
+        if(interpolated){
+            sblu.reset(new SBesselLookUp(l, nmax, BESSELINTERPOLATIONPOINTS_PER_ZERO*nmax));
+            sph_bessel_l = [&](const double& z){return sblu->operator()(z);};
+        } else {
+            sph_bessel_l = [&](const double& z){return boost::math::sph_bessel(l, z);};
+        }
+
         Eigen::ArrayXXcd f_l_mn = Eigen::ArrayXXcd::Zero(l+1, nmax);
 
 #pragma omp parallel if(parallel)
@@ -55,7 +100,7 @@ KClkk decomp_SFB(
                 Eigen::ArrayXd j_l_n(nmax);
 
                 for (unsigned short n = 0; n<nmax; ++n) {
-                    j_l_n(n) = boost::math::sph_bessel(l, kclkk.k_ln(l, n)*obj_it->r);
+                    j_l_n(n) = sph_bessel_l(kclkk.k_ln(l, n)*obj_it->r);
                 }
 
                 // Compute Y_lm
@@ -89,9 +134,9 @@ KClkk decomp_SFB(
     return kclkk;
 }
 
-KClkk decomp_SFB(const PixelizedObjectContainer& pix_obj_cont,
+KClkk _decomp_SFB(const PixelizedObjectContainer& pix_obj_cont,
         unsigned short lmax, unsigned short nmax,
-        double rmax, double window_volume, bool verbose, bool parallel)
+        double rmax, double window_volume, bool verbose, bool parallel, bool interpolated)
 {
     auto nside = pix_obj_cont.get_nside();
     auto npix = pix_obj_cont.size();
@@ -108,13 +153,25 @@ KClkk decomp_SFB(const PixelizedObjectContainer& pix_obj_cont,
     double_t norm_factor = std::sqrt(2/M_PI) * window_volume/pix_obj_cont.get_nobjects();
     KClkk kclkk(lmax, nmax, rmax);
 
-    /////////////////////
-    // Computing f_lmn //
-    for(unsigned short l=0; l<lmax; ++l) {
+    // This will be a nullptr if !interpolated, otherwise we will assign it within the l-for loop
+    std::unique_ptr<SBesselLookUp> sblu;
+    std::function <double(double)> sph_bessel_l;
+
+    // Actual decomposition
+    for(unsigned short l=0; l<lmax; ++l){
+
         if(verbose) {
             std::cout << "\tl = " << l << " ...";
             std::cout.flush();
         }
+
+        if(interpolated){
+            sblu.reset(new SBesselLookUp(l, nmax, BESSELINTERPOLATIONPOINTS_PER_ZERO*nmax));
+            sph_bessel_l = [&](const double& z){return sblu->operator()(z);};
+        } else {
+            sph_bessel_l = [&](const double& z){return boost::math::sph_bessel(l, z);};
+        }
+
         // Allocate space for spherical harmonics
         Eigen::MatrixXcd y_l_mi(l+1, npix);
         // Allocate space for f_lmn and f_ln
@@ -139,7 +196,7 @@ KClkk decomp_SFB(const PixelizedObjectContainer& pix_obj_cont,
                 for (unsigned short n = 0; n<nmax; ++n) {
                     const auto& k = kclkk.k_ln(l, n);
                     for (const auto& r: pix_obj_cont[i]) {
-                        f_l_in(i, n) += boost::math::sph_bessel(l, k*r);
+                        f_l_in(i, n) += sph_bessel_l(k*r);
                     }
                 }
             }
@@ -161,215 +218,10 @@ KClkk decomp_SFB(const PixelizedObjectContainer& pix_obj_cont,
 }
 
 
-//KClkk decomp_SFB_FFT(
-//        const PixelizedObjectContainer& pix_obj_cont,
-//        unsigned short lmax, unsigned short nmax,
-//        double rmax, double window_volume, bool verbose, bool parallel
-//) {
-//    double_t norm_factor = std::sqrt(2/M_PI) * window_volume/pix_obj_cont.get_nobjects();
-//    KClkk kclkk(lmax, nmax, rmax);
-//
-//    auto nside = pix_obj_cont.get_nside();
-//    auto npix = pix_obj_cont.size();
-//    auto nrings = 4*nside - 1;
-//    auto hp_base = pix_obj_cont.get_hp_base();
-//
-//    double* map = (double*) fftw_malloc(sizeof(double)*npix);
-//    complex* fft_map = (complex*) fftw_malloc(sizeof(complex)*(nrings+npix/2));
-//
-//
-//    std::vector<fftw_plan> fftw_plans;
-//    std::vector<int> ring_startpix;
-//    std::vector<int> ring_npix;
-//    std::vector<double> ring_phases;
-//    std::vector<double> ring_theta;
-//
-//
-//    // Prepare FFTW plans.
-//    for(int i=0; i<nrings; ++i) {
-//        int rstart, rpix; bool shifted;
-//        hp_base.get_ring_info_small(i+1, rstart, rpix, shifted);  // Healpix ring enumeration starts at 1
-//        ring_startpix.push_back(rstart);
-//        ring_npix.push_back(rpix);
-//        fftw_plans.push_back(fftw_plan_dft_r2c_1d(rpix, &map[rstart], (fftw_complex*) &fft_map[rstart/2+i], FFTW_MEASURE));
-//        ring_phases.push_back(pix_obj_cont[rstart].p.phi);
-//        ring_theta.push_back(pix_obj_cont[rstart].p.theta);
-//    }
-//
-//    // Actual decomposition
-//    for(unsigned short l=0; l<lmax; ++l){
-//        for(unsigned short n=0; n<nmax; ++n){
-//            double k = kclkk.k_ln(l,n);
-//
-//#pragma omp parallel if(parallel)
-//            {
-//                double c_ln_private;
-//                // Computing A_sni
-//#pragma omp for schedule(dynamic,5)
-//                for (int i = 0; i<nrings; ++i) {
-//
-//                    // Compute map part (each pixel = sum over spherical bessel of contained distances)
-//                    for (int j = ring_startpix[i]; j<ring_startpix[i]+ring_npix[i]; ++j) {
-//                        map[j] = 0;
-//                        for (const auto& r: pix_obj_cont[j]) {
-//                            map[j] += boost::math::sph_bessel(l, k*r);
-//                        }
-//                    }
-//
-//                    // Compute fft_map part
-//                    fftw_execute(fftw_plans[i]);
-//                }
-//
-//                complex j(0, 1);
-//#pragma omp for
-//                for (unsigned short m = 0; m<=l; ++m) {
-//                    complex f_lmn = 0.;
-//                    for (int i = 0; i<nrings; ++i) {
-//                        unsigned short m_ = (m%ring_npix[i]);
-//                        complex fft_m;
-//                        if (m_>ring_npix[i]/2)
-//                            fft_m = std::conj(fft_map[ring_startpix[i]/2+i+ring_npix[i]-m_]);
-//                        else
-//                            fft_m = fft_map[ring_startpix[i]/2+i+m_];
-//
-//                        f_lmn += fft_m*std::conj(boost::math::spherical_harmonic(l, m, ring_theta[i], ring_phases[i]));
-//                    }
-//                    if (m>0)
-//                        c_ln_private += 2*std::pow(std::abs(f_lmn), 2);
-//                    else
-//                        c_ln_private += std::pow(std::abs(f_lmn), 2);
-//                }
-//#pragma omp critical
-//                kclkk.c_ln(l, n) += c_ln_private;
-//            }  // End of parallel section
-//
-//            // Normalize c_ln
-//            kclkk.c_ln(l,n) *= std::pow(norm_factor * k, 2) / (2*l+1);
-//        }
-//    }
-//
-//    // Clean up
-//    while(fftw_plans.size()>0){
-//        fftw_destroy_plan(fftw_plans.back());
-//        fftw_plans.pop_back();
-//    }
-//    fftw_free(map);
-//    fftw_free(fft_map);
-//
-//    // Return
-//    return kclkk;
-//}
-//
-//
-//
-//KClkk decomp_SFB_FFT_v2(
-//        const PixelizedObjectContainer& pix_obj_cont,
-//        unsigned short lmax, unsigned short nmax,
-//        double rmax, double window_volume, bool verbose, bool parallel
-//) {
-//    double_t norm_factor = std::sqrt(2/M_PI) * window_volume/pix_obj_cont.get_nobjects();
-//    KClkk kclkk(lmax, nmax, rmax);
-//
-//    auto nside = pix_obj_cont.get_nside();
-//    auto npix = pix_obj_cont.size();
-//    auto nrings = 4*nside - 1;
-//    auto hp_base = pix_obj_cont.get_hp_base();
-//
-//    double* map = (double*) fftw_malloc(sizeof(double)*npix);
-//    complex* fft_map = (complex*) fftw_malloc(sizeof(complex)*(nrings+npix/2));
-//
-//    std::vector<fftw_plan> fftw_plans;
-//    std::vector<int> ring_startpix;
-//    std::vector<int> ring_npix;
-//    std::vector<double> ring_phases;
-//    std::vector<double> ring_theta;
-//
-//
-//    // Prepare FFTW plans.
-//    for(int i=0; i<nrings; ++i) {
-//        int rstart, rpix; bool shifted;
-//        hp_base.get_ring_info_small(i+1, rstart, rpix, shifted);  // Healpix ring enumeration starts at 1
-//        ring_startpix.push_back(rstart);
-//        ring_npix.push_back(rpix);
-//        fftw_plans.push_back(fftw_plan_dft_r2c_1d(rpix, &map[rstart], (fftw_complex*) &fft_map[rstart/2+i], FFTW_MEASURE));
-//        ring_phases.push_back(pix_obj_cont[rstart].p.phi);
-//        ring_theta.push_back(pix_obj_cont[rstart].p.theta);
-//    }
-//
-//    // Actual decomposition
-//    for(unsigned short l=0; l<lmax; ++l){
-//
-//        // Precompute spherical harmonics
-//        Eigen::ArrayXXcd ylm_im(nrings, l+1);
-//
-//#pragma omp parallel for if(parallel) schedule(dynamic, 5)
-//        for(int i=0; i<nrings; ++i){
-//            for(unsigned short m=0; m<=l; ++m){
-//                ylm_im(i,m) = std::conj(boost::math::spherical_harmonic(l, m, ring_theta[i], ring_phases[i]));
-//            }
-//        }
-//
-//
-//        for(unsigned short n=0; n<nmax; ++n){
-//            double k_n = kclkk.k_ln(l,n);
-//#pragma omp parallel if(parallel)
-//            {
-//                double c_ln_private = 0;
-//                // Computing Map and its FFT
-//#pragma omp for schedule(dynamic, 5)
-//                for (int i = 0; i<nrings; ++i) {
-//                    for (int j = ring_startpix[i]; j<ring_startpix[i]+ring_npix[i]; ++j) {
-//                        map[j] = 0;
-//                        for (const auto& r: pix_obj_cont[j]) {
-//                            map[j] += boost::math::sph_bessel(l, k_n*r);
-//                        }
-//                    }
-//                    fftw_execute(fftw_plans[i]);
-//                }
-//
-//#pragma omp for
-//                for (unsigned short m = 0; m<=l; ++m) {
-//                    complex f_lmn = 0.;
-//                    for (int i = 0; i<nrings; ++i) {
-//                        unsigned short m_ = (m%ring_npix[i]);
-//                        complex fft_m;
-//                        if (m_>ring_npix[i]/2)
-//                            fft_m = std::conj(fft_map[ring_startpix[i]/2+i+ring_npix[i]-m_]);
-//                        else
-//                            fft_m = fft_map[ring_startpix[i]/2+i+m_];
-//                        f_lmn += fft_m*ylm_im(i, m);
-//                    }
-//
-//                    if (m>0)
-//                        c_ln_private += 2*std::pow(std::abs(f_lmn), 2);
-//                    else
-//                        c_ln_private += std::pow(std::abs(f_lmn), 2);
-//                }
-//#pragma omp critical
-//                kclkk.c_ln(l,n) += c_ln_private;
-//            }  // End of parallel section
-//
-//            // Normalize c_ln
-//            kclkk.c_ln(l,n) *= std::pow(norm_factor * k_n, 2) / (2*l+1);
-//        }
-//    }
-//
-//    // Clean up
-//    while(fftw_plans.size()>0){
-//        fftw_destroy_plan(fftw_plans.back());
-//        fftw_plans.pop_back();
-//    }
-//    fftw_free(map);
-//    fftw_free(fft_map);
-//
-//    // Return
-//    return kclkk;
-//}
-
-KClkk decomp_SFB_FFT(
+KClkk _decomp_SFB_FFT(
         const PixelizedObjectContainer& pix_obj_cont,
         unsigned short lmax, unsigned short nmax,
-        double rmax, double window_volume, bool verbose, bool parallel
+        double rmax, double window_volume, bool verbose, bool parallel, bool interpolated
 ) {
     double_t norm_factor = std::sqrt(2/M_PI) * window_volume/pix_obj_cont.get_nobjects();
     KClkk kclkk(lmax, nmax, rmax);
@@ -400,8 +252,25 @@ KClkk decomp_SFB_FFT(
         ring_theta.push_back(pix_obj_cont[rstart].p.theta);
     }
 
+    // This will be a nullptr if !interpolated, otherwise we will assign it within the l-for loop
+    std::unique_ptr<SBesselLookUp> sblu;
+    std::function <double(double)> sph_bessel_l;
+
     // Actual decomposition
     for(unsigned short l=0; l<lmax; ++l){
+
+        if(verbose) {
+            std::cout << "\tl = " << l << " ...";
+            std::cout.flush();
+        }
+
+        if(interpolated){
+            sblu.reset(new SBesselLookUp(l, nmax, BESSELINTERPOLATIONPOINTS_PER_ZERO*nmax));
+            sph_bessel_l = [&](const double& z){return sblu->operator()(z);};
+        } else {
+            sph_bessel_l = [&](const double& z){return boost::math::sph_bessel(l, z);};
+        }
+
 
         // Precompute spherical harmonics
         Eigen::ArrayXXcd ylm_im(nrings, l+1);
@@ -425,7 +294,7 @@ KClkk decomp_SFB_FFT(
                     for (int j = ring_startpix[i]; j<ring_startpix[i]+ring_npix[i]; ++j) {
                         map[j] = 0;
                         for (const auto& r: pix_obj_cont[j]) {
-                            map[j] += boost::math::sph_bessel(l, k_n*r);
+                            map[j] += sph_bessel_l(k_n*r);
                         }
                     }
                     fftw_execute(fftw_plans[i]);

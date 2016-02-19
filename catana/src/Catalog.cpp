@@ -13,7 +13,7 @@ unsigned long Catalog::size() const
 
 KClkk Catalog::compute_SFB_raw(unsigned short lmax, unsigned short nmax) const
 {
-    return decomp_SFB(cat_rtp, lmax, nmax, window.get_Rmax(), window.volume());
+    return _decomp_SFB(cat_rtp, lmax, nmax, window.get_Rmax(), window.volume());
 }
 
 KClkk Catalog::compute_SFB_reverse(unsigned short lmax, unsigned short nmax, unsigned int NSide) const
@@ -25,7 +25,7 @@ KClkk Catalog::compute_SFB_reverse(unsigned short lmax, unsigned short nmax, uns
         FilterStream fs(&source, &sink, 1000000, false);
         fs.run();
     }
-    return decomp_SFB(cat_pix, lmax, nmax, window.get_Rmax(), window.volume());
+    return _decomp_SFB(cat_pix, lmax, nmax, window.get_Rmax(), window.volume());
 }
 
 void Catalog::add_object(const Object& object)

@@ -30,8 +30,11 @@ ObjectContainer random_objects(size_t n, double box_size, bool tophat) {
 
 void print_arguments(){
 //    std::cout << "Arguments: lmax, nmax, nside, parallel [True/False], methods [raw, hp, hp_fft, hp_fft2, hp_fft3], " << std::endl;
-    std::cout << "Arguments: lmax, nmax, nside, parallel [True/False], methods [raw, hp, hp_fft], " << std::endl;
+    std::cout << "Arguments: lmax nmax nside parallel [True/False] methods [raw, hp, hp_fft], " << std::endl;
 }
+
+
+
 
 int main(int argc, char* argv[]) {
     if(argc < 5){
@@ -42,26 +45,21 @@ int main(int argc, char* argv[]) {
 
     // methods
     bool do_raw=false;
-    std::vector<KClkk (*)(const PixelizedObjectContainer&, unsigned short, unsigned short, double, double, bool, bool)> hp_functions;
+    std::vector<KClkk (*)(const PixelizedObjectContainer&, unsigned short, unsigned short, double, double, bool, bool, bool)>
+            hp_functions;
     // if no method specified: do all
     if(argc==5){
         do_raw=true;
-        hp_functions.push_back(decomp_SFB);
-        hp_functions.push_back(decomp_SFB_FFT);
-//        hp_functions.push_back(decomp_SFB_FFT_v2);
-//        hp_functions.push_back(decomp_SFB_FFT_v3);
+        hp_functions.push_back(_decomp_SFB);
+        hp_functions.push_back(_decomp_SFB_FFT);
     } else {
         for(int i=5; i<argc; ++i){
             if(std::string(argv[i]) == std::string("raw")){
                 do_raw=true;
             } else if(std::string(argv[i]) == std::string("hp")){
-                hp_functions.push_back(decomp_SFB);
+                hp_functions.push_back(_decomp_SFB);
             } else if(std::string(argv[i]) == std::string("hp_fft")){
-                hp_functions.push_back(decomp_SFB_FFT);
-//            } else if(std::string(argv[i]) == std::string("hp_fft2")){
-//                hp_functions.push_back(decomp_SFB_FFT_v2);
-//            } else if(std::string(argv[i]) == std::string("hp_fft3")){
-//                hp_functions.push_back(decomp_SFB_FFT_v3);
+                hp_functions.push_back(_decomp_SFB_FFT);
             } else {
                 std::cout << "Unknown method: " << argv[i] << std::endl;
                 print_arguments();
@@ -98,9 +96,9 @@ int main(int argc, char* argv[]) {
     std::vector<std::pair<size_t, size_t>> runs = {
             {1<<10, 20},
             {1<<14, 10},
-            {1<<16, 4 },
-            {1<<18, 2 },
-            {1<<20, 1 }};
+            {1<<16, 6 },
+            {1<<18, 4 },
+            {1<<20, 2 }};
 
     double box_size = 100;
     double window_volume = 4/3.*M_PI*std::pow(box_size/2, 3);
@@ -118,7 +116,14 @@ int main(int argc, char* argv[]) {
         if(do_raw) {
             time.start();
             for (size_t i = 0; i<r.second; ++i) {
-                auto kclkk = decomp_SFB(oc, lmax, nmax, box_size/2., window_volume, false, parallel);
+                auto kclkk = _decomp_SFB(oc, lmax, nmax, box_size/2., window_volume, false, parallel, false);
+            }
+            time.stop();
+            std::cout << std::setw(10) << time.duration<timer::milliseconds>()/r.second << " ";
+
+            time.start();
+            for (size_t i = 0; i<r.second; ++i) {
+                auto kclkk = _decomp_SFB(oc, lmax, nmax, box_size/2., window_volume, false, parallel, true);
             }
             time.stop();
             std::cout << std::setw(10) << time.duration<timer::milliseconds>()/r.second << " ";
@@ -127,7 +132,14 @@ int main(int argc, char* argv[]) {
         for(auto& fct: hp_functions){
             time.start();
             for(size_t i=0; i<r.second; ++i){
-                auto kclkk = fct(pix_oc, lmax, nmax, box_size/2., window_volume, false, parallel);
+                auto kclkk = fct(pix_oc, lmax, nmax, box_size/2., window_volume, false, parallel, false);
+            }
+            time.stop();
+            std::cout << std::setw(10) << time.duration<timer::milliseconds>()/r.second << " ";
+
+            time.start();
+            for(size_t i=0; i<r.second; ++i){
+                auto kclkk = fct(pix_oc, lmax, nmax, box_size/2., window_volume, false, parallel, true);
             }
             time.stop();
             std::cout << std::setw(10) << time.duration<timer::milliseconds>()/r.second << " ";

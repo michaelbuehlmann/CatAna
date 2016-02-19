@@ -14,13 +14,13 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 # Google Tests subdirectories
 add_subdirectory(besseltools_tests)
 add_subdirectory(tools_tests)
-add_subdirectory(field_tests)
+#add_subdirectory(field_tests)
 add_subdirectory(io_tests)
 add_subdirectory(object_types_tests)
 add_subdirectory(decomposition_tests)
 
 # Timing subdirectories
-add_subdirectory(decomposition_time)
+add_subdirectory(speed_comparisons)
 
 
 #####################
