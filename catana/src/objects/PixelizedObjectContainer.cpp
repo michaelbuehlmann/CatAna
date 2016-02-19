@@ -41,4 +41,7 @@ size_t PixelizedObjectContainer::get_nobjects() const
     return std::accumulate(begin(), end(), 0ULL, [&](const long sum, const PixelObjects& pix_objs){return sum+pix_objs.size();});
 }
 
-
+const Healpix_Base& PixelizedObjectContainer::get_hp_base() const
+{
+    return hp_base;
+}

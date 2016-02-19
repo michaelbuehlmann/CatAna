@@ -26,10 +26,7 @@ public:
     unsigned int get_nside() const;
     size_t get_nobjects() const;
 
-//    using std::vector<PixelObjects>::operator[];
-//    using std::vector<PixelObjects>::size;
-//    using std::vector<PixelObjects>::begin;
-//    using std::vector<PixelObjects>::end;
+    const Healpix_Base& get_hp_base() const;
 
 private:
     Healpix_Base hp_base;

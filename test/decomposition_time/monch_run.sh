@@ -13,7 +13,7 @@ for n in "${A_CORES[@]}"
 do
     for nside in "${A_NSIDE[@]}"
     do
-        for nmax in "${A_NMAX[@]}"
+        for nmax in "${A_NMlAX[@]}"
         do
             echo ${n} ${nside} ${nmax}
             NAME=${n}_${nmax}_${nside}

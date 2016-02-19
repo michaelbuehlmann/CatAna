@@ -19,5 +19,21 @@ KClkk decomp_SFB(
         double rmax, double window_volume, bool verbose=true, bool parallel=false
 );
 
+KClkk decomp_SFB_FFT(
+        const PixelizedObjectContainer& pix_obj_cont,
+        unsigned short lmax, unsigned short nmax,
+        double rmax, double window_volume, bool verbose=true, bool parallel=false
+);
 
+//KClkk decomp_SFB_FFT_v2(
+//        const PixelizedObjectContainer& pix_obj_cont,
+//        unsigned short lmax, unsigned short nmax,
+//        double rmax, double window_volume, bool verbose=true, bool parallel=false
+//);
+//
+//KClkk decomp_SFB_FFT_v3(
+//        const PixelizedObjectContainer& pix_obj_cont,
+//        unsigned short lmax, unsigned short nmax,
+//        double rmax, double window_volume, bool verbose=true, bool parallel=false
+//);
 #endif //CATANA_APP_SFB_DECOMPOSITION_HPP

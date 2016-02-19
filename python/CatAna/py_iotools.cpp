@@ -29,7 +29,7 @@ std::mt19937 rng;
 
 
 PYBIND11_PLUGIN(iotools) {
-    py::module m("iotools", "python binding for in/output of particle positions (part of CatAna)");
+    py::module m("io", "python binding for in/output of particle positions (part of CatAna)");
 
     // Initialization of random numbers. Once with given seed, once random seed
     m.def("init_random", [&](unsigned int seed){

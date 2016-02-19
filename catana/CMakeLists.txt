@@ -2,8 +2,8 @@ project(catana)
 
 # SOURCE FILES
 set(besseltools_SOURCES
-        src/besseltools/besseltools.cpp include/catana/besseltools.hpp
-        include/catana/tools/gsl_function_wrapper.hpp)
+        src/besseltools/besselzeros.cpp include/catana/besseltools/besselzeros.hpp
+        include/catana/tools/gsl_function_wrapper.hpp include/catana/besseltools/sbessel_integrator.hpp)
 
 set(basictypes_SOURCES
         include/catana/objects/Object.hpp

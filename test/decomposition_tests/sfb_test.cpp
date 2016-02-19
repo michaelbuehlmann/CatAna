@@ -103,7 +103,7 @@ TEST(SFB, Reverse) {
     auto python_cln = read_python_cln(lmax,nmax);
     for(int l=0; l<lmax; ++l){
         for(int n=0; n<nmax; ++n){
-            ASSERT_NEAR(kclkk.c_ln(l,n), python_cln(l,n), 0.10*python_cln(l,n))
+            EXPECT_NEAR(kclkk.c_ln(l,n), python_cln(l,n), 0.10*python_cln(l,n))
                                     << "Error larger than 10% at l="<<l<<", n="<<n<<std::endl;
         }
     }
@@ -127,8 +127,152 @@ TEST(SFB, ReverseParallel) {
     auto python_cln = read_python_cln(lmax,nmax);
     for(int l=0; l<lmax; ++l){
         for(int n=0; n<nmax; ++n){
-            ASSERT_NEAR(kclkk.c_ln(l,n), python_cln(l,n), 0.10*python_cln(l,n))
+            EXPECT_NEAR(kclkk.c_ln(l,n), python_cln(l,n), 0.10*python_cln(l,n))
                                     << "Error larger than 10% at l="<<l<<", n="<<n<<std::endl;
         }
     }
 }
+
+TEST(SFB, ReverseFFT) {
+    PixelizedObjectContainer pix_obj_cont(64);
+    {
+        HDF5Source<CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        PixelizedObjectContainerSink sink(pix_obj_cont);
+        FilterStream fs(&source, &sink, 10000, false);
+        fs.run();
+    }
+
+    int lmax = 10;
+    int nmax = 10;
+    KClkk kclkk = decomp_SFB_FFT(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false);
+    kclkk.savetxt("sfb_reverse");
+
+    // Compare with Python
+    auto python_cln = read_python_cln(lmax,nmax);
+    for(int l=0; l<lmax; ++l){
+        for(int n=0; n<nmax; ++n){
+            EXPECT_NEAR(kclkk.c_ln(l,n), python_cln(l,n), 0.10*python_cln(l,n))
+                                    << "Error larger than 10% at l="<<l<<", n="<<n<<std::endl;
+        }
+    }
+}
+
+TEST(SFB, ReverseFFTParallel) {
+    PixelizedObjectContainer pix_obj_cont(64);
+    {
+        HDF5Source<CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        PixelizedObjectContainerSink sink(pix_obj_cont);
+        FilterStream fs(&source, &sink, 10000, false);
+        fs.run();
+    }
+
+    int lmax = 10;
+    int nmax = 10;
+    KClkk kclkk = decomp_SFB_FFT(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, true);
+    kclkk.savetxt("sfb_reverse");
+
+    // Compare with Python
+    auto python_cln = read_python_cln(lmax,nmax);
+    for(int l=0; l<lmax; ++l){
+        for(int n=0; n<nmax; ++n){
+            EXPECT_NEAR(kclkk.c_ln(l,n), python_cln(l,n), 0.10*python_cln(l,n))
+                            << "Error larger than 10% at l="<<l<<", n="<<n<<std::endl;
+        }
+    }
+}
+
+//TEST(SFB, ReverseFFT2) {
+//    PixelizedObjectContainer pix_obj_cont(64);
+//    {
+//        HDF5Source<CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+//        PixelizedObjectContainerSink sink(pix_obj_cont);
+//        FilterStream fs(&source, &sink, 10000, false);
+//        fs.run();
+//    }
+//
+//    int lmax = 10;
+//    int nmax = 10;
+//    KClkk kclkk = decomp_SFB_FFT_v2(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false);
+//    kclkk.savetxt("sfb_reverse");
+//
+//    // Compare with Python
+//    auto python_cln = read_python_cln(lmax,nmax);
+//    for(int l=0; l<lmax; ++l){
+//        for(int n=0; n<nmax; ++n){
+//            EXPECT_NEAR(kclkk.c_ln(l,n), python_cln(l,n), 0.10*python_cln(l,n))
+//                            << "Error larger than 10% at l="<<l<<", n="<<n<<std::endl;
+//        }
+//    }
+//}
+//
+//TEST(SFB, ReverseFFT2Parallel) {
+//    PixelizedObjectContainer pix_obj_cont(64);
+//    {
+//        HDF5Source<CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+//        PixelizedObjectContainerSink sink(pix_obj_cont);
+//        FilterStream fs(&source, &sink, 10000, false);
+//        fs.run();
+//    }
+//
+//    int lmax = 10;
+//    int nmax = 10;
+//    KClkk kclkk = decomp_SFB_FFT_v2(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, true);
+//    kclkk.savetxt("sfb_reverse");
+//
+//    // Compare with Python
+//    auto python_cln = read_python_cln(lmax,nmax);
+//    for(int l=0; l<lmax; ++l){
+//        for(int n=0; n<nmax; ++n){
+//            EXPECT_NEAR(kclkk.c_ln(l,n), python_cln(l,n), 0.10*python_cln(l,n))
+//                            << "Error larger than 10% at l="<<l<<", n="<<n<<std::endl;
+//        }
+//    }
+//}
+//
+//TEST(SFB, ReverseFFT3) {
+//    PixelizedObjectContainer pix_obj_cont(64);
+//    {
+//        HDF5Source<CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+//        PixelizedObjectContainerSink sink(pix_obj_cont);
+//        FilterStream fs(&source, &sink, 10000, false);
+//        fs.run();
+//    }
+//
+//    int lmax = 10;
+//    int nmax = 10;
+//    KClkk kclkk = decomp_SFB_FFT_v3(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false);
+//    kclkk.savetxt("sfb_reverse");
+//
+//    // Compare with Python
+//    auto python_cln = read_python_cln(lmax,nmax);
+//    for(int l=0; l<lmax; ++l){
+//        for(int n=0; n<nmax; ++n){
+//            EXPECT_NEAR(kclkk.c_ln(l,n), python_cln(l,n), 0.10*python_cln(l,n))
+//                            << "Error larger than 10% at l="<<l<<", n="<<n<<std::endl;
+//        }
+//    }
+//}
+//
+//TEST(SFB, ReverseFFT3Parallel) {
+//    PixelizedObjectContainer pix_obj_cont(64);
+//    {
+//        HDF5Source<CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+//        PixelizedObjectContainerSink sink(pix_obj_cont);
+//        FilterStream fs(&source, &sink, 10000, false);
+//        fs.run();
+//    }
+//
+//    int lmax = 10;
+//    int nmax = 10;
+//    KClkk kclkk = decomp_SFB_FFT_v3(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, true);
+//    kclkk.savetxt("sfb_reverse");
+//
+//    // Compare with Python
+//    auto python_cln = read_python_cln(lmax,nmax);
+//    for(int l=0; l<lmax; ++l){
+//        for(int n=0; n<nmax; ++n){
+//            EXPECT_NEAR(kclkk.c_ln(l,n), python_cln(l,n), 0.10*python_cln(l,n))
+//                            << "Error larger than 10% at l="<<l<<", n="<<n<<std::endl;
+//        }
+//    }
+//}

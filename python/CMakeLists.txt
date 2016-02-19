@@ -19,11 +19,16 @@ target_link_libraries(py_besseltools besseltools)
 target_link_libraries(py_besseltools cblas)
 
 add_library(py_iotools SHARED CatAna/py_iotools.cpp)
-set_target_properties(py_iotools PROPERTIES OUTPUT_NAME iotools)
+set_target_properties(py_iotools PROPERTIES OUTPUT_NAME io)
 target_link_libraries(py_iotools iotools)
 add_dependencies(py_iotools eigen)
 
-foreach(LIB py_besseltools py_iotools)
+add_library(py_decomposition SHARED CatAna/py_decomposition.cpp)
+set_target_properties(py_decomposition PROPERTIES OUTPUT_NAME decomp)
+target_link_libraries(py_decomposition iotools catana)
+add_dependencies(py_decomposition eigen)
+
+foreach(LIB py_besseltools py_iotools py_decomposition)
     set_target_properties(${LIB} PROPERTIES PREFIX "")  # No 'libname.so' but 'name.so'
 
     if (UNIX)

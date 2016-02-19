@@ -3,7 +3,7 @@
 //
 
 #include "catana/tools/return_types.hpp"
-#include "catana/besseltools.hpp"
+#include "catana/besseltools/besselzeros.hpp"
 #include <cmath>
 #include <iomanip>
 #include <fstream>
