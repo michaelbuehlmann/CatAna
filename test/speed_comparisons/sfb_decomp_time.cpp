@@ -13,139 +13,170 @@
 
 std::mt19937 rng;
 
-ObjectContainer random_objects(size_t n, double box_size, bool tophat) {
-    std::uniform_real_distribution<double> dist(-box_size/2., box_size/2.);
-    ObjectContainer oc;
+ObjectContainer random_objects(size_t n, double box_size) {
+    ObjectContainer oc(n);
+    TophatRadialWindowFunctionFilter tophat_filter(box_size/2.);
 
-    for(size_t i=0; i<n; ++i) {
-        oc.add_object(Object(dist(rng), dist(rng), dist(rng)));
-    }
-
-    if(tophat){
-        TophatRadialWindowFunctionFilter tophat_filter(box_size/2.);
-        tophat_filter(oc, true);
+#pragma omp parallel
+    {
+        std::mt19937 rng_private;
+        std::uniform_real_distribution<double> dist(-box_size/2., box_size/2.);
+        Object object;
+#pragma omp for
+        for (size_t i = 0; i<n; ++i) {
+            do{
+                object = Object(dist(rng_private), dist(rng_private), dist(rng_private));
+            } while(!tophat_filter.filter(object));
+            oc[i] = object;
+        }
     }
     return oc;
 }
 
 void print_arguments(){
-//    std::cout << "Arguments: lmax, nmax, nside, parallel [True/False], methods [raw, hp, hp_fft, hp_fft2, hp_fft3], " << std::endl;
-    std::cout << "Arguments: lmax nmax nside parallel [True/False] methods [raw, hp, hp_fft], " << std::endl;
+    std::cout << "Arguments: lmax nmax nside parallel [True/False] interpolated [True/False] method [raw/reverse/reverse_fft] obj_number" << std::endl;
+}
+
+enum class Method{
+    RAW,
+    REVERSE,
+    REVERSE_FFT
+};
+
+struct RunArgs{
+    int lmax;
+    int nmax;
+    int nside;
+    int n;
+    bool parallel;
+    bool interpolated;
+    Method method;
+};
+
+RunArgs parser_arguments(int argc, char* argv[]){
+    if(argc != 8){
+        std::cout << "Got " << argc << " arguments." << std::endl;
+        print_arguments();
+        throw "ARGUMENT_ERROR";
+    }
+
+    RunArgs run_args;
+
+    run_args.lmax = std::stoi(argv[1]);
+    run_args.nmax = std::stoi(argv[2]);
+    run_args.nside = std::stoi(argv[3]);
+
+    if(std::string(argv[4])==std::string("True"))
+        run_args.parallel=true;
+    else if(std::string(argv[4])==std::string("False"))
+        run_args.parallel=false;
+    else{
+        std::cout << "Parallel either 'True' or 'False' (got '" << argv[4] << "')" << std::endl;
+        throw "ARGUMENT_ERROR";
+    }
+
+    if(std::string(argv[5])==std::string("True"))
+        run_args.interpolated=true;
+    else if(std::string(argv[5])==std::string("False"))
+        run_args.interpolated=false;
+    else{
+        std::cout << "Interpolated either 'True' or 'False' (got '" << argv[5] << "')" << std::endl;
+        throw "ARGUMENT_ERROR";
+    }
+
+    if(std::string(argv[6]) == std::string("raw")){
+        run_args.method=Method::RAW;
+    } else if(std::string(argv[6]) == std::string("reverse")){
+        run_args.method=Method::REVERSE;
+    } else if(std::string(argv[6]) == std::string("reverse_fft")){
+        run_args.method=Method::REVERSE_FFT;
+    } else {
+        std::cout << "Unknown method: " << argv[6] << std::endl;
+        print_arguments();
+        throw "ARGUMENT_ERROR";
+    }
+
+    run_args.n = std::stoi(argv[7]);
+
+    return run_args;
 }
 
 
-
-
 int main(int argc, char* argv[]) {
-    if(argc < 5){
-        std::cout << "Got " << argc << " arguments." << std::endl;
-        print_arguments();
-        return -1;
-    }
+    RunArgs run_args(parser_arguments(argc, argv));
 
-    // methods
-    bool do_raw=false;
-    std::vector<KClkk (*)(const PixelizedObjectContainer&, unsigned short, unsigned short, double, double, bool, bool, bool)>
-            hp_functions;
-    // if no method specified: do all
-    if(argc==5){
-        do_raw=true;
-        hp_functions.push_back(_decomp_SFB);
-        hp_functions.push_back(_decomp_SFB_FFT);
-    } else {
-        for(int i=5; i<argc; ++i){
-            if(std::string(argv[i]) == std::string("raw")){
-                do_raw=true;
-            } else if(std::string(argv[i]) == std::string("hp")){
-                hp_functions.push_back(_decomp_SFB);
-            } else if(std::string(argv[i]) == std::string("hp_fft")){
-                hp_functions.push_back(_decomp_SFB_FFT);
-            } else {
-                std::cout << "Unknown method: " << argv[i] << std::endl;
-                print_arguments();
-                return -1;
-            }
-        }
-    }
-
-    int nside = std::stoi(argv[3]);
-    int lmax = std::stoi(argv[1]);
-    int nmax = std::stoi(argv[2]);
-
-    // parallel
-    bool parallel;
-    if(std::string(argv[4])==std::string("True"))
-        parallel=true;
-    else if(std::string(argv[4])==std::string("False"))
-        parallel=false;
-    else{
-        std::cout << "Parallel either 'True' or 'False' (got '" << argv[4] << "')" << std::endl;
-        return -1;
-    }
-
+    int threads = 1;
 #if defined(_OPENMP)
-#pragma omp parallel if(parallel)
+#pragma omp parallel if(run_args.parallel)
     {
 #pragma omp master
         {
-                std::cout << "Using " << omp_get_num_threads() << " of max " << omp_get_max_threads() << std::endl;
+            threads = omp_get_num_threads();
+            std::cout << "# Using OpenMP with " << threads << " threads of maximal " << omp_get_max_threads() << std::endl;
         }
     }
+#else
+    std::cout << "# Not compiled with OpenMP support. Using 1 thread only." << std::endl
 #endif // defined(_OPENMP)
-
-    std::vector<std::pair<size_t, size_t>> runs = {
-            {1<<10, 20},
-            {1<<14, 10},
-            {1<<16, 6 },
-            {1<<18, 4 },
-            {1<<20, 2 }};
-
     double box_size = 100;
     double window_volume = 4/3.*M_PI*std::pow(box_size/2, 3);
 
-    timer::Timer time;
-
-
-    for(auto& r: runs) {
-        ObjectContainer oc(random_objects(r.first, box_size, true));
-        PixelizedObjectContainer pix_oc(nside, oc);
-
-        std::cout << std::setw(10) << oc.size() << " ";
-
-        // Raw
-        if(do_raw) {
-            time.start();
-            for (size_t i = 0; i<r.second; ++i) {
-                auto kclkk = _decomp_SFB(oc, lmax, nmax, box_size/2., window_volume, false, parallel, false);
-            }
-            time.stop();
-            std::cout << std::setw(10) << time.duration<timer::milliseconds>()/r.second << " ";
-
-            time.start();
-            for (size_t i = 0; i<r.second; ++i) {
-                auto kclkk = _decomp_SFB(oc, lmax, nmax, box_size/2., window_volume, false, parallel, true);
-            }
-            time.stop();
-            std::cout << std::setw(10) << time.duration<timer::milliseconds>()/r.second << " ";
-        }
-
-        for(auto& fct: hp_functions){
-            time.start();
-            for(size_t i=0; i<r.second; ++i){
-                auto kclkk = fct(pix_oc, lmax, nmax, box_size/2., window_volume, false, parallel, false);
-            }
-            time.stop();
-            std::cout << std::setw(10) << time.duration<timer::milliseconds>()/r.second << " ";
-
-            time.start();
-            for(size_t i=0; i<r.second; ++i){
-                auto kclkk = fct(pix_oc, lmax, nmax, box_size/2., window_volume, false, parallel, true);
-            }
-            time.stop();
-            std::cout << std::setw(10) << time.duration<timer::milliseconds>()/r.second << " ";
-        }
-        std::cout << std::endl;
+    double internal_runs = 2000. / std::sqrt(run_args.n);
+    internal_runs *= std::pow(20./run_args.lmax,2);
+    internal_runs *= 100./run_args.nmax;
+    internal_runs *= threads;
+    if(run_args.interpolated){
+        internal_runs *= 5;
     }
+    internal_runs = std::max(internal_runs, 1.);
+
+    std::cout << "# Within tophat: " << run_args.n << " objects. Number of runs to average time over: " << internal_runs << std::endl;
+    std::cout << "# Analyzing method: " << argv[6] << std::endl;
+
+    timer::Timer timer;
+    KClkk kclkk(run_args.lmax, run_args.nmax, box_size/2.);
+
+    std::stringstream output_filename;
+    output_filename << run_args.lmax << run_args.nmax << run_args.nside << run_args.parallel << run_args.interpolated
+            << run_args.n << threads << "_";
+    switch(run_args.method){
+    case Method::RAW:
+        output_filename << "raw";
+        break;
+    case Method::REVERSE:
+        output_filename << "reverse";
+        break;
+    case Method::REVERSE_FFT:
+        output_filename << "reverse_fft";
+        break;
+    }
+
+    ObjectContainer oc(random_objects(run_args.n, box_size));
+    PixelizedObjectContainer pix_oc(run_args.nside, oc);
+
+    timer.start();
+    for(int i=0; i<internal_runs; ++i) {
+        switch(run_args.method){
+        case Method::RAW:
+            kclkk = _decomp_SFB(oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, run_args.parallel, run_args.interpolated);
+            break;
+        case Method::REVERSE:
+            kclkk = _decomp_SFB(oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, run_args.parallel, run_args.interpolated);
+            break;
+        case Method::REVERSE_FFT:
+            kclkk = _decomp_SFB(oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, run_args.parallel, run_args.interpolated);
+            break;
+        }
+    }
+    timer.stop();
+    double time = timer.duration<timer::milliseconds>()/internal_runs;
+
+    kclkk.savetxt(output_filename.str());
+
+    time /= internal_runs;
+    std::cout << std::endl;
+    std::cout << std::setw(12) << "# ___size___"             << " " << std::setw(12) << "__Avg time__" << std::endl;
+    std::cout << std::setw(12) << oc.size() << " " << std::setw(12) << std::setprecision(7) << std::scientific << time << std::endl;
     return 0;
 }
 
