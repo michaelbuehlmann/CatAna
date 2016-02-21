@@ -24,25 +24,26 @@ KClkk Analyzer::compute_sfb(unsigned short lmax, unsigned short nmax, double rma
     ObjectContainer oc;
     {
         ObjectContainerSink sink(oc);
-        FilterStream fs(source.get(), &sink);
+        FilterStream fs(source.get(), &sink, 1000000, verbose);
         for (auto& filter: filters) {
             fs.add_filter(filter.get());
         }
         fs.run();
     }
-    return _decomp_SFB(oc, lmax, nmax, rmax, window_volume, verbose, true);
+    return compute_SFB(oc, lmax, nmax, rmax, window_volume, verbose);
 }
 
-KClkk Analyzer::compute_sfb(unsigned short lmax, unsigned short nmax, double rmax, unsigned int nside, bool verbose)
+KClkk Analyzer::compute_sfb_pixelized(unsigned short lmax, unsigned short nmax, double rmax, unsigned int nside,
+        bool verbose)
 {
     PixelizedObjectContainer pix_oc(nside);
     {
         PixelizedObjectContainerSink sink(pix_oc);
-        FilterStream fs(source.get(), &sink);
+        FilterStream fs(source.get(), &sink, 1000000, verbose);
         for (auto& filter: filters) {
             fs.add_filter(filter.get());
         }
         fs.run();
     }
-    return _decomp_SFB(pix_oc, lmax, nmax, rmax, window_volume, verbose, true);
+    return compute_SFB(pix_oc, lmax, nmax, rmax, window_volume, verbose);
 }

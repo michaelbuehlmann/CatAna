@@ -14,13 +14,13 @@
 class Analyzer {
 public:
     Analyzer() = default;
-    Analyzer(std::shared_ptr<Source> source, double window_volume);
+    Analyzer(std::shared_ptr<Source> source_ptr, double window_volume);
 
     void set_source(std::shared_ptr<Source> source);
     void add_filter(std::shared_ptr<Filter> filter);
 
     KClkk compute_sfb(unsigned short lmax, unsigned short nmax, double rmax, bool verbose);
-    KClkk compute_sfb(unsigned short lmax, unsigned short nmax, double rmax, unsigned int nside, bool verbose);
+    KClkk compute_sfb_pixelized(unsigned short lmax, unsigned short nmax, double rmax, unsigned int nside, bool verbose);
 private:
     std::shared_ptr<Source> source;
     std::vector<std::shared_ptr<Filter>> filters;
