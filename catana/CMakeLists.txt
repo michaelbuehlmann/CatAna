@@ -14,7 +14,7 @@ set(basictypes_SOURCES
         include/catana/objects/PixelizedObjectContainer.hpp src/objects/PixelizedObjectContainer.cpp)
 
 set(returntypes_SOURCES
-        include/catana/tools/return_types.hpp src/tools/return_types.cpp)
+        include/catana/decomposition/return_types.hpp src/decomposition/return_types.cpp)
 
 set(iotools_sources_SOURCES
         include/catana/io_tools/Source.hpp

@@ -8,7 +8,7 @@
 #include <functional>
 #include <complex>
 #include "tools/fftw_field.hpp"
-#include "tools/return_types.hpp"
+#include "decomposition/return_types.hpp"
 #include "Window.hpp"
 
 class Catalog;

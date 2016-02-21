@@ -104,6 +104,9 @@ RunArgs parser_arguments(int argc, char* argv[]){
 
 int main(int argc, char* argv[]) {
     RunArgs run_args(parser_arguments(argc, argv));
+    timer::Timer timer;
+
+    timer.start();
 
     int threads = 1;
 #if defined(_OPENMP)
@@ -121,7 +124,7 @@ int main(int argc, char* argv[]) {
     double box_size = 100;
     double window_volume = 4/3.*M_PI*std::pow(box_size/2, 3);
 
-    double internal_runs = 2000. / std::sqrt(run_args.n);
+    double internal_runs = 300. / std::sqrt(run_args.n);
     internal_runs *= std::pow(20./run_args.lmax,2);
     internal_runs *= 100./run_args.nmax;
     internal_runs *= threads;
@@ -130,10 +133,9 @@ int main(int argc, char* argv[]) {
     }
     internal_runs = std::max(internal_runs, 1.);
 
-    std::cout << "# Within tophat: " << run_args.n << " objects. Number of runs to average time over: " << internal_runs << std::endl;
+    std::cout << "# Within tophat: " << run_args.n << " objects. Number of runs to average time over: " << int(internal_runs) << std::endl;
     std::cout << "# Analyzing method: " << argv[6] << std::endl;
 
-    timer::Timer timer;
     KClkk kclkk(run_args.lmax, run_args.nmax, box_size/2.);
 
     std::stringstream output_filename;
@@ -153,6 +155,8 @@ int main(int argc, char* argv[]) {
 
     ObjectContainer oc(random_objects(run_args.n, box_size));
     PixelizedObjectContainer pix_oc(run_args.nside, oc);
+    timer.stop();
+    std::cout << "# Time for objectcontainer creation: " << timer.duration() << std::endl;
 
     timer.start();
     for(int i=0; i<internal_runs; ++i) {
@@ -169,14 +173,13 @@ int main(int argc, char* argv[]) {
         }
     }
     timer.stop();
-    double time = timer.duration<timer::milliseconds>()/internal_runs;
+    double time = timer.duration()/int(internal_runs);
 
     kclkk.savetxt(output_filename.str());
 
-    time /= internal_runs;
     std::cout << std::endl;
-    std::cout << std::setw(12) << "# ___size___"             << " " << std::setw(12) << "__Avg time__" << std::endl;
-    std::cout << std::setw(12) << oc.size() << " " << std::setw(12) << std::setprecision(7) << std::scientific << time << std::endl;
+    std::cout << std::setw(12) << "# ___size___"             << " "  << "___Avg time___" << std::endl;
+    std::cout << std::setw(12) << oc.size() << " " << std::setprecision(8) << std::scientific << time << std::endl;
     return 0;
 }
 

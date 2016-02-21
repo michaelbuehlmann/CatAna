@@ -5,10 +5,6 @@
 #include "timer.hpp"
 
 namespace timer {
-    using seconds = std::chrono::seconds;
-    using milliseconds = std::chrono::milliseconds;
-    using microseconds = std::chrono::microseconds;
-    using nanoseconds = std::chrono::nanoseconds;
 
     class Timer {
     public:
@@ -27,14 +23,17 @@ namespace timer {
             stopped = true;
         }
 
-        template<class T>
         double duration()
         {
+            double time;
             if (started && stopped) {
-                return std::chrono::duration_cast<T>(t_stop-t_start).count();
+                std::chrono::duration<double> elapsed_seconds = t_stop-t_start;
+                time = elapsed_seconds.count();
             } else {
-                return 0;
+                time = 0;
             }
+            started = stopped = false;
+            return time;
         }
 
     private:

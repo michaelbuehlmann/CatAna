@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include <catana/tools/return_types.hpp>
+#include <catana/decomposition/return_types.hpp>
 #include <boost/math/special_functions/bessel.hpp>
 #include <fstream>
 #include <string>

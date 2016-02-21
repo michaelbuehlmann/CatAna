@@ -2,7 +2,7 @@
 // Created by Michael Bühlmann on 27/01/16.
 //
 
-#include <catana/tools/return_types.hpp>
+#include <catana/decomposition/return_types.hpp>
 #include <catana/besseltools.hpp>
 #include <cmath>
 #include <iomanip>

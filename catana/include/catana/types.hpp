@@ -8,6 +8,6 @@
 #include "catana/objects/Object.hpp"
 #include "catana/objects/ObjectContainer.hpp"
 #include "catana/objects/PixelizedObjectContainer.hpp"
-#include "tools/return_types.hpp"
+#include "catana/decomposition/return_types.hpp"
 
 #endif //CATANA_TYPES_HPP
