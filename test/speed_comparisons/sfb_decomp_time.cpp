@@ -125,8 +125,8 @@ int main(int argc, char* argv[]) {
     double window_volume = 4/3.*M_PI*std::pow(box_size/2, 3);
 
     double internal_runs = 300. / std::sqrt(run_args.n);
-    internal_runs *= std::pow(20./run_args.lmax,2);
-    internal_runs *= 100./run_args.nmax;
+    internal_runs *= (20./run_args.lmax);
+    internal_runs *= (50./run_args.nmax);
     internal_runs *= threads;
     if(run_args.interpolated){
         internal_runs *= 5;

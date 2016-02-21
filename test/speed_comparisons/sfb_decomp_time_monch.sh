@@ -23,11 +23,11 @@ if [ "$1" = "A" ]; then
                     NAME=A_${lmax}_${nmax}_${method}_${A_N}_${A_THREADS}
                     srun -N1 --exclusive --partition ${PARTITION} --time ${TIME} --job-name ${NAME} \
                         env OMP_NUM_THREADS=${A_THREADS} \
-                        "./sfb_time" "${lmax}" "${nmax}" "${nside}" "True" "True" "${method}" "${A_N}" > ${OUTPUT_DIR}/${NAME}.txt &
+                        "./sfb_time" "${lmax}" "${nmax}" "128" "True" "True" "${method}" "${A_N}" > ${OUTPUT_DIR}/${NAME}.txt &
                 else
                     for nside in "${A_NSIDE[@]}"
                     do
-                        NAME=A_${lmax}_${nmax}_${method}__${nside}_${A_N}_${A_THREADS}
+                        NAME=A_${lmax}_${nmax}_${method}_${nside}_${A_N}_${A_THREADS}
                         srun -N1 --exclusive --partition ${PARTITION} --time ${TIME} --job-name ${NAME} \
                             env OMP_NUM_THREADS=${A_THREADS} \
                             "./sfb_time" "${lmax}" "${nmax}" "${nside}" "True" "True" "${method}" "${A_N}" > ${OUTPUT_DIR}/${NAME}.txt &
