@@ -165,10 +165,10 @@ int main(int argc, char* argv[]) {
             kclkk = _decomp_SFB(oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, run_args.parallel, run_args.interpolated);
             break;
         case Method::REVERSE:
-            kclkk = _decomp_SFB(oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, run_args.parallel, run_args.interpolated);
+            kclkk = _decomp_SFB(pix_oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, run_args.parallel, run_args.interpolated);
             break;
         case Method::REVERSE_FFT:
-            kclkk = _decomp_SFB(oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, run_args.parallel, run_args.interpolated);
+            kclkk = _decomp_SFB_FFT(pix_oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, run_args.parallel, run_args.interpolated);
             break;
         }
     }

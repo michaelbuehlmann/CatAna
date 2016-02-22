@@ -72,7 +72,7 @@ elif [ "$1" = "C" ]; then
     do
         for method in "${C_METHODS[@]}"
         do
-            NAME=B_${C_LMAX}_${C_NMAX}_${method}_${C_NSIDE}_${N}_${C_THREADS}
+            NAME=C_${C_LMAX}_${C_NMAX}_${method}_${C_NSIDE}_${N}_${C_THREADS}
             srun -N1 --exclusive --partition ${PARTITION} --time ${TIME} --job-name ${NAME} \
                     env OMP_NUM_THREADS=${C_THREADS} \
                     "./sfb_time" "${C_LMAX}" "${C_NMAX}" "${C_NSIDE}" "True" "True" "${method}" "${N}" > ${OUTPUT_DIR}/${NAME}.txt &
