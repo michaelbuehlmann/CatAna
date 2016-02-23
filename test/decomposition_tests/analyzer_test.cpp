@@ -18,8 +18,9 @@ std::mt19937 rng;
 
 
 TEST(Analyzer, RAW){
+    auto source = std::shared_ptr<Source>(new HDF5Source<CartesianRecord<float>>(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false));
     Analyzer analyzer(
-            std::shared_ptr<Source>(new HDF5Source<CartesianRecord<float>>(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false)),
+            source.get(),
             5535184878.03
     );
 
@@ -27,8 +28,9 @@ TEST(Analyzer, RAW){
 }
 
 TEST(Analyzer, Pixelized){
+    auto source = std::shared_ptr<Source>(new HDF5Source<CartesianRecord<float>>(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false));
     Analyzer analyzer(
-            std::shared_ptr<Source>(new HDF5Source<CartesianRecord<float>>(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false)),
+            source.get(),
             5535184878.03
     );
 
@@ -36,21 +38,14 @@ TEST(Analyzer, Pixelized){
 }
 
 TEST(Analyzer, Filter){
+    auto source = std::shared_ptr<Source>(new HDF5Source<CartesianRecord<float>>(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false));
     Analyzer analyzer(
-            std::shared_ptr<Source>(new HDF5Source<CartesianRecord<float>>(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false)),
+            source.get(),
             5535184878.03
     );
+    auto filter = std::shared_ptr<Filter>(new TophatRadialWindowFunctionFilter(1000));
     analyzer.add_filter(
-            std::shared_ptr<Filter>(new TophatRadialWindowFunctionFilter(1000))
+            filter.get()
     );
     auto kclkk = analyzer.compute_sfb_pixelized(5, 10, 2500, 16, false);
-}
-
-TEST(Analyzer, ConstructDerived){
-    Analyzer analyzer(
-            std::shared_ptr<HDF5Source<CartesianRecord<float>>>(new HDF5Source<CartesianRecord<float>>(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false)),
-            5535184878.03
-    );
-
-    auto kclkk = analyzer.compute_sfb(5, 10, 2500, false);
 }

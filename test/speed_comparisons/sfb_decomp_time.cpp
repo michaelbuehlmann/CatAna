@@ -3,7 +3,7 @@
 //
 
 #include <catana/iotools.hpp>
-#include <catana/decomposition/sfb_decomposition.hpp>
+#include <catana/decomposition.hpp>
 #include <iostream>
 #include <iomanip>
 #include <random>
@@ -119,7 +119,7 @@ int main(int argc, char* argv[]) {
         }
     }
 #else
-    std::cout << "# Not compiled with OpenMP support. Using 1 thread only." << std::endl
+    std::cout << "# Not compiled with OpenMP support. Using 1 thread only." << std::endl;
 #endif // defined(_OPENMP)
     double box_size = 100;
     double window_volume = 4/3.*M_PI*std::pow(box_size/2, 3);
@@ -162,13 +162,13 @@ int main(int argc, char* argv[]) {
     for(int i=0; i<internal_runs; ++i) {
         switch(run_args.method){
         case Method::RAW:
-            kclkk = _decomp_SFB(oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, run_args.parallel, run_args.interpolated);
+            kclkk = _sfb_raw(oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, run_args.parallel, run_args.interpolated);
             break;
         case Method::REVERSE:
-            kclkk = _decomp_SFB(pix_oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, run_args.parallel, run_args.interpolated);
+            kclkk = _sfb_reverse(pix_oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, run_args.parallel, run_args.interpolated);
             break;
         case Method::REVERSE_FFT:
-            kclkk = _decomp_SFB_FFT(pix_oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, run_args.parallel, run_args.interpolated);
+            kclkk = _sfb_reverse_fft(pix_oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, run_args.parallel, run_args.interpolated);
             break;
         }
     }

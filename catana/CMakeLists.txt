@@ -53,6 +53,9 @@ set(iotools_SOURCES
 set(decomposition_SOURCES
         ${returntypes_SOURCES}
         include/catana/decomposition/sfb_decomposition.hpp src/decomposition/sfb_decomposition.cpp
+        include/catana/decomposition/sfb_raw.hpp src/decomposition/sfb_raw.cpp
+        include/catana/decomposition/sfb_reverse.hpp src/decomposition/sfb_reverse.cpp
+        include/catana/decomposition/sfb_reverse_fft.hpp src/decomposition/sfb_reverse_fft.cpp
         src/decomposition/Analyzer.cpp include/catana/decomposition/Analyzer.hpp)
 
 #set(catalog_SOURCES

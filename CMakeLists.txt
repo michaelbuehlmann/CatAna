@@ -60,6 +60,6 @@ include_directories(${CMAKE_BINARY_DIR}/catana/include)
 add_subdirectory(catana)
 add_subdirectory(python)
 
-if(TEST)
+if(BUILD_TESTS)
     add_subdirectory(test)
 endif()

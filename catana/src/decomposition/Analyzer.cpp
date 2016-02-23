@@ -5,16 +5,16 @@
 #include <catana/decomposition/Analyzer.hpp>
 #include <catana/decomposition/sfb_decomposition.hpp>
 
-Analyzer::Analyzer(std::shared_ptr<Source> source, double window_volume)
+Analyzer::Analyzer(Source* source, double window_volume)
     : source(source), window_volume(window_volume)
 {}
 
-void Analyzer::set_source(std::shared_ptr<Source> source)
+void Analyzer::set_source(Source* source)
 {
     this->source = source;
 }
 
-void Analyzer::add_filter(std::shared_ptr<Filter> filter)
+void Analyzer::add_filter(Filter* filter)
 {
     filters.push_back(filter);
 }
@@ -24,9 +24,9 @@ KClkk Analyzer::compute_sfb(unsigned short lmax, unsigned short nmax, double rma
     ObjectContainer oc;
     {
         ObjectContainerSink sink(oc);
-        FilterStream fs(source.get(), &sink, 1000000, verbose);
+        FilterStream fs(source, &sink, 1000000, verbose);
         for (auto& filter: filters) {
-            fs.add_filter(filter.get());
+            fs.add_filter(filter);
         }
         fs.run();
     }
@@ -39,9 +39,9 @@ KClkk Analyzer::compute_sfb_pixelized(unsigned short lmax, unsigned short nmax, 
     PixelizedObjectContainer pix_oc(nside);
     {
         PixelizedObjectContainerSink sink(pix_oc);
-        FilterStream fs(source.get(), &sink, 1000000, verbose);
+        FilterStream fs(source, &sink, 1000000, verbose);
         for (auto& filter: filters) {
-            fs.add_filter(filter.get());
+            fs.add_filter(filter);
         }
         fs.run();
     }
