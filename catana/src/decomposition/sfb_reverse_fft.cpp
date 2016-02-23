@@ -13,7 +13,7 @@
 
 using complex = std::complex<double>;
 
-
+//! A class holding information of a healpix ring, along with pointers to the actual map, the FFT-map and the FFTW-routine.
 struct RingInfo{
     RingInfo(int npix, const PixelObjects* const pixelobj1, double* map_i, complex* fft_map_i)
             : npix(npix), start_pixobjs(pixelobj1), phase(pixelobj1->p.phi), theta(pixelobj1->p.theta), map(map_i), fft_map(fft_map_i)
@@ -30,7 +30,7 @@ struct RingInfo{
     fftw_plan fft_forward;
 };
 
-
+//! The main computational part
 inline void sfb_ringdecomp_kernel(const unsigned short& l, double& k_n,
         const PixelizedObjectContainer& pix_oc,
         const std::function<double(double)>& sbessel_fct, Eigen::MatrixXcd& f_lmn,
@@ -38,6 +38,7 @@ inline void sfb_ringdecomp_kernel(const unsigned short& l, double& k_n,
         RingInfo& ring_info);
 
 
+//! This function initialized and runs through the sfb decomposition using the reverse_fft-method.
 KClkk _sfb_reverse_fft(
         const PixelizedObjectContainer& pix_obj_cont,
         unsigned short lmax, unsigned short nmax,
@@ -67,6 +68,7 @@ KClkk _sfb_reverse_fft(
                         &map[rstart], &fft_map[rstart/2+i]
                 )
         );
+        std::cout << "i: " << i << ", n: " << rpix << std::endl;
     }
 
     // This will be a nullptr if !interpolated, otherwise we will assign it within the l-for loop
@@ -77,10 +79,11 @@ KClkk _sfb_reverse_fft(
     for(unsigned short l=0; l<lmax; ++l){
 
         if(verbose) {
-            std::cout << "\tl = " << l << " ...";
+            std::cout << "\tl = " << l << " ... ";
             std::cout.flush();
         }
 
+        // Instantiate an interpolation routine for spherical bessels if asked for. Otherwise use plain function.
         if(interpolated){
             sblu.reset(new SBesselLookUp(l, nmax, BESSELINTERPOLATIONPOINTS_PER_ZERO*nmax));
             sph_bessel_l = [&](const double& z){return sblu->operator()(z);};
@@ -121,6 +124,10 @@ KClkk _sfb_reverse_fft(
 
             // Normalize c_ln
             kclkk.c_ln(l,n) *= std::pow(norm_factor * k_n, 2) / (2*l+1);
+
+            if(verbose) {
+                std::cout << "Done." << std::endl;
+            }
         }
     }
 
@@ -136,13 +143,13 @@ KClkk _sfb_reverse_fft(
 }
 
 
-
 inline void sfb_ringdecomp_kernel(const unsigned short& l, double& k_n,
         const PixelizedObjectContainer& pix_oc,
         const std::function<double(double)>& sbessel_fct, Eigen::MatrixXcd& f_lmn,
         const complex* y_lm_i,
         RingInfo& ring_info)
 {
+    // Create ring-map
     auto current_pixelobj = ring_info.start_pixobjs;
     for (int j = 0; j<ring_info.npix; ++j) {
         ring_info.map[j] = 0;
@@ -150,8 +157,11 @@ inline void sfb_ringdecomp_kernel(const unsigned short& l, double& k_n,
             ring_info.map[j] += sbessel_fct(k_n*r);
         }
     }
+
+    // Transform ring-map
     fftw_execute(ring_info.fft_forward);
 
+    // Get f_lmn from transformed map, do multiply with y_lm of this ring;
     for (unsigned short m = 0; m<=l; ++m) {
         complex fft_m;
 
