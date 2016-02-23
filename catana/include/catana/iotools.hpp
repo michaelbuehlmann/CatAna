@@ -12,6 +12,7 @@
 #include "io_tools/sources/HDF5Source.hpp"
 #include "io_tools/sources/GadgetSource.hpp"
 #include "io_tools/sources/RawBinarySource.hpp"
+#include "io_tools/sources/TextSource.hpp"
 
 #include "io_tools/sinks/ObjectContainerSink.hpp"
 #include "io_tools/sinks/PixelizedObjectContainerSink.hpp"

@@ -25,10 +25,12 @@
 
 template<class FLOAT_TYPE>
 struct CartesianRecord {
+    typedef FLOAT_TYPE float_t;
     FLOAT_TYPE pos_x;
     FLOAT_TYPE pos_y;
     FLOAT_TYPE pos_z;
     CartesianRecord(): pos_x(0), pos_y(0), pos_z(0) {}
+    CartesianRecord(FLOAT_TYPE x, FLOAT_TYPE y, FLOAT_TYPE z): pos_x(x), pos_y(y), pos_z(z) {}
     CartesianRecord(const Object& object, const double& box_size, const double& hubble_param) {
         pos_x = pos_y = pos_z = object.r*hubble_param;
         vec3 unit_vec(object.p.to_vec3());
@@ -54,10 +56,12 @@ struct CartesianRecord {
 
 template<class FLOAT_TYPE>
 struct SphericalRecord {
+    typedef FLOAT_TYPE float_t;
     FLOAT_TYPE pos_r;
     FLOAT_TYPE pos_theta;
     FLOAT_TYPE pos_phi;
     SphericalRecord() : pos_r(0), pos_theta(0), pos_phi(0) {}
+    SphericalRecord(FLOAT_TYPE r, FLOAT_TYPE theta, FLOAT_TYPE phi): pos_r(r), pos_theta(theta), pos_phi(phi) {}
     SphericalRecord(const Object& object, const double& box_size, const double& hubble_param)
             : pos_r(object.r*hubble_param), pos_theta(object.p.theta), pos_phi(object.p.phi) {}
     Object object(const double& box_size, const double& hubble_param){

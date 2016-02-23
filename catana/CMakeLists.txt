@@ -20,7 +20,8 @@ set(iotools_sources_SOURCES
         include/catana/io_tools/Source.hpp
         include/catana/io_tools/sources/GadgetSource.hpp src/io_tools/sources/GadgetSource.cpp
         include/catana/io_tools/sources/HDF5Source.hpp src/io_tools/sources/HDF5Source.cpp
-        include/catana/io_tools/sources/RawBinarySource.hpp src/io_tools/sources/RawBinarySource.cpp)
+        include/catana/io_tools/sources/RawBinarySource.hpp src/io_tools/sources/RawBinarySource.cpp
+        include/catana/io_tools/sources/TextSource.hpp src/io_tools/sources/TextSource.cpp)
 
 set(iotools_sinks_SOURCES
         include/catana/io_tools/Sink.hpp
