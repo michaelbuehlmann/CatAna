@@ -40,7 +40,7 @@ if [ "$1" = "A" ]; then
 
 # B: MULTITHREAD_SCALING
 elif [ "$1" = "B" ]; then
-    B_THREADS=( 1 2 4 8 16 32 )
+    B_THREADS=( 1 2 4 6 8 10 12 16 20 24 28 32 36 40 )
     B_METHODS=( raw reverse reverse_fft )
     B_N=2000000
     B_NMAX=200
