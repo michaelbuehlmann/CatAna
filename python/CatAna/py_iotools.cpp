@@ -13,6 +13,7 @@
 #include <random>
 
 #include <pybind11/pybind11.h>
+#include <pybind11/numpy.h>
 #include <pybind11/functional.h>
 
 namespace py = pybind11;
@@ -28,8 +29,8 @@ std::random_device rand_dev;
 std::mt19937 rng;
 
 
-PYBIND11_PLUGIN(iotools) {
-    py::module m("io", "python binding for in/output of particle positions (part of CatAna)");
+PYBIND11_PLUGIN(io_core) {
+    py::module m("io_core", "python binding for in/output of particle positions (part of CatAna)");
 
     // Initialization of random numbers. Once with given seed, once random seed
     m.def("init_random", [&](unsigned int seed){
@@ -41,17 +42,9 @@ PYBIND11_PLUGIN(iotools) {
         std::seed_seq seq(std::begin(seed_data), std::end(seed_data));
         rng.seed(seq); });
 
-    // Binding for the "Object" class, with cartesian and spherical output methods
-    py::class_<Object>(m, "Object")
-            .def(py::init<>())
-            .def(py::init<double, double, double>())
-            .def("spherical", [](const Object& obj) {
-                return std::make_tuple(obj.r, obj.p.theta, obj.p.phi);
-            })
-            .def("cartesian", [](const Object& obj) {
-                vec3 v = obj.p.to_vec3();
-                return std::make_tuple(obj.r*v.x, obj.r*v.y, obj.r*v.z);
-            });
+
+
+
 
     // Parent classes
     py::class_<Source> source(m, "Source");
@@ -130,5 +123,6 @@ PYBIND11_PLUGIN(iotools) {
                     py::arg("temporary_filename"), py::arg("verbose")=true)
             .def("add_filter", &FilterStream::add_filter, "Add a Filter to process", py::arg("filter"))
             .def("run", &FilterStream::run, "Run the pipeline");
+
     return m.ptr();
 }

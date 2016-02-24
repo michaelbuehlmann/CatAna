@@ -30,7 +30,7 @@ KClkk Analyzer::compute_sfb(unsigned short lmax, unsigned short nmax, double rma
         }
         fs.run();
     }
-    return compute_SFB(oc, lmax, nmax, rmax, window_volume, verbose);
+    return sfb_decomposition(oc, lmax, nmax, rmax, window_volume, verbose);
 }
 
 KClkk Analyzer::compute_sfb_pixelized(unsigned short lmax, unsigned short nmax, double rmax, unsigned int nside,
@@ -45,5 +45,5 @@ KClkk Analyzer::compute_sfb_pixelized(unsigned short lmax, unsigned short nmax, 
         }
         fs.run();
     }
-    return compute_SFB(pix_oc, lmax, nmax, rmax, window_volume, verbose);
+    return sfb_decomposition(pix_oc, lmax, nmax, rmax, window_volume, verbose);
 }

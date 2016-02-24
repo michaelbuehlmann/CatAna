@@ -87,3 +87,18 @@ TEST(PixelizedObjectContainer, CreateFromObjectContainer) {
     EXPECT_EQ(oc.size(), pix_oc.get_nobjects());
 
 }
+
+TEST(PixelizedObjectContainer, CountMap) {
+    ObjectContainer oc;
+    oc.add_object(Object(-1,2,3));
+    oc.add_object(Object(-4,1,0));
+    oc.add_object(Object(0,1,2));
+    oc.add_object(Object(1,4,0));
+    oc.add_object(Object(1,2,3));
+
+    PixelizedObjectContainer pix_oc(16, oc);
+    auto countmap = pix_oc.get_countmap();
+    ASSERT_EQ(16*16*12, countmap.rows());
+    EXPECT_EQ(5, countmap.sum());
+
+}

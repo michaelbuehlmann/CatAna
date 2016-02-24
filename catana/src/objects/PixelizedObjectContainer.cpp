@@ -45,3 +45,14 @@ const Healpix_Base& PixelizedObjectContainer::get_hp_base() const
 {
     return hp_base;
 }
+
+Eigen::ArrayXi PixelizedObjectContainer::get_countmap() const
+{
+    int npix = hp_base.Npix();
+    Eigen::ArrayXi map = Eigen::ArrayXi::Zero(npix);
+    for(int i=0; i<npix; ++i){
+        map(i) = operator[](i).size();
+    }
+    return map;
+}
+

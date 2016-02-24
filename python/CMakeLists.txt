@@ -18,17 +18,22 @@ set_target_properties(py_besseltools PROPERTIES OUTPUT_NAME besseltools)
 target_link_libraries(py_besseltools besseltools)
 target_link_libraries(py_besseltools cblas)
 
+add_library(py_basictypes SHARED CatAna/py_basictypes.cpp)
+set_target_properties(py_basictypes PROPERTIES OUTPUT_NAME basictypes)
+target_link_libraries(py_basictypes iotools)
+add_dependencies(py_basictypes eigen)
+
 add_library(py_iotools SHARED CatAna/py_iotools.cpp)
-set_target_properties(py_iotools PROPERTIES OUTPUT_NAME io)
+set_target_properties(py_iotools PROPERTIES OUTPUT_NAME io_core)
 target_link_libraries(py_iotools iotools)
 add_dependencies(py_iotools eigen)
 
 add_library(py_decomposition SHARED CatAna/py_decomposition.cpp)
-set_target_properties(py_decomposition PROPERTIES OUTPUT_NAME decomp)
+set_target_properties(py_decomposition PROPERTIES OUTPUT_NAME decomp_core)
 target_link_libraries(py_decomposition iotools catana)
 add_dependencies(py_decomposition eigen)
 
-foreach(LIB py_besseltools py_iotools py_decomposition)
+foreach(LIB py_besseltools py_basictypes py_iotools py_decomposition)
     set_target_properties(${LIB} PROPERTIES PREFIX "")  # No 'libname.so' but 'name.so'
 
     if (UNIX)
@@ -63,3 +68,6 @@ foreach(LIB py_besseltools py_iotools py_decomposition)
         endif()
     endif()
 endforeach()
+
+add_custom_target(python_libraries
+        DEPENDS py_besseltools py_basictypes py_iotools py_decomposition)

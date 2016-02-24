@@ -10,6 +10,7 @@
 #include <healpix_cxx/healpix_base.h>
 #include <healpix_cxx/pointing.h>
 #include <vector>
+#include <Eigen/Dense>
 
 class PixelObjects : public std::vector<double>{
 public:
@@ -25,6 +26,8 @@ public:
     void add_object(const Object&);
     unsigned int get_nside() const;
     size_t get_nobjects() const;
+
+    Eigen::ArrayXi get_countmap() const;
 
     const Healpix_Base& get_hp_base() const;
 

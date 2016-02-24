@@ -124,10 +124,10 @@ KClkk _sfb_reverse_fft(
 
             // Normalize c_ln
             kclkk.c_ln(l,n) *= std::pow(norm_factor * k_n, 2) / (2*l+1);
-
-            if(verbose) {
-                std::cout << "Done." << std::endl;
             }
+
+        if(verbose) {
+            std::cout << "Done." << std::endl;
         }
     }
 
