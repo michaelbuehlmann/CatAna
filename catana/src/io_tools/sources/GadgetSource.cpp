@@ -186,4 +186,13 @@ ObjectContainer read_gadget_halo_positions(const std::string& filename, bool ver
     return object_container;
 }
 
+void GadgetSource::reset()
+{
+    if(files > 1){
+        load_file(0);
+    } else {
+        load_file(filename);
+    }
+    current_object = 0;
+}
 

@@ -21,10 +21,13 @@ void Analyzer::add_filter(Filter* filter)
 
 KClkk Analyzer::compute_sfb(unsigned short lmax, unsigned short nmax, double rmax, bool verbose)
 {
+    source->reset();
     ObjectContainer oc;
     {
         ObjectContainerSink sink(oc);
         FilterStream fs(source, &sink, 1000000, verbose);
+        TophatRadialWindowFunctionFilter radial_filter(rmax);
+        fs.add_filter(&radial_filter);
         for (auto& filter: filters) {
             fs.add_filter(filter);
         }
@@ -36,10 +39,13 @@ KClkk Analyzer::compute_sfb(unsigned short lmax, unsigned short nmax, double rma
 KClkk Analyzer::compute_sfb_pixelized(unsigned short lmax, unsigned short nmax, double rmax, unsigned int nside,
         bool verbose)
 {
+    source->reset();
     PixelizedObjectContainer pix_oc(nside);
     {
         PixelizedObjectContainerSink sink(pix_oc);
         FilterStream fs(source, &sink, 1000000, verbose);
+        TophatRadialWindowFunctionFilter radial_filter(rmax);
+        fs.add_filter(&radial_filter);
         for (auto& filter: filters) {
             fs.add_filter(filter);
         }

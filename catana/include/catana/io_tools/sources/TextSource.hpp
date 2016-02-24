@@ -16,8 +16,10 @@ class TextSource : public Source {
 public:
     TextSource(std::string filename, double hubble_param=1, double box_size=0);
 
-    virtual long long int read(ObjectContainer::iterator write_iterator, size_t n);
-    virtual long long int read(Object* write_iterator, size_t n);
+    virtual long long int read(ObjectContainer::iterator write_iterator, size_t n) override;
+    virtual long long int read(Object* write_iterator, size_t n) override;
+
+    void reset() override;
 
 private:
     template<class ObjectIterator>

@@ -57,6 +57,15 @@ long long int TextSource<RecordType>::read(ObjectContainer::iterator write_itera
     return read_template(write_iterator, n);
 }
 
+template<class RecordType>
+void TextSource<RecordType>::reset()
+{
+    fs.clear();
+    fs.seekg(0, std::ios::beg);
+}
+
+////////////////////////////
+// Implicit instantiation //
 template class TextSource<CartesianRecord<float>>;
 template class TextSource<CartesianRecord<double>>;
 template class TextSource<SphericalRecord<float>>;

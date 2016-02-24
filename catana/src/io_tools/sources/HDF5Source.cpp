@@ -119,6 +119,12 @@ ObjectContainer read_hdf5_positions(const std::string& filename, const std::stri
     return object_container;
 }
 
+template<class RecordType>
+void HDF5Source<RecordType>::reset()
+{
+    current_record=0;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // IMPLICIT INSTANTIATION (add needed cases)
 template class HDF5Source<CartesianRecord<float>>;

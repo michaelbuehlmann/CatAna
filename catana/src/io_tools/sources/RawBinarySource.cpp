@@ -26,18 +26,18 @@ RawBinarySource<RecordType>::RawBinarySource(std::string filename, bool verbose)
 }
 
 
-template<class RecordType>
-RawBinarySource<RecordType>::~RawBinarySource()
-{
-    close();
-}
-template<class RecordType>
-void RawBinarySource<RecordType>::close()
-{
-    fd.close();
-    if(verbose)
-        std::cout << "Closed file " << filename << std::endl;
-}
+//template<class RecordType>
+//RawBinarySource<RecordType>::~RawBinarySource()
+//{
+//    close();
+//}
+//template<class RecordType>
+//void RawBinarySource<RecordType>::close()
+//{
+//    fd.close();
+//    if(verbose)
+//        std::cout << "Closed file " << filename << std::endl;
+//}
 
 template<class RecordType>
 long long int RawBinarySource<RecordType>::read(ObjectContainer::iterator write_iterator, size_t n)
@@ -72,6 +72,18 @@ long long int RawBinarySource<RecordType>::read_template(ObjectIterator write_it
     }
 }
 
+template<class RecordType>
+void RawBinarySource<RecordType>::reset()
+{
+    current_pos = 0;
+    fd.seekg(0, std::ios::beg);
+}
+
+template<class RecordType>
+size_t RawBinarySource<RecordType>::get_nobjects()
+{
+    return ntot;
+}
 
 //////////////////////////
 // Implicit instantiation

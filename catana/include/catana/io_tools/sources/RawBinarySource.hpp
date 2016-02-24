@@ -15,10 +15,12 @@ class RawBinarySource : public Source {
 public:
     typedef RecordType record_t;
     RawBinarySource(std::string filename, bool verbose=true);
-    ~RawBinarySource();
+//    ~RawBinarySource();
     virtual long long int read(ObjectContainer::iterator write_iterator, size_t n) override;
     virtual long long int read(Object* write_iterator, size_t n) override;
-    void close();
+//    void close();
+    size_t get_nobjects() override;
+    void reset() override;
 
     // Non copyable and assignable
     RawBinarySource(RawBinarySource const&) = delete;

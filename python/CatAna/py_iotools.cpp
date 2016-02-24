@@ -47,30 +47,34 @@ PYBIND11_PLUGIN(io_core) {
 
 
     // Parent classes
-    py::class_<Source> source(m, "Source");
+    py::class_<Source> (m, "Source")
+            .def("reset", &Source::reset)
+            .def("get_objectcontainer", &Source::get_objectcontainer)
+            .def("get_pixobjectcontainer", &Source::get_pixobjectcontainer, py::arg("nside"));
+
     py::class_<Sink> sink(m, "Sink");
     py::class_<Filter> filter(m, "Filter");
 
     // Add Source classes here
-    py::class_<GadgetSource>(m, "GadgetSource", source, "Read positions from binary Gadget file")
+    py::class_<GadgetSource>(m, "GadgetSource", py::base<Source>(), "Read positions from binary Gadget file")
             .def(py::init<std::string, bool>(),
                     py::arg("filename"), py::arg("verbose")=true);
-    py::class_<HDF5Source<record_cf>>(m, "HDF5Source_cartesian_float", source,
+    py::class_<HDF5Source<record_cf>>(m, "HDF5Source_cartesian_float", py::base<Source>(),
             "Read from HDF5 File (cartesian coordinates, float)")
             .def(py::init<std::string, std::string, double, double, bool>(),
                     py::arg("filename"), py::arg("tablename"), py::arg("hubble_param")=1., py::arg("box_size")=0.,
                     py::arg("verbose")=true);
-    py::class_<HDF5Source<record_cd>>(m, "HDF5Source_cartesian_double", source,
+    py::class_<HDF5Source<record_cd>>(m, "HDF5Source_cartesian_double", py::base<Source>(),
             "Read from HDF5 File (cartesian coordinates, double)")
             .def(py::init<std::string, std::string, double, double, bool>(),
                     py::arg("filename"), py::arg("tablename"), py::arg("hubble_param")=1., py::arg("box_size")=0.,
                     py::arg("verbose")=true);
-    py::class_<HDF5Source<record_sf>>(m, "HDF5Source_spherical_float", source,
+    py::class_<HDF5Source<record_sf>>(m, "HDF5Source_spherical_float", py::base<Source>(),
             "Read from HDF5 File (spherical coordinates, float)")
             .def(py::init<std::string, std::string, double, double, bool>(),
                     py::arg("filename"), py::arg("tablename"), py::arg("hubble_param")=1., py::arg("box_size")=0.,
                     py::arg("verbose")=true);
-    py::class_<HDF5Source<record_sd>>(m, "HDF5Source_spherical_double", source,
+    py::class_<HDF5Source<record_sd>>(m, "HDF5Source_spherical_double", py::base<Source>(),
             "Read from HDF5 File (spherical coordinates, double")
             .def(py::init<std::string, std::string, double, double, bool>(),
                     py::arg("filename"), py::arg("tablename"), py::arg("hubble_param")=1., py::arg("box_size")=0.,

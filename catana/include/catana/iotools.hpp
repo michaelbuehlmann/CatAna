@@ -9,6 +9,7 @@
 #include "io_tools/Source.hpp"
 #include "io_tools/Sink.hpp"
 
+#include "io_tools/sources/ObjectContainerSource.hpp"
 #include "io_tools/sources/HDF5Source.hpp"
 #include "io_tools/sources/GadgetSource.hpp"
 #include "io_tools/sources/RawBinarySource.hpp"

@@ -60,6 +60,7 @@ public:
     long long int read(Object* write_iterator, size_t n) override;
 
     size_t get_nobjects() override;
+    void reset() override;
 
 private:
     template<class ObjectIterator>

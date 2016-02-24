@@ -68,7 +68,6 @@ KClkk _sfb_reverse_fft(
                         &map[rstart], &fft_map[rstart/2+i]
                 )
         );
-        std::cout << "i: " << i << ", n: " << rpix << std::endl;
     }
 
     // This will be a nullptr if !interpolated, otherwise we will assign it within the l-for loop

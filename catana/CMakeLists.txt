@@ -17,7 +17,8 @@ set(returntypes_SOURCES
         include/catana/decomposition/return_types.hpp src/decomposition/return_types.cpp)
 
 set(iotools_sources_SOURCES
-        include/catana/io_tools/Source.hpp
+        include/catana/io_tools/Source.hpp src/io_tools/Source.cpp
+        include/catana/io_tools/sources/ObjectContainerSource.hpp src/io_tools/sources/ObjectContainerSource.cpp
         include/catana/io_tools/sources/GadgetSource.hpp src/io_tools/sources/GadgetSource.cpp
         include/catana/io_tools/sources/HDF5Source.hpp src/io_tools/sources/HDF5Source.cpp
         include/catana/io_tools/sources/RawBinarySource.hpp src/io_tools/sources/RawBinarySource.cpp
