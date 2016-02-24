@@ -74,17 +74,14 @@ TEST(ReadGadgetStream, AllObjects) {
         EXPECT_FLOAT_EQ(test_theta[i], oc2[test_positions[i]].p.theta);
         EXPECT_FLOAT_EQ(test_phi[i], oc2[test_positions[i]].p.phi);
     }
-}
 
-TEST(ReadGadget, AllObjects) {
-    std::string filename = "mock_data_z0p000.0";
-    ObjectContainer oc = read_gadget_halo_positions(test_data_dir + filename, false);
-    EXPECT_EQ(512, oc.size());
+    // Assert that nothing left
+    auto n_objects = input.read(tmp_objects, 10);
+    ASSERT_EQ(-1, n_objects);
 
-    for(int i=0; i<test_positions.size(); ++i){
-        EXPECT_FLOAT_EQ(test_radius[i], oc[test_positions[i]].r);
-        EXPECT_FLOAT_EQ(test_theta[i], oc[test_positions[i]].p.theta);
-        EXPECT_FLOAT_EQ(test_phi[i], oc[test_positions[i]].p.phi);
-
-    }
+    // Test Reset
+    ObjectContainer oc3(1000);
+    input.reset();
+    n_objects = input.read(oc3.begin(), 1000);
+    EXPECT_EQ(512, n_objects);
 }

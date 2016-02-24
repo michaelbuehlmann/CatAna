@@ -76,6 +76,18 @@ TEST(RawData, IOLarge) {
         read += n;
         n = source.read(buffer, 100);
     } while(n != -1);
-
     EXPECT_EQ(oc.size(), read);
+
+    // Assert that it returns -1
+    ASSERT_EQ(-1, source.read(buffer, 100));
+
+    // Check if reset works
+    source.reset();
+    read = n = 0;
+    do {
+        read += n;
+        n = source.read(buffer, 100);
+    } while(n != -1);
+    EXPECT_EQ(oc.size(), read);
+
 }

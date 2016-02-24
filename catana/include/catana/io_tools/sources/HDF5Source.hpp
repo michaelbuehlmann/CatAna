@@ -19,16 +19,6 @@
 static const size_t read_chunck = 100000;
 
 
-//! Read all data from HDF5 table filename/dataset_name.
-/*
- * Template parameter defines HDF5 record layout. See hdf5_record_types.hpp
- * dataset_name is absolute path in the HDF5 file to the table to read
- */
-template<class RecordType>
-ObjectContainer read_hdf5_positions(const std::string& filename, const std::string& dataset_name, double hubble_param,
-        double box_size, bool verbose);
-
-
 //! A source to read from HDF5 table filename/dataset_name.
 /*
  * Template parameter defines HDF5 record layout. See hdf5_record_types.hpp

@@ -31,26 +31,21 @@ TEST(ReadHDF5, Stream){
     std::string dataset_name = "/table";
 
     HDF5Source<CartesianRecord<float>> input(test_data_dir + filename, dataset_name, 0.7, 0, false);
-    EXPECT_EQ(512, input.get_nobjects());
+    auto total_objects = input.get_nobjects();
+    EXPECT_EQ(512, total_objects);
 
-    ObjectContainer oc(input.get_nobjects());
+    ObjectContainer oc(total_objects);
 
     auto nrecords = input.read(oc.begin(), 20);
     EXPECT_EQ(20, nrecords);
-}
+    nrecords += input.read(oc.begin()+nrecords, 1000);
+    EXPECT_EQ(total_objects, nrecords);
 
-
-TEST(ReadHDF5, FullFile){
-    std::string filename = "mock_data.hdf5";
-    std::string dataset_name = "/table";
-    ObjectContainer oc;
-
-    oc = read_hdf5_positions<CartesianRecord<float>>(test_data_dir + filename, dataset_name, 0.7, 0, false);
-    ASSERT_EQ(512, oc.size());
-    for(int i=0; i<test_positions_hdf.size(); ++i){
-        EXPECT_FLOAT_EQ(test_radius_hdf[i], oc[test_positions_hdf[i]].r);
-        EXPECT_FLOAT_EQ(test_theta_hdf[i], oc[test_positions_hdf[i]].p.theta);
-        EXPECT_FLOAT_EQ(test_phi_hdf[i], oc[test_positions_hdf[i]].p.phi);
-    }
+    ObjectContainer oc2(input.get_nobjects());
+    auto nrecords2 = input.read(oc2.begin(), 1000);
+    ASSERT_EQ(-1, nrecords2);
+    input.reset();
+    nrecords2 = input.read(oc2.begin(), 1000);
+    EXPECT_EQ(nrecords, nrecords2);
 }
 

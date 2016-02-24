@@ -10,7 +10,6 @@
 #include <cassert>
 #include <algorithm>
 
-
 //! HEADER block defined in gadget manual/read_snapshot.c
 struct io_header {
     unsigned int npart[6];
@@ -172,18 +171,6 @@ void GadgetSource::load_file(unsigned int filenum)
 {
     std::string fname = filename + '.' + std::to_string(filenum);
     load_file(fname);
-}
-
-ObjectContainer read_gadget_halo_positions(const std::string& filename, bool verbose)
-{
-    GadgetSource gadget_source(filename, verbose);
-    ObjectContainer object_container(gadget_source.get_nobjects());
-    auto nread = gadget_source.read(object_container.begin(), gadget_source.get_nobjects());
-    if(nread<0){
-        nread = 0;
-    } else
-    object_container.resize(static_cast<size_t>(nread));
-    return object_container;
 }
 
 void GadgetSource::reset()

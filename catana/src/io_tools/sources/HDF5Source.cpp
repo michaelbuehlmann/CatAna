@@ -106,20 +106,6 @@ size_t HDF5Source<RecordType>::get_nobjects() {
 }
 
 template<class RecordType>
-ObjectContainer read_hdf5_positions(const std::string& filename, const std::string& dataset_name, double hubble_param,
-        double box_size, bool verbose)
-{
-    HDF5Source<RecordType> hdf5_source(filename, dataset_name, hubble_param, box_size, verbose);
-    ObjectContainer object_container(hdf5_source.get_nobjects());
-    auto nrecords = hdf5_source.read(object_container.begin(), hdf5_source.get_nobjects());
-    if(nrecords<0)
-        throw "Read Error";
-    if(nrecords<hdf5_source.get_nobjects())
-        object_container.resize(static_cast<size_t>(nrecords));
-    return object_container;
-}
-
-template<class RecordType>
 void HDF5Source<RecordType>::reset()
 {
     current_record=0;
@@ -131,8 +117,3 @@ template class HDF5Source<CartesianRecord<float>>;
 template class HDF5Source<CartesianRecord<double>>;
 template class HDF5Source<SphericalRecord<float>>;
 template class HDF5Source<SphericalRecord<double>>;
-
-template ObjectContainer read_hdf5_positions<CartesianRecord<float>>(const std::string&, const std::string&, double, double, bool);
-template ObjectContainer read_hdf5_positions<CartesianRecord<double>>(const std::string&, const std::string&, double, double, bool);;
-template ObjectContainer read_hdf5_positions<SphericalRecord<float>>(const std::string&, const std::string&, double, double, bool);;
-template ObjectContainer read_hdf5_positions<SphericalRecord<double>>(const std::string&, const std::string&, double, double, bool);;

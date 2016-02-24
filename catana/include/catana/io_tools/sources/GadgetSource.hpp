@@ -12,9 +12,6 @@
 #include <iosfwd>
 #include <fstream>
 
-//! Read all objects from filename (and associated files) and output ObjectContainer.
-ObjectContainer read_gadget_halo_positions(const std::string& filename, bool verbose=true);
-
 //! A source which can be read sequentially
 class GadgetSource : public Source{
 public:
