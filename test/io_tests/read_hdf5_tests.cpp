@@ -12,6 +12,12 @@
 #include <catana/config.hpp>
 const std::string test_data_dir(TEST_DATA_DIR);
 
+#ifndef ALL_TESTS
+#include<random>
+std::mt19937 rng;
+#endif //ALL_TESTS
+
+
 // Some known values:
 std::vector<unsigned int> test_positions_hdf = {0, 10, 100, 511};
 std::vector<float> test_radius_hdf = {11.43271463, 7.47124219, 5.63280499, 8.62107958};

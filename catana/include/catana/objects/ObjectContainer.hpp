@@ -6,11 +6,7 @@
 #define CATANA_OBJECTCONTAINER_HPP
 
 #include "Object.hpp"
-#include <random>
 #include <vector>
-#include <cassert>
-
-extern std::mt19937 rng;
 
 //! Catalog representation
 class ObjectContainer : public std::vector<Object>{

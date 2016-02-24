@@ -14,6 +14,10 @@
 #include <catana/config.hpp>
 const std::string test_data_dir(TEST_DATA_DIR);
 
+#ifndef ALL_TESTS
+#include<random>
+std::mt19937 rng;
+#endif //ALL_TESTS
 
 // Some known values:
 std::vector<unsigned int> test_positions = {0, 10, 100, 511};

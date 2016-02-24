@@ -3,6 +3,11 @@
 //
 
 #include <catana/objects/ObjectContainer.hpp>
+#include <random>
+#include <cassert>
+
+extern std::mt19937 rng;
+
 
 void create_object_container_subset(ObjectContainer& object_container, const size_t& n)
 {

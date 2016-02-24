@@ -3,7 +3,9 @@
 //
 
 #include <catana/io_tools/filters/radial_filters.hpp>
+#include <random>
 
+extern std::mt19937 rng;
 
 GenericRadialWindowFunctionFilter::GenericRadialWindowFunctionFilter(std::function<double(double)> window_function)
             : window_function(window_function), random_dist(0, 1)

@@ -8,8 +8,14 @@
 #include <catana/config.hpp>
 const std::string test_data_dir(TEST_DATA_DIR);
 
+#ifndef ALL_TESTS
+#include<random>
+std::mt19937 rng;
+#endif //ALL_TESTS
+
+
 TEST(ReadTxt, Read1){
-    auto source = TextSource<CartesianRecord<double>>(test_data_dir+"mock_data.txt");
+    TextSource<CartesianRecord<double>> source(test_data_dir+"mock_data.txt");
     ObjectContainer oc(100);
     auto n = source.read(oc.begin(), 100);
     EXPECT_EQ(20, n);
@@ -21,7 +27,7 @@ TEST(ReadTxt, Read1){
 }
 
 TEST(ReadTxt, Read2){
-    auto source = TextSource<CartesianRecord<double>>(test_data_dir+"mock_data.txt");
+    TextSource<CartesianRecord<double>> source(test_data_dir+"mock_data.txt");
     ObjectContainer oc(100);
     int n=0;
     auto o_ptr = oc.begin();

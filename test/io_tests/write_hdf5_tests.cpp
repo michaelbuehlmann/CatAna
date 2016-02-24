@@ -10,6 +10,10 @@
 #include <catana/config.hpp>
 const std::string test_data_dir(TEST_DATA_DIR);
 
+#ifndef ALL_TESTS
+#include<random>
+std::mt19937 rng;
+#endif //ALL_TESTS
 
 TEST(HDF5SmallSink, Cartesian) {
     std::string filename = "write_test_1.hdf5";
