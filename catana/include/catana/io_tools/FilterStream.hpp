@@ -24,8 +24,8 @@
 
 class FilterStream {
 public:
-    FilterStream(Source* source, Sink* sink, size_t buffer_size = 1000000, bool verbose=true);
-    FilterStream(Source* source, Sink* sink, size_t buffer_size, size_t subset_size, std::string temp_file_name, bool verbose=true);
+    FilterStream(Source* source, Sink* sink, size_t buffer_size = 1000000, bool verbose=false);
+    FilterStream(Source* source, Sink* sink, size_t buffer_size, size_t subset_size, std::string temp_file_name, bool verbose=false);
 
     // Method to add filter to the list of filters
     void add_filter(Filter* filter_p);
