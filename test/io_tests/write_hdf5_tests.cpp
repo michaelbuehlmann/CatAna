@@ -6,6 +6,8 @@
 #include <catana/io_tools/sinks/HDF5Sink.hpp>
 #include <catana/io_tools/sources/HDF5Source.hpp>
 
+using namespace catana;
+
 // Load data directory
 #include <catana/config.hpp>
 const std::string test_data_dir(TEST_DATA_DIR);
@@ -25,12 +27,12 @@ TEST(HDF5SmallSink, Cartesian) {
     oc.push_back(Object(100,1,100));
 
     {
-        HDF5Sink<CartesianRecord<float>> hdf5_sink(test_data_dir + filename, dataset_name, 1, 0, true, false);
+        io::HDF5Sink<io::CartesianRecord<float>> hdf5_sink(test_data_dir + filename, dataset_name, 1, 0, true, false);
         auto records = hdf5_sink.write(oc.begin(), oc.size());
         EXPECT_EQ(oc.size(), records);
     }
 
-    HDF5Source<CartesianRecord<float>> hdf5_source(test_data_dir + filename, dataset_name, 1, 0, false);
+    io::HDF5Source<io::CartesianRecord<float>> hdf5_source(test_data_dir + filename, dataset_name, 1, 0, false);
     EXPECT_EQ(oc.size(), hdf5_source.get_nobjects());
     ObjectContainer oc_read(hdf5_source.get_nobjects());
 
@@ -54,12 +56,12 @@ TEST(HDF5SmallSink, Spherical) {
     oc.push_back(Object(100,1,100));
 
     {
-        HDF5Sink<SphericalRecord<float>> hdf5_sink(test_data_dir + filename, dataset_name, 1, 0, true, false);
+        io::HDF5Sink<io::SphericalRecord<float>> hdf5_sink(test_data_dir + filename, dataset_name, 1, 0, true, false);
         auto records = hdf5_sink.write(oc.begin(), oc.size());
         EXPECT_EQ(oc.size(), records);
     }
 
-    HDF5Source<SphericalRecord<float>> hdf5_source(test_data_dir + filename, dataset_name, 1, 0, false);
+    io::HDF5Source<io::SphericalRecord<float>> hdf5_source(test_data_dir + filename, dataset_name, 1, 0, false);
     EXPECT_EQ(oc.size(), hdf5_source.get_nobjects());
     ObjectContainer oc_read(hdf5_source.get_nobjects());
 

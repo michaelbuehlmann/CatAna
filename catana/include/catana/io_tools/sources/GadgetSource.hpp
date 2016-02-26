@@ -12,43 +12,50 @@
 #include <iosfwd>
 #include <fstream>
 
-//! A source which can be read sequentially
-class GadgetSource : public Source{
-public:
-    GadgetSource(std::string filename, bool verbose=false);
+namespace catana{ namespace io {
 
-    //!Returns number of objects put into object_s. -1 if EOF.
-    // Implemented are Iterators of type ObjectContainer::iterator and Object*
+        //! A source which can be read sequentially
+        class GadgetSource : public Source {
+        public:
+            GadgetSource(std::string filename, bool verbose = false);
 
-    long long int read(ObjectContainer::iterator write_iterator, size_t n) override;
-    long long int read(Object* write_iterator, size_t n) override;
+            //!Returns number of objects put into object_s. -1 if EOF.
+            // Implemented are Iterators of type ObjectContainer::iterator and Object*
 
-    //!Total number of objects which can be read
-    size_t get_nobjects() override;
-    void reset() override;
+            long long int read(ObjectContainer::iterator write_iterator, size_t n) override;
 
-    static const int skipsize;
-private:
-    template<class ObjectIterator>
-    long long int read_template(ObjectIterator write_iterator, size_t n);
+            long long int read(Object* write_iterator, size_t n) override;
 
-    void load_file(std::string fname, bool initial_file=false);
-    void load_file(unsigned int filenum);
-private:
-    std::string filename;
-    unsigned int files;
-    unsigned int current_file;
-    size_t n_objects;
-    size_t n_objects_file;
-    size_t current_object;
-    size_t current_object_file;
+            //!Total number of objects which can be read
+            size_t get_nobjects() override;
 
-    double box_size;
-    double hubble_parameter;
+            void reset() override;
 
-    std::ifstream fd;
+            static const int skipsize;
+        private:
+            template<class ObjectIterator>
+            long long int read_template(ObjectIterator write_iterator, size_t n);
 
-    bool verbose;
-};
+            void load_file(std::string fname, bool initial_file = false);
 
+            void load_file(unsigned int filenum);
+
+        private:
+            std::string filename;
+            unsigned int files;
+            unsigned int current_file;
+            size_t n_objects;
+            size_t n_objects_file;
+            size_t current_object;
+            size_t current_object_file;
+
+            double box_size;
+            double hubble_parameter;
+
+            std::ifstream fd;
+
+            bool verbose;
+        };
+
+}}
 #endif //CATANA_APP_READ_GADGET_HPP

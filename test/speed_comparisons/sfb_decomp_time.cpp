@@ -11,11 +11,13 @@
 #include <string>
 #include "timer.hpp"
 
+using namespace catana;
+
 std::mt19937 rng;
 
 ObjectContainer random_objects(size_t n, double box_size) {
     ObjectContainer oc(n);
-    TophatRadialWindowFunctionFilter tophat_filter(box_size/2.);
+    io::TophatRadialWindowFunctionFilter tophat_filter(box_size/2.);
 
 #pragma omp parallel
     {

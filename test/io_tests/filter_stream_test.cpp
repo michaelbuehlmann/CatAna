@@ -13,6 +13,7 @@
 #include <catana/iotools.hpp>
 
 const std::string test_data_dir(TEST_DATA_DIR);
+using namespace catana;
 
 #ifndef ALL_TESTS
 #include<random>
@@ -29,11 +30,11 @@ TEST(FilterStream, SmallTophat)
 
     ObjectContainer object_container_result;
 
-    ObjectContainerSource source(object_container);
-    ObjectContainerSink sink(object_container_result);
+    io::ObjectContainerSource source(object_container);
+    io::ObjectContainerSink sink(object_container_result);
 
-    FilterStream filter_stream(&source, &sink, 10, false);
-    TophatRadialWindowFunctionFilter filter(1.);
+    io::FilterStream filter_stream(&source, &sink, 10, false);
+    io::TophatRadialWindowFunctionFilter filter(1.);
     filter_stream.add_filter(&filter);
     filter_stream.run();
 
@@ -53,11 +54,11 @@ TEST(FilterStream, LargeTophat)
 
     ObjectContainer object_container_result;
 
-    ObjectContainerSource source(object_container);
-    ObjectContainerSink sink(object_container_result);
+    io::ObjectContainerSource source(object_container);
+    io::ObjectContainerSink sink(object_container_result);
 
-    FilterStream filter_stream(&source, &sink, 100, false);
-    TophatRadialWindowFunctionFilter filter(1.);
+    io::FilterStream filter_stream(&source, &sink, 100, false);
+    io::TophatRadialWindowFunctionFilter filter(1.);
     filter_stream.add_filter(&filter);
     filter_stream.run();
 
@@ -73,10 +74,10 @@ TEST(FilterStream, Subsample)
     }
 
     ObjectContainer object_container_result;
-    ObjectContainerSource source(object_container);
-    ObjectContainerSink sink(object_container_result);
+    io::ObjectContainerSource source(object_container);
+    io::ObjectContainerSink sink(object_container_result);
 
-    FilterStream filter_stream(&source, &sink, 100, 1<<10, TEST_DATA_DIR + std::string("tmp.dat"), false);
+    io::FilterStream filter_stream(&source, &sink, 100, 1<<10, TEST_DATA_DIR + std::string("tmp.dat"), false);
     filter_stream.run();
 
     EXPECT_EQ(1<<10, object_container_result.size());

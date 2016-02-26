@@ -2,7 +2,7 @@ add_executable(BesselZeros_test BesselZeros_test.cpp)
 target_link_libraries(BesselZeros_test gtest gtest_main)
 target_link_libraries(BesselZeros_test besseltools)
 
-add_executable(sbessel_integrator_test sbessel_integrator_test.cpp)
+add_executable(sbessel_integrator_test sbessel_integrator.cpp)
 target_link_libraries(sbessel_integrator_test gtest gtest_main)
 target_link_libraries(sbessel_integrator_test besseltools)
 

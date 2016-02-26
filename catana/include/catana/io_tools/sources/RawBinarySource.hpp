@@ -10,30 +10,36 @@
 #include <string>
 #include <fstream>
 
-template<class RecordType>
-class RawBinarySource : public Source {
-public:
-    typedef RecordType record_t;
-    RawBinarySource(std::string filename, bool verbose=true);
-//    ~RawBinarySource();
-    virtual long long int read(ObjectContainer::iterator write_iterator, size_t n) override;
-    virtual long long int read(Object* write_iterator, size_t n) override;
-//    void close();
-    size_t get_nobjects() override;
-    void reset() override;
+namespace catana{ namespace io {
 
-    // Non copyable and assignable
-    RawBinarySource(RawBinarySource const&) = delete;
-    RawBinarySource& operator=(RawBinarySource const&) = delete;
-private:
-    template<class ObjectIterator>
-    long long int read_template(ObjectIterator write_iterator, size_t n);
-    std::string filename;
-    std::ifstream fd;
-    size_t ntot;
-    size_t current_pos;
-    bool verbose;
-};
+        template<class RecordType>
+        class RawBinarySource : public Source {
+        public:
+            typedef RecordType record_t;
 
+            RawBinarySource(std::string filename, bool verbose = true);
 
+            virtual long long int read(ObjectContainer::iterator write_iterator, size_t n) override;
+            virtual long long int read(Object* write_iterator, size_t n) override;
+
+            size_t get_nobjects() override;
+            void reset() override;
+
+            // Non copyable and assignable
+            RawBinarySource(RawBinarySource const&) = delete;
+
+            RawBinarySource& operator=(RawBinarySource const&) = delete;
+
+        private:
+            template<class ObjectIterator>
+            long long int read_template(ObjectIterator write_iterator, size_t n);
+
+            std::string filename;
+            std::ifstream fd;
+            size_t ntot;
+            size_t current_pos;
+            bool verbose;
+        };
+
+}}
 #endif //CATANA_READ_RAWBINARY_HPP_HPP

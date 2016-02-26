@@ -6,7 +6,7 @@
 #define CATANA_BESSELTOOLS_HPP
 
 #include "besseltools/BesselZeros.hpp"
-#include "catana/besseltools/sbessel_integrator_test.hpp"
+#include "catana/besseltools/sbessel_integrator.hpp"
 #include "besseltools/SBesselLookUp.hpp"
 
 #endif //CATANA_BESSELTOOLS_HPP

@@ -9,6 +9,7 @@
 #include <string>
 #include <algorithm>
 
+using namespace catana;
 
 // Load data directory
 #include <catana/config.hpp>
@@ -29,7 +30,7 @@ std::vector<float> test_phi = {4.04660937, 2.79354124, 2.96859039, 5.80961737};
 TEST(ReadGadgetStream, SmallBunch) {
     std::string filename = "mock_data_z0p000.0";
 
-    GadgetSource input(test_data_dir + filename, false);
+    io::GadgetSource input(test_data_dir + filename, false);
 
     Object objects[20];
     long returned_values;
@@ -40,7 +41,7 @@ TEST(ReadGadgetStream, SmallBunch) {
 
 TEST(ReadGadgetStream, AllObjects) {
     std::string filename = "mock_data_z0p000.0";
-    GadgetSource input(test_data_dir + filename, false);
+    io::GadgetSource input(test_data_dir + filename, false);
 
     Object tmp_objects[10];
     ObjectContainer oc;
@@ -54,7 +55,7 @@ TEST(ReadGadgetStream, AllObjects) {
 
 
     filename = "mock_data_z0p000.1";
-    GadgetSource input2(test_data_dir + filename, false);
+    io::GadgetSource input2(test_data_dir + filename, false);
     ObjectContainer oc2;
     returned_values = 0;
     do {

@@ -5,7 +5,7 @@ set(besseltools_SOURCES
         include/catana/besseltools.hpp
         include/catana/besseltools/BesselZeros.hpp src/besseltools/BesselZeros.cpp
         include/catana/tools/gsl_function_wrapper.hpp
-        include/catana/besseltools/sbessel_integrator_test.hpp src/besseltools/sbessel_integrator.cpp
+        include/catana/besseltools/sbessel_integrator.hpp src/besseltools/sbessel_integrator.cpp
         include/catana/besseltools/SBesselLookUp.hpp src/besseltools/SBesselLookUp.cpp )
 
 set(basictypes_SOURCES
@@ -61,13 +61,6 @@ set(decomposition_SOURCES
         include/catana/decomposition/sfb_reverse_fft.hpp src/decomposition/sfb_reverse_fft.cpp
         src/decomposition/Analyzer.cpp include/catana/decomposition/Analyzer.hpp)
 
-#set(catalog_SOURCES
-#        ${basictypes_SOURCES}
-#        ${returntypes_SOURCES}
-#        src/Catalog.cpp include/catana/Catalog.hpp
-#        ${window_SOURCES}
-#        ${decomposition_SOURCES})
-
 #set(field_SOURCES
 #        src/Field.cpp include/catana/Field.hpp
 #        include/catana/tools/fftw_field.hpp)
@@ -76,7 +69,6 @@ set(decomposition_SOURCES
 add_library(iotools STATIC ${iotools_SOURCES})
 add_library(besseltools STATIC ${besseltools_SOURCES})
 add_library(catana STATIC
-#        ${catalog_SOURCES}
 #        ${field_SOURCES}
 #        ${window_SOURCES}
         ${decomposition_SOURCES})

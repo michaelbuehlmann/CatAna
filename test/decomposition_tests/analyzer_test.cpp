@@ -15,10 +15,10 @@ const std::string test_data_dir(TEST_DATA_DIR);
 std::mt19937 rng;
 #endif //ALL_TESTS
 
-
+using namespace catana;
 
 TEST(Analyzer, RAW){
-    auto source = std::shared_ptr<Source>(new HDF5Source<CartesianRecord<float>>(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false));
+    auto source = std::shared_ptr<io::Source>(new io::HDF5Source<io::CartesianRecord<float>>(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false));
     Analyzer analyzer(
             source.get(),
             5535184878.03
@@ -28,7 +28,7 @@ TEST(Analyzer, RAW){
 }
 
 TEST(Analyzer, Pixelized){
-    auto source = std::shared_ptr<Source>(new HDF5Source<CartesianRecord<float>>(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false));
+    auto source = std::shared_ptr<io::Source>(new io::HDF5Source<io::CartesianRecord<float>>(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false));
     Analyzer analyzer(
             source.get(),
             5535184878.03
@@ -38,12 +38,12 @@ TEST(Analyzer, Pixelized){
 }
 
 TEST(Analyzer, Filter){
-    auto source = std::shared_ptr<Source>(new HDF5Source<CartesianRecord<float>>(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false));
+    auto source = std::shared_ptr<io::Source>(new io::HDF5Source<io::CartesianRecord<float>>(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false));
     Analyzer analyzer(
             source.get(),
             5535184878.03
     );
-    auto filter = std::shared_ptr<Filter>(new TophatRadialWindowFunctionFilter(1000));
+    auto filter = std::shared_ptr<io::Filter>(new io::TophatRadialWindowFunctionFilter(1000));
     analyzer.add_filter(
             filter.get()
     );

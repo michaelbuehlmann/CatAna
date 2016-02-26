@@ -10,28 +10,36 @@
 #include <string>
 #include <fstream>
 
-template<class RecordType>
-class RawBinarySink : public Sink {
-public:
-    typedef RecordType record_t;
-    RawBinarySink(std::string filename, bool verbose=true);
-    ~RawBinarySink();
-    virtual long long int write(ObjectContainer::iterator read_iterator, size_t n) override;
-    virtual long long int write(Object* read_iterator, size_t n) override;
-    void close();
+namespace catana{ namespace io {
 
-    // Non copyable and assignable
-    RawBinarySink(RawBinarySink const&) = delete;
-    RawBinarySink& operator=(RawBinarySink const&) = delete;
-private:
-    template<class ObjectIterator>
-    long long int write_template(ObjectIterator read_iterator, size_t n);
-    std::string filename;
-    std::ofstream fd;
-    bool verbose;
-};
+        template<class RecordType>
+        class RawBinarySink : public Sink {
+        public:
+            typedef RecordType record_t;
 
+            RawBinarySink(std::string filename, bool verbose = true);
 
+            ~RawBinarySink();
 
+            virtual long long int write(ObjectContainer::iterator read_iterator, size_t n) override;
 
+            virtual long long int write(Object* read_iterator, size_t n) override;
+
+            void close();
+
+            // Non copyable and assignable
+            RawBinarySink(RawBinarySink const&) = delete;
+
+            RawBinarySink& operator=(RawBinarySink const&) = delete;
+
+        private:
+            template<class ObjectIterator>
+            long long int write_template(ObjectIterator read_iterator, size_t n);
+
+            std::string filename;
+            std::ofstream fd;
+            bool verbose;
+        };
+
+}}
 #endif //CATANA_WRITE_RAWBINARY_HPP

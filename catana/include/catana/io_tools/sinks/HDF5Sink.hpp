@@ -10,6 +10,8 @@
 #include "../record_types.hpp"
 #include "../Sink.hpp"
 
+namespace catana{ namespace io {
+
 //! A sink to write to HDF5 table filename/dataset_name.
 /*
  * If table already exists, overwrite it.
@@ -17,39 +19,46 @@
  * Template parameter defines HDF5 record layout. See hdf5_record_types.hpp
  * dataset_name is absolute path in the HDF5 file to the table to read
  */
-template<class RecordType>
-class HDF5Sink : public Sink{
-public:
-    typedef RecordType record_t;
-    HDF5Sink(const std::string& filename, const std::string& dataset_name,
-                double hubble_parameter, double box_size, bool overwrite_file=true, bool verbose=true);
+        template<class RecordType>
+        class HDF5Sink : public Sink {
+        public:
+            typedef RecordType record_t;
 
-    ~HDF5Sink();
+            HDF5Sink(const std::string& filename, const std::string& dataset_name,
+                    double hubble_parameter, double box_size, bool overwrite_file = true, bool verbose = true);
 
-    // Not copyable, not assignable
-    HDF5Sink(const HDF5Sink&) = delete;
-    HDF5Sink& operator=(HDF5Sink const&) = delete;
+            ~HDF5Sink();
 
-    //!Try to read n objects from table and store in ObjectIterator
-    /*
-     * ObjectIterator must be a forward iterator.
-     * (ObjectIterator, ObjectIterator+n) must be a valid range.
-     * Returns number of objects put into object_s. -1 if EOF.
-    */
+            // Not copyable, not assignable
+            HDF5Sink(const HDF5Sink&) = delete;
 
-    long long int write(ObjectContainer::iterator read_iterator, size_t n) override;
-    long long int write(Object* read_iterator, size_t n) override;
-private:
-    template<class ObjectIterator>
-    long long int write_template(ObjectIterator read_iterator, size_t n);
-private:
-    std::string filename;
-    std::string dataset_name;
-    hid_t file_id;  // ID of opened file
+            HDF5Sink& operator=(HDF5Sink const&) = delete;
 
-    double box_size;
-    double hubble_parameter;
-    bool verbose;
-};
+            //!Try to read n objects from table and store in ObjectIterator
+            /*
+             * ObjectIterator must be a forward iterator.
+             * (ObjectIterator, ObjectIterator+n) must be a valid range.
+             * Returns number of objects put into object_s. -1 if EOF.
+            */
 
+            long long int write(ObjectContainer::iterator read_iterator, size_t n) override;
+
+            long long int write(Object* read_iterator, size_t n) override;
+
+        private:
+            template<class ObjectIterator>
+            long long int write_template(ObjectIterator read_iterator, size_t n);
+
+        private:
+            std::string filename;
+            std::string dataset_name;
+            hid_t file_id;  // ID of opened file
+
+            double box_size;
+            double hubble_parameter;
+            bool verbose;
+        };
+
+
+}}
 #endif //CATANA_APP_WRITE_HDF5_HPP_HPP

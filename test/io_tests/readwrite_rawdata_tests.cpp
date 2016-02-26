@@ -6,6 +6,8 @@
 #include <catana/types.hpp>
 #include "gtest/gtest.h"
 
+using namespace catana;
+
 #ifndef ALL_TESTS
 #include<random>
 std::mt19937 rng;
@@ -19,11 +21,11 @@ TEST(RawData, IO) {
     oc.push_back(object_from_spherical_position(100., 0.3 , 4.));
 
     std::string filename = "RawIOTest.dat";
-    using record_t = CartesianRecord<float>;
+    using record_t = io::CartesianRecord<float>;
     int n;
 
     // Writing
-    RawBinarySink<record_t> sink(filename, false);
+    io::RawBinarySink<record_t> sink(filename, false);
     n = sink.write(oc.begin(), oc.size());
     EXPECT_EQ(oc.size(), n);
     sink.close();
@@ -34,7 +36,7 @@ TEST(RawData, IO) {
     ObjectContainer oc2(2*oc.size());
     int read = 0;
     n = 0;
-    RawBinarySource<record_t> source(filename, false);
+    io::RawBinarySource<record_t> source(filename, false);
     do {
         read += n;
         ASSERT_LE(read, oc.size()) << "Read too many records!!";
@@ -58,11 +60,11 @@ TEST(RawData, IOLarge) {
     }
 
     std::string filename = "RawIOLargeTest.dat";
-    using record_t = SphericalRecord<float>;
+    using record_t = io::SphericalRecord<float>;
     long long int n;
 
     // Writing
-    RawBinarySink<record_t> sink(filename, false);
+    io::RawBinarySink<record_t> sink(filename, false);
     n = sink.write(oc.begin(), oc.size());
 
 
@@ -70,7 +72,7 @@ TEST(RawData, IOLarge) {
     Object buffer[100];
     size_t read = 0;
     n = 0;
-    RawBinarySource<record_t> source(filename, false);
+    io::RawBinarySource<record_t> source(filename, false);
 
     do {
         read += n;

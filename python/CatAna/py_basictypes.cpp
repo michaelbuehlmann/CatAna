@@ -12,6 +12,8 @@
 #include <catana/types.hpp>
 
 namespace py = pybind11;
+using namespace catana;
+
 
 PYBIND11_PLUGIN(basictypes)
 {

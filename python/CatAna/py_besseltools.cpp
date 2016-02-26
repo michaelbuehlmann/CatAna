@@ -10,27 +10,29 @@
 #include <catana/besseltools.hpp>
 
 namespace py = pybind11;
+using namespace catana;
+
 
 PYBIND11_PLUGIN(besseltools) {
     py::module m("besseltools", "python binding to besseltools library (part of CatAna)");
 
-    py::class_<BesselZeros>(m, "BesselZeros")
+    py::class_<besseltools::BesselZeros>(m, "BesselZeros")
             .def(py::init<const double&>())
-            .def("__getitem__", &BesselZeros::operator[],
+            .def("__getitem__", &besseltools::BesselZeros::operator[],
                     "Return n-th zero",
                     py::arg("n"))
-            .def("compute_up_to", &BesselZeros::compute_up_to,
+            .def("compute_up_to", &besseltools::BesselZeros::compute_up_to,
                     "Precompute first n zeros",
                     py::arg("n"));
 
-    py::class_<SphericalBesselZeros>(m, "SphericalBesselZeros", py::base<BesselZeros>())
+    py::class_<besseltools::SphericalBesselZeros>(m, "SphericalBesselZeros", py::base<besseltools::BesselZeros>())
             .def(py::init<const double&>());
 
-    py::class_<SBesselTransformedFunction>(m, "SBesselTransformedFunction")
+    py::class_<besseltools::SBesselTransformedFunction>(m, "SBesselTransformedFunction")
             .def(py::init<std::function<double(double)>, const unsigned int&, const double&>())
-            .def("__call__", &SBesselTransformedFunction::operator());
+            .def("__call__", &besseltools::SBesselTransformedFunction::operator());
 
-    m.def("double_sbessel_integrator", &double_sbessel_integrator,
+    m.def("double_sbessel_integrator", &besseltools::double_sbessel_integrator,
             "compute integral [0,Rmax] over w(r)*j_l(k1*r)*j_l(k2*r)",
             py::arg("w"), py::arg("l"), py::arg("Rmax"), py::arg("k1"), py::arg("k2"));
 

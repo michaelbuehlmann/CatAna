@@ -6,6 +6,8 @@
 #include <catana/types.hpp>
 #include <catana/iotools.hpp>
 
+using namespace catana;
+
 TEST(ObjectContainerSink, Pixelized) {
     ObjectContainer oc;
     for(size_t i=1; i<(1<<12); ++i){
@@ -14,7 +16,7 @@ TEST(ObjectContainerSink, Pixelized) {
 
     PixelizedObjectContainer pix_oc(256);
 
-    PixelizedObjectContainerSink pix_sink(pix_oc);
+    io::PixelizedObjectContainerSink pix_sink(pix_oc);
     long int n = pix_sink.write(oc.begin(), oc.size());
     EXPECT_EQ(oc.size(), n);
     EXPECT_EQ(oc.size(), pix_oc.get_nobjects());

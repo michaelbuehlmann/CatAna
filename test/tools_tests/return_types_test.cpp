@@ -9,6 +9,8 @@
 #include <string>
 #include <sstream>
 
+using namespace catana;
+
 TEST(ReturnTypes, KCLKK){
     short lmax=10;
     short nmax=20;

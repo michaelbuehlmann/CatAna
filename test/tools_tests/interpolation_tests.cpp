@@ -6,6 +6,8 @@
 #include <catana/tools/gsl_function_interpolate.hpp>
 #include <cmath>
 
+using namespace catana;
+
 TEST(Interpolation, Basic){
     auto fct = [](double x){return std::sin(x);};
     FunctionInterpolator fct_interp(fct, 10000, 0, 10);

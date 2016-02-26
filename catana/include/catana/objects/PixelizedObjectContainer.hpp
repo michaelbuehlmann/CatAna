@@ -12,28 +12,35 @@
 #include <vector>
 #include <Eigen/Dense>
 
-class PixelObjects : public std::vector<double>{
-public:
-    pointing p;
-};
+namespace catana {
 
+    class PixelObjects : public std::vector<double> {
+    public:
+        pointing p;
+    };
 
-class PixelizedObjectContainer : public std::vector<PixelObjects> {
-public:
+    class PixelizedObjectContainer : public std::vector<PixelObjects> {
+    public:
 //    PixelizedObjectContainer() = default;
-    PixelizedObjectContainer(unsigned int nside);
-    PixelizedObjectContainer(unsigned int nside, const ObjectContainer& oc);
-    void add_object(const Object&);
-    unsigned int get_nside() const;
-    size_t get_nobjects() const;
+        PixelizedObjectContainer(unsigned int nside);
 
-    Eigen::ArrayXi get_countmap() const;
+        PixelizedObjectContainer(unsigned int nside, const ObjectContainer& oc);
 
-    const Healpix_Base& get_hp_base() const;
+        void add_object(const Object&);
 
-private:
-    Healpix_Base hp_base;
-    unsigned int nside;
-};
+        unsigned int get_nside() const;
+
+        size_t get_nobjects() const;
+
+        Eigen::ArrayXi get_countmap() const;
+
+        const Healpix_Base& get_hp_base() const;
+
+    private:
+        Healpix_Base hp_base;
+        unsigned int nside;
+    };
+
+}
 
 #endif //CATANA_PIXELIZEDOBJECTCONTAINER_HPP

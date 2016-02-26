@@ -6,6 +6,9 @@
 #include <catana/iotools.hpp>
 
 #include <catana/config.hpp>
+
+using namespace catana;
+
 const std::string test_data_dir(TEST_DATA_DIR);
 
 #ifndef ALL_TESTS
@@ -15,7 +18,7 @@ std::mt19937 rng;
 
 
 TEST(ReadTxt, AllAndReset){
-    TextSource<CartesianRecord<double>> source(test_data_dir+"mock_data.txt");
+    io::TextSource<io::CartesianRecord<double>> source(test_data_dir+"mock_data.txt");
     ObjectContainer oc(100);
     auto n = source.read(oc.begin(), 100);
     EXPECT_EQ(20, n);
@@ -32,7 +35,7 @@ TEST(ReadTxt, AllAndReset){
 }
 
 TEST(ReadTxt, SmallChuncks){
-    TextSource<CartesianRecord<double>> source(test_data_dir+"mock_data.txt");
+    io::TextSource<io::CartesianRecord<double>> source(test_data_dir+"mock_data.txt");
     ObjectContainer oc(100);
     int n=0;
     auto o_ptr = oc.begin();
@@ -52,11 +55,11 @@ TEST(WriteTxt, Cartesian){
     oc.add_object(Object(-1,-1,-1));
     oc.add_object(Object(0,0,0));
 
-    TextSink<CartesianRecord<double>> sink("test.txt");
+    io::TextSink<io::CartesianRecord<double>> sink("test.txt");
     int n = sink.write(oc.begin(), oc.size());
     EXPECT_EQ(oc.size(), n);
 
-    TextSource<CartesianRecord<double>> source("test.txt");
+    io::TextSource<io::CartesianRecord<double>> source("test.txt");
     n = source.read(oc2.begin(), 100);
     ASSERT_EQ(oc.size(), n);
     for(int i=0; i<oc.size(); ++i){
@@ -73,11 +76,11 @@ TEST(WriteTxt, Spherical){
     oc.add_object(Object(-1,-1,-1));
     oc.add_object(Object(0,0,0));
 
-    TextSink<SphericalRecord<double>> sink("test.txt");
+    io::TextSink<io::SphericalRecord<double>> sink("test.txt");
     int n = sink.write(oc.begin(), oc.size());
     EXPECT_EQ(oc.size(), n);
 
-    TextSource<SphericalRecord<double>> source("test.txt");
+    io::TextSource<io::SphericalRecord<double>> source("test.txt");
     n = source.read(oc2.begin(), 100);
     ASSERT_EQ(oc.size(), n);
     for(int i=0; i<oc.size(); ++i){
@@ -88,8 +91,9 @@ TEST(WriteTxt, Spherical){
 }
 
 
+// TODO: Move to different place
 TEST(Source, ToObjectContainer){
-    TextSource<CartesianRecord<double>> source(test_data_dir+"mock_data.txt");
+    io::TextSource<io::CartesianRecord<double>> source(test_data_dir+"mock_data.txt");
     ObjectContainer oc(source.get_objectcontainer());
     EXPECT_EQ(20, oc.size());
     EXPECT_FLOAT_EQ(19.49477717, oc[0].r);
@@ -97,7 +101,7 @@ TEST(Source, ToObjectContainer){
 
 
 TEST(Source, ToPixelizedObjectContainer){
-    TextSource<CartesianRecord<double>> source(test_data_dir+"mock_data.txt");
+    io::TextSource<io::CartesianRecord<double>> source(test_data_dir+"mock_data.txt");
     PixelizedObjectContainer poc(source.get_pixobjectcontainer(32));
     EXPECT_EQ(20, poc.get_nobjects());
     EXPECT_EQ(32*32*12, poc.size());

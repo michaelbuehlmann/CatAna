@@ -8,6 +8,8 @@
 
 #include <string>
 
+using namespace catana;
+
 // Load data directory
 #include <catana/config.hpp>
 const std::string test_data_dir(TEST_DATA_DIR);
@@ -30,7 +32,7 @@ TEST(ReadHDF5, Stream){
     std::string filename = "mock_data.hdf5";
     std::string dataset_name = "/table";
 
-    HDF5Source<CartesianRecord<float>> input(test_data_dir + filename, dataset_name, 0.7, 0, false);
+    io::HDF5Source<io::CartesianRecord<float>> input(test_data_dir + filename, dataset_name, 0.7, 0, false);
     auto total_objects = input.get_nobjects();
     EXPECT_EQ(512, total_objects);
 

@@ -10,26 +10,30 @@
 #include <string>
 #include <fstream>
 
-template<class RecordType>
-class TextSource : public Source {
-    typedef RecordType record_t;
-public:
-    TextSource(std::string filename, double hubble_param=1, double box_size=0);
+namespace catana{ namespace io {
 
-    virtual long long int read(ObjectContainer::iterator write_iterator, size_t n) override;
-    virtual long long int read(Object* write_iterator, size_t n) override;
+        template<class RecordType>
+        class TextSource : public Source {
+            typedef RecordType record_t;
+        public:
+            TextSource(std::string filename, double hubble_param = 1, double box_size = 0);
 
-    void reset() override;
+            virtual long long int read(ObjectContainer::iterator write_iterator, size_t n) override;
 
-private:
-    template<class ObjectIterator>
-    long long int read_template(ObjectIterator write_iterator, size_t n);
+            virtual long long int read(Object* write_iterator, size_t n) override;
 
-private:
-    std::string filename;
-    double hubble_param;
-    double box_size;
-    std::ifstream fs;
-};
+            void reset() override;
 
+        private:
+            template<class ObjectIterator>
+            long long int read_template(ObjectIterator write_iterator, size_t n);
+
+        private:
+            std::string filename;
+            double hubble_param;
+            double box_size;
+            std::ifstream fs;
+        };
+
+}}
 #endif //CATANA_TEXTSOURCE_HPP

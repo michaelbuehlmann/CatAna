@@ -11,20 +11,27 @@
 #include <memory>
 #include <vector>
 
-class Analyzer {
-public:
-    Analyzer() = default;
-    Analyzer(Source* source, double window_volume);
+namespace catana {
+    class Analyzer {
+    public:
+        Analyzer() = default;
 
-    void set_source(Source* source);
-    void add_filter(Filter* filter);
+        Analyzer(io::Source* source, double window_volume);
 
-    KClkk compute_sfb(unsigned short lmax, unsigned short nmax, double rmax, bool verbose);
-    KClkk compute_sfb_pixelized(unsigned short lmax, unsigned short nmax, double rmax, unsigned int nside, bool verbose);
-private:
-    Source* source;
-    std::vector<Filter*> filters;
-    double window_volume;
-};
+        void set_source(io::Source* source);
 
+        void add_filter(io::Filter* filter);
+
+        KClkk compute_sfb(unsigned short lmax, unsigned short nmax, double rmax, bool verbose);
+
+        KClkk compute_sfb_pixelized(unsigned short lmax, unsigned short nmax, double rmax, unsigned int nside,
+                bool verbose);
+
+    private:
+        io::Source* source;
+        std::vector<io::Filter*> filters;
+        double window_volume;
+    };
+
+}
 #endif //CATANA_ANALYZER_HPP

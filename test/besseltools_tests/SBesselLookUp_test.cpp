@@ -14,11 +14,13 @@
 std::mt19937 rng;
 #endif
 
+using namespace catana;
+
 TEST(SBesselLookUp, Accuracy){
     int N_TEST = 1000;
 
     for(int l=0; l<10; ++l){
-        SBesselLookUp sblu(l, 4, 4000);
+        besseltools::SBesselLookUp sblu(l, 4, 4000);
         std::uniform_real_distribution<double> z_dist(0,sblu.get_zmax());
         for(int i=0; i<N_TEST; ++i){
             double z = z_dist(rng);

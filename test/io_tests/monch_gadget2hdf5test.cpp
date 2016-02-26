@@ -5,18 +5,20 @@
 #include <catana/iotools.hpp>
 #include <random>
 
+using namespace catana;
+
 #ifndef ALL_TESTS
 std::mt19937 rng;
 
 
 int main() {
-    GadgetSource source("/mnt/lnec/buehmich/lpicola/ix1/i0/ix1_z0p000.0", true);
-    HDF5Sink<SphericalRecord<float>> sink("/users/buehmich/MT/data/sdss_lpicola/ix1/t0/catalog_i0_test.hdf",
+    io::GadgetSource source("/mnt/lnec/buehmich/lpicola/ix1/i0/ix1_z0p000.0", true);
+    io::HDF5Sink<io::SphericalRecord<float>> sink("/users/buehmich/MT/data/sdss_lpicola/ix1/t0/catalog_i0_test.hdf",
                                             "test", 1, 0, true, true);
 
-    FilterStream fs(&source, &sink, 1000000, true);
-    TophatRadialWindowFunctionFilter tophat(2500/0.7);
-    GaussianRadialWindowFunctionFilter gauss(1000/0.7);
+    io::FilterStream fs(&source, &sink, 1000000, true);
+    io::TophatRadialWindowFunctionFilter tophat(2500/0.7);
+    io::GaussianRadialWindowFunctionFilter gauss(1000/0.7);
 
     fs.add_filter(&tophat);
     fs.add_filter(&gauss);

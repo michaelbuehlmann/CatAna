@@ -9,6 +9,8 @@
 #include <pybind11/stl.h>
 
 namespace py = pybind11;
+using namespace catana;
+
 
 PYBIND11_PLUGIN(decomp_core)
 {
@@ -21,7 +23,7 @@ PYBIND11_PLUGIN(decomp_core)
             .def("savetxt", &KClkk::savetxt);
 
     py::class_<Analyzer>(m, "Analyzer")
-            .def(py::init<Source*, double>())
+            .def(py::init<io::Source*, double>())
             .def("set_source", &Analyzer::set_source)
             .def("add_filter", &Analyzer::add_filter)
             .def("compute_sfb", &Analyzer::compute_sfb)

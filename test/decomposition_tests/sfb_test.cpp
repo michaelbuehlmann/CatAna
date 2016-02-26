@@ -15,6 +15,8 @@
 std::mt19937 rng;
 #endif //ALL_TESTS
 
+using namespace catana;
+
 // LOAD TEST_DATA_DIR
 #include <catana/config.hpp>
 const std::string test_data_dir(TEST_DATA_DIR);
@@ -42,9 +44,9 @@ Eigen::ArrayXXd read_python_cln(int lmax, int nmax){
 TEST(SFB, Raw) {
     ObjectContainer object_container;
     {
-        HDF5Source<CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
-        ObjectContainerSink sink(object_container);
-        FilterStream fs(&source, &sink, 10000, false);
+        io::HDF5Source<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        io::ObjectContainerSink sink(object_container);
+        io::FilterStream fs(&source, &sink, 10000, false);
         fs.run();
     }
 
@@ -79,9 +81,9 @@ TEST(SFB, Raw) {
 TEST(SFB, RawParallel) {
     ObjectContainer object_container;
     {
-        HDF5Source<CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
-        ObjectContainerSink sink(object_container);
-        FilterStream fs(&source, &sink, 10000, false);
+        io::HDF5Source<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        io::ObjectContainerSink sink(object_container);
+        io::FilterStream fs(&source, &sink, 10000, false);
         fs.run();
     }
     int lmax = 10;
@@ -117,9 +119,9 @@ TEST(SFB, RawParallel) {
 TEST(SFB, Reverse) {
     PixelizedObjectContainer pix_obj_cont(64);
     {
-        HDF5Source<CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
-        PixelizedObjectContainerSink sink(pix_obj_cont);
-        FilterStream fs(&source, &sink, 10000, false);
+        io::HDF5Source<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        io::PixelizedObjectContainerSink sink(pix_obj_cont);
+        io::FilterStream fs(&source, &sink, 10000, false);
         fs.run();
     }
 
@@ -153,9 +155,9 @@ TEST(SFB, Reverse) {
 TEST(SFB, ReverseParallel) {
     PixelizedObjectContainer pix_obj_cont(64);
     {
-        HDF5Source<CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
-        PixelizedObjectContainerSink sink(pix_obj_cont);
-        FilterStream fs(&source, &sink, 10000, false);
+        io::HDF5Source<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        io::PixelizedObjectContainerSink sink(pix_obj_cont);
+        io::FilterStream fs(&source, &sink, 10000, false);
         fs.run();
     }
 
@@ -189,9 +191,9 @@ TEST(SFB, ReverseParallel) {
 TEST(SFB, ReverseFFT) {
     PixelizedObjectContainer pix_obj_cont(64);
     {
-        HDF5Source<CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
-        PixelizedObjectContainerSink sink(pix_obj_cont);
-        FilterStream fs(&source, &sink, 10000, false);
+        io::HDF5Source<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        io::PixelizedObjectContainerSink sink(pix_obj_cont);
+        io::FilterStream fs(&source, &sink, 10000, false);
         fs.run();
     }
 
@@ -225,9 +227,9 @@ TEST(SFB, ReverseFFT) {
 TEST(SFB, ReverseFFTParallel) {
     PixelizedObjectContainer pix_obj_cont(64);
     {
-        HDF5Source<CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
-        PixelizedObjectContainerSink sink(pix_obj_cont);
-        FilterStream fs(&source, &sink, 10000, false);
+        io::HDF5Source<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        io::PixelizedObjectContainerSink sink(pix_obj_cont);
+        io::FilterStream fs(&source, &sink, 10000, false);
         fs.run();
     }
 
@@ -262,18 +264,18 @@ TEST(SFB, ReverseFFTParallel) {
 TEST(SFB, F_LMN) {
     ObjectContainer object_container;
     {
-        HDF5Source<CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
-        ObjectContainerSink sink(object_container);
-        FilterStream fs(&source, &sink, 10000, false);
+        io::HDF5Source<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        io::ObjectContainerSink sink(object_container);
+        io::FilterStream fs(&source, &sink, 10000, false);
         fs.run();
     }
 
 
     PixelizedObjectContainer pix_obj_cont(64);
     {
-        HDF5Source<CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
-        PixelizedObjectContainerSink sink(pix_obj_cont);
-        FilterStream fs(&source, &sink, 10000, false);
+        io::HDF5Source<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        io::PixelizedObjectContainerSink sink(pix_obj_cont);
+        io::FilterStream fs(&source, &sink, 10000, false);
         fs.run();
     }
 

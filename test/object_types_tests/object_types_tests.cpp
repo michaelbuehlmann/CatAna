@@ -5,6 +5,7 @@
 #include "gtest/gtest.h"
 #include <catana/types.hpp>
 
+using namespace catana;
 
 #ifndef ALL_TESTS
 #include <random>
