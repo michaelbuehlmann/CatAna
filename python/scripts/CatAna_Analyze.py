@@ -1,6 +1,7 @@
 from __future__ import division, print_function, absolute_import
 
 import CatAna.io as io
+import CatAna.decomp as decomp
 
 import argparse
 import os
@@ -62,7 +63,6 @@ class CMASSWindowFunction(GenericRedshiftWindowFunction):
 supported_filters = ["tophat", "gauss", "AngMask", "CMASS"]
 FilterTuple = collections.namedtuple('Filter', 'filter option')
 
-
 class ParseFilter(argparse.Action):
     def __call__(self, parser, args, values, option_string=None):
         if values[0] not in supported_filters:
@@ -85,6 +85,7 @@ class ParseFilter(argparse.Action):
                 else:
                     parser.error("need to specify path to angular mask")
             if values[0] == 'CMASS':
+                values[0] = 'generic'
                 option = CMASSWindowFunction()
             try:
                 getattr(args, self.dest).append(FilterTuple(values[0], option))
@@ -92,18 +93,8 @@ class ParseFilter(argparse.Action):
                 setattr(args, self.dest, [FilterTuple(values[0], option)])
 
 
-def extract(infile, outfile, intype, max_dist, intable=None, outtable=None, precision='float',
-                 incoord='cartesian', incoord_unit='Mpc', outcoord='cartesian', outcoord_unit='Mpc',
-                 hubble_param=1., box_origin=0., filter = [], subsample_size=None, temp_file=None, verbose=True):
-
-        #  Prepare Sink
-        assert outcoord_unit in ['Mpc', 'Mpc/h']
-        if outcoord_unit == 'Mpc':
-            output_hubble_param = 1.
-        else:
-            output_hubble_param = hubble_param
-        pysink = io.PySink(outfile, "HDF5", tablename=outtable, precision=precision, coord=outcoord,
-                           hubble_param=output_hubble_param, box_origin=0)
+def analyze(infile, lmax, nmax, outfile_base, method, intype, incoord, incoord_unit, hubble_param, intable, precision, max_dist,
+                 box_origin, filter, survey_volume, verbose=True, nside=None):
 
         #  Prepare Source
         assert incoord_unit in ['Mpc', 'Mpc/h']
@@ -111,66 +102,69 @@ def extract(infile, outfile, intype, max_dist, intable=None, outtable=None, prec
             input_hubble_param = 1.
         else:
             input_hubble_param = hubble_param
-        pysource = io.PySource(infile, intype, verbose, tablename=intable, coord=incoord, hubble_param=input_hubble_param, box_origin=box_origin)
 
-        pyfilterstream = io.PyFilterStream(pysource, pysink, subsample_size, temp_file, verbose)
+        pysource = io.PySource(infile, intype, verbose, tablename=intable, coord=incoord, hubble_param=input_hubble_param, box_origin=box_origin)
+        analyzer = decomp.PyAnalyzer(pysource, survey_volume)
 
         if not hasattr(filter, '__len__'):
             filters = [filter]
         tophat_defined = any([f.filter == "tophat" for f in filter])
 
         if not tophat_defined:
-            pyfilterstream.add_filter(io.PyFilter("tophat", max_dist))
+            analyzer.add_filter(io.PyFilter("tophat", max_dist))
         for f in filter:
-            pyfilterstream.add_filter(io.PyFilter(f.filter, f.option, rmax=max_dist))
+            analyzer.add_filter(io.PyFilter(f.filter, f.option, rmax=max_dist))
 
-        pyfilterstream.run()
+        if method == 'RAW':
+            kclkk = analyzer.compute_sfb(lmax, nmax, max_dist, verbose)
+        elif method == "REV_FFT":
+            assert nside is not None
+            kclkk = analyzer.compute_sfb_pixelized(lmax, nmax, max_dist, nside, verbose)
+        else:
+            raise RuntimeError("unknown method: {}".format(method))
+
+        kclkk.savetxt(outfile_base)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-            description="Extract and filter particle positions from gadget/hdf5 files")
+        description="Read from source file and compute C_l(k,k)")
+
     parser.add_argument("infile", type=str,
                         help="the input file", )
-    parser.add_argument("outfile", type=str,
-                        help="the output file (only HDF5 supported so far)")
-    parser.add_argument("--intable", type=str,
-                        help="the input table in the input file (only HDF5)")
-    parser.add_argument("--outtable", type=str,
-                        help="the output table in the output file")
+    parser.add_argument("lmax", type=int, help="Up to which l to compute C_l(k,k)")
+    parser.add_argument("nmax", type=int, help="Number of k's for each l to compute")
+    parser.add_argument("outfile_base", type=str,
+                        help="filename base of output files")
+    parser.add_argument("--method", type=str, choices=["RAW", "REV_FFT"], default="REV_FFT",
+                        help="method to use for C_l(k,k) computation")
+    parser.add_argument("--nside", type=int, default=256,
+                        help="NSide for REV_FFT method")
     parser.add_argument("--intype", type=str, choices=["HDF5", "Gadget", "Text"],
                         help="type of input file (may be deduced from filename")
+    parser.add_argument("--incoord", type=str, choices=["cartesian", "spherical"], default="cartesian",
+                        help="Coordinate system used in the input file (only HDF5 and Text)")
+    parser.add_argument("--incoord_unit", type=str, choices=["Mpc", "Mpc/h"], default="Mpc")
+    parser.add_argument("--hubble_param", type=float, default=0.7,
+                        help="If the input is in Mpc/h, use this parameter to transform coordinates to Mpc.")
+    parser.add_argument("--intable", type=str,
+                        help="the input table in the input file (only HDF5)")
     parser.add_argument("--precision", type=str, choices=["float", "double"], default='float',
                         help="Data precision in input file (only HDF5)")
-    parser.add_argument("--incoord", type=str, choices=["cartesian", "spherical"], default="cartesian",
-                        help="Coordinate system used in the input file (only HDF5, Text)")
-    parser.add_argument("--incoord_unit", type=str, choices=["Mpc", "Mpc/h"], default="Mpc")
-    parser.add_argument("--outcoord", type=str, choices=["cartesian", "spherical"], default="cartesian",
-                        help="Coordinate system used for the output file")
-    parser.add_argument("--outcoord_unit", type=str, choices=["Mpc", "Mpc/h"], default="Mpc")
     parser.add_argument("--max_dist", type=float, required=True,
-                        help="The maximal distance of objects from the origin, in input coordinates."
-                             "Automatically adds tophat filter to ensure.")
+                        help="The maximal distance of objects from the origin (Rmax), in input units")
     parser.add_argument("--box_origin", type=float, default=0,
                         help="Coordinate location of the box center (only cartesian coords) "
                              "(e.g. if box coordinates from [0,L] -> specify L/2)")
-    parser.add_argument("--hubble_param", type=float, default=0.7,
-                        help="If the input is in Mpc/h, use this parameter to transform coordinates to Mpc. Set to 1"
-                             "if units are in Mpc")
     parser.add_argument("--filter", nargs='*', action=ParseFilter,
                         metavar="name [scale/option]",
-                        help="Filters to apply to data. Scales in input coordinates (eg Mpc/h). Valid filters: {}".format(supported_filters))
-    parser.add_argument("--subsample_size", type=int,
-                        help="Size of the output catalog which is randomly subsampled after filtering")
-    parser.add_argument("--temp_file", type=str,
-                        help="Path to the temporary file which will be created if subsample_size is set")
+                        help="Filters to apply to data. Scales in input units. Valid filters: {}".format(supported_filters))
+    parser.add_argument("--survey_volume", type=float, default=1,
+                        help="The volume spanned by the window function of the data [in input units].")
     parser.add_argument("--verbose", action='store_true')
     args = parser.parse_args()
-
-    if args.subsample_size is not None:
-        assert args.temp_file is not None, "Need to specify path to a valid temporary file, if subsample_size is set."
 
     kwargs = vars(args)
     print("Arguments used:", kwargs)
 
-    extract(**kwargs)
+    analyze(**kwargs)

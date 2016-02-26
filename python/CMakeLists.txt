@@ -10,7 +10,9 @@ include_directories(${PYTHON_INCLUDE_DIR})
 
 # Just write files to top_dir/build...
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/python/CatAna)
-configure_file(CatAna/__init__.py ${CMAKE_SOURCE_DIR}/build/python/CatAna/__init__.py)
+configure_file(CatAna/__init__.py  ${CMAKE_SOURCE_DIR}/build/python/CatAna/__init__.py)
+configure_file(CatAna/io.py        ${CMAKE_SOURCE_DIR}/build/python/CatAna/io.py)
+configure_file(CatAna/decomp.py    ${CMAKE_SOURCE_DIR}/build/python/CatAna/decomp.py)
 
 # The actual python library
 add_library(py_besseltools SHARED CatAna/py_besseltools.cpp)

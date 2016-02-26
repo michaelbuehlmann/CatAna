@@ -51,7 +51,6 @@ PYBIND11_PLUGIN(io_core) {
             .def("reset", &Source::reset)
             .def("get_objectcontainer", &Source::get_objectcontainer)
             .def("get_pixobjectcontainer", &Source::get_pixobjectcontainer, py::arg("nside"));
-
     py::class_<Sink> sink(m, "Sink");
     py::class_<Filter> filter(m, "Filter");
 
@@ -59,6 +58,16 @@ PYBIND11_PLUGIN(io_core) {
     py::class_<GadgetSource>(m, "GadgetSource", py::base<Source>(), "Read positions from binary Gadget file")
             .def(py::init<std::string, bool>(),
                     py::arg("filename"), py::arg("verbose")=true);
+    // TEXT
+    py::class_<TextSource<record_cd>>(m, "TextSoruce_cartesian", py::base<Source>(),
+            "Read from Text File (cartesian coordinates), first 3 columns")
+            .def(py::init<std::string, double, double>(),
+                    py::arg("filename"), py::arg("hubble_param")=1., py::arg("box_size")=0.);
+    py::class_<TextSource<record_sd>>(m, "TextSoruce_spherical", py::base<Source>(),
+            "Read from Text File (spherical coordinates), first 3 columns")
+            .def(py::init<std::string, double, double>(),
+                    py::arg("filename"), py::arg("hubble_param")=1., py::arg("box_size")=0.);
+    // HDF5
     py::class_<HDF5Source<record_cf>>(m, "HDF5Source_cartesian_float", py::base<Source>(),
             "Read from HDF5 File (cartesian coordinates, float)")
             .def(py::init<std::string, std::string, double, double, bool>(),
