@@ -15,7 +15,7 @@ using complex = std::complex<double>;
 
 KClkk _sfb_reverse(const PixelizedObjectContainer& pix_obj_cont,
         unsigned short lmax, unsigned short nmax,
-        double rmax, double window_volume, bool verbose, bool parallel, bool interpolated)
+        double rmax, double window_volume, bool store_flmn, bool verbose, bool parallel, bool interpolated)
 {
     auto nside = pix_obj_cont.get_nside();
     auto npix = pix_obj_cont.size();
@@ -90,6 +90,14 @@ KClkk _sfb_reverse(const PixelizedObjectContainer& pix_obj_cont,
             }
             kclkk.c_ln(l,n) *= std::pow(norm_factor*kclkk.k_ln(l,n),2)/(2*l+1);
         }
+
+        if(store_flmn) {
+            for (unsigned short n=0; n<nmax; ++n){
+                f_l_mn.col(n) *= kclkk.k_ln(l,n)*norm_factor;
+            }
+            kclkk.f_lmn.push_back(f_l_mn);
+        }
+
         if(verbose)
             std::cout << "Done." << std::endl;
     }

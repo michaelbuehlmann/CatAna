@@ -17,15 +17,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 KClkk sfb_decomposition(const ObjectContainer& objects, unsigned short lmax, unsigned short nmax, double rmax,
-        double window_volume, bool verbose)
+        double window_volume, bool store_flmn, bool verbose)
 {
     bool interpolated = (objects.size()>BESSELINTERPOLATIONPOINTS_PER_ZERO);
-    return _sfb_raw(objects, lmax, nmax, rmax, window_volume, verbose, true, interpolated);
+    return _sfb_raw(objects, lmax, nmax, rmax, window_volume, store_flmn, verbose, true, interpolated);
 }
 
 KClkk sfb_decomposition(PixelizedObjectContainer& pix_obj_cont, unsigned short lmax, unsigned short nmax, double rmax,
-        double window_volume, bool verbose)
+        double window_volume, bool store_flmn, bool verbose)
 {
     bool interpolated = (pix_obj_cont.get_nobjects()>BESSELINTERPOLATIONPOINTS_PER_ZERO);
-    return _sfb_reverse_fft(pix_obj_cont, lmax, nmax, rmax, window_volume, verbose, true, interpolated);
+    return _sfb_reverse_fft(pix_obj_cont, lmax, nmax, rmax, window_volume, store_flmn, verbose, true, interpolated);
 }

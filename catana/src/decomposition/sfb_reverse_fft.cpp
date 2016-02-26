@@ -42,7 +42,7 @@ inline void sfb_ringdecomp_kernel(const unsigned short& l, double& k_n,
 KClkk _sfb_reverse_fft(
         const PixelizedObjectContainer& pix_obj_cont,
         unsigned short lmax, unsigned short nmax,
-        double rmax, double window_volume, bool verbose, bool parallel, bool interpolated
+        double rmax, double window_volume, bool store_flmn, bool verbose, bool parallel, bool interpolated
 ) {
     double_t norm_factor = std::sqrt(2/M_PI) * window_volume/pix_obj_cont.get_nobjects();
     KClkk kclkk(lmax, nmax, rmax);
@@ -80,6 +80,10 @@ KClkk _sfb_reverse_fft(
         if(verbose) {
             std::cout << "\tl = " << l << " ... ";
             std::cout.flush();
+        }
+
+        if(store_flmn) {
+            kclkk.f_lmn.push_back(Eigen::ArrayXXcd(l+1, nmax));
         }
 
         // Instantiate an interpolation routine for spherical bessels if asked for. Otherwise use plain function.
@@ -123,7 +127,11 @@ KClkk _sfb_reverse_fft(
 
             // Normalize c_ln
             kclkk.c_ln(l,n) *= std::pow(norm_factor * k_n, 2) / (2*l+1);
-            }
+
+            if(store_flmn)
+                kclkk.f_lmn.back().col(n) = f_lmn_m * k_n * norm_factor;
+
+        }
 
         if(verbose) {
             std::cout << "Done." << std::endl;

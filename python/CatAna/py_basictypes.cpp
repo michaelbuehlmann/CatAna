@@ -5,6 +5,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>
 #include <pybind11/numpy.h>
+#include <pybind11/complex.h>
 
 #include <Eigen/Dense>
 
@@ -49,6 +50,19 @@ PYBIND11_PLUGIN(basictypes)
                         a.data(),  // pointer to buffer
                         sizeof(double),  // size of scalar
                         py::format_descriptor<double>::value(),  // python format descriptor
+                        2,  // number of dimensions
+                        {static_cast<unsigned long int>(a.rows()), static_cast<unsigned long int>(a.cols())},  // the dimensions
+                        {sizeof(double), sizeof(double)*a.rows()}  // strides (in bytes)
+                );
+            });
+
+    // Binding Eigen array to numpy
+    py::class_<Eigen::ArrayXXcd>(m, "EigenArrayXXcd")
+            .def_buffer([](Eigen::ArrayXXcd &a) -> py::buffer_info{
+                return py::buffer_info(
+                        a.data(),  // pointer to buffer
+                        sizeof(std::complex<double>),  // size of scalar
+                        py::format_descriptor<std::complex<double>>::value(),  // python format descriptor
                         2,  // number of dimensions
                         {static_cast<unsigned long int>(a.rows()), static_cast<unsigned long int>(a.cols())},  // the dimensions
                         {sizeof(double), sizeof(double)*a.rows()}  // strides (in bytes)

@@ -8,6 +8,9 @@
 #include <Eigen/Dense>
 #include <string>
 #include <ostream>
+#include <vector>
+
+
 //! Return Type of SFB decomposition methods
 /*
  * k_ln contains the k at which C_l(k,k) is evaluated
@@ -16,9 +19,12 @@
  *  index 1: 0<n<nmax)
  */
 struct KClkk {
+public:
     KClkk(unsigned short lmax, unsigned short nmax, double rmax);
     Eigen::ArrayXXd k_ln;
     Eigen::ArrayXXd c_ln;
+    std::vector<Eigen::ArrayXXcd> f_lmn;
+public:
     //! Save k_ln and c_ln to files '{filename_base}.(k_ln/c_ln) respectively. Rows are l, columns are n.
     void savetxt(std::string filename_base);
 };

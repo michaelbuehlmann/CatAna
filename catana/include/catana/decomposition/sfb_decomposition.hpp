@@ -13,11 +13,11 @@
 
 KClkk sfb_decomposition(const ObjectContainer& objects,
         unsigned short lmax, unsigned short nmax,
-        double rmax, double window_volume, bool verbose = true);
+        double rmax, double window_volume, bool store_flmn = false, bool verbose = true);
 
 KClkk sfb_decomposition(PixelizedObjectContainer& pix_obj_cont,
         unsigned short lmax, unsigned short nmax,
-        double rmax, double window_volume, bool verbose = true);
+        double rmax, double window_volume, bool store_flmn = false, bool verbose = true);
 
 ////////////////////////////////////////////////////////////////////////////////
 #endif //CATANA_APP_SFB_DECOMPOSITION_HPP

@@ -54,7 +54,7 @@ TEST(SFB, Raw) {
     // Compare with Python
     auto python_cln = read_python_cln(lmax,nmax);
 
-    KClkk kclkk = _sfb_raw(object_container, lmax, nmax, 2500, 5535184878.03, false, false, false);
+    KClkk kclkk = _sfb_raw(object_container, lmax, nmax, 2500, 5535184878.03, false, false, false, false);
     kclkk.savetxt("sfb_raw");
 
     for(int l=0; l<lmax; ++l){
@@ -65,7 +65,7 @@ TEST(SFB, Raw) {
     }
 
     // With interpolation
-    kclkk = _sfb_raw(object_container, lmax, nmax, 2500, 5535184878.03, false, false, true);
+    kclkk = _sfb_raw(object_container, lmax, nmax, 2500, 5535184878.03, false, false, false, true);
     kclkk.savetxt("sfb_raw_inter");
 
     for(int l=0; l<lmax; ++l){
@@ -91,7 +91,7 @@ TEST(SFB, RawParallel) {
     auto python_cln = read_python_cln(lmax,nmax);
 
 
-    KClkk kclkk = _sfb_raw(object_container, lmax, nmax, 2500, 5535184878.03, false, true, false);
+    KClkk kclkk = _sfb_raw(object_container, lmax, nmax, 2500, 5535184878.03, false, false, true, false);
     kclkk.savetxt("sfb_raw_p");
 
     for(int l=0; l<lmax; ++l){
@@ -101,7 +101,7 @@ TEST(SFB, RawParallel) {
         }
     }
 
-    kclkk = _sfb_raw(object_container, lmax, nmax, 2500, 5535184878.03, false, true, true);
+    kclkk = _sfb_raw(object_container, lmax, nmax, 2500, 5535184878.03, false, false, true, true);
     kclkk.savetxt("sfb_raw_p_inter");
 
     for(int l=0; l<lmax; ++l){
@@ -129,7 +129,7 @@ TEST(SFB, Reverse) {
     // Compare with Python
     auto python_cln = read_python_cln(lmax,nmax);
 
-    KClkk kclkk = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, false);
+    KClkk kclkk = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, false, false);
     kclkk.savetxt("sfb_reverse");
 
     for(int l=0; l<lmax; ++l){
@@ -139,7 +139,7 @@ TEST(SFB, Reverse) {
         }
     }
 
-    kclkk = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, true);
+    kclkk = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, false, true);
     kclkk.savetxt("sfb_reverse_inter");
 
     for(int l=0; l<lmax; ++l){
@@ -165,7 +165,7 @@ TEST(SFB, ReverseParallel) {
     // Compare with Python
     auto python_cln = read_python_cln(lmax,nmax);
 
-    KClkk kclkk = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, true, false);
+    KClkk kclkk = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, true, false);
     kclkk.savetxt("sfb_reverse_p");
 
     for(int l=0; l<lmax; ++l){
@@ -175,7 +175,7 @@ TEST(SFB, ReverseParallel) {
         }
     }
 
-    kclkk = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, true, true);
+    kclkk = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, true, true);
     kclkk.savetxt("sfb_reverse_p_inter");
 
     for(int l=0; l<lmax; ++l){
@@ -201,7 +201,7 @@ TEST(SFB, ReverseFFT) {
     // Compare with Python
     auto python_cln = read_python_cln(lmax,nmax);
 
-    KClkk kclkk = _sfb_reverse_fft(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, false);
+    KClkk kclkk = _sfb_reverse_fft(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, false, false);
     kclkk.savetxt("sfb_reverse_fft");
 
     for(int l=0; l<lmax; ++l){
@@ -211,7 +211,7 @@ TEST(SFB, ReverseFFT) {
         }
     }
 
-    kclkk = _sfb_reverse_fft(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, true);
+    kclkk = _sfb_reverse_fft(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, false, true);
     kclkk.savetxt("sfb_reverse_fft_inter");
 
     for(int l=0; l<lmax; ++l){
@@ -237,7 +237,7 @@ TEST(SFB, ReverseFFTParallel) {
     // Compare with Python
     auto python_cln = read_python_cln(lmax,nmax);
 
-    KClkk kclkk = _sfb_reverse_fft(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, true, false);
+    KClkk kclkk = _sfb_reverse_fft(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, true, false);
     kclkk.savetxt("sfb_reverse_fft_p");
 
     for(int l=0; l<lmax; ++l){
@@ -247,7 +247,7 @@ TEST(SFB, ReverseFFTParallel) {
         }
     }
 
-    kclkk = _sfb_reverse_fft(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, true, true);
+    kclkk = _sfb_reverse_fft(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, true, true);
     kclkk.savetxt("sfb_reverse_fft_p_inter");
 
     for(int l=0; l<lmax; ++l){
@@ -255,5 +255,40 @@ TEST(SFB, ReverseFFTParallel) {
             EXPECT_NEAR(kclkk.c_ln(l,n), python_cln(l,n), 0.10*python_cln(l,n))
                             << "Error larger than 10% at l="<<l<<", n="<<n<<std::endl;
         }
+    }
+}
+
+
+TEST(SFB, F_LMN) {
+    ObjectContainer object_container;
+    {
+        HDF5Source<CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        ObjectContainerSink sink(object_container);
+        FilterStream fs(&source, &sink, 10000, false);
+        fs.run();
+    }
+
+
+    PixelizedObjectContainer pix_obj_cont(64);
+    {
+        HDF5Source<CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        PixelizedObjectContainerSink sink(pix_obj_cont);
+        FilterStream fs(&source, &sink, 10000, false);
+        fs.run();
+    }
+
+    int lmax = 10;
+    int nmax = 10;
+
+    auto kclkk_raw = _sfb_raw(object_container, lmax, nmax, 2500, 5535184878.03, true, false, true, true);
+    ASSERT_EQ(lmax, kclkk_raw.f_lmn.size());
+    auto kclkk_rev = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, true, false, true, true);
+    ASSERT_EQ(lmax, kclkk_rev.f_lmn.size());
+    auto kclkk_rev_fft = _sfb_reverse_fft(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, true, false, true, true);
+    ASSERT_EQ(lmax, kclkk_rev_fft.f_lmn.size());
+
+    for(int l=0; l<lmax; ++l){
+        EXPECT_TRUE(kclkk_rev.f_lmn[l].isApprox(kclkk_rev.f_lmn[l]));
+//        EXPECT_TRUE(kclkk_raw.f_lmn[l].isApprox(kclkk_rev_fft.f_lmn[l]));
     }
 }

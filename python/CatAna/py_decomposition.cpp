@@ -6,6 +6,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>
 #include <pybind11/numpy.h>
+#include <pybind11/stl.h>
 
 namespace py = pybind11;
 
@@ -16,6 +17,7 @@ PYBIND11_PLUGIN(decomp_core)
     py::class_<KClkk>(m, "KClkk")
             .def_readonly("k_ln", &KClkk::k_ln)
             .def_readonly("c_ln", &KClkk::c_ln)
+            .def_readonly("f_lmn", &KClkk::f_lmn)
             .def("savetxt", &KClkk::savetxt);
 
     py::class_<Analyzer>(m, "Analyzer")
@@ -26,22 +28,22 @@ PYBIND11_PLUGIN(decomp_core)
             .def("compute_sfb_pixelized", &Analyzer::compute_sfb_pixelized);
 
     m.def("sfb_decomposition",
-            [](ObjectContainer& oc, unsigned short lmax, unsigned short nmax, double rmax, double window_volume, bool verbose)
+            [](ObjectContainer& oc, unsigned short lmax, unsigned short nmax, double rmax, double window_volume, bool store_flmn, bool verbose)
             {
-                return sfb_decomposition(oc, lmax, nmax, rmax, window_volume, verbose);
+                return sfb_decomposition(oc, lmax, nmax, rmax, window_volume, store_flmn, verbose);
             },
             "compute the C_l(k,k) of the SFB decomposition.",
             py::arg("ObjectContainer"), py::arg("lmax"), py::arg("nmax"), py::arg("rmax"), py::arg("window_volume"),
-            py::arg("verbose")=true);
+            py::arg("store_flmn")=false, py::arg("verbose")=true);
 
     m.def("sfb_decomposition",
-            [](PixelizedObjectContainer& pic_oc, unsigned short lmax, unsigned short nmax, double rmax, double window_volume, bool verbose)
+            [](PixelizedObjectContainer& pic_oc, unsigned short lmax, unsigned short nmax, double rmax, double window_volume, bool store_flmn, bool verbose)
             {
-                return sfb_decomposition(pic_oc, lmax, nmax, rmax, window_volume, verbose);
+                return sfb_decomposition(pic_oc, lmax, nmax, rmax, window_volume, store_flmn, verbose);
             },
             "compute the C_l(k,k) of the SFB decomposition.",
             py::arg("PixelizedObjectContainer"), py::arg("lmax"), py::arg("nmax"), py::arg("rmax"), py::arg("window_volume"),
-            py::arg("verbose")=true);
+            py::arg("store_flmn")=false, py::arg("verbose")=true);
 
     return m.ptr();
 }

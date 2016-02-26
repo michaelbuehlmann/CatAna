@@ -12,7 +12,8 @@
 KClkk _sfb_raw(
         const ObjectContainer& objects,
         unsigned short lmax, unsigned short nmax,
-        double rmax, double window_volume, bool verbose = true, bool parallel = false, bool interpolated = false
+        double rmax, double window_volume, bool store_flmn = false, bool verbose = true,
+        bool parallel = false, bool interpolated = false
 );
 
 

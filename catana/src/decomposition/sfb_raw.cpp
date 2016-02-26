@@ -15,7 +15,7 @@ using complex = std::complex<double_t>;
 KClkk _sfb_raw(
         const ObjectContainer& objects,
         unsigned short lmax, unsigned short nmax,
-        double rmax, double window_volume, bool verbose, bool parallel, bool interpolated)
+        double rmax, double window_volume, bool store_flmn, bool verbose, bool parallel, bool interpolated)
 {
     size_t container_size = size_t(std::distance(std::begin(objects), std::end(objects)));
     if(verbose) {
@@ -84,12 +84,17 @@ KClkk _sfb_raw(
             std::cout << "Computing C_l(k,k) ... ";
         // Norming and computing C_l(k,k)
         f_l_mn *= norm_factor;
+
         for (unsigned short n=0; n<nmax; ++n){
             for (int m=-l; m<=l; ++m) {
                 kclkk.c_ln(l,n) += std::pow(std::abs(f_l_mn(abs(m),n)),2);
             }
             kclkk.c_ln(l,n) /= (2*l+1);
         }
+
+        if(store_flmn)
+            kclkk.f_lmn.push_back(f_l_mn);
+
         if(verbose)
             std::cout << "Done.\n";
     }
