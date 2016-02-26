@@ -62,6 +62,13 @@ const size_t CartesianRecord<FLOAT_TYPE>::field_sizes[] = {
 
 template<class FLOAT_TYPE>
 const char CartesianRecord<FLOAT_TYPE>::title[] = "Particle positions(cartesian)";
+
+template<class FLOAT_TYPE>
+std::ostream& operator<<(std::ostream& os, const CartesianRecord<FLOAT_TYPE>& rec)
+{
+    os << rec.pos_x << " " << rec.pos_y << " " << rec.pos_z;
+    return os;
+}
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -98,6 +105,13 @@ const size_t SphericalRecord<FLOAT_TYPE>::field_sizes[] = {
 
 template<class FLOAT_TYPE>
 const char SphericalRecord<FLOAT_TYPE>::title[] = "Particle positions(cartesian)";
+
+template<class FLOAT_TYPE>
+std::ostream& operator<<(std::ostream& os, const SphericalRecord<FLOAT_TYPE>& rec)
+{
+    os << rec.pos_r << " " << rec.pos_theta << " " << rec.pos_phi;
+    return os;
+}
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -108,4 +122,9 @@ template class CartesianRecord<float>;
 template class CartesianRecord<double>;
 template class SphericalRecord<float>;
 template class SphericalRecord<double>;
+
+template std::ostream& operator<<<float>(std::ostream&, const CartesianRecord<float>&);
+template std::ostream& operator<<<double>(std::ostream&, const CartesianRecord<double>&);
+template std::ostream& operator<<<float>(std::ostream&, const SphericalRecord<float>&);
+template std::ostream& operator<<<double>(std::ostream&, const SphericalRecord<double>&);
 #endif //CATANA_APP_RECORD_TYPE_CPP_HPP

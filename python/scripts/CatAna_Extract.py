@@ -85,6 +85,7 @@ class ParseFilter(argparse.Action):
                 else:
                     parser.error("need to specify path to angular mask")
             if values[0] == 'CMASS':
+                values[0] = 'generic'
                 option = CMASSWindowFunction()
             try:
                 getattr(args, self.dest).append(FilterTuple(values[0], option))
@@ -92,7 +93,7 @@ class ParseFilter(argparse.Action):
                 setattr(args, self.dest, [FilterTuple(values[0], option)])
 
 
-def extract(infile, outfile, intype, max_dist, intable=None, outtable=None, precision='float',
+def extract(infile, outfile, intype, outtype, max_dist, intable=None, outtable=None, precision='float',
                  incoord='cartesian', incoord_unit='Mpc', outcoord='cartesian', outcoord_unit='Mpc',
                  hubble_param=1., box_origin=0., filter = [], subsample_size=None, temp_file=None, verbose=True):
 
@@ -102,7 +103,7 @@ def extract(infile, outfile, intype, max_dist, intable=None, outtable=None, prec
             output_hubble_param = 1.
         else:
             output_hubble_param = hubble_param
-        pysink = io.PySink(outfile, "HDF5", tablename=outtable, precision=precision, coord=outcoord,
+        pysink = io.PySink(outfile, outtype, tablename=outtable, precision=precision, coord=outcoord,
                            hubble_param=output_hubble_param, box_origin=0)
 
         #  Prepare Source
@@ -140,6 +141,8 @@ if __name__ == "__main__":
                         help="the output table in the output file")
     parser.add_argument("--intype", type=str, choices=["HDF5", "Gadget", "Text"],
                         help="type of input file (may be deduced from filename")
+    parser.add_argument("--outtype", type=str, choices=["HDF5", "Text"],
+                        help="type of output file (may be deduced from filename")
     parser.add_argument("--precision", type=str, choices=["float", "double"], default='float',
                         help="Data precision in input file (only HDF5)")
     parser.add_argument("--incoord", type=str, choices=["cartesian", "spherical"], default="cartesian",

@@ -45,6 +45,49 @@ TEST(ReadTxt, SmallChuncks){
 }
 
 
+TEST(WriteTxt, Cartesian){
+    ObjectContainer oc, oc2(100);
+    oc.add_object(Object(1,2,3));
+    oc.add_object(Object(0,0,2));
+    oc.add_object(Object(-1,-1,-1));
+    oc.add_object(Object(0,0,0));
+
+    TextSink<CartesianRecord<double>> sink("test.txt");
+    int n = sink.write(oc.begin(), oc.size());
+    EXPECT_EQ(oc.size(), n);
+
+    TextSource<CartesianRecord<double>> source("test.txt");
+    n = source.read(oc2.begin(), 100);
+    ASSERT_EQ(oc.size(), n);
+    for(int i=0; i<oc.size(); ++i){
+        EXPECT_DOUBLE_EQ(oc[i].r, oc2[i].r);
+        EXPECT_DOUBLE_EQ(oc[i].p.theta, oc2[i].p.theta);
+        EXPECT_DOUBLE_EQ(oc[i].p.phi, oc2[i].p.phi);
+    }
+}
+
+TEST(WriteTxt, Spherical){
+    ObjectContainer oc, oc2(100);
+    oc.add_object(Object(1,2,3));
+    oc.add_object(Object(0,0,2));
+    oc.add_object(Object(-1,-1,-1));
+    oc.add_object(Object(0,0,0));
+
+    TextSink<SphericalRecord<double>> sink("test.txt");
+    int n = sink.write(oc.begin(), oc.size());
+    EXPECT_EQ(oc.size(), n);
+
+    TextSource<SphericalRecord<double>> source("test.txt");
+    n = source.read(oc2.begin(), 100);
+    ASSERT_EQ(oc.size(), n);
+    for(int i=0; i<oc.size(); ++i){
+        EXPECT_DOUBLE_EQ(oc[i].r, oc2[i].r);
+        EXPECT_DOUBLE_EQ(oc[i].p.theta, oc2[i].p.theta);
+        EXPECT_DOUBLE_EQ(oc[i].p.phi, oc2[i].p.phi);
+    }
+}
+
+
 TEST(Source, ToObjectContainer){
     TextSource<CartesianRecord<double>> source(test_data_dir+"mock_data.txt");
     ObjectContainer oc(source.get_objectcontainer());

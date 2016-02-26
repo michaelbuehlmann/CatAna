@@ -86,4 +86,10 @@ struct HDF5_PandasCartesianRecord{
     }
 };
 
+template<class FLOAT_TYPE>
+std::ostream& operator<<(std::ostream& os, const CartesianRecord<FLOAT_TYPE>& rec);
+
+template<class FLOAT_TYPE>
+std::ostream& operator<<(std::ostream& os, const SphericalRecord<FLOAT_TYPE>& rec);
+
 #endif //CATANA_APP_HDF5_RECORD_TYPES_HPP

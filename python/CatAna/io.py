@@ -14,9 +14,9 @@ class PySource(object):
         if filetype is None:
             extension = filename.split('.')[-1]
             if extension in ['hdf', 'hdf5', 'h5']:
-                filetype='HDF5'
+                filetype = 'HDF5'
             elif extension in ['txt','dat']:
-                filetype='Text'
+                filetype = 'Text'
             else:
                 raise RuntimeError("Could not derrive the filetype, please specify explicitly.")
 
@@ -63,7 +63,16 @@ class PySource(object):
 
 class PySink(object):
     def __init__(self, filename, filetype="HDF5", verbose=True, **kwargs):
-        assert(filetype in ["HDF5"])
+        if filetype is None:
+            extension = filename.split('.')[-1]
+            if extension in ['hdf', 'hdf5', 'h5']:
+                filetype = 'HDF5'
+            elif extension in ['txt','dat']:
+                filetype = 'Text'
+            else:
+                raise RuntimeError("Could not derrive the filetype, please specify explicitly.")
+
+        assert(filetype in ["HDF5", "Text"])
 
         hubble_param = kwargs.get('hubble_param', 1)
         box_origin = kwargs.get('box_origin', 0)
@@ -89,6 +98,13 @@ class PySink(object):
                 elif precision == 'dobule':
                     self.sink = io_core.HDF5Sink_spherical_double(filename, tablename, hubble_param, 2 * box_origin, True,
                                                             verbose)
+
+        elif filetype == "Text":
+            if coord == 'cartesian':
+                self.sink = io_core.TextSink_cartesian(filename, verbose)
+            elif coord == 'spherical':
+                self.sink = io_core.TextSink_spherical(filename, verbose)
+
 
         else:
             raise RuntimeError("Unsupported filetype: {}".format(filetype))

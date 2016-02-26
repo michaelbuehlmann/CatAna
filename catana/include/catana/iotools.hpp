@@ -19,6 +19,7 @@
 #include "io_tools/sinks/PixelizedObjectContainerSink.hpp"
 #include "io_tools/sinks/HDF5Sink.hpp"
 #include "io_tools/sinks/RawBinarySink.hpp"
+#include "io_tools/sinks/TextSink.hpp"
 
 #include "io_tools/Filter.hpp"
 #include "io_tools/filters/angular_filters.hpp"

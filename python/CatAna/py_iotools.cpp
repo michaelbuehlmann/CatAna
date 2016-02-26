@@ -110,6 +110,14 @@ PYBIND11_PLUGIN(io_core) {
             .def(py::init<std::string, std::string, double, double, bool, bool>(),
                     py::arg("filename"), py::arg("tablename"), py::arg("hubble_param")=1., py::arg("box_size")=0.,
                     py::arg("new_file")=true, py::arg("verbose")=true);
+    py::class_<TextSink<record_cd>>(m, "TextSink_cartesian", sink,
+            "Write to Text File (cartesian)")
+            .def(py::init<std::string, bool>(),
+                    py::arg("filename"), py::arg("verbose")=true);
+    py::class_<TextSink<record_sd>>(m, "TextSink_spherical", sink,
+            "Write to Text File (spherical)")
+            .def(py::init<std::string, bool>(),
+                    py::arg("filename"), py::arg("verbose")=true);
 
     // Add Filter classes here
     py::class_<TophatRadialWindowFunctionFilter>(m, "TophatRadialWindowFunctionFilter", filter,

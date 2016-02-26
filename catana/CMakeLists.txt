@@ -30,6 +30,7 @@ set(iotools_sinks_SOURCES
         include/catana/io_tools/sinks/PixelizedObjectContainerSink.hpp
         include/catana/io_tools/sinks/HDF5Sink.hpp src/io_tools/sinks/HDF5Sink.cpp
         include/catana/io_tools/sinks/RawBinarySink.hpp src/io_tools/sinks/RawBinarySink.cpp
+        include/catana/io_tools/sinks/TextSink.hpp src/io_tools/sinks/TextSink.cpp
         )
 
 set(iotools_filters_SOURCES
