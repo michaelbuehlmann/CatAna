@@ -24,7 +24,7 @@ TEST(Analyzer, RAW){
             5535184878.03
     );
 
-    auto kclkk = analyzer.compute_sfb(5, 10, 2500, false);
+    auto kclkk = analyzer.compute_sfb(5, 10, 2500, false, false);
 }
 
 TEST(Analyzer, Pixelized){
@@ -34,7 +34,7 @@ TEST(Analyzer, Pixelized){
             5535184878.03
     );
 
-    auto kclkk = analyzer.compute_sfb_pixelized(5, 10, 2500, 16, false);
+    auto kclkk = analyzer.compute_sfb_pixelized(5, 10, 2500, 16, false, false);
 }
 
 TEST(Analyzer, Filter){
@@ -47,5 +47,5 @@ TEST(Analyzer, Filter){
     analyzer.add_filter(
             filter.get()
     );
-    auto kclkk = analyzer.compute_sfb_pixelized(5, 10, 2500, 16, false);
+    auto kclkk = analyzer.compute_sfb_pixelized(5, 10, 2500, 16, false, false);
 }

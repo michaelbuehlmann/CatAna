@@ -19,7 +19,8 @@ namespace catana {
         filters.push_back(filter);
     }
 
-    KClkk Analyzer::compute_sfb(unsigned short lmax, unsigned short nmax, double rmax, bool verbose)
+    KClkk Analyzer::compute_sfb(unsigned short lmax, unsigned short nmax, double rmax,
+            bool store_flmn, bool verbose)
     {
         source->reset();
         ObjectContainer oc;
@@ -33,11 +34,11 @@ namespace catana {
             }
             fs.run();
         }
-        return sfb_decomposition(oc, lmax, nmax, rmax, window_volume, verbose);
+        return sfb_decomposition(oc, lmax, nmax, rmax, window_volume, store_flmn, verbose);
     }
 
     KClkk Analyzer::compute_sfb_pixelized(unsigned short lmax, unsigned short nmax, double rmax, unsigned int nside,
-            bool verbose)
+            bool store_flmn, bool verbose)
     {
         source->reset();
         PixelizedObjectContainer pix_oc(nside);
@@ -51,7 +52,7 @@ namespace catana {
             }
             fs.run();
         }
-        return sfb_decomposition(pix_oc, lmax, nmax, rmax, window_volume, verbose);
+        return sfb_decomposition(pix_oc, lmax, nmax, rmax, window_volume, store_flmn, verbose);
     }
 
 }

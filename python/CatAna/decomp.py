@@ -23,8 +23,8 @@ class PyAnalyzer(object):
         self.filters.append(py_filter.filter)
         self.analyzer.add_filter(py_filter.filter)
 
-    def compute_sfb(self, lmax, nmax, rmax, verbose=True):
-        return self.analyzer.compute_sfb(lmax, nmax, rmax, verbose)
+    def compute_sfb(self, lmax, nmax, rmax, store_flmn=False, verbose=True):
+        return self.analyzer.compute_sfb(lmax, nmax, rmax, store_flmn, verbose)
 
-    def compute_sfb_pixelized(self, lmax, nmax, rmax, nside, verbose=True):
-        return self.analyzer.compute_sfb_pixelized(lmax, nmax, rmax, nside, verbose)
+    def compute_sfb_pixelized(self, lmax, nmax, rmax, nside, store_flmn=False, verbose=True):
+        return self.analyzer.compute_sfb_pixelized(lmax, nmax, rmax, nside, store_flmn, verbose)

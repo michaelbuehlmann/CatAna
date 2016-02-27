@@ -22,10 +22,11 @@ namespace catana {
 
         void add_filter(io::Filter* filter);
 
-        KClkk compute_sfb(unsigned short lmax, unsigned short nmax, double rmax, bool verbose);
+        KClkk compute_sfb(unsigned short lmax, unsigned short nmax, double rmax,
+                bool store_flmn, bool verbose);
 
         KClkk compute_sfb_pixelized(unsigned short lmax, unsigned short nmax, double rmax, unsigned int nside,
-                bool verbose);
+                bool store_flmn, bool verbose);
 
     private:
         io::Source* source;
