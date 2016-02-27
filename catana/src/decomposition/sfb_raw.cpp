@@ -33,7 +33,7 @@ namespace catana {
         KClkk kclkk(lmax, nmax, rmax);
 
         // This will be a nullptr if !interpolated, otherwise we will assign it within the l-for loop
-        std::unique_ptr<besseltools::SBesselLookUp> sblu;
+        std::unique_ptr<besseltools::SBesselInterpolator> sblu;
         std::function<double(double)> sph_bessel_l;
 
         // Actual decomposition
@@ -45,7 +45,7 @@ namespace catana {
             }
 
             if (interpolated) {
-                sblu.reset(new besseltools::SBesselLookUp(l, nmax, BESSELINTERPOLATIONPOINTS_PER_ZERO*nmax));
+                sblu.reset(new besseltools::SBesselInterpolator(l, nmax, BESSELINTERPOLATIONPOINTS_PER_ZERO*nmax));
                 sph_bessel_l = [&](const double& z) { return sblu->operator()(z); };
             }
             else {

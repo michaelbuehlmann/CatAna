@@ -6,7 +6,7 @@ set(besseltools_SOURCES
         include/catana/besseltools/BesselZeros.hpp src/besseltools/BesselZeros.cpp
         include/catana/tools/gsl_function_wrapper.hpp
         include/catana/besseltools/sbessel_integrator.hpp src/besseltools/sbessel_integrator.cpp
-        include/catana/besseltools/SBesselLookUp.hpp src/besseltools/SBesselLookUp.cpp )
+        include/catana/besseltools/SBesselInterpolator.hpp src/besseltools/SBesselInterpolator.cpp)
 
 set(basictypes_SOURCES
         include/catana/objects/Object.hpp
@@ -42,7 +42,7 @@ set(iotools_filters_SOURCES
 set(iotools_SOURCES
         ${basictypes_SOURCES}
         include/catana/tools/string_format.hpp
-        include/catana/tools/gsl_function_interpolate.hpp src/tools/gsl_function_interpolate.cpp
+        include/catana/tools/FunctionInterpolator.hpp src/tools/FunctionInterpolator.cpp
         include/catana/io_tools/record_types.hpp src/io_tools/record_type.cpp
         ${iotools_sources_SOURCES}
         ${iotools_sinks_SOURCES}

@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include <catana/tools/gsl_function_interpolate.hpp>
+#include <catana/tools/FunctionInterpolator.hpp>
 #include <cmath>
 
 using namespace catana;

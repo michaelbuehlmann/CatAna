@@ -6,26 +6,18 @@
 #define CATANA_SBESSELLOOKUP_HPP
 
 #include <memory>
+#include "../tools/FunctionInterpolator.hpp"
 
 namespace catana {namespace besseltools {
 
-        class SBesselLookUp {
+        class SBesselInterpolator : public FunctionInterpolator{
         public:
-            SBesselLookUp(unsigned short l, unsigned short nmax, unsigned int n_interp);
-
+            SBesselInterpolator(unsigned short l, unsigned short nmax, unsigned int n_interp);
             double operator()(const double& z) const;
-
             double get_zmax() const;
 
         private:
-            void load_lut();
-
-        private:
             unsigned short l;
-            double z_max;
-            double delta_z_inv;
-            unsigned int n_interp;
-            std::unique_ptr<double[]> lut;
         };
 
 }}

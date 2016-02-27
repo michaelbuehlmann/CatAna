@@ -7,7 +7,7 @@
 
 #include "../Filter.hpp"
 #include <functional>
-#include <catana/tools/gsl_function_interpolate.hpp>
+#include <catana/tools/FunctionInterpolator.hpp>
 #include <memory>
 
 namespace catana{ namespace io {

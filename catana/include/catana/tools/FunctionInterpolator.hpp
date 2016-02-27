@@ -6,32 +6,30 @@
 #define CATANA_GSL_FUNCTION_INTERPOLATE_HPP
 
 #include <functional>
-#include <gsl/gsl_interp.h>
-
-// TODO: fix default GSL errorhandler (i.e. force interpolation to die outside of valid range)
+#include <memory>
 
 namespace catana {
+
     class FunctionInterpolator {
     public:
-        FunctionInterpolator(std::function<double(double)> fct, size_t interpolation_points, double min, double max);
-
-        ~FunctionInterpolator();
+        FunctionInterpolator(std::function<double(double)> fct, unsigned int interpolation_points, double x_min,
+                double x_max);
 
         // Non copyable, non assignable;
         FunctionInterpolator(FunctionInterpolator const&) = delete;
-
         FunctionInterpolator& operator=(FunctionInterpolator const&) = delete;
 
         // Call operator
-        double operator()(double r);
+        double operator()(double x) const;
+        double operator[](unsigned int index) const;
+        unsigned int get_index(double x) const;
 
-    private:
-        size_t interpolation_points;
-        gsl_interp* interp_p;
-        gsl_interp_accel* accel_p;
-        double* x_values;
-        double* y_values;
+    protected:
+        unsigned int interpolation_points;
+        double x_min, x_max;
+        double dx_inv;
+        std::unique_ptr<double[]> y_values;
     };
-}
 
+}
 #endif //CATANA_GSL_FUNCTION_INTERPOLATE_HPP

@@ -7,6 +7,6 @@
 
 #include "besseltools/BesselZeros.hpp"
 #include "catana/besseltools/sbessel_integrator.hpp"
-#include "besseltools/SBesselLookUp.hpp"
+#include "catana/besseltools/SBesselInterpolator.hpp"
 
 #endif //CATANA_BESSELTOOLS_HPP

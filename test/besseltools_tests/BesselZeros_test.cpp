@@ -7,14 +7,6 @@
 
 using namespace catana;
 
-class BesselZerosTest : public ::testing::Test {
-protected:
-    besseltools::BesselZeros bz0{0};
-    besseltools::BesselZeros bz1{1};
-    besseltools::BesselZeros bz55_1{5.5};
-    besseltools::BesselZeros bz55_2{5.5};
-};
-
 TEST(BesselZeros, known_zeros){ //MATHEMATICA
     besseltools::BesselZeros bz(0);
     EXPECT_DOUBLE_EQ(2.4048255576957727686, bz[0]);
