@@ -20,12 +20,22 @@ TEST(SBesselLookUp, Accuracy){
     int N_TEST = 1000;
 
     for(int l=0; l<10; ++l){
-        besseltools::SBesselInterpolator sblu(l, 4, 4000);
+        besseltools::SBesselInterpolator sblu(l, 10., 4000);
         std::uniform_real_distribution<double> z_dist(0,sblu.get_zmax());
         for(int i=0; i<N_TEST; ++i){
             double z = z_dist(rng);
             double boost_jlz = boost::math::sph_bessel(l, z);
             EXPECT_NEAR(boost_jlz, sblu(z), std::max(1e-8, std::abs(0.05*boost_jlz))) << "More than 5% error at l=" << l << ", z=" << z;
         }
+    }
+}
+
+TEST(SBesselLookUp, UpToZero){
+    int N_TEST = 1000;
+
+    for(int l=0; l<10; ++l){
+        besseltools::SBesselInterpolator sblu = besseltools::SBesselInterpolator_uptozero(l, 4, 4000);
+        double z_max = sblu.get_zmax();
+        EXPECT_NEAR(sblu(z_max), 0, 1e-10);
     }
 }

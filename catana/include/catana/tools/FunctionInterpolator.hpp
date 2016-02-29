@@ -13,11 +13,15 @@ namespace catana {
     class FunctionInterpolator {
     public:
         FunctionInterpolator(std::function<double(double)> fct, unsigned int interpolation_points, double x_min,
-                double x_max);
+                double x_max, bool parallel=true);
 
         // Non copyable, non assignable;
-        FunctionInterpolator(FunctionInterpolator const&) = delete;
-        FunctionInterpolator& operator=(FunctionInterpolator const&) = delete;
+//        FunctionInterpolator(FunctionInterpolator const&) = delete;
+//        FunctionInterpolator& operator=(FunctionInterpolator const&) = delete;
+
+        // Movable
+        FunctionInterpolator(FunctionInterpolator&& other);
+        FunctionInterpolator& operator=(FunctionInterpolator other);
 
         // Call operator
         double operator()(double x) const;

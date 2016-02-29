@@ -1,10 +1,16 @@
 project(catana)
 
 # SOURCE FILES
+set(tools_SOURCES
+        include/catana/tools/gsl_function_wrapper.hpp
+        include/catana/tools/fftw_field.hpp
+        include/catana/tools/FunctionInterpolator.hpp src/tools/FunctionInterpolator.cpp
+        include/catana/tools/string_format.hpp)
+
 set(besseltools_SOURCES
         include/catana/besseltools.hpp
+        ${tools_SOURCES}
         include/catana/besseltools/BesselZeros.hpp src/besseltools/BesselZeros.cpp
-        include/catana/tools/gsl_function_wrapper.hpp
         include/catana/besseltools/sbessel_integrator.hpp src/besseltools/sbessel_integrator.cpp
         include/catana/besseltools/SBesselInterpolator.hpp src/besseltools/SBesselInterpolator.cpp)
 
@@ -41,8 +47,7 @@ set(iotools_filters_SOURCES
 
 set(iotools_SOURCES
         ${basictypes_SOURCES}
-        include/catana/tools/string_format.hpp
-        include/catana/tools/FunctionInterpolator.hpp src/tools/FunctionInterpolator.cpp
+        ${tools_SOURCES}
         include/catana/io_tools/record_types.hpp src/io_tools/record_type.cpp
         ${iotools_sources_SOURCES}
         ${iotools_sinks_SOURCES}

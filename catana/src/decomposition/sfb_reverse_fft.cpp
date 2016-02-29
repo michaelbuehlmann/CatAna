@@ -102,10 +102,11 @@ namespace catana {
 
             // Instantiate an interpolation routine for spherical bessels if asked for. Otherwise use plain function.
             if (interpolated) {
-                sblu.reset(new besseltools::SBesselInterpolator(l, nmax, BESSELINTERPOLATIONPOINTS_PER_ZERO*nmax));
+                sblu.reset(new besseltools::SBesselInterpolator(
+                        besseltools::SBesselInterpolator_uptozero(l, nmax, BESSELINTERPOLATIONPOINTS_PER_ZERO*nmax)
+                ));
                 sph_bessel_l = [&](const double& z) { return sblu->operator()(z); };
-            }
-            else {
+            } else {
                 sph_bessel_l = [&](const double& z) { return boost::math::sph_bessel(l, z); };
             }
 
