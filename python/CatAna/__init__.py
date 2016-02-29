@@ -1,5 +1,6 @@
 import besseltools
 import io
+import decomp
 
 
 from basictypes import *

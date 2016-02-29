@@ -62,6 +62,9 @@ class PySource(object):
     def get_pixobjectcontainer(self, nside):
         return self.source.get_pixobjectcontainer(nside)
 
+    def reset(self):
+        self.source.reset()
+
 
 class PySink(object):
     def __init__(self, filename, filetype="HDF5", verbose=True, **kwargs):

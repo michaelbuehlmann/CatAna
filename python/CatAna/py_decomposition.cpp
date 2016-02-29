@@ -34,14 +34,25 @@ PYBIND11_PLUGIN(decomp_core)
             .def_readonly("k_ln", &KClkk::k_ln)
             .def_readonly("c_ln", &KClkk::c_ln)
             .def_readonly("f_lmn", &KClkk::f_lmn)
-            .def("savetxt", &KClkk::savetxt);
+            .def("savetxt", &KClkk::savetxt,
+                    "Save k_ln and c_ln to textfile",
+                    py::arg("filename_base"));
 
     py::class_<Analyzer>(m, "Analyzer")
-            .def(py::init<io::Source*, double>())
-            .def("set_source", &Analyzer::set_source)
-            .def("add_filter", &Analyzer::add_filter)
-            .def("compute_sfb", &Analyzer::compute_sfb)
-            .def("compute_sfb_pixelized", &Analyzer::compute_sfb_pixelized);
+            .def(py::init<io::Source*, double>(),
+                    py::arg("Source"), py::arg("window_volume"))
+            .def("set_source", &Analyzer::set_source,
+                    py::arg("Source"))
+            .def("add_filter", &Analyzer::add_filter,
+                    py::arg("Filter"))
+            .def("compute_sfb", &Analyzer::compute_sfb,
+                    "Compute the C_l(k,k) for the filtered source using 'RAW' method",
+                    py::arg("lmax"), py::arg("nmax"), py::arg("rmax"),
+                    py::arg("store_flmn")=false, py::arg("verbose")=true)
+            .def("compute_sfb_pixelized", &Analyzer::compute_sfb_pixelized,
+                    "Compute the C_l(k,k) for the filtered source using 'REVERSE_FFT' method",
+                    py::arg("lmax"), py::arg("nmax"), py::arg("rmax"), py::arg("nside"),
+                    py::arg("store_flmn")=false, py::arg("verbose")=true);
 
     m.def("sfb_decomposition",
             [](ObjectContainer& oc, unsigned short lmax, unsigned short nmax, double rmax, double window_volume, bool store_flmn, bool verbose)
