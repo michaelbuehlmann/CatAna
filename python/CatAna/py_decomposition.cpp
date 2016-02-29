@@ -11,10 +11,24 @@
 namespace py = pybind11;
 using namespace catana;
 
+// Provide a random number generator
+std::random_device rand_dev;
+std::mt19937 rng;
+
 
 PYBIND11_PLUGIN(decomp_core)
 {
     py::module m("decomp_core", "python binding for SFB decomposition of particle positions (part of CatAna)");
+
+    // Initialization of random numbers. Once with given seed, once random seed
+    m.def("init_random", [&](unsigned int seed){
+                rng.seed(seed); },
+            py::arg("seed"));
+    m.def("init_random", [&](){
+        std::array<int, 624> seed_data;
+        std::generate(seed_data.begin(), seed_data.end(), std::ref(rand_dev));
+        std::seed_seq seq(std::begin(seed_data), std::end(seed_data));
+        rng.seed(seq); });
 
     py::class_<KClkk>(m, "KClkk")
             .def_readonly("k_ln", &KClkk::k_ln)

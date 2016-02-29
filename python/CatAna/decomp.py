@@ -6,6 +6,8 @@ from . import decomp_core
 from . import io_core
 from . import io
 
+decomp_core.init_random()
+
 sfb_decomposition = decomp_core.sfb_decomposition
 KClkk = decomp_core.KClkk
 
