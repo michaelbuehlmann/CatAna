@@ -145,11 +145,11 @@ if __name__ == "__main__":
                         help="type of output file (may be deduced from filename")
     parser.add_argument("--precision", type=str, choices=["float", "double"], default='float',
                         help="Data precision in input file (only HDF5)")
-    parser.add_argument("--incoord", type=str, choices=["cartesian", "spherical"], default="cartesian",
-                        help="Coordinate system used in the input file (only HDF5, Text)")
+    parser.add_argument("--incoord", type=str, choices=["cartesian", "spherical", "spherical_3dex"], default="cartesian",
+                        help="Coordinate system used in the input file (only HDF5 and Text, spherical_3dex Text only)")
     parser.add_argument("--incoord_unit", type=str, choices=["Mpc", "Mpc/h"], default="Mpc")
-    parser.add_argument("--outcoord", type=str, choices=["cartesian", "spherical"], default="cartesian",
-                        help="Coordinate system used for the output file")
+    parser.add_argument("--outcoord", type=str, choices=["cartesian", "spherical", "spherical_3dex"], default="cartesian",
+                        help="Coordinate system used for the output file (spherical_3dex text only)")
     parser.add_argument("--outcoord_unit", type=str, choices=["Mpc", "Mpc/h"], default="Mpc")
     parser.add_argument("--max_dist", type=float, required=True,
                         help="The maximal distance of objects from the origin, in input coordinates."

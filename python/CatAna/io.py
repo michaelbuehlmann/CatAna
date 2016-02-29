@@ -24,7 +24,7 @@ class PySource(object):
         hubble_param = kwargs.get('hubble_param', 1)
         box_origin = kwargs.get('box_origin', 0)
         coord = kwargs.get('coord', 'cartesian')
-        assert (coord in ['cartesian', 'spherical'])
+        assert (coord in ['cartesian', 'spherical', 'spherical_3dex'])
 
         if filetype == 'Gadget':
             self.source = io_core.GadgetSource(filename, verbose)
@@ -50,6 +50,8 @@ class PySource(object):
                 self.source = io_core.TextSource_cartesian(filename, hubble_param, box_origin*2)
             elif coord == 'spherical':
                 self.source = io_core.TextSource_spherical(filename, hubble_param, box_origin*2)
+            elif coord == 'spherical_3dex':
+                self.source = io_core.TextSource_spherical_3dex(filename, hubble_param, box_origin*2)
 
         else:
             raise RuntimeError("Unsupported filetype: {}".format(filetype))
@@ -77,7 +79,7 @@ class PySink(object):
         hubble_param = kwargs.get('hubble_param', 1)
         box_origin = kwargs.get('box_origin', 0)
         coord = kwargs.get('coord', 'cartesian')
-        assert (coord in ['cartesian', 'spherical'])
+        assert (coord in ['cartesian', 'spherical', 'spherical_3dex'])
 
         if filetype == "HDF5":
             tablename = kwargs.get('tablename')
@@ -104,6 +106,8 @@ class PySink(object):
                 self.sink = io_core.TextSink_cartesian(filename, verbose)
             elif coord == 'spherical':
                 self.sink = io_core.TextSink_spherical(filename, verbose)
+            elif coord == 'spherical_3dex':
+                self.sink = io_core.TextSink_spherical_3dex(filename, verbose)
 
 
         else:

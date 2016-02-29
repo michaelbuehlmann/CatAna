@@ -90,6 +90,27 @@ TEST(WriteTxt, Spherical){
     }
 }
 
+TEST(WriteTxt, Spherical3DEX){
+    ObjectContainer oc, oc2(100);
+    oc.add_object(Object(1,2,3));
+    oc.add_object(Object(0,0,2));
+    oc.add_object(Object(-1,-1,-1));
+    oc.add_object(Object(0,0,0));
+
+    io::TextSink<io::SphericalRecord<double, io::SphericalTextFormat::THREEDEX>> sink("test3dex.txt");
+    int n = sink.write(oc.begin(), oc.size());
+    EXPECT_EQ(oc.size(), n);
+
+    io::TextSource<io::SphericalRecord<double, io::SphericalTextFormat::THREEDEX>> source("test3dex.txt");
+    n = source.read(oc2.begin(), 100);
+    ASSERT_EQ(oc.size(), n);
+    for(int i=0; i<oc.size(); ++i){
+        EXPECT_NEAR(oc[i].r, oc2[i].r, 1e-12);
+        EXPECT_NEAR(oc[i].p.theta, oc2[i].p.theta, 1e-12);
+        EXPECT_NEAR(oc[i].p.phi, oc2[i].p.phi, 1e-12);
+    }
+}
+
 
 // TODO: Move to different place
 TEST(Source, ToObjectContainer){

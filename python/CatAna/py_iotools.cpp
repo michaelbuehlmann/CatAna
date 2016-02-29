@@ -24,6 +24,7 @@ using record_cf = io::CartesianRecord<float>;
 using record_cd = io::CartesianRecord<double>;
 using record_sf = io::SphericalRecord<float>;
 using record_sd = io::SphericalRecord<double>;
+using record_sd_3dex = io::SphericalRecord<double, io::SphericalTextFormat::THREEDEX>;
 
 // Provide a random number generator
 std::random_device rand_dev;
@@ -64,10 +65,15 @@ PYBIND11_PLUGIN(io_core) {
             "Read from Text File (cartesian coordinates), first 3 columns")
             .def(py::init<std::string, double, double>(),
                     py::arg("filename"), py::arg("hubble_param")=1., py::arg("box_size")=0.);
-    py::class_<io::TextSource<record_sd>>(m, "TextSoruce_spherical", py::base<io::Source>(),
-            "Read from Text File (spherical coordinates), first 3 columns")
+    py::class_<io::TextSource<record_sd>>(m, "TextSource_spherical", py::base<io::Source>(),
+            "Read from Text File (spherical coordinates [r, theta, phi]), first 3 columns")
             .def(py::init<std::string, double, double>(),
                     py::arg("filename"), py::arg("hubble_param")=1., py::arg("box_size")=0.);
+    py::class_<io::TextSource<record_sd_3dex>>(m, "TextSource_spherical_3dex", py::base<io::Source>(),
+            "Read from Text File (spherical coordinates, [theta, phi, r]), first 3 columns")
+            .def(py::init<std::string, double, double>(),
+                    py::arg("filename"), py::arg("hubble_param")=1., py::arg("box_size")=0.);
+
     // HDF5
     py::class_<io::HDF5Source<record_cf>>(m, "HDF5Source_cartesian_float", py::base<io::Source>(),
             "Read from HDF5 File (cartesian coordinates, float)")
@@ -116,7 +122,11 @@ PYBIND11_PLUGIN(io_core) {
             .def(py::init<std::string, bool>(),
                     py::arg("filename"), py::arg("verbose")=true);
     py::class_<io::TextSink<record_sd>>(m, "TextSink_spherical", sink,
-            "Write to Text File (spherical)")
+            "Write to Text File (spherical, [r, theta, phi])")
+            .def(py::init<std::string, bool>(),
+                    py::arg("filename"), py::arg("verbose")=true);
+    py::class_<io::TextSink<record_sd_3dex>>(m, "TextSink_spherical_3dex", sink,
+            "Write to Text File (spherical, [theta, phi, r] 3dex format)")
             .def(py::init<std::string, bool>(),
                     py::arg("filename"), py::arg("verbose")=true);
 
