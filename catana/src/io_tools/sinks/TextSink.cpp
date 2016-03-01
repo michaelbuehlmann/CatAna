@@ -52,7 +52,7 @@ namespace catana { namespace io {
         record_t record;
         for (size_t i = 0; i<n; ++i) {
             record = record_t(*read_iterator++, 0, 1);
-            fd << record << std::endl;
+            fd << record << "\n";
         }
         fd.flush();
         return static_cast<long long int>(n);
