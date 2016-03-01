@@ -15,7 +15,7 @@ set(besseltools_SOURCES
         include/catana/besseltools/SBesselInterpolator.hpp src/besseltools/SBesselInterpolator.cpp)
 
 set(basictypes_SOURCES
-        include/catana/objects/Object.hpp
+        include/catana/objects/Object.hpp src/objects/Object.cpp
         include/catana/objects/ObjectContainer.hpp src/objects/ObjectContainer.cpp
         include/catana/objects/PixelizedObjectContainer.hpp src/objects/PixelizedObjectContainer.cpp)
 

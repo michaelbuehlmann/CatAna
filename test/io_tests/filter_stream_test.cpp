@@ -70,7 +70,7 @@ TEST(FilterStream, Subsample)
     ObjectContainer object_container;
     int N = 1<<11;
     for(int i=0; i<N; ++i){
-        object_container.push_back(object_from_spherical_position<float>((2.f*i)/N, 0.f, 0.f));
+        object_container.push_back(object_from_spherical_position((2.f*i)/N, 0.f, 0.f));
     }
 
     ObjectContainer object_container_result;
