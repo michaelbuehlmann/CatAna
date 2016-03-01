@@ -116,14 +116,17 @@ def extract(infile, outfile, intype, outtype, max_dist, intable=None, outtable=N
 
         pyfilterstream = io.PyFilterStream(pysource, pysink, subsample_size, temp_file, verbose)
 
-        if not hasattr(filter, '__len__'):
-            filters = [filter]
-        tophat_defined = any([f.filter == "tophat" for f in filter])
+        tophat_defined = False
+        if filter is not None:
+            if not hasattr(filter, '__len__'):
+                filters = [filter]
+            tophat_defined = any([f.filter == "tophat" for f in filter])
 
         if not tophat_defined:
             pyfilterstream.add_filter(io.PyFilter("tophat", max_dist))
-        for f in filter:
-            pyfilterstream.add_filter(io.PyFilter(f.filter, f.option, rmax=max_dist))
+        if filter is not None:
+            for f in filter:
+                pyfilterstream.add_filter(io.PyFilter(f.filter, f.option, rmax=max_dist))
 
         pyfilterstream.run()
 

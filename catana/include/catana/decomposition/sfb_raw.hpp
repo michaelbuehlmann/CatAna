@@ -6,6 +6,7 @@
 #define CATANA_SFB_RAW_HPP
 
 #include <catana/config.hpp>
+#include "return_types.hpp"
 #include "../types.hpp"
 
 namespace catana {

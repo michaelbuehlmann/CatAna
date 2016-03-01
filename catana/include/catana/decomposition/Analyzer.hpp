@@ -7,6 +7,7 @@
 
 #include "../iotools.hpp"
 #include "../types.hpp"
+#include "return_types.hpp"
 
 #include <memory>
 #include <vector>

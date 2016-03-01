@@ -2,7 +2,7 @@
 // Created by Michael Bühlmann on 23/02/16.
 //
 
-#include <catana/decomposition/sfb_reverse.hpp>
+#include <catana/decomposition/sfb_reverse_fft.hpp>
 #include <catana/config.hpp>
 #include <catana/besseltools.hpp>
 

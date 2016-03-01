@@ -150,7 +150,7 @@ namespace catana { namespace io {
             :SphericalRecordBase<FLOAT_TYPE>() { }
 
     template<class FLOAT_TYPE>
-    SphericalRecord<FLOAT_TYPE, SphericalTextFormat::THREEDEX>::SphericalRecord(FLOAT_TYPE theta, FLOAT_TYPE phi, FLOAT_TYPE r)
+    SphericalRecord<FLOAT_TYPE, SphericalTextFormat::THREEDEX>::SphericalRecord(FLOAT_TYPE phi, FLOAT_TYPE theta, FLOAT_TYPE r)
             :SphericalRecordBase<FLOAT_TYPE>(r, theta, phi) { }
 
     template<class FLOAT_TYPE>
@@ -168,7 +168,7 @@ namespace catana { namespace io {
     std::ostream& operator<<(std::ostream& os, const SphericalRecord<FLOAT_TYPE, SphericalTextFormat::THREEDEX>& rec)
     {
         char buffer[60];
-        sprintf(buffer, " %18.14F %18.14F %18.12F", rec.pos_theta, rec.pos_phi, rec.pos_r);
+        sprintf(buffer, " %18.14F %18.14F %18.12F", rec.pos_phi, rec.pos_theta, rec.pos_r);
         return os << buffer;
     }
     ///////////////////////////////////////////////////////////////////////////////

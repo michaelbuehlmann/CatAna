@@ -6,6 +6,7 @@
 #define CATANA_APP_SFB_DECOMPOSITION_HPP
 
 #include "../types.hpp"
+#include "return_types.hpp"
 
 namespace catana {
 ////////////////////////////////////////////////////////////////////////////////

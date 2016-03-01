@@ -61,7 +61,7 @@ PYBIND11_PLUGIN(io_core) {
             .def(py::init<std::string, bool>(),
                     py::arg("filename"), py::arg("verbose")=true);
     // TEXT
-    py::class_<io::TextSource<record_cd>>(m, "TextSoruce_cartesian", py::base<io::Source>(),
+    py::class_<io::TextSource<record_cd>>(m, "TextSource_cartesian", py::base<io::Source>(),
             "Read from Text File (cartesian coordinates), first 3 columns")
             .def(py::init<std::string, double, double>(),
                     py::arg("filename"), py::arg("hubble_param")=1., py::arg("box_size")=0.);

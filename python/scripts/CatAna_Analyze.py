@@ -106,14 +106,17 @@ def analyze(infile, lmax, nmax, outfile_base, method, intype, incoord, incoord_u
         pysource = io.PySource(infile, intype, verbose, tablename=intable, coord=incoord, hubble_param=input_hubble_param, box_origin=box_origin)
         analyzer = decomp.PyAnalyzer(pysource, survey_volume)
 
-        if not hasattr(filter, '__len__'):
-            filters = [filter]
-        tophat_defined = any([f.filter == "tophat" for f in filter])
+        tophat_defined = False
+        if filter is not None:
+            if not hasattr(filter, '__len__'):
+                filters = [filter]
+            tophat_defined = any([f.filter == "tophat" for f in filter])
 
         if not tophat_defined:
             analyzer.add_filter(io.PyFilter("tophat", max_dist))
-        for f in filter:
-            analyzer.add_filter(io.PyFilter(f.filter, f.option, rmax=max_dist))
+        if filter is not None:
+            for f in filter:
+                analyzer.add_filter(io.PyFilter(f.filter, f.option, rmax=max_dist))
 
         if method == 'RAW':
             kclkk = analyzer.compute_sfb(lmax, nmax, max_dist, verbose)
@@ -142,7 +145,7 @@ if __name__ == '__main__':
                         help="NSide for REV_FFT method")
     parser.add_argument("--intype", type=str, choices=["HDF5", "Gadget", "Text"],
                         help="type of input file (may be deduced from filename")
-    parser.add_argument("--incoord", type=str, choices=["cartesian", "spherical"], default="cartesian",
+    parser.add_argument("--incoord", type=str, choices=["cartesian", "spherical", "spherical_3dex"], default="cartesian",
                         help="Coordinate system used in the input file (only HDF5 and Text)")
     parser.add_argument("--incoord_unit", type=str, choices=["Mpc", "Mpc/h"], default="Mpc")
     parser.add_argument("--hubble_param", type=float, default=0.7,
