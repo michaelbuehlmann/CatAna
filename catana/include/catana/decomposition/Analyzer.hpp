@@ -20,6 +20,7 @@ namespace catana {
         Analyzer(io::Source* source, double window_volume);
 
         void set_source(io::Source* source);
+        void set_subsample_size(unsigned int n);
 
         void add_filter(io::Filter* filter);
 
@@ -33,6 +34,7 @@ namespace catana {
         io::Source* source;
         std::vector<io::Filter*> filters;
         double window_volume;
+        unsigned int subsample_size = 0;
     };
 
 }

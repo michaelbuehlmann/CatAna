@@ -43,6 +43,8 @@ PYBIND11_PLUGIN(decomp_core)
                     py::arg("Source"), py::arg("window_volume"))
             .def("set_source", &Analyzer::set_source,
                     py::arg("Source"))
+            .def("set_subsample_size", &Analyzer::set_subsample_size,
+                    py::arg("subsample_size"))
             .def("add_filter", &Analyzer::add_filter,
                     py::arg("Filter"))
             .def("compute_sfb", &Analyzer::compute_sfb,

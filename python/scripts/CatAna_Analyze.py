@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from __future__ import division, print_function, absolute_import
 
 import CatAna.io as io
@@ -94,7 +96,7 @@ class ParseFilter(argparse.Action):
 
 
 def analyze(infile, lmax, nmax, outfile_base, method, intype, incoord, incoord_unit, hubble_param, intable, precision, max_dist,
-                 box_origin, filter, survey_volume, verbose=True, nside=None):
+                 box_origin, filter, survey_volume, subsample_size, verbose=True, nside=None):
 
         #  Prepare Source
         assert incoord_unit in ['Mpc', 'Mpc/h']
@@ -104,7 +106,7 @@ def analyze(infile, lmax, nmax, outfile_base, method, intype, incoord, incoord_u
             input_hubble_param = hubble_param
 
         pysource = io.PySource(infile, intype, verbose, tablename=intable, coord=incoord, hubble_param=input_hubble_param, box_origin=box_origin)
-        analyzer = decomp.PyAnalyzer(pysource, survey_volume)
+        analyzer = decomp.PyAnalyzer(pysource, survey_volume, subsample_size)
 
         tophat_defined = False
         if filter is not None:
@@ -164,6 +166,7 @@ if __name__ == '__main__':
                         help="Filters to apply to data. Scales in input units. Valid filters: {}".format(supported_filters))
     parser.add_argument("--survey_volume", type=float, default=1,
                         help="The volume spanned by the window function of the data [in input units].")
+    parser.add_argument("--subsample_size", type=int)
     parser.add_argument("--verbose", action='store_true')
     args = parser.parse_args()
 

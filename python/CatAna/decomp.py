@@ -12,12 +12,14 @@ sfb_decomposition = decomp_core.sfb_decomposition
 KClkk = decomp_core.KClkk
 
 class PyAnalyzer(object):
-    def __init__(self, py_source, window_volume):
+    def __init__(self, py_source, window_volume, subsample_size=None):
         assert(isinstance(py_source, io.PySource))
         self.source = py_source.source
         self.window_volume = window_volume
 
         self.analyzer = decomp_core.Analyzer(self.source, self.window_volume)
+        if subsample_size is not None:
+            self.analyzer.set_subsample_size(int(subsample_size))
         self.filters = []
 
     def add_filter(self, py_filter):
