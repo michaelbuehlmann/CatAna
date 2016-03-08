@@ -15,10 +15,10 @@ namespace catana{ namespace io {
 
         GenericRadialWindowFunctionFilter::GenericRadialWindowFunctionFilter(
                 std::function<double(double)> window_function,
-                size_t interpolation_points, double min, double max)
+                size_t interpolation_points, double min, double max, bool parallel_init)
                 :random_dist(0, 1)
         {
-            auto interp_p = new FunctionInterpolator(window_function, interpolation_points, min, max);
+            auto interp_p = new FunctionInterpolator(window_function, interpolation_points, min, max, parallel_init);
             wfct_interp.reset(interp_p);
             this->window_function = [=](double r) { return wfct_interp->operator()(r); };
         }

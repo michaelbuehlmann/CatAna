@@ -19,7 +19,7 @@ namespace catana{ namespace io {
 
             GenericRadialWindowFunctionFilter(
                     std::function<double(double)> window_function,
-                    size_t interpolation_points, double min, double max
+                    size_t interpolation_points, double min, double max, bool parallel_init=false
             );
 
             bool filter(Object& object) override;
