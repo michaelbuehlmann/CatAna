@@ -105,37 +105,28 @@ elif [ "$1" = "D" ]; then
         env OMP_NUM_THREADS=${THREADS} \
         "./sfb_time" "${D_LMAX}" "${D_NMAX}" "${D_NSIDE}" "True" "${INTERP}" "${METHOD}" "${D_N}" > ${OUTPUT_DIR}/${NAME}.txt &
 
-    #3 RAW, 32-CORE, INTERP
-    METHOD=raw
-    INTERP=True
-    THREADS=32
-    NAME=D_${D_LMAX}_${D_NMAX}_${METHOD}_${D_NSIDE}_${D_N}_${THREADS}_I${INTERP}
-    srun -N1 --exclusive --partition ${PARTITION} --time ${TIME} --job-name ${NAME} \
-        env OMP_NUM_THREADS=${THREADS} \
-        "./sfb_time" "${D_LMAX}" "${D_NMAX}" "${D_NSIDE}" "True" "${INTERP}" "${METHOD}" "${D_N}" > ${OUTPUT_DIR}/${NAME}.txt &
-
-    #4 REVERSE, 32-CORE, INTERP
+    #3 REVERSE, 1-CORE, INTERP
     METHOD=reverse
     INTERP=True
-    THREADS=32
+    THREADS=1
     NAME=D_${D_LMAX}_${D_NMAX}_${METHOD}_${D_NSIDE}_${D_N}_${THREADS}_I${INTERP}
     srun -N1 --exclusive --partition ${PARTITION} --time ${TIME} --job-name ${NAME} \
         env OMP_NUM_THREADS=${THREADS} \
         "./sfb_time" "${D_LMAX}" "${D_NMAX}" "${D_NSIDE}" "True" "${INTERP}" "${METHOD}" "${D_N}" > ${OUTPUT_DIR}/${NAME}.txt &
 
-    #5 REVERSE_FFT, 32-CORE, INTERP
-    METHOD=reverse_fft
-    INTERP=True
-    THREADS=32
-    NAME=D_${D_LMAX}_${D_NMAX}_${METHOD}_${D_NSIDE}_${D_N}_${THREADS}_I${INTERP}
-    srun -N1 --exclusive --partition ${PARTITION} --time ${TIME} --job-name ${NAME} \
-        env OMP_NUM_THREADS=${THREADS} \
-        "./sfb_time" "${D_LMAX}" "${D_NMAX}" "${D_NSIDE}" "True" "${INTERP}" "${METHOD}" "${D_N}" > ${OUTPUT_DIR}/${NAME}.txt &
-
-    #5 REVERSE_FFT, 1-CORE, INTERP
+    #4 REVERSE_FFT, 1-CORE, INTERP
     METHOD=reverse_fft
     INTERP=True
     THREADS=1
+    NAME=D_${D_LMAX}_${D_NMAX}_${METHOD}_${D_NSIDE}_${D_N}_${THREADS}_I${INTERP}
+    srun -N1 --exclusive --partition ${PARTITION} --time ${TIME} --job-name ${NAME} \
+        env OMP_NUM_THREADS=${THREADS} \
+        "./sfb_time" "${D_LMAX}" "${D_NMAX}" "${D_NSIDE}" "True" "${INTERP}" "${METHOD}" "${D_N}" > ${OUTPUT_DIR}/${NAME}.txt &
+
+    #5 REVERSE_FFT, 40-CORE, INTERP
+    METHOD=reverse_fft
+    INTERP=True
+    THREADS=40
     NAME=D_${D_LMAX}_${D_NMAX}_${METHOD}_${D_NSIDE}_${D_N}_${THREADS}_I${INTERP}
     srun -N1 --exclusive --partition ${PARTITION} --time ${TIME} --job-name ${NAME} \
         env OMP_NUM_THREADS=${THREADS} \

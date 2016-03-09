@@ -164,13 +164,13 @@ int main(int argc, char* argv[]) {
     for(int i=0; i<internal_runs; ++i) {
         switch(run_args.method){
         case Method::RAW:
-            kclkk = _sfb_raw(oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, run_args.parallel, run_args.interpolated);
+            kclkk = _sfb_raw(oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, false, run_args.parallel, run_args.interpolated);
             break;
         case Method::REVERSE:
-            kclkk = _sfb_reverse(pix_oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, run_args.parallel, run_args.interpolated);
+            kclkk = _sfb_reverse(pix_oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, false, run_args.parallel, run_args.interpolated);
             break;
         case Method::REVERSE_FFT:
-            kclkk = _sfb_reverse_fft(pix_oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, run_args.parallel, run_args.interpolated);
+            kclkk = _sfb_reverse_fft(pix_oc, run_args.lmax, run_args.nmax, box_size/2., window_volume, false, false, run_args.parallel, run_args.interpolated);
             break;
         }
     }
