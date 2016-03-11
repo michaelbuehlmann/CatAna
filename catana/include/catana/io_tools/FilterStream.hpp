@@ -24,9 +24,10 @@ namespace catana { namespace io {
 
     class FilterStream {
     public:
-        FilterStream(Source* source, Sink* sink, size_t buffer_size = 1000000, bool verbose = false);
+//        FilterStream(Source* source, Sink* sink, size_t buffer_size = 1000000, bool verbose = false);
 
-        FilterStream(Source* source, Sink* sink, size_t buffer_size, size_t subsample_size, std::string temp_file_name,
+        FilterStream(Source* source, Sink* sink, size_t buffer_size = 1000000,
+                size_t subsample_size = 0, std::string temp_file_name = "tmp.bin",
                 bool verbose = false);
 
         // Method to add filter to the list of filters

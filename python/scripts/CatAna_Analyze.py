@@ -2,6 +2,7 @@
 
 from __future__ import division, print_function, absolute_import
 
+import CatAna
 import CatAna.io as io
 import CatAna.decomp as decomp
 
@@ -65,6 +66,7 @@ class CMASSWindowFunction(GenericRedshiftWindowFunction):
 supported_filters = ["tophat", "gauss", "AngMask", "CMASS"]
 FilterTuple = collections.namedtuple('Filter', 'filter option')
 
+
 class ParseFilter(argparse.Action):
     def __call__(self, parser, args, values, option_string=None):
         if values[0] not in supported_filters:
@@ -95,8 +97,36 @@ class ParseFilter(argparse.Action):
                 setattr(args, self.dest, [FilterTuple(values[0], option)])
 
 
+def get_distort(distort_number):
+
+    # Linear Cosmology
+    if distort_number == 1:
+        relative_polynomial = np.poly1d(np.array(
+            [2.31660685e-12, 8.98421034e-11, 6.48390680e-05, 9.95985081e-01]
+        ))
+        distort_f = lambda r: r * relative_polynomial(r)
+
+    # Poly1 Distortion (see PyCosmo redshift-distance Notebook)
+    elif distort_number == 2:
+        relative_polynomial = np.poly1d(np.array(
+                [1e-11, 1e-10, -0.000227, 1]
+        ))
+        distort_f = lambda r: r * relative_polynomial(r)
+
+    # Poly1 Distortion (see PyCosmo redshift-distance Notebook)
+    elif distort_number == 3:
+        relative_polynomial = np.poly1d(np.array(
+                [-3e-12, -1e-8, 3e-4, 1]
+        ))
+        distort_f = lambda r: r * relative_polynomial(r)
+    else:
+        raise ValueError("Unknown distort_number: {}".format(distort_number))
+
+    return distort_f
+
+
 def analyze(infile, lmax, nmax, outfile_base, method, intype, incoord, incoord_unit, hubble_param, intable, precision, max_dist,
-                 box_origin, filter, survey_volume, subsample_size, verbose=True, nside=None):
+                 box_origin, filter, survey_volume, subsample_size, distort_number=None, verbose=True, nside=None):
 
         #  Prepare Source
         assert incoord_unit in ['Mpc', 'Mpc/h']
@@ -106,7 +136,8 @@ def analyze(infile, lmax, nmax, outfile_base, method, intype, incoord, incoord_u
             input_hubble_param = hubble_param
 
         pysource = io.PySource(infile, intype, verbose, tablename=intable, coord=incoord, hubble_param=input_hubble_param, box_origin=box_origin)
-        analyzer = decomp.PyAnalyzer(pysource, survey_volume, subsample_size)
+        oc = CatAna.ObjectContainer()
+        fs = io.PyFilterStream(pysource, oc, subsample_size, verbose=verbose)
 
         tophat_defined = False
         if filter is not None:
@@ -115,10 +146,21 @@ def analyze(infile, lmax, nmax, outfile_base, method, intype, incoord, incoord_u
             tophat_defined = any([f.filter == "tophat" for f in filter])
 
         if not tophat_defined:
-            analyzer.add_filter(io.PyFilter("tophat", max_dist))
+            fs.add_filter(io.PyFilter("tophat", max_dist))
         if filter is not None:
             for f in filter:
-                analyzer.add_filter(io.PyFilter(f.filter, f.option, rmax=max_dist))
+                fs.add_filter(io.PyFilter(f.filter, f.option, rmax=max_dist))
+        fs.run()
+
+        if distort_number is not None:
+            print("Doing distortion: {}".format(distort_number))
+            distort_f = get_distort(distort_number)
+            oc_np = np.array(oc)
+            oc_np[:,0] = distort_f(oc_np[:,0])
+            oc = CatAna.ObjectContainer(oc_np, "spherical")
+            max_dist = distort_f(max_dist)
+
+        analyzer = decomp.PyAnalyzer(oc, survey_volume)
 
         if method == 'RAW':
             kclkk = analyzer.compute_sfb(lmax, nmax, max_dist, verbose)
@@ -167,6 +209,7 @@ if __name__ == '__main__':
     parser.add_argument("--survey_volume", type=float, default=1,
                         help="The volume spanned by the window function of the data [in input units].")
     parser.add_argument("--subsample_size", type=int)
+    parser.add_argument("--distort_number", type=int)
     parser.add_argument("--verbose", action='store_true')
     args = parser.parse_args()
 

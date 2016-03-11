@@ -57,13 +57,13 @@ namespace catana { namespace io {
     };
 
 
-    FilterStream::FilterStream(Source* source, Sink* sink, size_t buffer_size, bool verbose)
-            :source(source),
-             sink(sink),
-             buffer_size(buffer_size),
-             subsample_size(0),
-             buffer(new Object[buffer_size]),
-             verbose(verbose) { }
+//    FilterStream::FilterStream(Source* source, Sink* sink, size_t buffer_size, bool verbose)
+//            :source(source),
+//             sink(sink),
+//             buffer_size(buffer_size),
+//             subsample_size(0),
+//             buffer(new Object[buffer_size]),
+//             verbose(verbose) { }
 
     FilterStream::FilterStream(Source* source, Sink* sink, size_t buffer_size, size_t subset_size,
             std::string temp_file_name, bool verbose)

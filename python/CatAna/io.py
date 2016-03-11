@@ -3,10 +3,11 @@ from __future__ import division, print_function, absolute_import
 import collections
 import os
 
+from . import basictypes
 from . import io_core
 io_core.init_random()
 
-buffer_size = 100000  # Uses ca 500MB memory (measured)
+buffer_size = 1000000
 function_interpolation_points = 10000  # For generic filter function
 
 class PySource(object):
@@ -142,14 +143,30 @@ class PyFilter(object):
 
 class PyFilterStream(object):
     def __init__(self, py_source, py_sink, subsample_size = None, temp_file = None, verbose=True):
-        assert(isinstance(py_source, PySource))
-        assert(isinstance(py_sink, PySink))
-        self.source = py_source.source
-        self.sink = py_sink.sink
+        if isinstance(py_source, PySource):
+            self.source = py_source.source
+        elif isinstance(py_source, io_core.Source):
+            self.soruce = py_source
+        elif isinstance(py_source, basictypes.ObjectContainer):
+            self.source = io_core.ObjectContainerSource(py_source)
+        else:
+            raise ValueError("py_source must be either instance of PySource, Source or ObjectContainer")
+
+        if isinstance(py_sink, PySink):
+            self.sink = py_sink.sink
+        elif isinstance(py_sink, io_core.Sink):
+            self.sink = py_sink
+        elif isinstance(py_sink, basictypes.ObjectContainer):
+            self.sink = io_core.ObjectContainerSink(py_sink)
+        elif isinstance(py_sink, basictypes.PixelizedObjectContainer):
+            self.sink = io_core.PixelizedObjectContainerSink(py_sink)
+        else:
+            raise ValueError("py_sink must be either instance of PySink, Sink, ObjectContainer or PixelizedObjectContainer")
 
         if subsample_size is not None:
             subsample_size = int(subsample_size)
-            assert(temp_file is not None)
+            if temp_file is None:
+                temp_file = "tmp_{}.bin".format(os.getpid())
             self.filter_stream = io_core.FilterStream(self.source, self.sink, buffer_size, subsample_size, temp_file, verbose)
         else:
             self.filter_stream = io_core.FilterStream(self.source, self.sink, buffer_size, verbose)

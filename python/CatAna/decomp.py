@@ -2,6 +2,7 @@ from __future__ import division, print_function, absolute_import
 
 import numpy as np
 
+from . import basictypes
 from . import decomp_core
 from . import io_core
 from . import io
@@ -13,8 +14,14 @@ KClkk = decomp_core.KClkk
 
 class PyAnalyzer(object):
     def __init__(self, py_source, window_volume, subsample_size=None):
-        assert(isinstance(py_source, io.PySource))
-        self.source = py_source.source
+        if isinstance(py_source, io.PySource):
+            self.source = py_source.source
+        elif isinstance(py_source, io_core.Source):
+            self.source = py_source
+        elif isinstance(py_source, basictypes.ObjectContainer):
+            self.source = io_core.ObjectContainerSource(py_source)
+        else:
+            raise ValueError("py_source must be instance of PySource, Source or ObjectContainer")
         self.window_volume = window_volume
 
         self.analyzer = decomp_core.Analyzer(self.source, self.window_volume)

@@ -57,7 +57,11 @@ PYBIND11_PLUGIN(io_core) {
     py::class_<io::Filter> filter(m, "Filter");
 
     // Add Source classes here
-    py::class_<io::GadgetSource>(m, "GadgetSource", py::base<io::Source>(), "Read positions from binary Gadget file")
+    py::class_<io::ObjectContainerSource>(m, "ObjectContainerSource", py::base<io::Source>(),
+            "Read positions from ObjectContainer")
+            .def(py::init<ObjectContainer&>());
+    py::class_<io::GadgetSource>(m, "GadgetSource", py::base<io::Source>(),
+            "Read positions from binary Gadget file")
             .def(py::init<std::string, bool>(),
                     py::arg("filename"), py::arg("verbose")=true);
     // TEXT
@@ -97,6 +101,12 @@ PYBIND11_PLUGIN(io_core) {
                     py::arg("verbose")=true);
 
     // Add Sink classes here
+    py::class_<io::ObjectContainerSink>(m, "ObjectContainerSink", sink,
+            "Write data into ObjectContainer")
+            .def(py::init<ObjectContainer&>());
+    py::class_<io::PixelizedObjectContainerSink>(m, "PixelizedObjectContainerSink", sink,
+            "Write data into PixelizedObjectContainer")
+            .def(py::init<PixelizedObjectContainer&>());
     py::class_<io::HDF5Sink<record_cf>>(m, "HDF5Sink_cartesian_float", sink,
             "Write to HDF5 File (cartesian float)")
             .def(py::init<std::string, std::string, double, double, bool, bool>(),
@@ -148,11 +158,12 @@ PYBIND11_PLUGIN(io_core) {
 
     // FilterStream
     py::class_<io::FilterStream>(m, "FilterStream", "A Stream which needs a source and a sink. Can add Filters")
-            .def(py::init<io::Source*, io::Sink*, size_t, bool>(),
-                    py::arg("source"), py::arg("sink"), py::arg("buffer_size")=1000000, py::arg("verbose")=true)
+//            .def(py::init<io::Source*, io::Sink*, size_t, bool>(),
+//                    py::arg("source"), py::arg("sink"), py::arg("buffer_size")=1000000, py::arg("verbose")=true)
             .def(py::init<io::Source*, io::Sink*, size_t, size_t, std::string, bool>(),
-                    py::arg("source"), py::arg("sink"), py::arg("buffer_size"), py::arg("subset_size"),
-                    py::arg("temporary_filename"), py::arg("verbose")=true)
+                    py::arg("source"), py::arg("sink"), py::arg("buffer_size")=1000000,
+                    py::arg("subset_size")=0, py::arg("temporary_filename")="tmp.txt",
+                    py::arg("verbose")=true)
             .def("add_filter", &io::FilterStream::add_filter, "Add a Filter to process", py::arg("filter"))
             .def("run", &io::FilterStream::run, "Run the pipeline");
 
