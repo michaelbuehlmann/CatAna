@@ -39,9 +39,14 @@ ObjectContainer random_objects(size_t n, double box_size) {
 }
 
 int main(int argc, char* argv[]){
-    int lmax = 40;
-    int nmax = 180;
-    int nside = 256;
+//    int lmax = 40;
+//    int nmax = 180;
+//    int nside = 256;
+//    int n = 4000000;
+
+    int lmax=20;
+    int nmax = 100;
+    int nside=256;
     int n = 4000000;
 
     int process_id = ::getpid();
