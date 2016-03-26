@@ -10,6 +10,7 @@
 #include <Eigen/Dense>
 
 #include <catana/types.hpp>
+#include <catana/tools/FunctionInterpolator.hpp>
 
 namespace py = pybind11;
 using namespace catana;
@@ -150,6 +151,17 @@ PYBIND11_PLUGIN(basictypes)
             .def(py::init<unsigned int>())
             .def(py::init<unsigned int, ObjectContainer>())
             .def("get_countmap", &PixelizedObjectContainer::get_countmap);
+
+    py::class_<FunctionInterpolator>(m, "FunctionInterpolator")
+            .def("__init__", [](FunctionInterpolator& fi, std::function<double(double)> fct,
+                    unsigned int interpolation_points, double x_min, double x_max) {
+                new (&fi) FunctionInterpolator(fct, interpolation_points, x_min, x_max, false);
+            })
+            .def("__call__", &FunctionInterpolator::operator())
+            .def("__call__", [](FunctionInterpolator& fi, py::array_t<double> x) {
+                auto stateful_closure = [&fi](double x){return fi(x);};
+                return py::vectorize(stateful_closure)(x);
+            });
 
     return m.ptr();
 }

@@ -1,4 +1,4 @@
-add_executable(BesselZeros_test BesselZeros_test.cpp)
+add_executable(BesselZeros_test SphericalBesselZeros_test.cpp)
 target_link_libraries(BesselZeros_test gtest gtest_main)
 target_link_libraries(BesselZeros_test besseltools)
 

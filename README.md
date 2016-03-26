@@ -10,7 +10,6 @@ Catalog Analyzer: A library for Spherical Fourier Bessel (SFB) Decomposition
 
 # Requirements
 - C++11 compatible compiler (GCC for OpenMP)
-- Boost library
 - FFTW3 library
 - HEALPix library (C++)
 - GSL library

@@ -4,7 +4,9 @@
 
 #include <catana/besseltools/SBesselInterpolator.hpp>
 #include <catana/besseltools/BesselZeros.hpp>
-#include <boost/math/special_functions/bessel.hpp>
+
+#include <gsl/gsl_sf_bessel.h>
+#include <cassert>
 
 namespace catana { namespace besseltools {
 
@@ -14,7 +16,7 @@ namespace catana { namespace besseltools {
     }
 
     SBesselInterpolator::SBesselInterpolator(unsigned short l, double z_max, unsigned int interpolation_points)
-            :l(l), FunctionInterpolator([l](double z) { return boost::math::sph_bessel(l, z); }, interpolation_points,
+            :l(l), FunctionInterpolator([l](double z) { return gsl_sf_bessel_jl(l, z); }, interpolation_points,
             0, z_max) { }
 
     double SBesselInterpolator::operator()(const double& z) const

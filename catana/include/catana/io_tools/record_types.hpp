@@ -1,4 +1,5 @@
-// The record classes defined here map out the memory layout of a row in the HDF5 Files
+// The record classes defined here map out the memory layout of binary files (Gadget, RawBinary) and ordering in
+// Text Files
 /*
  * All classes must define a member function  which returns an Object
  * and a constructor from an Object and box_size, hubble_param.
@@ -7,21 +8,13 @@
  *      CartesianRecord()
  *      CartesianRecord(const Object&, const double& box_size, const double& hubble_param)
  *      Object object(box_size, hubble_param)
- *
- *      static unsigned int nfields
- *      static char const* field_names[]
- *      static const hid_t field_types[]
- *      static const size_t field_offsets[]
- *      static const size_t field_sizes[]
- *      static const char title[]
  */
 
 
-#ifndef CATANA_APP_HDF5_RECORD_TYPES_HPP
-#define CATANA_APP_HDF5_RECORD_TYPES_HPP
+#ifndef CATANA_APP_RECORD_TYPES_HPP
+#define CATANA_APP_RECORD_TYPES_HPP
 
 #include "../types.hpp"
-#include "hdf5.h"
 
 namespace catana { namespace io {
 
@@ -54,14 +47,6 @@ namespace catana { namespace io {
         {
             return object_from_box_position(pos_x, pos_y, pos_z, box_size, hubble_param);
         }
-
-        // STUFF FOR HDF5 OUTPUT (defined in record_types.cpp)
-        static const unsigned int nfields = 3;
-        static char const* field_names[nfields];
-        static const hid_t field_types[nfields];
-        static const size_t field_offsets[nfields];
-        static const size_t field_sizes[nfields];
-        static const char title[];
     };
 
     enum class SphericalTextFormat{
@@ -80,14 +65,6 @@ namespace catana { namespace io {
         SphericalRecordBase(FLOAT_TYPE r, FLOAT_TYPE theta, FLOAT_TYPE phi);
         SphericalRecordBase(const Object& object, const double& box_size, const double& hubble_param);
         Object object(const double& box_size, const double& hubble_param);
-
-        // STUFF FOR HDF5 OUTPUT (defined in record_types.cpp)
-        static const unsigned int nfields = 3;
-        static char const* field_names[];
-        static const hid_t field_types[];
-        static const size_t field_offsets[];
-        static const size_t field_sizes[];
-        static const char title[];
     };
 
     template<class FLOAT_TYPE, SphericalTextFormat FMT = SphericalTextFormat::RTHETAPHI>
@@ -104,17 +81,6 @@ namespace catana { namespace io {
         SphericalRecord(const Object& object, const double& box_size, const double& hubble_param);
     };
 
-    // Only supports reading
-    struct HDF5_PandasCartesianRecord {
-        int64 index;
-        CartesianRecord<double> cart;
-
-        Object object(const double& box_size, const double& hubble_param)
-        {
-            return cart.object(box_size, hubble_param);
-        }
-    };
-
     // OUT STREAM DECLARATIONS
     template<class FLOAT_TYPE>
     std::ostream& operator<<(std::ostream& os, const CartesianRecord<FLOAT_TYPE>& rec);
@@ -126,4 +92,4 @@ namespace catana { namespace io {
     std::ostream& operator<<(std::ostream& os, const SphericalRecord<FLOAT_TYPE, SphericalTextFormat::THREEDEX>& rec);
 
 }}
-#endif //CATANA_APP_HDF5_RECORD_TYPES_HPP
+#endif //CATANA_APP_RECORD_TYPES_HPP

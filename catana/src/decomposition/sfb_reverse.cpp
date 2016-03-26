@@ -8,7 +8,9 @@
 
 
 #include <healpix_cxx/healpix_base.h>
-#include <boost/math/special_functions.hpp>
+#include <cmath>
+#include <gsl/gsl_sf_bessel.h>
+#include <gsl/gsl_sf_legendre.h>
 
 namespace catana {
     using complex = std::complex<double>;
@@ -51,7 +53,7 @@ namespace catana {
                 ));
                 sph_bessel_l = [&](const double& z) { return sblu->operator()(z); };
             } else {
-                sph_bessel_l = [&](const double& z) { return boost::math::sph_bessel(l, z); };
+                sph_bessel_l = [&](const double& z) { return gsl_sf_bessel_jl(l, z); };
             }
 
             // Allocate space for spherical harmonics
@@ -68,7 +70,7 @@ namespace catana {
                 for (int i = 0; i<npix; ++i) {
                     const pointing& p = pix_oc[i].p;
                     for (unsigned short m = 0; m<=l; ++m) {
-                        y_l_mi(m, i) = std::conj(boost::math::spherical_harmonic(l, m, p.theta, p.phi));
+                        y_l_mi(m, i) = std::polar(gsl_sf_legendre_sphPlm(l,m,std::cos(p.theta)), -m*p.phi);
                     }
                 }
 

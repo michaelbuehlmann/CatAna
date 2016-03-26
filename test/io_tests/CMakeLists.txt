@@ -6,14 +6,6 @@ add_executable(readwrite_text_tests readwrite_text_tests.cpp)
 target_link_libraries(readwrite_text_tests gtest gtest_main)
 target_link_libraries(readwrite_text_tests iotools)
 
-add_executable(read_hdf5_tests read_hdf5_tests.cpp)
-target_link_libraries(read_hdf5_tests gtest gtest_main)
-target_link_libraries(read_hdf5_tests iotools)
-
-add_executable(write_hdf5_tests write_hdf5_tests.cpp)
-target_link_libraries(write_hdf5_tests gtest gtest_main)
-target_link_libraries(write_hdf5_tests iotools)
-
 add_executable(readwrite_rawdata_tests readwrite_rawdata_tests.cpp)
 target_link_libraries(readwrite_rawdata_tests gtest gtest_main)
 target_link_libraries(readwrite_rawdata_tests iotools)
@@ -29,7 +21,4 @@ target_link_libraries(filter_stream_tests iotools)
 add_executable(pixelized_oc_sink_test pixelized_oc_sink_test.cpp)
 target_link_libraries(pixelized_oc_sink_test gtest gtest_main)
 target_link_libraries(pixelized_oc_sink_test iotools)
-
-add_executable(monch_gadget2hdf5test monch_gadget2hdf5test.cpp)
-target_link_libraries(monch_gadget2hdf5test iotools)
 

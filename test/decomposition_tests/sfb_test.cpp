@@ -44,12 +44,12 @@ Eigen::ArrayXXd read_python_cln(int lmax, int nmax){
 TEST(SFB, Raw) {
     ObjectContainer object_container;
     {
-        io::HDF5Source<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        io::TextSource<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.txt", 1, 0);
         io::ObjectContainerSink sink(object_container);
         io::FilterStream fs(&source, &sink, 10000, false);
         fs.run();
     }
-
+    ASSERT_EQ(445, object_container.size());
     int lmax = 10;
     int nmax = 10;
 
@@ -81,7 +81,7 @@ TEST(SFB, Raw) {
 TEST(SFB, RawParallel) {
     ObjectContainer object_container;
     {
-        io::HDF5Source<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        io::TextSource<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.txt", 1, 0);
         io::ObjectContainerSink sink(object_container);
         io::FilterStream fs(&source, &sink, 10000, false);
         fs.run();
@@ -119,7 +119,7 @@ TEST(SFB, RawParallel) {
 TEST(SFB, Reverse) {
     PixelizedObjectContainer pix_obj_cont(64);
     {
-        io::HDF5Source<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        io::TextSource<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.txt", 1, 0);
         io::PixelizedObjectContainerSink sink(pix_obj_cont);
         io::FilterStream fs(&source, &sink, 10000, false);
         fs.run();
@@ -155,7 +155,7 @@ TEST(SFB, Reverse) {
 TEST(SFB, ReverseParallel) {
     PixelizedObjectContainer pix_obj_cont(64);
     {
-        io::HDF5Source<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        io::TextSource<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.txt", 1, 0);
         io::PixelizedObjectContainerSink sink(pix_obj_cont);
         io::FilterStream fs(&source, &sink, 10000, false);
         fs.run();
@@ -191,7 +191,7 @@ TEST(SFB, ReverseParallel) {
 TEST(SFB, ReverseFFT) {
     PixelizedObjectContainer pix_obj_cont(64);
     {
-        io::HDF5Source<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        io::TextSource<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.txt", 1, 0);
         io::PixelizedObjectContainerSink sink(pix_obj_cont);
         io::FilterStream fs(&source, &sink, 10000, false);
         fs.run();
@@ -227,7 +227,7 @@ TEST(SFB, ReverseFFT) {
 TEST(SFB, ReverseFFTParallel) {
     PixelizedObjectContainer pix_obj_cont(64);
     {
-        io::HDF5Source<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        io::TextSource<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.txt", 1, 0);
         io::PixelizedObjectContainerSink sink(pix_obj_cont);
         io::FilterStream fs(&source, &sink, 10000, false);
         fs.run();
@@ -264,7 +264,7 @@ TEST(SFB, ReverseFFTParallel) {
 TEST(SFB, F_LMN) {
     ObjectContainer object_container;
     {
-        io::HDF5Source<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        io::TextSource<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.txt", 1, 0);
         io::ObjectContainerSink sink(object_container);
         io::FilterStream fs(&source, &sink, 10000, false);
         fs.run();
@@ -273,7 +273,7 @@ TEST(SFB, F_LMN) {
 
     PixelizedObjectContainer pix_obj_cont(64);
     {
-        io::HDF5Source<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false);
+        io::TextSource<io::CartesianRecord<float>> source(test_data_dir+"gaussian_catalog.txt", 1, 0);
         io::PixelizedObjectContainerSink sink(pix_obj_cont);
         io::FilterStream fs(&source, &sink, 10000, false);
         fs.run();
@@ -291,6 +291,5 @@ TEST(SFB, F_LMN) {
 
     for(int l=0; l<lmax; ++l){
         EXPECT_TRUE(kclkk_rev.f_lmn[l].isApprox(kclkk_rev.f_lmn[l]));
-//        EXPECT_TRUE(kclkk_raw.f_lmn[l].isApprox(kclkk_rev_fft.f_lmn[l]));
     }
 }

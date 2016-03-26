@@ -6,7 +6,9 @@
 #include <catana/besseltools.hpp>
 #include <catana/config.hpp>
 
-#include <boost/math/special_functions.hpp>
+#include <cmath>
+#include <gsl/gsl_sf_bessel.h>
+#include <gsl/gsl_sf_legendre.h>
 
 
 namespace catana {
@@ -50,7 +52,7 @@ namespace catana {
                 ));
                 sph_bessel_l = [&](const double& z) { return sblu->operator()(z); };
             } else {
-                sph_bessel_l = [&](const double& z) { return boost::math::sph_bessel(l, z); };
+                sph_bessel_l = [&](const double& z) { return gsl_sf_bessel_jl(l, z); };
             }
 
             Eigen::ArrayXXcd f_l_mn = Eigen::ArrayXXcd::Zero(l+1, nmax);
@@ -72,7 +74,7 @@ namespace catana {
 
                     // Compute Y_lm
                     for (unsigned short m = 0; m<=l; ++m) {
-                        complex y_lm = std::conj(boost::math::spherical_harmonic(l, m, obj_it->p.theta, obj_it->p.phi));
+                        complex y_lm = std::polar(gsl_sf_legendre_sphPlm(l, m, std::cos(obj_it->p.theta)), -m*(obj_it->p.phi));
 
                         for (unsigned short n = 0; n<nmax; ++n) {
                             f_l_mn_private(m, n) += kclkk.k_ln(l, n)*j_l_n(n)*y_lm;

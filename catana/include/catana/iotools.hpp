@@ -10,14 +10,12 @@
 #include "io_tools/Sink.hpp"
 
 #include "io_tools/sources/ObjectContainerSource.hpp"
-#include "io_tools/sources/HDF5Source.hpp"
 #include "io_tools/sources/GadgetSource.hpp"
 #include "io_tools/sources/RawBinarySource.hpp"
 #include "io_tools/sources/TextSource.hpp"
 
 #include "io_tools/sinks/ObjectContainerSink.hpp"
 #include "io_tools/sinks/PixelizedObjectContainerSink.hpp"
-#include "io_tools/sinks/HDF5Sink.hpp"
 #include "io_tools/sinks/RawBinarySink.hpp"
 #include "io_tools/sinks/TextSink.hpp"
 

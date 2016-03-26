@@ -78,28 +78,6 @@ PYBIND11_PLUGIN(io_core) {
             .def(py::init<std::string, double, double>(),
                     py::arg("filename"), py::arg("hubble_param")=1., py::arg("box_size")=0.);
 
-    // HDF5
-    py::class_<io::HDF5Source<record_cf>>(m, "HDF5Source_cartesian_float", py::base<io::Source>(),
-            "Read from HDF5 File (cartesian coordinates, float)")
-            .def(py::init<std::string, std::string, double, double, bool>(),
-                    py::arg("filename"), py::arg("tablename"), py::arg("hubble_param")=1., py::arg("box_size")=0.,
-                    py::arg("verbose")=true);
-    py::class_<io::HDF5Source<record_cd>>(m, "HDF5Source_cartesian_double", py::base<io::Source>(),
-            "Read from HDF5 File (cartesian coordinates, double)")
-            .def(py::init<std::string, std::string, double, double, bool>(),
-                    py::arg("filename"), py::arg("tablename"), py::arg("hubble_param")=1., py::arg("box_size")=0.,
-                    py::arg("verbose")=true);
-    py::class_<io::HDF5Source<record_sf>>(m, "HDF5Source_spherical_float", py::base<io::Source>(),
-            "Read from HDF5 File (spherical coordinates, float)")
-            .def(py::init<std::string, std::string, double, double, bool>(),
-                    py::arg("filename"), py::arg("tablename"), py::arg("hubble_param")=1., py::arg("box_size")=0.,
-                    py::arg("verbose")=true);
-    py::class_<io::HDF5Source<record_sd>>(m, "HDF5Source_spherical_double", py::base<io::Source>(),
-            "Read from HDF5 File (spherical coordinates, double")
-            .def(py::init<std::string, std::string, double, double, bool>(),
-                    py::arg("filename"), py::arg("tablename"), py::arg("hubble_param")=1., py::arg("box_size")=0.,
-                    py::arg("verbose")=true);
-
     // Add Sink classes here
     py::class_<io::ObjectContainerSink>(m, "ObjectContainerSink", sink,
             "Write data into ObjectContainer")
@@ -107,26 +85,6 @@ PYBIND11_PLUGIN(io_core) {
     py::class_<io::PixelizedObjectContainerSink>(m, "PixelizedObjectContainerSink", sink,
             "Write data into PixelizedObjectContainer")
             .def(py::init<PixelizedObjectContainer&>());
-    py::class_<io::HDF5Sink<record_cf>>(m, "HDF5Sink_cartesian_float", sink,
-            "Write to HDF5 File (cartesian float)")
-            .def(py::init<std::string, std::string, double, double, bool, bool>(),
-                    py::arg("filename"), py::arg("tablename"), py::arg("hubble_param")=1., py::arg("box_size")=0.,
-                    py::arg("new_file")=true, py::arg("verbose")=true);
-    py::class_<io::HDF5Sink<record_cd>>(m, "HDF5Sink_cartesian_double", sink,
-            "Write to HDF5 File (cartesian double)")
-            .def(py::init<std::string, std::string, double, double, bool, bool>(),
-                    py::arg("filename"), py::arg("tablename"), py::arg("hubble_param")=1., py::arg("box_size")=0.,
-                    py::arg("new_file")=true, py::arg("verbose")=true);
-    py::class_<io::HDF5Sink<record_sf>>(m, "HDF5Sink_spherical_float", sink,
-            "Write to HDF5 File (spherical float)")
-            .def(py::init<std::string, std::string, double, double, bool, bool>(),
-                    py::arg("filename"), py::arg("tablename"), py::arg("hubble_param")=1., py::arg("box_size")=0.,
-                    py::arg("new_file")=true, py::arg("verbose")=true);
-    py::class_<io::HDF5Sink<record_sd>>(m, "HDF5Sink_spherical_double", sink,
-            "Write to HDF5 File (spherical double)")
-            .def(py::init<std::string, std::string, double, double, bool, bool>(),
-                    py::arg("filename"), py::arg("tablename"), py::arg("hubble_param")=1., py::arg("box_size")=0.,
-                    py::arg("new_file")=true, py::arg("verbose")=true);
     py::class_<io::TextSink<record_cd>>(m, "TextSink_cartesian", sink,
             "Write to Text File (cartesian)")
             .def(py::init<std::string, bool>(),

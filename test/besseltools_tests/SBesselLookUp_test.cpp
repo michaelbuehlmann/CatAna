@@ -6,7 +6,7 @@
 #include <gtest/gtest.h>
 
 #include <random>
-#include <boost/math/special_functions/bessel.hpp>
+#include <gsl/gsl_sf_bessel.h>
 #include <iostream>
 #include <algorithm>
 
@@ -24,8 +24,8 @@ TEST(SBesselLookUp, Accuracy){
         std::uniform_real_distribution<double> z_dist(0,sblu.get_zmax());
         for(int i=0; i<N_TEST; ++i){
             double z = z_dist(rng);
-            double boost_jlz = boost::math::sph_bessel(l, z);
-            EXPECT_NEAR(boost_jlz, sblu(z), std::max(1e-8, std::abs(0.05*boost_jlz))) << "More than 5% error at l=" << l << ", z=" << z;
+            double gsl_jlz = gsl_sf_bessel_jl(l, z);
+            EXPECT_NEAR(gsl_jlz, sblu(z), std::max(1e-8, std::abs(0.05*gsl_jlz))) << "More than 5% error at l=" << l << ", z=" << z;
         }
     }
 }

@@ -52,7 +52,5 @@ namespace catana { namespace io {
         bool verbose;
     };
 
-    // TODO: Close function for FilterStream (closes HDF5 file)
-
 }}
 #endif //CATANA_FILTERSTREAMS_HPP

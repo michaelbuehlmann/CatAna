@@ -31,7 +31,7 @@ TEST(ReadTxt, AllAndReset){
 
 
 
-    EXPECT_FLOAT_EQ(19.49477717, oc[0].r);
+    EXPECT_FLOAT_EQ(8.002900041, oc[0].r);
 }
 
 TEST(ReadTxt, SmallChuncks){
@@ -117,7 +117,7 @@ TEST(Source, ToObjectContainer){
     io::TextSource<io::CartesianRecord<double>> source(test_data_dir+"mock_data.txt");
     ObjectContainer oc(source.get_objectcontainer());
     EXPECT_EQ(20, oc.size());
-    EXPECT_FLOAT_EQ(19.49477717, oc[0].r);
+    EXPECT_FLOAT_EQ(8.002900041, oc[0].r);
 }
 
 

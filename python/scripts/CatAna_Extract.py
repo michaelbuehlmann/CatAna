@@ -138,17 +138,13 @@ if __name__ == "__main__":
     parser.add_argument("infile", type=str,
                         help="the input file", )
     parser.add_argument("outfile", type=str,
-                        help="the output file (only HDF5 supported so far)")
-    parser.add_argument("--intable", type=str,
-                        help="the input table in the input file (only HDF5)")
-    parser.add_argument("--outtable", type=str,
-                        help="the output table in the output file")
-    parser.add_argument("--intype", type=str, choices=["HDF5", "Gadget", "Text"],
+                        help="the output file")
+    parser.add_argument("--intype", type=str, choices=["Gadget", "Text"],
                         help="type of input file (may be deduced from filename")
-    parser.add_argument("--outtype", type=str, choices=["HDF5", "Text"],
+    parser.add_argument("--outtype", type=str, choices=["Text"],
                         help="type of output file (may be deduced from filename")
     parser.add_argument("--precision", type=str, choices=["float", "double"], default='float',
-                        help="Data precision in input file (only HDF5)")
+                        help="Data precision in input file")
     parser.add_argument("--incoord", type=str, choices=["cartesian", "spherical", "spherical_3dex"], default="cartesian",
                         help="Coordinate system used in the input file (only HDF5 and Text, spherical_3dex Text only)")
     parser.add_argument("--incoord_unit", type=str, choices=["Mpc", "Mpc/h"], default="Mpc")

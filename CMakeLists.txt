@@ -36,13 +36,6 @@ find_package(CBLAS REQUIRED)
 include_directories(${CBLAS_INCLUDE_DIR})
 message(STATUS "CBLAS Libraries: ${CBLAS_LIBRARIES}")
 
-
-# HDF5 Library
-set(HDF5_USE_STATIC_LIBRARIES)
-find_package(HDF5 REQUIRED)
-include_directories(${HDF5_INCLUDE_DIRS})
-link_directories(${HDF5_LIBRARY_DIRS})
-
 # OpenMP
 find_package(OpenMP)
 if(OPENMP_FOUND)

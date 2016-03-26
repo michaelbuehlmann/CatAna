@@ -187,17 +187,15 @@ if __name__ == '__main__':
                         help="method to use for C_l(k,k) computation")
     parser.add_argument("--nside", type=int, default=256,
                         help="NSide for REV_FFT method")
-    parser.add_argument("--intype", type=str, choices=["HDF5", "Gadget", "Text"],
+    parser.add_argument("--intype", type=str, choices=["Gadget", "Text"],
                         help="type of input file (may be deduced from filename")
     parser.add_argument("--incoord", type=str, choices=["cartesian", "spherical", "spherical_3dex"], default="cartesian",
                         help="Coordinate system used in the input file (only HDF5 and Text)")
     parser.add_argument("--incoord_unit", type=str, choices=["Mpc", "Mpc/h"], default="Mpc")
     parser.add_argument("--hubble_param", type=float, default=0.7,
                         help="If the input is in Mpc/h, use this parameter to transform coordinates to Mpc.")
-    parser.add_argument("--intable", type=str,
-                        help="the input table in the input file (only HDF5)")
     parser.add_argument("--precision", type=str, choices=["float", "double"], default='float',
-                        help="Data precision in input file (only HDF5)")
+                        help="Data precision in input file")
     parser.add_argument("--max_dist", type=float, required=True,
                         help="The maximal distance of objects from the origin (Rmax), in input units")
     parser.add_argument("--box_origin", type=float, default=0,

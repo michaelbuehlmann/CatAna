@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include <catana/decomposition/return_types.hpp>
-#include <boost/math/special_functions/bessel.hpp>
+#include <gsl/gsl_sf_bessel.h>
 #include <fstream>
 #include <string>
 #include <sstream>
@@ -24,7 +24,7 @@ TEST(ReturnTypes, KCLKK){
     ASSERT_EQ(kclkk.c_ln.cols(), nmax);
 
     for(int l=0; l<lmax; ++l) {
-        EXPECT_NEAR(boost::math::sph_bessel(l, kclkk.k_ln(l, nmax-1)*rmax), 0, 1e-16) << "l=" << l;
+        EXPECT_NEAR(gsl_sf_bessel_jl(l, kclkk.k_ln(l, nmax-1)*rmax), 0, 1e-16) << "l=" << l;
         EXPECT_EQ(0, kclkk.c_ln(l,nmax-1)); // Initialized to 0?
     }
 

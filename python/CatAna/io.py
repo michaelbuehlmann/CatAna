@@ -14,9 +14,7 @@ class PySource(object):
     def __init__(self, filename, filetype=None, verbose=True, **kwargs):
         if filetype is None:
             extension = filename.split('.')[-1]
-            if extension in ['hdf', 'hdf5', 'h5']:
-                filetype = 'HDF5'
-            elif extension in ['txt','dat']:
+            if extension in ['txt','dat']:
                 filetype = 'Text'
             else:
                 raise RuntimeError("Could not derrive the filetype, please specify explicitly.")
@@ -29,22 +27,6 @@ class PySource(object):
 
         if filetype == 'Gadget':
             self.source = io_core.GadgetSource(filename, verbose)
-
-        elif filetype == 'HDF5':
-            tablename = kwargs.get('tablename')
-            precision = kwargs.get('precision', 'float')
-            assert(precision in ['float', 'double'])
-
-            if coord == 'cartesian':
-                if precision == 'float':
-                    self.source = io_core.HDF5Source_cartesian_float(filename, tablename, hubble_param, box_origin * 2, verbose)
-                elif precision == 'double':
-                    self.source = io_core.HDF5Source_cartesian_double(filename, tablename, hubble_param, box_origin * 2, verbose)
-            elif coord == 'spherical':
-                if precision == 'float':
-                    self.source = io_core.HDF5Source_spherical_float(filename, tablename, hubble_param, box_origin * 2, verbose)
-                elif precision == 'double':
-                    self.source = io_core.HDF5Source_spherical_double(filename, tablename, hubble_param, box_origin * 2, verbose)
 
         elif filetype == 'Text':
             if coord == 'cartesian':
@@ -71,9 +53,7 @@ class PySink(object):
     def __init__(self, filename, filetype="HDF5", verbose=True, **kwargs):
         if filetype is None:
             extension = filename.split('.')[-1]
-            if extension in ['hdf', 'hdf5', 'h5']:
-                filetype = 'HDF5'
-            elif extension in ['txt','dat']:
+            if extension in ['txt','dat']:
                 filetype = 'Text'
             else:
                 raise RuntimeError("Could not derrive the filetype, please specify explicitly.")
@@ -85,27 +65,7 @@ class PySink(object):
         coord = kwargs.get('coord', 'cartesian')
         assert (coord in ['cartesian', 'spherical', 'spherical_3dex'])
 
-        if filetype == "HDF5":
-            tablename = kwargs.get('tablename')
-            precision = kwargs.get('precision', 'float')
-            assert(precision in ['float', 'double'])
-
-            if coord == 'cartesian':
-                if precision == 'float':
-                    self.sink = io_core.HDF5Sink_cartesian_float(filename, tablename, hubble_param, 2*box_origin, True,
-                                                            verbose)
-                elif precision == 'double':
-                    self.sink = io_core.HDF5Sink_cartesian_double(filename, tablename, hubble_param, 2 * box_origin, True,
-                                                            verbose)
-            elif coord == 'spherical':
-                if precision == 'float':
-                    self.sink = io_core.HDF5Sink_spherical_float(filename, tablename, hubble_param, 2 * box_origin, True,
-                                                            verbose)
-                elif precision == 'dobule':
-                    self.sink = io_core.HDF5Sink_spherical_double(filename, tablename, hubble_param, 2 * box_origin, True,
-                                                            verbose)
-
-        elif filetype == "Text":
+        if filetype == "Text":
             if coord == 'cartesian':
                 self.sink = io_core.TextSink_cartesian(filename, verbose)
             elif coord == 'spherical':

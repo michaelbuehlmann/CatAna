@@ -18,7 +18,8 @@ std::mt19937 rng;
 using namespace catana;
 
 TEST(Analyzer, RAW){
-    auto source = std::shared_ptr<io::Source>(new io::HDF5Source<io::CartesianRecord<float>>(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false));
+    auto source = std::shared_ptr<io::Source>(new io::TextSource<io::CartesianRecord<float>>(test_data_dir+"gaussian_catalog.txt", 1, 0));
+//    auto source = std::shared_ptr<io::Source>(new io::HDF5Source<io::CartesianRecord<float>>(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false));
     Analyzer analyzer(
             source.get(),
             5535184878.03
@@ -28,7 +29,8 @@ TEST(Analyzer, RAW){
 }
 
 TEST(Analyzer, Pixelized){
-    auto source = std::shared_ptr<io::Source>(new io::HDF5Source<io::CartesianRecord<float>>(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false));
+    auto source = std::shared_ptr<io::Source>(new io::TextSource<io::CartesianRecord<float>>(test_data_dir+"gaussian_catalog.txt", 1, 0));
+//    auto source = std::shared_ptr<io::Source>(new io::HDF5Source<io::CartesianRecord<float>>(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false));
     Analyzer analyzer(
             source.get(),
             5535184878.03
@@ -38,7 +40,8 @@ TEST(Analyzer, Pixelized){
 }
 
 TEST(Analyzer, Filter){
-    auto source = std::shared_ptr<io::Source>(new io::HDF5Source<io::CartesianRecord<float>>(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false));
+    auto source = std::shared_ptr<io::Source>(new io::TextSource<io::CartesianRecord<float>>(test_data_dir+"gaussian_catalog.txt", 1, 0));
+//    auto source = std::shared_ptr<io::Source>(new io::HDF5Source<io::CartesianRecord<float>>(test_data_dir+"gaussian_catalog.hdf", "particle_pos_cartesian", 1, 0, false));
     Analyzer analyzer(
             source.get(),
             5535184878.03

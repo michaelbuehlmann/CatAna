@@ -12,36 +12,39 @@
 
 namespace catana { namespace besseltools {
 
-    class SBesselTransformedFunction {
-    public:
-        SBesselTransformedFunction(std::function<double_t(double_t)> f, unsigned int l, double_t Rmax);
-        double_t operator()(const double_t& k1, const double_t& k2);
-
-    private:
-        std::function<double_t(double_t)> function;
-        unsigned int l;
-        SphericalBesselZeros bz;
-        double_t Rmax;
-    };
-
-
     //! Computes the integral over f(r)*j_l(k1*r)*j_l(k2*r) between [0,Rmax]
-    double_t double_sbessel_integrator(
-            std::function<double_t(double_t)> f,
+    double double_sbessel_integrator(
+            std::function<double(double)> f,
             const unsigned int& l,
-            const double_t& Rmax,
-            double_t k1, double_t k2);
+            const double& Rmax,
+            double k1, double k2);
+
 
     //! Computes the integral over f(r)*j_l(k1*r)*j_l(k2*r) between [0,Rmax]
     /*
      * The order of bz must be of the same l!
      */
-    double_t double_sbessel_integrator_bz(
-            std::function<double_t(double_t)> f,
+    double double_sbessel_integrator_bz(
+            std::function<double(double)> f,
             const unsigned int& l,
             SphericalBesselZeros& bz,
-            const double_t& Rmax,
-            double_t k1, double_t k2);
+            const double& Rmax,
+            double k1, double k2);
+
+
+    class SBesselIntegrationRangeGenerator {
+    public:
+        SBesselIntegrationRangeGenerator(SphericalBesselZeros& bz, double k);
+        void set_boundaries(double r_min, double r_max);
+        std::pair<double, double> next();
+
+    private:
+        double k;
+        SphericalBesselZeros& bz;
+        double r_max;
+        double current_low;
+        int current_high_idx;
+    };
 
 }}
 #endif //CATANA_SBESSEL_INTEGRATOR_HPP

@@ -8,13 +8,13 @@
 using namespace catana;
 
 TEST(BesselZeros, known_zeros){ //MATHEMATICA
-    besseltools::BesselZeros bz(0);
-    EXPECT_DOUBLE_EQ(2.4048255576957727686, bz[0]);
-    EXPECT_DOUBLE_EQ(5.5200781102863106496, bz[1]);
-    EXPECT_DOUBLE_EQ(8.6537279129110122170, bz[2]);
+    besseltools::SphericalBesselZeros bz(0);
+    EXPECT_FLOAT_EQ(3.141592653589791, bz[0]);
+    EXPECT_FLOAT_EQ(6.283185307179586, bz[1]);
+    EXPECT_FLOAT_EQ(9.42477796076938, bz[2]);
 
     bz.compute_up_to(100);
 
-    besseltools::BesselZeros bz2(5.5);
+    besseltools::SphericalBesselZeros bz2(5);
     EXPECT_NEAR(38.8836, bz2[9], 0.0001);
 }

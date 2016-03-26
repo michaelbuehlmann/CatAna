@@ -3,35 +3,67 @@
 //
 
 #include <catana/besseltools/sbessel_integrator.hpp>
+#include <catana/tools/gsl_function_wrapper.hpp>
+#include <gsl/gsl_sf_bessel.h>
 #include <gsl/gsl_integration.h>
 #include <gsl/gsl_errno.h>
-#include <catana/tools/gsl_function_wrapper.hpp>
-#include <boost/math/special_functions/bessel.hpp>
 
+#include <limits>
 #include <iostream>
 
 namespace catana { namespace besseltools {
 
     // Machine epsilon of double
-    typedef std::numeric_limits<double_t> double_t_lim;
+    typedef std::numeric_limits<double> double_lim;
 
-    double_t double_sbessel_integrator(std::function<double_t(double_t)> f, const unsigned int& l,
-            const double_t& Rmax,
-            double_t k1, double_t k2)
+    template<class T>
+    double SimpsonIntegration(T f, double a, double b, int N)
+    {
+        /*
+        Doing Simpson integration on function f with N boxes
+        Input:
+            f:	function which takes 1 value and returns 1
+            a:	lower bound of integration
+            b:	upper bound of integration
+            N:	Number of boxes in which interval [a,b] is divides
+
+        Output:
+            Value of integration of f between a and b
+        */
+
+        double h = 0.5*(b-a)/N; //Size of half a step
+        double s = f(a) + f(b); //initializing sum with boundary values
+
+        for (int i=0; i<N; ++i) //summing up all half-step values
+        {
+            s += 4 * f(a+h*(2*i+1));
+        }
+        for (int i=1; i<N; ++i) //summing up all full-step values
+        {
+            s += 2 * f(a+h*(2*i));
+        }
+
+        return s*h/3;
+    }
+
+    double double_sbessel_integrator(std::function<double(double)> f, const unsigned int& l,
+            const double& Rmax,
+            double k1, double k2)
     {
         SphericalBesselZeros bz(l);
         return double_sbessel_integrator_bz(f, l, bz, Rmax, k1, k2);
     }
 
-    double_t double_sbessel_integrator_bz(std::function<double_t(double_t)> f, const unsigned int& l,
+
+    double double_sbessel_integrator_bz(std::function<double(double)> f, const unsigned int& l,
             SphericalBesselZeros& bz,
-            const double_t& Rmax,
-            double_t k1, double_t k2)
+            const double& Rmax,
+            double k1, double k2)
     {
         gsl_set_error_handler_off();
 
-        auto integrand = [&](double_t r) {
-            return f(r)*boost::math::sph_bessel(l, k1*r)*boost::math::sph_bessel(l, k2*r);
+        auto integrand = [&](double r) {
+            return f(r)*gsl_sf_bessel_jl(l, k1*r)*gsl_sf_bessel_jl(l, k2*r);
         };
         if (k1>k2) {
             std::swap(k1, k2);
@@ -41,51 +73,72 @@ namespace catana { namespace besseltools {
         gsl_function* F = static_cast<gsl_function*>(&Fp);
 
         auto workspace = gsl_integration_workspace_alloc(1000);
-        double_t result = 0.;
-        double_t result_old, result_intermediate, temp, error;
+        double result = 0.;
+        double result_old, result_intermediate, temp, error;
         int exit_code;
 
-        double_t lower_z = 0;
-        double_t upper_z, upper_z_large;
+        SBesselIntegrationRangeGenerator sbirg_l(bz, k1);
+        sbirg_l.set_boundaries(0, Rmax);
+        SBesselIntegrationRangeGenerator sbirg_s(bz, k2);
 
-        unsigned int i = 0;
-        unsigned int j = 0;
+        auto range_l = sbirg_l.next();
 
-        do {
-            upper_z_large = std::min(bz[i]/k1, Rmax);
-            result_intermediate = 0.;
-            do {
-                upper_z = (bz[j]/k2>upper_z_large) ? upper_z_large : bz[j++]/k2;
-//                std::cout << "\t " << lower_z << ",\t" << upper_z << ": ";
-                exit_code = gsl_integration_qag(F, lower_z, upper_z, 0, 100*double_t_lim::epsilon(), 1000, 2,
+
+        while(range_l.first != range_l.second) {
+            sbirg_s.set_boundaries(range_l.first, range_l.second);
+            result_intermediate = 0;
+            auto range_s = sbirg_s.next();
+            while(range_s.first != range_s.second) {
+//                std::cout << "\t\t(" << range_s.first << " " << range_s.second << ")" << std::endl;
+                exit_code = gsl_integration_qag(F, range_s.first, range_s.second, 0, 1e-12, 1000, 2,
                         workspace, &temp, &error);
-                if (exit_code==GSL_EROUND) {
-                    std::cout << "round-off error for integration between "
-                            << lower_z << ", " << upper_z << std::endl;
-                } else {
+//                if (exit_code==GSL_EROUND) {
+//                    std::cout << "round-off error for integration between "
+//                            << range_s.first << ", " << range_s.second << std::endl;
+//                } else {
                     result_intermediate += temp;
-                }
-                lower_z = upper_z;
-            } while (upper_z<upper_z_large);
+//                }
 
+                range_s = sbirg_s.next();
+            }
+
+//            std::cout << "\t(" << range_l.first << " " << range_l.second << "): \t" << result_intermediate << std::endl;
             result_old = result;
             result += result_intermediate;
-            ++i;
-        } while (result_old!=result && upper_z<Rmax);
+            if(result == result_old)
+                break;
+
+            range_l = sbirg_l.next();
+        }
 
         gsl_integration_workspace_free(workspace);
         return result;
     }
 
-    SBesselTransformedFunction::SBesselTransformedFunction(std::function<double_t(double_t)> f, unsigned int l,
-            double_t Rmax)
-            :function(f), l(l), bz(l), Rmax(Rmax) { }
 
-    double_t SBesselTransformedFunction::operator()(const double_t& k1, const double_t& k2)
+    SBesselIntegrationRangeGenerator::SBesselIntegrationRangeGenerator(SphericalBesselZeros& bz, double k)
+            : bz(bz), k(k)
+    { }
+
+    void SBesselIntegrationRangeGenerator::set_boundaries(double r_min, double r_max)
     {
-        auto fct = [&](double_t r) {
-            return 2./M_PI*std::pow(r, 2)*function(r);
-        };
-        return double_sbessel_integrator_bz(fct, l, bz, Rmax, k1, k2);
+        this->r_max = r_max;
+        this->current_low = r_min;
+        unsigned int ix = bz.next_zero(r_min*k);
+
+        current_high_idx = (bz[ix]/k > r_min) ? ix : ix+1;
+//        std::cout << "Set boundaries called: [" << r_min << ", " << r_max << "], set low=" << current_low
+//                << ", high_idx=" << current_high_idx << " (" << bz[current_high_idx]/k << ")" << std::endl;
+    }
+
+    std::pair<double, double> SBesselIntegrationRangeGenerator::next()
+    {
+        double low = current_low;
+        double high = std::min(bz[current_high_idx]/k, r_max);
+
+        current_low = high;
+        current_high_idx++;
+
+        return std::make_pair(low, high);
     }
 }}

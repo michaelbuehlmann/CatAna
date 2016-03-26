@@ -8,7 +8,9 @@
 
 
 #include <healpix_cxx/healpix_base.h>
-#include <boost/math/special_functions.hpp>
+#include <cmath>
+#include <gsl/gsl_sf_legendre.h>
+#include <gsl/gsl_sf_bessel.h>
 #include <fftw3.h>
 
 namespace catana {
@@ -17,7 +19,7 @@ namespace catana {
 //! A class holding information of a healpix ring, along with pointers to the actual map, the FFT-map and the FFTW-routine.
     struct RingInfo {
         RingInfo(int npix, const PixelObjects* const pixelobj1, double* map_i, complex* fft_map_i)
-                :npix(npix), start_pixobjs(pixelobj1), phase(pixelobj1->p.phi), theta(pixelobj1->p.theta), map(map_i),
+                :npix(npix), start_pixobjs(pixelobj1), phase(pixelobj1->p.phi), costheta(std::cos(pixelobj1->p.theta)), map(map_i),
                  fft_map(fft_map_i)
         {
             fft_forward = fftw_plan_dft_r2c_1d(npix, this->map, (fftw_complex*) this->fft_map, FFTW_MEASURE);
@@ -26,7 +28,7 @@ namespace catana {
         const int npix;
         const PixelObjects* const start_pixobjs;
         const double phase;
-        const double theta;
+        const double costheta;
         double* map;
         complex* fft_map;
 
@@ -107,7 +109,7 @@ namespace catana {
                 ));
                 sph_bessel_l = [&](const double& z) { return sblu->operator()(z); };
             } else {
-                sph_bessel_l = [&](const double& z) { return boost::math::sph_bessel(l, z); };
+                sph_bessel_l = [&](const double& z) { return gsl_sf_bessel_jl(l, z); };
             }
 
 
@@ -116,8 +118,7 @@ namespace catana {
 #pragma omp parallel for if(parallel) schedule(dynamic, 5)
             for (int i = 0; i<nrings; ++i) {
                 for (unsigned short m = 0; m<=l; ++m) {
-                    ylm_im(i, m) = std::conj(boost::math::spherical_harmonic(l, m, ring_info_container[i].theta,
-                            ring_info_container[i].phase));
+                    ylm_im(i, m) = std::polar(gsl_sf_legendre_sphPlm(l,m,ring_info_container[i].costheta), -m*ring_info_container[i].phase);
                 }
             }
 
