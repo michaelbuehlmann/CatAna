@@ -9,7 +9,7 @@ set(tools_SOURCES
 set(besseltools_SOURCES
         include/catana/besseltools.hpp
         ${tools_SOURCES}
-        include/catana/besseltools/BesselZeros.hpp src/besseltools/BesselZeros.cpp
+        include/catana/besseltools/SphericalBesselZeros.hpp src/besseltools/SphericalBesselZeros.cpp
         include/catana/besseltools/sbessel_integrator.hpp src/besseltools/sbessel_integrator.cpp
         include/catana/besseltools/SBesselInterpolator.hpp src/besseltools/SBesselInterpolator.cpp)
 

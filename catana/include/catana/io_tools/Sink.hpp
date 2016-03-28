@@ -7,14 +7,15 @@
 
 #include "../types.hpp"
 
-namespace catana{ namespace io {
+namespace catana { namespace io {
 
-        class Sink {
-        public:
-            virtual long long int write(ObjectContainer::iterator read_iterator, size_t n) = 0;
+    class Sink {
+    public:
+        virtual long long int write(ObjectContainer::iterator read_iterator, size_t n) = 0;
+        virtual long long int write(Object* read_iterator, size_t n) = 0;
 
-            virtual long long int write(Object* read_iterator, size_t n) = 0;
-        };
+        virtual ~Sink()=default;
+    };
 
 }}
 

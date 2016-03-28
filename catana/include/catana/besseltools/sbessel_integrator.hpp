@@ -8,7 +8,7 @@
 #include <functional>
 #include <memory>
 #include "../tools/FunctionInterpolator.hpp"
-#include "BesselZeros.hpp"
+#include "SphericalBesselZeros.hpp"
 
 namespace catana { namespace besseltools {
 

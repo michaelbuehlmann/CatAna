@@ -16,6 +16,14 @@ endif()
 # Load git versioning module
 include(${CMAKE_SOURCE_DIR}/cmake/git_versioning.cmake)
 
+# Load external projects (eigen, pybind11, googletest)
+include(${CMAKE_SOURCE_DIR}/external_projects.cmake)
+
+
+################################################################################
+# LOADING LIBRARIES ############################################################
+################################################################################
+
 # eigen3 Library
 message(STATUS "Using Eigen Library located at ${EIGEN3_INCLUDE_DIR}")
 include_directories(${EIGEN3_INCLUDE_DIR})
@@ -43,6 +51,13 @@ if(OPENMP_FOUND)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
 endif()
+
+# Python
+if(BUILD_PYTHON)
+    find_package(PythonLibs REQUIRED)
+    find_package(PythonInterp REQUIRED)
+endif()
+
 
 # Setting up include files from CatAna
 #if(CATANA_CONFIG_DIR)

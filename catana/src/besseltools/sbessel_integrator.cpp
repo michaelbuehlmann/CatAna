@@ -117,7 +117,7 @@ namespace catana { namespace besseltools {
 
 
     SBesselIntegrationRangeGenerator::SBesselIntegrationRangeGenerator(SphericalBesselZeros& bz, double k)
-            : bz(bz), k(k)
+            : k(k), bz(bz)
     { }
 
     void SBesselIntegrationRangeGenerator::set_boundaries(double r_min, double r_max)

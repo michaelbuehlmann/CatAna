@@ -3,7 +3,7 @@
 //
 
 #include <catana/besseltools/SBesselInterpolator.hpp>
-#include <catana/besseltools/BesselZeros.hpp>
+#include <catana/besseltools/SphericalBesselZeros.hpp>
 
 #include <gsl/gsl_sf_bessel.h>
 #include <cassert>
@@ -16,8 +16,9 @@ namespace catana { namespace besseltools {
     }
 
     SBesselInterpolator::SBesselInterpolator(unsigned short l, double z_max, unsigned int interpolation_points)
-            :l(l), FunctionInterpolator([l](double z) { return gsl_sf_bessel_jl(l, z); }, interpolation_points,
-            0, z_max) { }
+            :FunctionInterpolator([l](double z) { return gsl_sf_bessel_jl(l, z); }, interpolation_points,
+            0, z_max), l(l)
+    { }
 
     double SBesselInterpolator::operator()(const double& z) const
     {

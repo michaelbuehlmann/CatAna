@@ -2,7 +2,7 @@
 // Created by Michael Bühlmann on 01/11/15.
 //
 
-#include <catana/besseltools/BesselZeros.hpp>
+#include <catana/besseltools/SphericalBesselZeros.hpp>
 #include <iostream>
 #include <cmath>
 #include <utility>
@@ -54,7 +54,6 @@ namespace catana { namespace besseltools {
 
     double SphericalBesselZeros::newton_iterate(double z)
     {
-        double z_old;
         double delta;
         double jl;
 
@@ -79,10 +78,8 @@ namespace catana { namespace besseltools {
 
     void SphericalBesselZeros::compute_up_to(double z_max)
     {
-        bool added(false);
         while (zeros.back()<z_max) {
             zeros.push_back(next());
-            added=true;
         }
     }
 

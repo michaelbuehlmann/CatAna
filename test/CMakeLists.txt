@@ -5,8 +5,6 @@ project(catana_tests)
 
 # Moving test data for IO Tests
 file(COPY test_data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-#configure_file(config.hpp.in ${CMAKE_CURRENT_BINARY_DIR}/include/config.hpp)
-#include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 
 add_subdirectory(${GOOGLETEST_DIR} ${CMAKE_CURRENT_BINARY_DIR}/googletest)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})

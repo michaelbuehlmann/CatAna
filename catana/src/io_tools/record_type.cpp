@@ -86,14 +86,14 @@ namespace catana { namespace io {
 
     ///////////////////////////////////////////////////////////////////////////////
     // IMPLICIT INSTANTIATION (add needed cases)
-    template class CartesianRecord<float>;
-    template class CartesianRecord<double>;
-    template class SphericalRecordBase<float>;
-    template class SphericalRecordBase<double>;
-    template class SphericalRecord<float, SphericalTextFormat::RTHETAPHI>;
-    template class SphericalRecord<double,SphericalTextFormat::RTHETAPHI>;
-    template class SphericalRecord<float, SphericalTextFormat::THREEDEX>;
-    template class SphericalRecord<double,SphericalTextFormat::THREEDEX>;
+    template struct CartesianRecord<float>;
+    template struct CartesianRecord<double>;
+    template struct SphericalRecordBase<float>;
+    template struct SphericalRecordBase<double>;
+    template struct SphericalRecord<float, SphericalTextFormat::RTHETAPHI>;
+    template struct SphericalRecord<double,SphericalTextFormat::RTHETAPHI>;
+    template struct SphericalRecord<float, SphericalTextFormat::THREEDEX>;
+    template struct SphericalRecord<double,SphericalTextFormat::THREEDEX>;
     template std::ostream& operator<<<float> (std::ostream&, const CartesianRecord<float>&);
     template std::ostream& operator<<<double>(std::ostream&, const CartesianRecord<double>&);
     template std::ostream& operator<<<float,  SphericalTextFormat::RTHETAPHI>(std::ostream&, const SphericalRecord<float, SphericalTextFormat::RTHETAPHI>&);

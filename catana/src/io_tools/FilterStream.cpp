@@ -27,7 +27,6 @@ namespace catana { namespace io {
         {
             assert(n_subset<n_tot);
             size_t n_added = 0;
-            size_t rand;
             std::uniform_int_distribution<size_t> random_dist(0, n_tot-1);
             while (n_added<n_subset) {
                 auto ret = subset_indices.insert(random_dist(rng));
@@ -56,23 +55,14 @@ namespace catana { namespace io {
         size_t current;
     };
 
-
-//    FilterStream::FilterStream(Source* source, Sink* sink, size_t buffer_size, bool verbose)
-//            :source(source),
-//             sink(sink),
-//             buffer_size(buffer_size),
-//             subsample_size(0),
-//             buffer(new Object[buffer_size]),
-//             verbose(verbose) { }
-
     FilterStream::FilterStream(Source* source, Sink* sink, size_t buffer_size, size_t subset_size,
             std::string temp_file_name, bool verbose)
             :source(source),
              sink(sink),
-             buffer_size(buffer_size),
-             subsample_size(subset_size),
-             temp_file_name(temp_file_name),
              buffer(new Object[buffer_size]),
+             buffer_size(buffer_size),
+             temp_file_name(temp_file_name),
+             subsample_size(subset_size),
              verbose(verbose) { }
 
     void FilterStream::add_filter(Filter* filter_p)

@@ -23,7 +23,6 @@ namespace catana { namespace besseltools {
         double second_zero();
         double newton_iterate(double z);
         double next();
-        unsigned int pos;
     };
 
 }}
