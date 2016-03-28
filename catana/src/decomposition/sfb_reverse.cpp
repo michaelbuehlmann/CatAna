@@ -7,7 +7,7 @@
 #include <catana/besseltools.hpp>
 
 
-#include <healpix_cxx/healpix_base.h>
+#include <healpix_base.h>
 #include <cmath>
 #include <gsl/gsl_sf_bessel.h>
 #include <gsl/gsl_sf_legendre.h>

@@ -19,7 +19,7 @@ namespace catana{ namespace io {
 
             void reset() override;
 
-            size_t get_nobjects();
+            size_t get_nobjects() override;
 
         private:
             template<class ObjectIterator>

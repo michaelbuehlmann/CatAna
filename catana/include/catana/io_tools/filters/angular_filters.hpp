@@ -6,7 +6,7 @@
 #define CATANA_ANGULAR_FILTERS_HPP
 
 #include "../Filter.hpp"
-#include <healpix_cxx/healpix_map.h>
+#include <healpix_map.h>
 
 namespace catana{ namespace io {
 

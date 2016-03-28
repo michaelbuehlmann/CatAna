@@ -3,7 +3,7 @@
 //
 
 #include <catana/io_tools/filters/angular_filters.hpp>
-#include <healpix_cxx/healpix_map_fitsio.h>
+#include <healpix_map_fitsio.h>
 
 namespace catana{ namespace io {
 

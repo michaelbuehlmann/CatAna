@@ -6,9 +6,10 @@
 #define CATANA_RADIAL_FILTERS_HPP
 
 #include "../Filter.hpp"
-#include <functional>
 #include <catana/tools/FunctionInterpolator.hpp>
+#include <functional>
 #include <memory>
+#include <random>
 
 namespace catana{ namespace io {
 

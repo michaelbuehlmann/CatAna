@@ -69,7 +69,7 @@ add_library(catana STATIC
 
 # LINK TOGETHER
 target_link_libraries(besseltools gsl ${CBLAS_LIBRARIES})
-target_link_libraries(iotools ${HEALPIX_LIB} gsl ${CBLAS_LIBRARIES})
-target_link_libraries(catana besseltools iotools fftw3 ${HEALPIX_LIB})
+target_link_libraries(iotools gsl ${HEALPIX_LIBRARIES} ${CFITSIO_LIBRARIES} ${CBLAS_LIBRARIES})
+target_link_libraries(catana besseltools iotools gsl fftw3 ${HEALPIX_LIBRARIES} ${CFITSIO_LIBRARIES})
 add_dependencies(catana eigen)
 add_dependencies(iotools eigen)

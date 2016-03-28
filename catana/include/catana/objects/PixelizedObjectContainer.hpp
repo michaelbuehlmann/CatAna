@@ -7,8 +7,8 @@
 
 #include "Object.hpp"
 #include "ObjectContainer.hpp"
-#include <healpix_cxx/healpix_base.h>
-#include <healpix_cxx/pointing.h>
+#include <healpix_base.h>
+#include <pointing.h>
 #include <vector>
 #include <Eigen/Dense>
 

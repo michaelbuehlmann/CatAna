@@ -1,0 +1,31 @@
+# Find CFITSIO
+#
+# Once run this will define:
+#
+# CFITSIO_FOUND:       did find CFITSIO library
+# CFITSIO_LIBRARIES:   full path to the CFITSIO package library
+# CFITSIO_INCLUDE_DIR: where to find headers
+
+FIND_PATH(CFITSIO_INCLUDE_DIR fitsio.h
+        PATH_SUFFIXES libcfitsio3 libcfitsio0 cfitsio
+        PATHS $ENV{CFITSIO} ${_obIncDir})
+FIND_LIBRARY(CFITSIO_LIBRARIES
+        NAMES libcfitsio.a cfitsio
+        PATHS $ENV{CFITSIO} ${_obIncDir})
+
+IF(CFITSIO_INCLUDE_DIR AND CFITSIO_LIBRARIES)
+    SET(CFITSIO_FOUND TRUE)
+ELSE()
+    SET(CFITSIO_FOUND FALSE)
+ENDIF()
+
+IF(CFITSIO_FOUND)
+    MESSAGE(STATUS "Found CFITSIO: ${CFITSIO_LIBRARIES}")
+ELSE()
+    IF(CFITSIO_FIND_REQUIRED)
+        MESSAGE(FATAL_ERROR "CFITSIO not found")
+    ELSE()
+        MESSAGE(STATUS "CFITSIO not found")
+    ENDIF()
+ENDIF()
+MARK_AS_ADVANCED(CFITSIO_INCLUDE_DIR CFITSIO_LIBRARIES)

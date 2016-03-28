@@ -5,7 +5,7 @@
 #ifndef CATANA_APP_OBJECT_TYPES_HPP
 #define CATANA_APP_OBJECT_TYPES_HPP
 
-#include <healpix_cxx/pointing.h>
+#include <pointing.h>
 
 namespace catana {
 
