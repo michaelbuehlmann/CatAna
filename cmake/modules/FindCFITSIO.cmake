@@ -8,10 +8,10 @@
 
 FIND_PATH(CFITSIO_INCLUDE_DIR fitsio.h
         PATH_SUFFIXES libcfitsio3 libcfitsio0 cfitsio
-        PATHS $ENV{CFITSIO} ${_obIncDir})
+        PATHS $ENV{CFITSIO}/include $ENV{INCLUDE})
 FIND_LIBRARY(CFITSIO_LIBRARIES
         NAMES libcfitsio.a cfitsio
-        PATHS $ENV{CFITSIO} ${_obIncDir})
+        PATHS $ENV{CFITSIO}/lib ENV LD_LIBRARY_PATH)
 
 IF(CFITSIO_INCLUDE_DIR AND CFITSIO_LIBRARIES)
     SET(CFITSIO_FOUND TRUE)

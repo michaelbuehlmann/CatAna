@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.3)
+cmake_minimum_required(VERSION 2.8)
 project(catana)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC")
@@ -23,6 +23,18 @@ include(${CMAKE_SOURCE_DIR}/external_projects.cmake)
 ################################################################################
 # LOADING LIBRARIES ############################################################
 ################################################################################
+# FFTW3 Library
+find_package(FFTW3 REQUIRED)
+include_directories(${FFTW3_INCLUDES})
+
+# CBLAS Library
+find_package(CBLAS REQUIRED)
+include_directories(${CBLAS_INCLUDE_DIR})
+message(STATUS "CBLAS Libraries: ${CBLAS_LIBRARIES}")
+
+# GSL Library
+find_package(GSL REQUIRED)
+include_directories(${GSL_INCLUDES})
 
 # eigen3 Library
 message(STATUS "Using Eigen Library located at ${EIGEN3_INCLUDE_DIR}")
@@ -37,12 +49,6 @@ find_package(CFITSIO REQUIRED)
 find_package(HEALPIX REQUIRED)
 include_directories(${HEALPIX_INCLUDE_DIR})
 link_directories(${HEALPIX_LIB_DIR})
-
-# CBLAS Library
-set(CBLAS_FIND_QUIETLY)
-find_package(CBLAS REQUIRED)
-include_directories(${CBLAS_INCLUDE_DIR})
-message(STATUS "CBLAS Libraries: ${CBLAS_LIBRARIES}")
 
 # OpenMP
 find_package(OpenMP)
