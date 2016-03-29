@@ -13,7 +13,7 @@
 namespace catana {
 
 //! Return Type of SFB decomposition methods
-/*
+/*!
  * k_ln contains the k at which C_l(k,k) is evaluated
  * c_ln contains the corresponding C_l(k,k)
  * (index 0: 0<l<lmax,
@@ -21,27 +21,23 @@ namespace catana {
  */
     struct KClkk {
     public:
+        //! Construct KClkk for given lmax and nmax
+        /*!
+         * This will initialize k_ln to the Zeros of the spherical bessel functions normalized with rmax.
+         * The c_ln and f_lmn will be set to 0.
+         * @param lmax k_ln and c_ln will contain space for l in [0,lmax)
+         * @param nmax k_ln and c_ln will contain space for n in [0,nmax)
+         * @param rmax the radius at which the boundary condition f(rmax)=0 is assumed. Will normalize the k_ln at which
+         * the c_ln are evaluated.
+         */
         KClkk(unsigned short lmax, unsigned short nmax, double rmax);
 
-        Eigen::ArrayXXd k_ln;
-        Eigen::ArrayXXd c_ln;
-        std::vector<Eigen::ArrayXXcd> f_lmn;
+        Eigen::ArrayXXd k_ln;  //!< the k's at which c_ln are evaluated
+        Eigen::ArrayXXd c_ln;  //!< the C_l(k_n, k_n)
+        std::vector<Eigen::ArrayXXcd> f_lmn;  //!< the coefficients from which the c_ln were computed
     public:
         //! Save k_ln and c_ln to files '{filename_base}.(k_ln/c_ln) respectively. Rows are l, columns are n.
         void savetxt(std::string filename_base);
     };
-
-    struct KPkk {
-        KPkk(unsigned short M, double L, unsigned short bin_number = 40, bool logdist = true);
-
-        Eigen::ArrayXd k;
-        Eigen::ArrayXd pkk;
-        Eigen::Array<unsigned int, Eigen::Dynamic, 1> bin_count;
-        Eigen::ArrayXd k_binedges;
-
-        //! k, pkk to file '{filename_base}.pkk' (each row of format (k_i, pkk_i))
-        void savetxt(std::string filename_base);
-    };
-
 }
 #endif //CATANA_APP_DECOMP_OBJECTS_HPP

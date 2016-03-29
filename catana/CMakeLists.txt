@@ -22,34 +22,34 @@ set(returntypes_SOURCES
         include/catana/decomposition/return_types.hpp src/decomposition/return_types.cpp)
 
 set(iotools_sources_SOURCES
-        include/catana/io_tools/Source.hpp src/io_tools/Source.cpp
-        include/catana/io_tools/sources/ObjectContainerSource.hpp src/io_tools/sources/ObjectContainerSource.cpp
-        include/catana/io_tools/sources/GadgetSource.hpp src/io_tools/sources/GadgetSource.cpp
-        include/catana/io_tools/sources/RawBinarySource.hpp src/io_tools/sources/RawBinarySource.cpp
-        include/catana/io_tools/sources/TextSource.hpp src/io_tools/sources/TextSource.cpp)
+        include/catana/io/Source.hpp src/io/Source.cpp
+        include/catana/io/sources/ObjectContainerSource.hpp src/io/sources/ObjectContainerSource.cpp
+        include/catana/io/sources/GadgetSource.hpp src/io/sources/GadgetSource.cpp
+        include/catana/io/sources/RawBinarySource.hpp src/io/sources/RawBinarySource.cpp
+        include/catana/io/sources/TextSource.hpp src/io/sources/TextSource.cpp)
 
 set(iotools_sinks_SOURCES
-        include/catana/io_tools/Sink.hpp
-        include/catana/io_tools/sinks/ObjectContainerSink.hpp
-        include/catana/io_tools/sinks/PixelizedObjectContainerSink.hpp
-        include/catana/io_tools/sinks/RawBinarySink.hpp src/io_tools/sinks/RawBinarySink.cpp
-        include/catana/io_tools/sinks/TextSink.hpp src/io_tools/sinks/TextSink.cpp
+        include/catana/io/Sink.hpp
+        include/catana/io/sinks/ObjectContainerSink.hpp
+        include/catana/io/sinks/PixelizedObjectContainerSink.hpp
+        include/catana/io/sinks/RawBinarySink.hpp src/io/sinks/RawBinarySink.cpp
+        include/catana/io/sinks/TextSink.hpp src/io/sinks/TextSink.cpp
         )
 
 set(iotools_filters_SOURCES
-        include/catana/io_tools/Filter.hpp src/io_tools/Filter.cpp
-        include/catana/io_tools/filters/radial_filters.hpp src/io_tools/filters/radial_filters.cpp
-        include/catana/io_tools/filters/angular_filters.hpp src/io_tools/filters/angular_filters.cpp
+        include/catana/io/Filter.hpp src/io/Filter.cpp
+        include/catana/io/filters/radial_filters.hpp src/io/filters/radial_filters.cpp
+        include/catana/io/filters/angular_filters.hpp src/io/filters/angular_filters.cpp
         )
 
 set(iotools_SOURCES
         ${basictypes_SOURCES}
         ${tools_SOURCES}
-        include/catana/io_tools/record_types.hpp src/io_tools/record_type.cpp
+        include/catana/io/record_types.hpp src/io/record_type.cpp
         ${iotools_sources_SOURCES}
         ${iotools_sinks_SOURCES}
         ${iotools_filters_SOURCES}
-        include/catana/io_tools/FilterStream.hpp src/io_tools/FilterStream.cpp)
+        include/catana/io/FilterStream.hpp src/io/FilterStream.cpp)
 
 set(decomposition_SOURCES
         ${returntypes_SOURCES}

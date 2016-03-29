@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include <catana/iotools.hpp>
+#include <catana/io.hpp>
 #include <catana/decomposition.hpp>
 
 #include <fstream>

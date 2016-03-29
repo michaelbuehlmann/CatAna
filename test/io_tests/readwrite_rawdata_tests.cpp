@@ -2,7 +2,7 @@
 // Created by Michael Bühlmann on 14/02/16.
 //
 
-#include <catana/iotools.hpp>
+#include <catana/io.hpp>
 #include <catana/types.hpp>
 #include "gtest/gtest.h"
 

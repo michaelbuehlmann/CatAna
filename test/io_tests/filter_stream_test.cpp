@@ -3,14 +3,14 @@
 //
 
 #include <catana/types.hpp>
-#include <catana/io_tools/Filter.hpp>
-#include <catana/io_tools/FilterStream.hpp>
+#include <catana/io/Filter.hpp>
+#include <catana/io/FilterStream.hpp>
 
 #include <gtest/gtest.h>
 
 // Load data directory
 #include <catana/config.hpp>
-#include <catana/iotools.hpp>
+#include <catana/io.hpp>
 
 const std::string test_data_dir(TEST_DATA_DIR);
 using namespace catana;

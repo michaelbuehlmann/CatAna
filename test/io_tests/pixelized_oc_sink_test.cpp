@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include <catana/types.hpp>
-#include <catana/iotools.hpp>
+#include <catana/io.hpp>
 
 using namespace catana;
 

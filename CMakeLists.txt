@@ -66,6 +66,7 @@ include_directories(catana/include)
 include_directories(${CMAKE_BINARY_DIR}/catana/include)
 
 add_subdirectory(catana)
+add_subdirectory(docs)
 
 if(BUILD_PYTHON)
     add_subdirectory(python)

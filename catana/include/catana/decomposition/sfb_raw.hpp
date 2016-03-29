@@ -10,7 +10,7 @@
 #include "../types.hpp"
 
 namespace catana {
-//! Decomposition of ObjectContainer
+    //! Do the SFB-decomposition of ObjectContainer (raw, brute-force method)
     KClkk _sfb_raw(
             const ObjectContainer& objects,
             unsigned short lmax, unsigned short nmax,

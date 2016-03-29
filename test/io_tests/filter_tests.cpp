@@ -6,11 +6,11 @@
 #include <random>
 #include <cmath>
 #include <catana/types.hpp>
-#include "catana/io_tools/Filter.hpp"
+#include "catana/io/Filter.hpp"
 
 // Load data directory
 #include <catana/config.hpp>
-#include <catana/iotools.hpp>
+#include <catana/io.hpp>
 
 using namespace catana;
 

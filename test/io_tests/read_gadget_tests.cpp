@@ -3,7 +3,7 @@
 //
 
 #include <catana/types.hpp>
-#include "catana/io_tools/sources/GadgetSource.hpp"
+#include "catana/io/sources/GadgetSource.hpp"
 #include "gtest/gtest.h"
 
 #include <string>

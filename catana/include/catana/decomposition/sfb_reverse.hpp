@@ -10,7 +10,7 @@
 #include "../types.hpp"
 
 namespace catana {
-//! Decomposition of PixelizedObjectContainer
+    //! Do the SFB-decomposition of PixelizedObjectContainer (without FFTs)
     KClkk _sfb_reverse(
             const PixelizedObjectContainer& pix_oc,
             unsigned short lmax, unsigned short nmax,

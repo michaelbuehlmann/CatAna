@@ -9,11 +9,13 @@
 #include <vector>
 
 namespace catana {
-//! Catalog representation
+
+    //! Container of Object: std::vector<Object>
     class ObjectContainer : public std::vector<Object> {
         // Inheriting constructors
         using std::vector<Object>::vector;
     public:
+        //! Add an object to ObjectContainer
         void add_object(const Object& object)
         {
             push_back(object);
@@ -21,7 +23,7 @@ namespace catana {
     };
 
     //! Creates a random subset of the Object Container such that N objects remain.
-    /*
+    /*!
      * This is a Fisher-Yates shuffle (stopped after N iterations).
      * See: https://en.wikipedia.org/wiki/Fisher–Yates_shuffle
      */
