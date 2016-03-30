@@ -45,16 +45,16 @@ PYBIND11_PLUGIN(io_core) {
         rng.seed(seq); });
 
 
-
-
-
     // Parent classes
     py::class_<io::Source> (m, "Source")
             .def("reset", &io::Source::reset)
             .def("get_objectcontainer", &io::Source::get_objectcontainer)
             .def("get_pixobjectcontainer", &io::Source::get_pixobjectcontainer, py::arg("nside"));
-    py::class_<io::Sink> sink(m, "Sink");
-    py::class_<io::Filter> filter(m, "Filter");
+    py::class_<io::Sink> (m, "Sink");
+    py::class_<io::Filter> (m, "Filter")
+            .def("__call__", [&](io::Filter& fi, ObjectContainer& object_container){
+                return fi(object_container);
+            });
 
     // Add Source classes here
     py::class_<io::ObjectContainerSource>(m, "ObjectContainerSource", py::base<io::Source>(),
@@ -79,38 +79,38 @@ PYBIND11_PLUGIN(io_core) {
                     py::arg("filename"), py::arg("hubble_param")=1., py::arg("box_size")=0.);
 
     // Add Sink classes here
-    py::class_<io::ObjectContainerSink>(m, "ObjectContainerSink", sink,
+    py::class_<io::ObjectContainerSink>(m, "ObjectContainerSink", py::base<io::Sink>(),
             "Write data into ObjectContainer")
             .def(py::init<ObjectContainer&>());
-    py::class_<io::PixelizedObjectContainerSink>(m, "PixelizedObjectContainerSink", sink,
+    py::class_<io::PixelizedObjectContainerSink>(m, "PixelizedObjectContainerSink", py::base<io::Sink>(),
             "Write data into PixelizedObjectContainer")
             .def(py::init<PixelizedObjectContainer&>());
-    py::class_<io::TextSink<record_cd>>(m, "TextSink_cartesian", sink,
+    py::class_<io::TextSink<record_cd>>(m, "TextSink_cartesian", py::base<io::Sink>(),
             "Write to Text File (cartesian)")
             .def(py::init<std::string, bool>(),
                     py::arg("filename"), py::arg("verbose")=true);
-    py::class_<io::TextSink<record_sd>>(m, "TextSink_spherical", sink,
+    py::class_<io::TextSink<record_sd>>(m, "TextSink_spherical", py::base<io::Sink>(),
             "Write to Text File (spherical, [r, theta, phi])")
             .def(py::init<std::string, bool>(),
                     py::arg("filename"), py::arg("verbose")=true);
-    py::class_<io::TextSink<record_sd_3dex>>(m, "TextSink_spherical_3dex", sink,
+    py::class_<io::TextSink<record_sd_3dex>>(m, "TextSink_spherical_3dex", py::base<io::Sink>(),
             "Write to Text File (spherical, [theta, phi, r] 3dex format)")
             .def(py::init<std::string, bool>(),
                     py::arg("filename"), py::arg("verbose")=true);
 
     // Add Filter classes here
-    py::class_<io::TophatRadialWindowFunctionFilter>(m, "TophatRadialWindowFunctionFilter", filter,
+    py::class_<io::TophatRadialWindowFunctionFilter>(m, "TophatRadialWindowFunctionFilter", py::base<io::Filter>(),
             "TopHat Radial WindowFunction Filter")
             .def(py::init<double>(), py::arg("R0"));
-    py::class_<io::GaussianRadialWindowFunctionFilter>(m, "GaussianRadialWindowFunctionFilter", filter,
+    py::class_<io::GaussianRadialWindowFunctionFilter>(m, "GaussianRadialWindowFunctionFilter", py::base<io::Filter>(),
             "Gaussian Radial WindowFunction Filter")
             .def(py::init<double>(), py::arg("R0"));
-    py::class_<io::GenericRadialWindowFunctionFilter>(m, "GenericRadialWindowFunctionFilter", filter,
+    py::class_<io::GenericRadialWindowFunctionFilter>(m, "GenericRadialWindowFunctionFilter", py::base<io::Filter>(),
             "Radial WindowFunction Filter")
             .def(py::init<std::function<double(double)>>(), py::arg("function"))
             .def(py::init<std::function<double(double)>, size_t, double, double>(),
                     py::arg("function"), py::arg("interpolation_points"), py::arg("min"), py::arg("max"));;
-    py::class_<io::AngularMaskFilter>(m, "AngularMaskFilter", filter,
+    py::class_<io::AngularMaskFilter>(m, "AngularMaskFilter", py::base<io::Filter>(),
             "Healpix Angular Mask Filter. 1->keep, 0->delete")
             .def(py::init<std::string>(), py::arg("mask_file"));
 

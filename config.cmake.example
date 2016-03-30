@@ -1,18 +1,12 @@
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
-    # using Clang -> HOMEBREW installed HEALPIX
-    set(HEALPIX_INCLUDEPATH /usr/local/Cellar/healpix/3.30/include/healpix_cxx)
-    set(HEALPIX_LIBPATH /usr/local/Cellar/healpix/3.30/lib)
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    # using GCC -> MANUALLY installed HEALPIX
-    set(HEALPIX_INCLUDEPATH /Users/michael/Documents/ETH/2015HS/MasterThesis/Build/Healpix_3.30/src/cxx/basic_gcc/include)
-    set(HEALPIX_LIBPATH /Users/michael/Documents/ETH/2015HS/MasterThesis/Build/Healpix_3.30/src/cxx/basic_gcc/lib)
-endif()
+## HEALPIX PATHS
+set(HEALPIX_INCLUDEPATH /Users/michael/Documents/ETH/2015HS/MasterThesis/Build/Healpix_3.30/src/cxx/optimized_gcc/include)
+set(HEALPIX_LIBPATH /Users/michael/Documents/ETH/2015HS/MasterThesis/Build/Healpix_3.30/src/cxx/optimized_gcc/lib)
 
-# Path to python library (otherwise, basic osx library used -> errors)
-set(PYTHON_LIBRARY /Users/michael/.virtualenvs/MT/lib/python2.7/libpython2.7.dylib)
+## Path to python library (might be needed if the auto-detection picks the wrong one)
+# set(PYTHON_LIBRARY /Users/michael/.virtualenvs/MT/lib/python2.7/libpython2.7.dylib)
 
-# Do we want to build python libraries?
+## Do we want to build python libraries?
 set(BUILD_PYTHON YES)
 
-# Do we want to build the unit tests?
+## Do we want to build the unit tests?
 set(BUILD_TESTS YES)

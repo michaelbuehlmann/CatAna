@@ -1,17 +1,47 @@
+"""
+This module is a convenience wrapper of the CatAna.io_core python module.
+
+The CatAna.io_core module directly exposes the CatAna "io" library functions written in C++. This module is a
+convenience wrapper around the CatAna.io_core module for simplified usage.
+"""
+
 from __future__ import division, print_function, absolute_import
 
 import collections
+import healpy as hp
 import os
 
 from . import basictypes
 from . import io_core
 io_core.init_random()
 
+## The number of objects which are loaded in chunck from the Source functions. Change if memory consumption too high.
 buffer_size = 1000000
+
+## The number of interpolation points used to interpolate the function used for the "generic" radial window function filter.
 function_interpolation_points = 10000  # For generic filter function
 
+
 class PySource(object):
+    """A manager for different sources of position data of the particles.
+
+    Currently supported are:
+    - Text: space delimited columns of either cartesian coordinates (x, y, z) or spherical coordinates (r, theta phi)
+      or (phi, theta, r)
+    - Gadget snapshot files
+    """
+
     def __init__(self, filename, filetype=None, verbose=True, **kwargs):
+        """
+        @param filename The filename of the Source file. For multiple Gadget files belonging to same snapshot, pick any.
+        @param filetype The type of source. Either "Text" or "Gadget"
+        @param verbose verbosity
+
+        For Text sources, you can further specify:
+        - coord: either 'cartesian', 'spherical' (r, theta, phi) or 'spherical_3dex' (phi, theta, r)
+        - hubble_param: If coordinates are in Mpc/h, use this parameter to convert to Mpc
+        - box_origin: If cartesian coordinates, specify the "center of the box"
+        """
         if filetype is None:
             extension = filename.split('.')[-1]
             if extension in ['txt','dat']:
@@ -40,17 +70,40 @@ class PySource(object):
             raise RuntimeError("Unsupported filetype: {}".format(filetype))
 
     def get_objectcontainer(self):
+        """ Retreive an instance of ObjectContainer
+        Loads all data from the source and returns an ObjectContainer.
+        """
         return self.source.get_objectcontainer()
 
     def get_pixobjectcontainer(self, nside):
+        """ Retreive an instance of PixelizedObjectContainer
+        Loads all data from the source and returns an PixelizedObjectContainer.
+        """
         return self.source.get_pixobjectcontainer(nside)
 
     def reset(self):
+        """ Resets source to initial state
+        """
         self.source.reset()
 
 
 class PySink(object):
-    def __init__(self, filename, filetype="HDF5", verbose=True, **kwargs):
+    """A manager for different sinks to store position data of the particles.
+    Currently supported are:
+    - Text: space delimited columns of either cartesian coordinates (x, y, z) or spherical coordinates (r, theta phi)
+      or (phi, theta, r)
+    """
+    def __init__(self, filename, filetype="Text", verbose=True, **kwargs):
+        """
+        @param filename The filename of the Sink file which will be created/overwritten
+        @param filetype The type of sink. Currently supported is only 'Text'
+        @param verbose verbosity
+
+        For Text sources, you can further specify:
+        - coord: either 'cartesian', 'spherical' (r, theta, phi) or 'spherical_3dex' (phi, theta, r)
+        - hubble_param: If coordinates are to be stored in Mpc/h, use this parameter for conversion.
+        - box_origin: If cartesian coordinates, specify the "center of the box"
+        """
         if filetype is None:
             extension = filename.split('.')[-1]
             if extension in ['txt','dat']:
@@ -58,7 +111,7 @@ class PySink(object):
             else:
                 raise RuntimeError("Could not derrive the filetype, please specify explicitly.")
 
-        assert(filetype in ["HDF5", "Text"])
+        assert(filetype in ["Text"])
 
         hubble_param = kwargs.get('hubble_param', 1)
         box_origin = kwargs.get('box_origin', 0)
@@ -79,7 +132,25 @@ class PySink(object):
 
 
 class PyFilter(object):
+    """A manager for different filters to filter particles depending on their position.
+    Currently supported are:
+    - tophat: A tophat filter which removes all particles with r>R0
+    - gauss : A gaussian filter where exp(-(r/R0)**2) is the probability of accepting the particle
+    - generic: Specify the acceptance probability function
+    - AngMask: A HEALPix angular mask filter (give path to HEALPix map where 1->accept and 0->reject)
+    """
     def __init__(self, filter_name, filter_option, **kwargs):
+        """
+        @param filter_name Type of filter. See below.
+        @param filter_option Options for the specified filter. See below
+
+        For 'tophat':  filter_option=R0
+        For 'gauss' :  filter_option=R0
+        For 'generic': filter_option=window_function (a function with signature double(double)). Further specify rmax=rmax,
+                       the maximum distance for which the function will be called
+        For 'AngMask': HEALPix map or filepath to HEALPix mask. If map, you can specify the location of the temporary file
+                       by also setting temp_file=path_to_temporary_file which will be created and deleted after usage.
+        """
         assert(filter_name in ["tophat", "gauss", "generic", "AngMask"])
 
         if filter_name == "tophat":
@@ -97,31 +168,63 @@ class PyFilter(object):
                 lambda r: filter_option(r), function_interpolation_points, 0, rmax)
 
         elif filter_name == "AngMask":
-            assert(os.path.isfile(filter_option))
-            self.filter = io_core.AngularMaskFilter(filter_option)
+            if isinstance(filter_option, basestring):
+                assert(os.path.isfile(filter_option))
+                self.filter = io_core.AngularMaskFilter(filter_option)
+            elif hasattr(filter_option, "__len__"):
+                maskpath = kwargs.get("temp_file", 'tmp_mask.fits')
+                hp.write_map(maskpath, filter_option)
+                self.filter = io_core.AngularMaskFilter(maskpath)
+                os.remove(maskpath)
+            else:
+                raise ValueError("filter_option for AngMask filter either mask-map or path to mask-file")
+
+    def __call__(self, object_container):
+        """ Apply filter to ObjectContainer
+        @param object_container The ObjectContainer instance on which to apply filter (will be resized)
+        """
+        assert(isinstance(object_container, basictypes.ObjectContainer))
+        self.filter(object_container)
+
 
 
 class PyFilterStream(object):
-    def __init__(self, py_source, py_sink, subsample_size = None, temp_file = None, verbose=True):
-        if isinstance(py_source, PySource):
-            self.source = py_source.source
-        elif isinstance(py_source, io_core.Source):
-            self.soruce = py_source
-        elif isinstance(py_source, basictypes.ObjectContainer):
-            self.source = io_core.ObjectContainerSource(py_source)
-        else:
-            raise ValueError("py_source must be either instance of PySource, Source or ObjectContainer")
+    """ Combines PySource, PySink and PyFilter to a filtered stream which processes all objects in the source to the sink.
+    If not all particles after filtering are needed, specify subsample_size which will only take a random subset of the
+    remaining particles.
 
-        if isinstance(py_sink, PySink):
-            self.sink = py_sink.sink
-        elif isinstance(py_sink, io_core.Sink):
-            self.sink = py_sink
-        elif isinstance(py_sink, basictypes.ObjectContainer):
-            self.sink = io_core.ObjectContainerSink(py_sink)
-        elif isinstance(py_sink, basictypes.PixelizedObjectContainer):
-            self.sink = io_core.PixelizedObjectContainerSink(py_sink)
+    Note that the sink can be an instance of PySource/PySink or ObjectContainer/PixelizedObjectContainer, so that the
+    data is load into the Containers directly.
+    """
+
+    def __init__(self, source, sink, subsample_size = None, temp_file = None, verbose=True):
+        """
+        @param source Either a PySource, an io_core.Source or an ObjectContainer instance
+        @param sink   Either a PySink, an io_core.Sink or an ObjectContainer/PixelizedObjectContainer instance
+        @param subsample_size Only write a random subset of the filtered data to sink
+        @param temp_file If subsample_size is turned on, the temporary file which is used to store the intermediary data
+        can be specified here
+        @param verbose verbosity
+        """
+        if isinstance(source, PySource):
+            self.source = source.source
+        elif isinstance(source, io_core.Source):
+            self.soruce = source
+        elif isinstance(source, basictypes.ObjectContainer):
+            self.source = io_core.ObjectContainerSource(source)
         else:
-            raise ValueError("py_sink must be either instance of PySink, Sink, ObjectContainer or PixelizedObjectContainer")
+            raise ValueError("source must be either instance of PySource, Source or ObjectContainer")
+
+        if isinstance(sink, PySink):
+            self.sink = sink.sink
+        elif isinstance(sink, io_core.Sink):
+            self.sink = sink
+        elif isinstance(sink, basictypes.ObjectContainer):
+            self.sink = io_core.ObjectContainerSink(sink)
+        elif isinstance(sink, basictypes.PixelizedObjectContainer):
+            self.sink = io_core.PixelizedObjectContainerSink(sink)
+        else:
+            raise ValueError("sink must be either instance of PySink, Sink, ObjectContainer or PixelizedObjectContainer")
 
         if subsample_size is not None:
             subsample_size = int(subsample_size)
@@ -134,9 +237,14 @@ class PyFilterStream(object):
         self.filters = []
 
     def add_filter(self, py_filter):
+        """ Add a PyFilter to the FilterStream
+        @param py_filter an instance of PyFilter
+        """
         assert(isinstance(py_filter, PyFilter))
         self.filters.append(py_filter.filter)  # Need to store the filter objects, otherwise destroyed
         self.filter_stream.add_filter(py_filter.filter)
 
     def run(self):
+        """ Run the filter stream: process all objects from source (filtering) and write to sink
+        """
         self.filter_stream.run()

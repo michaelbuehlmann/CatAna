@@ -12,7 +12,6 @@ if (GSL_INCLUDES)
 endif (GSL_INCLUDES)
 
 find_path (GSL_INCLUDES gsl/gsl_math.h)
-
 find_library (GSL_LIBRARIES NAMES libgsl.a gsl)
 
 # handle the QUIETLY and REQUIRED arguments and set GSL_FOUND to TRUE if

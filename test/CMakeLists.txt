@@ -33,5 +33,5 @@ add_executable(GTESTS main.cpp ${TEST_SOURCES})
 target_compile_definitions(GTESTS PRIVATE "-DALL_TESTS" )
 target_link_libraries(GTESTS
         gtest gtest_main
-        iotools catana besseltools
+        io catana besseltools
         ${CBLAS_LIBRARIES} ${HEALPIX_LIB})

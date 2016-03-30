@@ -9,7 +9,7 @@
 #include <fstream>
 #include <sstream>
 
-// Provide rng (GCC otherwise complains when linking iotools library)
+// Provide rng (GCC otherwise complains when linking io library)
 #ifndef ALL_TESTS
 #include <random>
 std::mt19937 rng;

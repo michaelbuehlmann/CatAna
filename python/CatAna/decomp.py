@@ -1,3 +1,10 @@
+"""
+This module is a convenience wrapper of the CatAna.decomp_core python module.
+
+The CatAna.decomp_core module directly exposes the CatAna "decomp" (decomposition) library functions written in C++.
+This module is a convenience wrapper around the CatAna.decomp_core module for simplified usage.
+"""
+
 from __future__ import division, print_function, absolute_import
 
 import numpy as np

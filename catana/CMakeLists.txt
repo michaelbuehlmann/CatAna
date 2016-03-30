@@ -1,5 +1,3 @@
-project(catana)
-
 # SOURCE FILES
 set(tools_SOURCES
         include/catana/tools/gsl_function_wrapper.hpp
@@ -21,14 +19,14 @@ set(basictypes_SOURCES
 set(returntypes_SOURCES
         include/catana/decomposition/return_types.hpp src/decomposition/return_types.cpp)
 
-set(iotools_sources_SOURCES
+set(io_sources_SOURCES
         include/catana/io/Source.hpp src/io/Source.cpp
         include/catana/io/sources/ObjectContainerSource.hpp src/io/sources/ObjectContainerSource.cpp
         include/catana/io/sources/GadgetSource.hpp src/io/sources/GadgetSource.cpp
         include/catana/io/sources/RawBinarySource.hpp src/io/sources/RawBinarySource.cpp
         include/catana/io/sources/TextSource.hpp src/io/sources/TextSource.cpp)
 
-set(iotools_sinks_SOURCES
+set(io_sinks_SOURCES
         include/catana/io/Sink.hpp
         include/catana/io/sinks/ObjectContainerSink.hpp
         include/catana/io/sinks/PixelizedObjectContainerSink.hpp
@@ -36,19 +34,19 @@ set(iotools_sinks_SOURCES
         include/catana/io/sinks/TextSink.hpp src/io/sinks/TextSink.cpp
         )
 
-set(iotools_filters_SOURCES
+set(io_filters_SOURCES
         include/catana/io/Filter.hpp src/io/Filter.cpp
         include/catana/io/filters/radial_filters.hpp src/io/filters/radial_filters.cpp
         include/catana/io/filters/angular_filters.hpp src/io/filters/angular_filters.cpp
         )
 
-set(iotools_SOURCES
+set(io_SOURCES
         ${basictypes_SOURCES}
         ${tools_SOURCES}
         include/catana/io/record_types.hpp src/io/record_type.cpp
-        ${iotools_sources_SOURCES}
-        ${iotools_sinks_SOURCES}
-        ${iotools_filters_SOURCES}
+        ${io_sources_SOURCES}
+        ${io_sinks_SOURCES}
+        ${io_filters_SOURCES}
         include/catana/io/FilterStream.hpp src/io/FilterStream.cpp)
 
 set(decomposition_SOURCES
@@ -60,7 +58,7 @@ set(decomposition_SOURCES
         src/decomposition/Analyzer.cpp include/catana/decomposition/Analyzer.hpp)
 
 # COMPILE AS STATIC LIBRARY
-add_library(iotools STATIC ${iotools_SOURCES})
+add_library(io STATIC ${io_SOURCES})
 add_library(besseltools STATIC ${besseltools_SOURCES})
 add_library(catana STATIC
 #        ${field_SOURCES}
@@ -69,7 +67,7 @@ add_library(catana STATIC
 
 # LINK TOGETHER
 target_link_libraries(besseltools ${GSL_LIBRARIES} ${CBLAS_LIBRARIES})
-target_link_libraries(iotools ${GSL_LIBRARIES} ${CBLAS_LIBRARIES} ${HEALPIX_LIBRARIES} ${CFITSIO_LIBRARIES})
-target_link_libraries(catana besseltools iotools ${GSL_LIBRARIES} ${CBLAS_LIBRARIES} ${FFTW3_LIBRARIES} ${HEALPIX_LIBRARIES} ${CFITSIO_LIBRARIES})
+target_link_libraries(io ${GSL_LIBRARIES} ${CBLAS_LIBRARIES} ${HEALPIX_LIBRARIES} ${CFITSIO_LIBRARIES})
+target_link_libraries(catana besseltools io ${GSL_LIBRARIES} ${CBLAS_LIBRARIES} ${FFTW3_LIBRARIES} ${HEALPIX_LIBRARIES} ${CFITSIO_LIBRARIES})
 add_dependencies(catana eigen)
-add_dependencies(iotools eigen)
+add_dependencies(io eigen)
