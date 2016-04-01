@@ -118,7 +118,11 @@ namespace catana {
 #pragma omp parallel for if(parallel) schedule(dynamic, 5)
             for (int i = 0; i<nrings; ++i) {
                 for (unsigned short m = 0; m<=l; ++m) {
-                    ylm_im(i, m) = std::polar(gsl_sf_legendre_sphPlm(l,m,ring_info_container[i].costheta), -m*ring_info_container[i].phase);
+                    double gsl_sphPlm = gsl_sf_legendre_sphPlm(l,m,ring_info_container[i].costheta);
+                    ylm_im(i, m) = std::complex<double>(
+                            gsl_sphPlm*std::cos(-m*ring_info_container[i].phase),
+                            gsl_sphPlm*std::sin(-m*ring_info_container[i].phase)
+                    );
                 }
             }
 

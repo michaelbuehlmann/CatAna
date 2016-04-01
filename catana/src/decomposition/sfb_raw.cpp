@@ -74,7 +74,8 @@ namespace catana {
 
                     // Compute Y_lm
                     for (unsigned short m = 0; m<=l; ++m) {
-                        complex y_lm = std::polar(gsl_sf_legendre_sphPlm(l, m, std::cos(obj_it->p.theta)), -m*(obj_it->p.phi));
+                        double gsl_sphPlm = gsl_sf_legendre_sphPlm(l, m, std::cos(obj_it->p.theta));
+                        complex y_lm(gsl_sphPlm*std::cos(-m*obj_it->p.phi), gsl_sphPlm*std::sin(-m*obj_it->p.phi));
 
                         for (unsigned short n = 0; n<nmax; ++n) {
                             f_l_mn_private(m, n) += kclkk.k_ln(l, n)*j_l_n(n)*y_lm;

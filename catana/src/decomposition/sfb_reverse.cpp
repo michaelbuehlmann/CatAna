@@ -70,7 +70,8 @@ namespace catana {
                 for (int i = 0; i<npix; ++i) {
                     const pointing& p = pix_oc[i].p;
                     for (unsigned short m = 0; m<=l; ++m) {
-                        y_l_mi(m, i) = std::polar(gsl_sf_legendre_sphPlm(l,m,std::cos(p.theta)), -m*p.phi);
+                        double gsl_sphPlm = gsl_sf_legendre_sphPlm(l,m,std::cos(p.theta));
+                        y_l_mi(m, i) = std::complex<double>(gsl_sphPlm*std::cos(-m*p.phi), gsl_sphPlm*std::sin(-m*p.phi));
                     }
                 }
 
