@@ -34,13 +34,13 @@ namespace catana {
         ObjectContainer oc;
         {
             io::ObjectContainerSink sink(oc);
-            io::FilterStream fs(source, &sink, 1000000, subsample_size, temp_filename, verbose);
+            io::FilterStream fs(source, &sink, 1000000, verbose);
             io::TophatRadialWindowFunctionFilter radial_filter(rmax);
             fs.add_filter(&radial_filter);
             for (auto& filter: filters) {
                 fs.add_filter(filter);
             }
-            fs.run();
+            fs.run(subsample_size, temp_filename);
         }
         return sfb_decomposition(oc, lmax, nmax, rmax, window_volume, store_flmn, verbose);
     }
@@ -54,13 +54,13 @@ namespace catana {
 
         {
             io::PixelizedObjectContainerSink sink(pix_oc);
-            io::FilterStream fs(source, &sink, 1000000, subsample_size, temp_filename, verbose);
+            io::FilterStream fs(source, &sink, 1000000, verbose);
             io::TophatRadialWindowFunctionFilter radial_filter(rmax);
             fs.add_filter(&radial_filter);
             for (auto& filter: filters) {
                 fs.add_filter(filter);
             }
-            fs.run();
+            fs.run(subsample_size, temp_filename);
         }
         return sfb_decomposition(pix_oc, lmax, nmax, rmax, window_volume, store_flmn, verbose);
     }

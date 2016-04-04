@@ -55,43 +55,62 @@ namespace catana { namespace io {
         size_t current;
     };
 
-    FilterStream::FilterStream(Source* source, Sink* sink, size_t buffer_size, size_t subset_size,
-            std::string temp_file_name, bool verbose)
+    FilterStream::FilterStream(Source* source, Sink* sink, size_t buffer_size, bool verbose)
             :source(source),
              sink(sink),
              buffer(new Object[buffer_size]),
              buffer_size(buffer_size),
-             temp_file_name(temp_file_name),
-             subsample_size(subset_size),
              verbose(verbose) { }
+
+    void FilterStream::set_source(Source* source)
+    {
+        this->source = source;
+    }
 
     void FilterStream::add_filter(Filter* filter_p)
     {
         filters_p.push_back(filter_p);
     }
 
-    size_t FilterStream::run()
+    size_t FilterStream::run_totemp(std::string temp_filename, bool append)
+    {
+        auto temp_sink = new RawBinarySink<SphericalRecord<double>>(temp_filename, verbose, append);
+        size_t n = run_step(source, temp_sink, filters_p);
+        delete temp_sink;
+        return n;
+    }
+
+    size_t FilterStream::run_fromtemp(std::string temp_filename, size_t subsample_size, bool remove_temp)
+    {
+        auto temp_source = new RawBinarySource<SphericalRecord<double>>(temp_filename, verbose);
+
+        size_t n = temp_source->get_nobjects();
+        if(verbose)
+            std::cout << "Temporary file " << temp_filename << " contains " << n << " objects." << std::endl;
+        std::vector<Filter*> fi_p;
+        std::unique_ptr<Filter> random_subset_filter;
+        if(subsample_size != 0 && subsample_size < n) {
+            random_subset_filter.reset(new RandomSubsetFilter(subsample_size, n));
+            fi_p = {random_subset_filter.get()};
+        }
+        n = run_step(temp_source, sink, fi_p);
+
+        delete temp_source;
+        if(remove_temp){
+            std::remove(temp_filename.c_str());
+        }
+        return n;
+    }
+
+    size_t FilterStream::run(size_t subsample_size, std::string temp_filename)
     {
         size_t n;
         if (subsample_size==0) {
             n = run_step(source, sink, filters_p);
         }
         else {
-            auto temp_sink = new RawBinarySink<SphericalRecord<double>>(temp_file_name, verbose);
-            n = run_step(source, temp_sink, filters_p);
-            delete temp_sink;
-
-            std::vector<Filter*> fi_p;
-            std::unique_ptr<Filter> random_subset_filter; // Declare here such that it can outlive the if {}
-            if (subsample_size<n) {
-                random_subset_filter.reset(new RandomSubsetFilter(subsample_size, n));
-                fi_p = {random_subset_filter.get()};
-            }  // Else: no filter in list -> no filters applied
-
-            auto temp_source = new RawBinarySource<SphericalRecord<double>>(temp_file_name, verbose);
-            n = run_step(temp_source, sink, fi_p);
-            delete temp_source;  // Close temporary file
-            std::remove(temp_file_name.c_str());  // Delete temporary file
+            run_totemp(temp_filename, false);
+            n = run_fromtemp(temp_filename, subsample_size, true);
         }
         return n;
     }

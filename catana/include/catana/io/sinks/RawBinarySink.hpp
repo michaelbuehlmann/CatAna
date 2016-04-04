@@ -23,7 +23,7 @@ namespace catana { namespace io {
         typedef RecordType record_t;
 
         //! Construct from filename. File with "filename" will be created
-        RawBinarySink(std::string filename, bool verbose = true);
+        RawBinarySink(std::string filename, bool verbose = true, bool append=false);
 
         ~RawBinarySink();
 

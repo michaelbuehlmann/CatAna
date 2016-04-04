@@ -19,16 +19,23 @@ namespace catana{ namespace io {
         }
 
         template<class RecordType>
-        RawBinarySink<RecordType>::RawBinarySink(std::string filename, bool verbose)
+        RawBinarySink<RecordType>::RawBinarySink(std::string filename, bool verbose, bool append)
                 :filename(filename), verbose(verbose)
         {
-            fd.open(filename, std::ios::out | std::ios::binary | std::ios::trunc);
+            auto mode = std::ios::out | std::ios::binary;
+            if(append) {
+                if(verbose)
+                    std::cout << "Opened RawBinarySource " << filename << "in append-mode" << std::endl;
+                mode = mode | std::ios::app | std::ios::ate;
+            } else {
+                if(verbose) {
+                    std::cout << "Opened RawBianrySource " << filename << "in overwrite-mode" << std::endl;
+                }
+                mode = mode | std::ios::trunc;
+            }
+            fd.open(filename, mode);
             if (!fd.is_open()) {
                 std::cout << "WARNING: Could not create file " << filename << std::endl;
-            }
-            else {
-                if (verbose)
-                    std::cout << "Created file " << filename << std::endl;
             }
         }
 

@@ -64,7 +64,6 @@ PYBIND11_PLUGIN(io_core) {
             "Read positions from binary Gadget file")
             .def(py::init<std::string, bool>(),
                     py::arg("filename"), py::arg("verbose")=true);
-    // TEXT
     py::class_<io::TextSource<record_cd>>(m, "TextSource_cartesian", py::base<io::Source>(),
             "Read from Text File (cartesian coordinates), first 3 columns")
             .def(py::init<std::string, double, double>(),
@@ -116,14 +115,17 @@ PYBIND11_PLUGIN(io_core) {
 
     // FilterStream
     py::class_<io::FilterStream>(m, "FilterStream", "A Stream which needs a source and a sink. Can add Filters")
-//            .def(py::init<io::Source*, io::Sink*, size_t, bool>(),
-//                    py::arg("source"), py::arg("sink"), py::arg("buffer_size")=1000000, py::arg("verbose")=true)
-            .def(py::init<io::Source*, io::Sink*, size_t, size_t, std::string, bool>(),
+            .def(py::init<io::Source*, io::Sink*, size_t, bool>(),
                     py::arg("source"), py::arg("sink"), py::arg("buffer_size")=1000000,
-                    py::arg("subset_size")=0, py::arg("temporary_filename")="tmp.txt",
                     py::arg("verbose")=true)
             .def("add_filter", &io::FilterStream::add_filter, "Add a Filter to process", py::arg("filter"))
-            .def("run", &io::FilterStream::run, "Run the pipeline");
+            .def("set_source", &io::FilterStream::set_source, "Set source to new source", py::arg("source"))
+            .def("run", &io::FilterStream::run, "Run the pipeline",
+                    py::arg("subsample_size"), py::arg("temp_filename")="tmp.bin")
+            .def("run_totemp", &io::FilterStream::run_totemp, "Run intermediate steps manually: write source to temporary file, apply filters",
+                    py::arg("temp_filename")="tmp.bin", py::arg("append")=true)
+            .def("run_fromtemp", &io::FilterStream::run_fromtemp, "Run intermediate steps manually: write temporary file to sink (with subsampling)",
+                    py::arg("temp_filename")="tmp.bin", py::arg("subsample_size")=0, py::arg("remove_temp")=true);
 
     return m.ptr();
-}
+};

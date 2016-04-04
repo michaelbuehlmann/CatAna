@@ -25,30 +25,42 @@ TEST(RawData, IO) {
     int n;
 
     // Writing
-    io::RawBinarySink<record_t> sink(filename, false);
-    n = sink.write(oc.begin(), oc.size());
-    EXPECT_EQ(oc.size(), n);
-    sink.close();
-    n = sink.write(oc.begin(), oc.size());
-    EXPECT_EQ(-1, n);
+    {
+        io::RawBinarySink<record_t> sink(filename, false, false);
+        n = sink.write(oc.begin(), oc.size());
+        EXPECT_EQ(oc.size(), n);
+        sink.close();
+        n = sink.write(oc.begin(), oc.size());
+        EXPECT_EQ(-1, n);
+    }
+
+    // Appending
+    {
+        io::RawBinarySink<record_t> sink(filename, false, true);
+        n = sink.write(oc.begin(), oc.size());
+        EXPECT_EQ(oc.size(), n);
+        sink.close();
+        n = sink.write(oc.begin(), oc.size());
+        EXPECT_EQ(-1, n);
+    }
 
     // Reading
-    ObjectContainer oc2(2*oc.size());
+    ObjectContainer oc2(10*oc.size());
     int read = 0;
     n = 0;
     io::RawBinarySource<record_t> source(filename, false);
     do {
         read += n;
-        ASSERT_LE(read, oc.size()) << "Read too many records!!";
+        ASSERT_LE(read, 2*oc.size()) << "Read too many records!!";
         n = source.read(oc2.begin()+read, 1);
     } while(n != -1);
-    EXPECT_EQ(oc.size(), read);
+    EXPECT_EQ(2*oc.size(), read);
     oc2.resize(read);
 
-    for(int i=0; i<oc.size(); ++i){
-        EXPECT_FLOAT_EQ(oc[i].r, oc2[i].r) << "at i=="<<i;
-        EXPECT_FLOAT_EQ(oc[i].p.theta, oc2[i].p.theta) << "at i=="<<i;
-        EXPECT_FLOAT_EQ(oc[i].p.phi, oc2[i].p.phi) << "at i=="<<i;
+    for(int i=0; i<2*oc.size(); ++i){
+        EXPECT_FLOAT_EQ(oc[i%oc.size()].r, oc2[i].r) << "at i=="<<i;
+        EXPECT_FLOAT_EQ(oc[i%oc.size()].p.theta, oc2[i].p.theta) << "at i=="<<i;
+        EXPECT_FLOAT_EQ(oc[i%oc.size()].p.phi, oc2[i].p.phi) << "at i=="<<i;
     }
 }
 

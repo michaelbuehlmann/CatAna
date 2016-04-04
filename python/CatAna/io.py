@@ -199,22 +199,32 @@ class PyFilterStream(object):
 
     def __init__(self, source, sink, subsample_size = None, temp_file = None, verbose=True):
         """
-        @param source Either a PySource, an io_core.Source or an ObjectContainer instance
+        @param source Either a PySource, an io_core.Source or an ObjectContainer instance or a list of such instances
         @param sink   Either a PySink, an io_core.Sink or an ObjectContainer/PixelizedObjectContainer instance
         @param subsample_size Only write a random subset of the filtered data to sink
         @param temp_file If subsample_size is turned on, the temporary file which is used to store the intermediary data
         can be specified here
         @param verbose verbosity
         """
-        if isinstance(source, PySource):
-            self.source = source.source
-        elif isinstance(source, io_core.Source):
-            self.soruce = source
-        elif isinstance(source, basictypes.ObjectContainer):
-            self.source = io_core.ObjectContainerSource(source)
-        else:
-            raise ValueError("source must be either instance of PySource, Source or ObjectContainer")
 
+        # Source(s)
+        if not hasattr(source, "__len__"):
+            source = [source]
+
+        self.source = []
+        for s in source:
+            if isinstance(s, PySource):
+                self.source.append(source.source)
+            elif isinstance(s, io_core.Source):
+                self.soruce.append(source)
+            elif isinstance(s, basictypes.ObjectContainer):
+                self.source.append(io_core.ObjectContainerSource(source))
+            else:
+                raise ValueError("unknown source: {}\n Must be either instance of PySource, Source or ObjectContainer".format(
+                    type(s)
+                ))
+
+        # Sink
         if isinstance(sink, PySink):
             self.sink = sink.sink
         elif isinstance(sink, io_core.Sink):
@@ -226,15 +236,15 @@ class PyFilterStream(object):
         else:
             raise ValueError("sink must be either instance of PySink, Sink, ObjectContainer or PixelizedObjectContainer")
 
+        # Subsampling
         if subsample_size is not None:
-            subsample_size = int(subsample_size)
+            self.subsample_size = int(subsample_size)
             if temp_file is None:
-                temp_file = "tmp_{}.bin".format(os.getpid())
-            self.filter_stream = io_core.FilterStream(self.source, self.sink, buffer_size, subsample_size, temp_file, verbose)
-        else:
-            self.filter_stream = io_core.FilterStream(self.source, self.sink, buffer_size, verbose)
+                self.temp_file = "tmp_{}.bin".format(os.getpid())
 
+        self.filter_stream = io_core.FilterStream(self.source[0], self.sink, buffer_size, verbose)
         self.filters = []
+        self.verbose=verbose
 
     def add_filter(self, py_filter):
         """ Add a PyFilter to the FilterStream
@@ -247,4 +257,15 @@ class PyFilterStream(object):
     def run(self):
         """ Run the filter stream: process all objects from source (filtering) and write to sink
         """
-        self.filter_stream.run()
+        if len(self.source) == 1:
+            self.filter_stream.run(self.subsample_size, self.temp_file)
+        else:
+            if self.verbose:
+                print("Processing file {} of {}".format(1, len(self.source)+1))
+            self.filter_stream.run_totemp(self.temp_file, append=False)
+            for i,s in enumerate(self.source[1:]):
+                if self.verbose:
+                    print("Processing file {} of {}".format(i+1, len(self.source)+1))
+                self.filter_stream.set_source(s)
+                self.filter_stream.run_totemp(self.temp_file, append=True)
+            self.filter_stream.run_fromtemp(self.temp_file, self.subsample_size, remove_temp=True)

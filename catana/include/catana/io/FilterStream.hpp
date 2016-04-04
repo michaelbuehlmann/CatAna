@@ -40,9 +40,10 @@ namespace catana { namespace io {
          * before subsampling
          * @param verbose Set to true for additional output to stdout.
          */
-        FilterStream(Source* source, Sink* sink, size_t buffer_size = 1000000,
-                size_t subsample_size = 0, std::string temp_file_name = "tmp.bin",
-                bool verbose = false);
+        FilterStream(Source* source, Sink* sink, size_t buffer_size = 1000000, bool verbose = false);
+
+        //! Set the data source
+        void set_source(Source* source);
 
         //! Add filter to the list of filters which will be applied during .run()
         void add_filter(Filter* filter_p);
@@ -51,7 +52,29 @@ namespace catana { namespace io {
         /*!
          * @return number of objects written to sink.
          */
-        size_t run();
+        size_t run(size_t subsample_size = 0, std::string temp_filename = "tmp.bin");
+
+        //! Run intermediate steps manually: write source to temporary file, apply filters
+        /*!
+         * This function is meant to use if multiple sources need to be combined and then subsampled (e.g. if data is
+         * spread across multiple files). Run the "run_totemp" function with the same temporary file for all sources first and then
+         * run the "run_fromtemp" function with the number of particles needed.
+         *
+         * @param temp_filename Path and name of the temporary file
+         * @return number of objects written to temporary file
+         */
+        size_t run_totemp(std::string temp_filename = "tmp.bin", bool append=true);
+
+        //! Run intermediate steps manually: write temporary file to sink (with subsampling)
+        /*!
+         * @param subsample_size The number of particles which are randomly drawn from the temporary file and moved to
+         * the sink object
+         * @param temp_filename Path and name of the temporary file
+         * @return number of objects written to sink
+         */
+        size_t run_fromtemp(std::string temp_filename="tmp.bin", size_t subsample_size=0, bool remove_temp=true);
+
+
 
     private:
         size_t run_step(Source* so, Sink* si, std::vector<Filter*>& fi_p);
@@ -63,8 +86,6 @@ namespace catana { namespace io {
         std::vector<Filter*> filters_p;
         std::unique_ptr<Object[]> buffer;
         size_t buffer_size;
-        std::string temp_file_name;
-        size_t subsample_size;
 
         bool verbose;
     };
