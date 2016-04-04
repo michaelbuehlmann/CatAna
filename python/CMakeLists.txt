@@ -14,7 +14,10 @@ configure_file(CatAna/io.py        ${CMAKE_CURRENT_BINARY_DIR}/CatAna/io.py)
 configure_file(CatAna/decomp.py    ${CMAKE_CURRENT_BINARY_DIR}/CatAna/decomp.py)
 
 ### NEW SETUP.PY COMPILATION ###
-set(DEPENDENCIES eigen besseltools io catana)
+set(PYSOURCES
+        py_basictypes.cpp py_besseltools.cpp py_io.cpp py_decomposition.cpp
+        setup.py CatAna/io.py CatAna/decomp.py CatAna/__init__.py)
+set(DEPENDENCIES eigen besseltools io catana ${PYSOURCES})
 set(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/build/timestamp)
 add_custom_command(
         OUTPUT ${OUTPUT}

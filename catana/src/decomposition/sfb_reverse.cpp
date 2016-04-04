@@ -9,6 +9,7 @@
 
 #include <healpix_base.h>
 #include <cmath>
+#include <gsl/gsl_errno.h>
 #include <gsl/gsl_sf_bessel.h>
 #include <gsl/gsl_sf_legendre.h>
 
@@ -32,6 +33,10 @@ namespace catana {
                     << std::endl;
         }
 
+        // Turn off GSL Error handler
+        auto gsl_error_handler_old = gsl_set_error_handler_off();
+
+        // Compute normalization factor and set up KClkk
         double_t norm_factor = std::sqrt(2/M_PI)*window_volume/pix_oc.get_nobjects();
         KClkk kclkk(lmax, nmax, rmax);
 
@@ -107,6 +112,9 @@ namespace catana {
             if (verbose)
                 std::cout << "Done." << std::endl;
         }
+
+        // Reset old GSL error handler
+        gsl_set_error_handler(gsl_error_handler_old);
         return kclkk;
     }
 }

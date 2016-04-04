@@ -265,7 +265,7 @@ class PyFilterStream(object):
             self.filter_stream.run_totemp(self.temp_file, append=False)
             for i,s in enumerate(self.source[1:]):
                 if self.verbose:
-                    print("Processing file {} of {}".format(i+1, len(self.source)+1))
+                    print("Processing file {} of {}".format(i+2, len(self.source)+1))
                 self.filter_stream.set_source(s)
                 self.filter_stream.run_totemp(self.temp_file, append=True)
             self.filter_stream.run_fromtemp(self.temp_file, self.subsample_size, remove_temp=True)

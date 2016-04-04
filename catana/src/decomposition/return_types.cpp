@@ -7,6 +7,7 @@
 #include <cmath>
 #include <iomanip>
 #include <fstream>
+#include <iostream>
 
 namespace catana {
 
@@ -43,12 +44,28 @@ namespace catana {
 
     void KClkk::savetxt(std::string filename_base)
     {
-        std::ofstream fs_k_ln, fs_c_ln;
-        fs_k_ln.open(filename_base+".k_ln", std::ios::out | std::ios::trunc);
+        // The k_ln
+        std::ofstream fs_k_ln;
+        fs_k_ln.exceptions(fs_k_ln.exceptions() | std::ios::failbit);
+
+        try {
+            fs_k_ln.open(filename_base+".k_ln", std::ios::out | std::ios::trunc);
+        }
+        catch (std::ios_base::failure& e){
+            std::cerr << "Error creating output file: " << e.what() << std::endl;
+        }
         output_txt(k_ln, fs_k_ln);
         fs_k_ln.close();
 
-        fs_c_ln.open(filename_base+".c_ln", std::ios::out | std::ios::trunc);
+        // The C_l(k_ln,k_ln)
+        std::ofstream fs_c_ln;
+        fs_c_ln.exceptions(fs_c_ln.exceptions() | std::ios::failbit);
+        try {
+            fs_c_ln.open(filename_base+".c_ln", std::ios::out | std::ios::trunc);
+        }
+        catch (std::ios_base::failure& e){
+            std::cerr << "Error creating output file: " << e.what() << std::endl;
+        }
         output_txt(c_ln, fs_c_ln);
         fs_c_ln.close();
     }
