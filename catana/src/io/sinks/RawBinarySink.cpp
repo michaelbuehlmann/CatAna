@@ -25,11 +25,11 @@ namespace catana{ namespace io {
             auto mode = std::ios::out | std::ios::binary;
             if(append) {
                 if(verbose)
-                    std::cout << "Opened RawBinarySource " << filename << "in append-mode" << std::endl;
+                    std::cout << "Opened RawBinarySource " << filename << " in append-mode" << std::endl;
                 mode = mode | std::ios::app | std::ios::ate;
             } else {
                 if(verbose) {
-                    std::cout << "Opened RawBianrySource " << filename << "in overwrite-mode" << std::endl;
+                    std::cout << "Opened RawBianrySource " << filename << " in overwrite-mode" << std::endl;
                 }
                 mode = mode | std::ios::trunc;
             }

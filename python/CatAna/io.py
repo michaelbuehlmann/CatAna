@@ -214,11 +214,11 @@ class PyFilterStream(object):
         self.source = []
         for s in source:
             if isinstance(s, PySource):
-                self.source.append(source.source)
+                self.source.append(s.source)
             elif isinstance(s, io_core.Source):
-                self.soruce.append(source)
+                self.soruce.append(s)
             elif isinstance(s, basictypes.ObjectContainer):
-                self.source.append(io_core.ObjectContainerSource(source))
+                self.source.append(io_core.ObjectContainerSource(s))
             else:
                 raise ValueError("unknown source: {}\n Must be either instance of PySource, Source or ObjectContainer".format(
                     type(s)
