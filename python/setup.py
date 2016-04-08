@@ -17,12 +17,12 @@ include_dirs = [
     "${PROJECT_BINARY_DIR}/catana/include",
     "${PYBIND11_INCLUDE_DIR}",
     "${EIGEN3_INCLUDE_DIR}",
-    "${HEALPIX_INCLUDE_DIR}"
+    "${HEALPIX_INCLUDE_DIR}",
+    "${PYTHON_INCLUDE_DIR}"
 ]
 
 library_dirs = [
-    "${LIB_LOCATION}",
-    "${HEALPIX_LIB_DIR}",
+    "${LIB_LOCATION}"
 ]
 
 libraries = [
@@ -48,7 +48,10 @@ for gsl_lib in gsl_libs:
 # HEALPIX
 healpix_libs = re.split('[; ]',"${HEALPIX_LIBRARIES}")
 for hp_lib in healpix_libs:
-    extra_link_args.append(hp_lib)
+    if path.isfile(hp_lib):
+        extra_link_args.append(hp_lib)
+    else:
+        libraries.append(hp_lib)
 
 # CFITSIO
 cfitsio_libs = re.split('[; ]',"${CFITSIO_LIBRARIES}")

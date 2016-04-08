@@ -17,8 +17,10 @@ endif()
 include(${CMAKE_SOURCE_DIR}/cmake/git_versioning.cmake)
 
 # Load external projects (eigen, pybind11, googletest)
-include(${CMAKE_SOURCE_DIR}/external_projects.cmake)
-
+include(ExternalProject)
+include(${CMAKE_SOURCE_DIR}/cmake/eigen3_external.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/pybind11_external.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/googletest_external.cmake)
 
 ################################################################################
 # LOADING LIBRARIES ############################################################
@@ -46,9 +48,15 @@ include_directories(${PYBIND11_INCLUDE_DIR})
 
 # HEALPix Library
 find_package(CFITSIO REQUIRED)
-find_package(HEALPIX REQUIRED)
-include_directories(${HEALPIX_INCLUDE_DIR})
-link_directories(${HEALPIX_LIB_DIR})
+if(NOT (HEALPIX_INCLUDEPATH AND HEALPIX_LIBPATH))
+    message(STATUS "No existing HEALPIX installation was given. Will attempt to automatically download and install...")
+    message(STATUS "(otherwise, specify HEALPIX_INCLUDEPATH and HEALPIX_LIBPATH within config.cmake)")
+    include(${CMAKE_SOURCE_DIR}/cmake/healpix_external.cmake)
+else()
+    find_package(HEALPIX REQUIRED)
+    include_directories(${HEALPIX_INCLUDE_DIR})
+endif()
+
 
 # OpenMP
 find_package(OpenMP)

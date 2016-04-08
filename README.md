@@ -12,9 +12,7 @@ Catalog Analyzer: A library for Spherical Fourier Bessel (SFB) Decomposition
 - C++11 compatible compiler (GCC for OpenMP)
 - FFTW3 library
 - GSL library
-- HEALPix library (C++)  
-  (compile with either 'generic_gcc' or 'optimized_gcc' config, since 'basic_gcc' does not 
-  produce position independent code (needs compilation option -fPIC))
+- CFITSIO library
 
 # Optional requirements
 - python and python developement library for python libraries  
