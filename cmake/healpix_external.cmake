@@ -28,4 +28,7 @@ set(HEALPIX_SOURCES
         ${HEALPIX_PATH}/Healpix_cxx/healpix_map_fitsio.cc)
 
 add_library(hplib STATIC ${HEALPIX_SOURCES})
+set_target_properties(hplib
+        PROPERTIES ARCHIVE_OUTPUT_DIRECTORY
+        ${PROJECT_BINARY_DIR}/catana)
 set(HEALPIX_LIBRARIES hplib)
