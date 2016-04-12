@@ -21,4 +21,3 @@ target_link_libraries(filter_stream_tests io)
 add_executable(pixelized_oc_sink_test pixelized_oc_sink_test.cpp)
 target_link_libraries(pixelized_oc_sink_test gtest gtest_main)
 target_link_libraries(pixelized_oc_sink_test io)
-

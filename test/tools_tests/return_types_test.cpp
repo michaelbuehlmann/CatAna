@@ -14,7 +14,7 @@ using namespace catana;
 TEST(ReturnTypes, KCLKK){
     short lmax=10;
     short nmax=20;
-    double rmax=5.4;
+    double rmax
     KClkk kclkk(lmax, nmax, rmax);
 
     ASSERT_EQ(kclkk.k_ln.rows(), lmax);
@@ -24,7 +24,7 @@ TEST(ReturnTypes, KCLKK){
     ASSERT_EQ(kclkk.c_ln.cols(), nmax);
 
     for(int l=0; l<lmax; ++l) {
-        EXPECT_NEAR(gsl_sf_bessel_jl(l, kclkk.k_ln(l, nmax-1)*rmax), 0, 1e-16) << "l=" << l;
+        EXPECT_NEAR(gsl_sf_bessel_jl(l, kclkk.k_ln(l, nmax-1)*rmax), 0, 1e-15) << "l=" << l;
         EXPECT_EQ(0, kclkk.c_ln(l,nmax-1)); // Initialized to 0?
     }
 

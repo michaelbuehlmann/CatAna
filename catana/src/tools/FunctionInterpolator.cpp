@@ -24,7 +24,7 @@ namespace catana {
 
     double FunctionInterpolator::operator()(double x) const
     {
-        assert((x>x_min) && (x<x_max));
+        assert((x>=x_min) && (x<x_max));
         x-=x_min;
         double i_approx = x*dx_inv;
         unsigned int i = static_cast<unsigned int>(i_approx);
@@ -39,7 +39,7 @@ namespace catana {
 
     unsigned int FunctionInterpolator::get_index(double x) const
     {
-        assert((x>x_min) && (x<x_max));
+        assert((x>=x_min) && (x<x_max));
         x-=x_min;
         return static_cast<unsigned int>(x*dx_inv);
     }

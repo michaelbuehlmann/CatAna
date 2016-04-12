@@ -26,9 +26,7 @@ library_dirs = [
 ]
 
 libraries = [
-    'catana',
-    'io',
-    'besseltools',
+    'catana'
 ]
 
 extra_compile_args = "${CMAKE_CXX_FLAGS}".split()
