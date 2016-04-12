@@ -1,9 +1,9 @@
 # - Find FFTW
 # Find the native FFTW includes and library
 #
-#  FFTW_INCLUDES    - where to find fftw3.h
-#  FFTW_LIBRARIES   - List of libraries when using FFTW.
-#  FFTW_FOUND       - True if FFTW found.
+#  FFTW3_INCLUDES    - where to find fftw3.h
+#  FFTW3_LIBRARIES   - List of libraries when using FFTW.
+#  FFTW3_FOUND       - True if FFTW found.
 
 if (FFTW3_INCLUDES)
     # Already in cache, be silent

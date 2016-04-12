@@ -34,12 +34,6 @@ libraries = [
 extra_compile_args = "${CMAKE_CXX_FLAGS}".split()
 extra_link_args = "${CMAKE_CXX_FLAGS}".split()
 
-for library_dir in library_dirs:
-    extra_link_args.append("-L{}".format(library_dir))
-
-for library in libraries:
-    extra_link_args.append("-l{}".format(library))
-
 # GSL
 gsl_libs = re.split('[; ]',"${GSL_LIBRARIES}")
 for gsl_lib in gsl_libs:
@@ -75,30 +69,40 @@ for cblas_lib in cblas_libs:
         extra_link_args.append(cblas_lib)
 
 
+# Add library directories and libraries to link_arg
+for library_dir in library_dirs:
+    extra_link_args.append("-L{}".format(library_dir))
+
+for library in libraries:
+    extra_link_args.append("-l{}".format(library))
 
 module_basictypes = Extension('basictypes',
                               include_dirs = include_dirs,
                               sources = ['${CMAKE_CURRENT_SOURCE_DIR}/py_basictypes.cpp'],
                               extra_compile_args = extra_compile_args,
-                              extra_link_args = extra_link_args)
+                              extra_link_args = extra_link_args,
+                              language = 'c++')
 
 module_besseltools = Extension('besseltools',
                                include_dirs = include_dirs,
                                sources = ['${CMAKE_CURRENT_SOURCE_DIR}/py_besseltools.cpp'],
                                extra_compile_args = extra_compile_args,
-                               extra_link_args = extra_link_args)
+                               extra_link_args = extra_link_args,
+                               language = 'c++')
 
 module_io_core = Extension('io_core',
                            include_dirs = include_dirs,
                            sources = ['${CMAKE_CURRENT_SOURCE_DIR}/py_io.cpp'],
                            extra_compile_args = extra_compile_args,
-                           extra_link_args = extra_link_args)
+                           extra_link_args = extra_link_args,
+                           language = 'c++')
 
 module_decomp_core = Extension('decomp_core',
                                include_dirs = include_dirs,
                                sources = ['${CMAKE_CURRENT_SOURCE_DIR}/py_decomposition.cpp'],
                                extra_compile_args = extra_compile_args,
-                               extra_link_args = extra_link_args)
+                               extra_link_args = extra_link_args,
+                               language = 'c++')
 
 setup(
     name = 'CatAna',
