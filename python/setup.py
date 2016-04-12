@@ -26,11 +26,19 @@ library_dirs = [
 ]
 
 libraries = [
-    'catana'
+    'catana',
 ]
 
 extra_compile_args = "${CMAKE_CXX_FLAGS}".split()
 extra_link_args = "${CMAKE_CXX_FLAGS}".split()
+
+# Add library directories and libraries to link_arg
+for library_dir in library_dirs:
+    extra_link_args.append("-L{}".format(library_dir))
+
+for library in libraries:
+    extra_link_args.append("-l{}".format(library))
+
 
 # GSL
 gsl_libs = re.split('[; ]',"${GSL_LIBRARIES}")
@@ -43,7 +51,7 @@ for hp_lib in healpix_libs:
     if path.isfile(hp_lib):
         extra_link_args.append(hp_lib)
     else:
-        libraries.append(hp_lib)
+        extra_link_args.append("-l{}".format(hp_lib))
 
 # CFITSIO
 cfitsio_libs = re.split('[; ]',"${CFITSIO_LIBRARIES}")
@@ -65,14 +73,6 @@ for cblas_lib in cblas_libs:
         extra_link_args.append(cblas_fname)
     else:
         extra_link_args.append(cblas_lib)
-
-
-# Add library directories and libraries to link_arg
-for library_dir in library_dirs:
-    extra_link_args.append("-L{}".format(library_dir))
-
-for library in libraries:
-    extra_link_args.append("-l{}".format(library))
 
 module_basictypes = Extension('basictypes',
                               include_dirs = include_dirs,
