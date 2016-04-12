@@ -14,7 +14,7 @@ using namespace catana;
 TEST(ReturnTypes, KCLKK){
     short lmax=10;
     short nmax=20;
-    double rmax
+    double rmax=5.4;
     KClkk kclkk(lmax, nmax, rmax);
 
     ASSERT_EQ(kclkk.k_ln.rows(), lmax);
