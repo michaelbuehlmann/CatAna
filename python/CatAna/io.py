@@ -216,7 +216,7 @@ class PyFilterStream(object):
             if isinstance(s, PySource):
                 self.source.append(s.source)
             elif isinstance(s, io_core.Source):
-                self.soruce.append(s)
+                self.source.append(s)
             elif isinstance(s, basictypes.ObjectContainer):
                 self.source.append(io_core.ObjectContainerSource(s))
             else:
@@ -242,8 +242,7 @@ class PyFilterStream(object):
         else:
             self.subsample_size = 0
 
-        if temp_file is None:
-            self.temp_file = "tmp_{}.bin".format(os.getpid())
+        self.temp_file = "tmp_{}.bin".format(os.getpid()) if temp_file is None else temp_file
 
         self.filter_stream = io_core.FilterStream(self.source[0], self.sink, buffer_size, verbose)
         self.filters = []
