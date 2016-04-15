@@ -197,7 +197,7 @@ class PyFilterStream(object):
     data is load into the Containers directly.
     """
 
-    def __init__(self, source, sink, subsample_size = None, temp_file = None, verbose=True):
+    def __init__(self, source, sink, subsample_size=None, temp_file=None, verbose=True):
         """
         @param source Either a PySource, an io_core.Source or an ObjectContainer instance or a list of such instances
         @param sink   Either a PySink, an io_core.Sink or an ObjectContainer/PixelizedObjectContainer instance
@@ -239,8 +239,11 @@ class PyFilterStream(object):
         # Subsampling
         if subsample_size is not None:
             self.subsample_size = int(subsample_size)
-            if temp_file is None:
-                self.temp_file = "tmp_{}.bin".format(os.getpid())
+        else:
+            self.subsample_size = 0
+
+        if temp_file is None:
+            self.temp_file = "tmp_{}.bin".format(os.getpid())
 
         self.filter_stream = io_core.FilterStream(self.source[0], self.sink, buffer_size, verbose)
         self.filters = []
@@ -257,6 +260,7 @@ class PyFilterStream(object):
     def run(self):
         """ Run the filter stream: process all objects from source (filtering) and write to sink
         """
+
         if len(self.source) == 1:
             self.filter_stream.run(self.subsample_size, self.temp_file)
         else:
@@ -268,4 +272,5 @@ class PyFilterStream(object):
                     print("Processing file {} of {}".format(i+2, len(self.source)+1))
                 self.filter_stream.set_source(s)
                 self.filter_stream.run_totemp(self.temp_file, append=True)
+
             self.filter_stream.run_fromtemp(self.temp_file, self.subsample_size, remove_temp=True)

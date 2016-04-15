@@ -76,6 +76,10 @@ PYBIND11_PLUGIN(io_core) {
             "Read from Text File (spherical coordinates, [theta, phi, r]), first 3 columns")
             .def(py::init<std::string, double, double>(),
                     py::arg("filename"), py::arg("hubble_param")=1., py::arg("box_size")=0.);
+    py::class_<io::RawBinarySource<record_sf>>(m, "RawBinarySource_float", py::base<io::Source>(),
+            "Read from CatAna binary file (float precision, spherical coordinates)")
+            .def(py::init<std::string, bool>(),
+                    py::arg("filename"), py::arg("verbose")=true);
 
     // Add Sink classes here
     py::class_<io::ObjectContainerSink>(m, "ObjectContainerSink", py::base<io::Sink>(),
@@ -96,6 +100,10 @@ PYBIND11_PLUGIN(io_core) {
             "Write to Text File (spherical, [theta, phi, r] 3dex format)")
             .def(py::init<std::string, bool>(),
                     py::arg("filename"), py::arg("verbose")=true);
+    py::class_<io::RawBinarySink<record_sf>>(m, "RawBinarySink_float", py::base<io::Sink>(),
+            "Write to CatAna binary file (float precision, spherical coordinates)")
+            .def(py::init<std::string, bool, bool>(),
+            py::arg("filename"), py::arg("verbose")=true, py::arg("append")=false);
 
     // Add Filter classes here
     py::class_<io::TophatRadialWindowFunctionFilter>(m, "TophatRadialWindowFunctionFilter", py::base<io::Filter>(),
