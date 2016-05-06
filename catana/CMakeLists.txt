@@ -65,10 +65,10 @@ add_library(catana STATIC
         ${besseltools_SOURCES}
         ${decomposition_SOURCES})
 
+add_executable(catana_exec executable/catana.cpp)
+
 # LINK TOGETHER
-#target_link_libraries(besseltools ${GSL_LIBRARIES} ${CBLAS_LIBRARIES})
-#target_link_libraries(io ${GSL_LIBRARIES} ${CBLAS_LIBRARIES} ${HEALPIX_LIBRARIES} ${CFITSIO_LIBRARIES})
-#target_link_libraries(catana besseltools io ${GSL_LIBRARIES} ${CBLAS_LIBRARIES} ${FFTW3_LIBRARIES} ${HEALPIX_LIBRARIES} ${CFITSIO_LIBRARIES})
 target_link_libraries(catana ${GSL_LIBRARIES} ${CBLAS_LIBRARIES} ${FFTW3_LIBRARIES} ${HEALPIX_LIBRARIES} ${CFITSIO_LIBRARIES})
+target_link_libraries(catana_exec catana)
 add_dependencies(catana eigen)
 #add_dependencies(io eigen)

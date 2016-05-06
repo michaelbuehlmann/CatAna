@@ -10,6 +10,7 @@
 
 #include <limits>
 #include <iostream>
+#include <cmath>
 
 namespace catana { namespace besseltools {
 
@@ -90,7 +91,7 @@ namespace catana { namespace besseltools {
             auto range_s = sbirg_s.next();
             while(range_s.first != range_s.second) {
 //                std::cout << "\t\t(" << range_s.first << " " << range_s.second << ")" << std::endl;
-                exit_code = gsl_integration_qag(F, range_s.first, range_s.second, 0, 1e-12, 1000, 2,
+                exit_code = gsl_integration_qag(F, range_s.first, range_s.second, 0, 1e-7, 1000, 2,
                         workspace, &temp, &error);
 //                if (exit_code==GSL_EROUND) {
 //                    std::cout << "round-off error for integration between "
@@ -105,7 +106,7 @@ namespace catana { namespace besseltools {
 //            std::cout << "\t(" << range_l.first << " " << range_l.second << "): \t" << result_intermediate << std::endl;
             result_old = result;
             result += result_intermediate;
-            if(result == result_old)
+            if(std::abs(result - result_old) < result*1e-10)
                 break;
 
             range_l = sbirg_l.next();
