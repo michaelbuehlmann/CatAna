@@ -54,7 +54,7 @@ namespace catana {
         auto gsl_error_handler_old = gsl_set_error_handler_off();
 
         // Compute normalization factor and set up KClkk
-        double_t norm_factor = std::sqrt(2/M_PI)*window_volume/pix_oc.get_nobjects();
+        double norm_factor = std::sqrt(2/M_PI)*window_volume/pix_oc.get_nobjects();
         KClkk kclkk(lmax, nmax, rmax);
 
         auto nside = pix_oc.get_nside();
