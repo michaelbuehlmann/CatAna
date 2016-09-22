@@ -26,7 +26,7 @@ PYBIND11_PLUGIN(basictypes)
                 return py::buffer_info(
                         a.data(),  // pointer to buffer
                         sizeof(double),  // size of scalar
-                        py::format_descriptor<double>::value(),  // python format descriptor
+                        py::format_descriptor<double>::format(),  // python format descriptor
                         1,  // number of dimensions
                         {static_cast<unsigned long int>(a.rows())},  // the dimensions
                         {sizeof(double)}  // strides (in bytes)
@@ -39,7 +39,7 @@ PYBIND11_PLUGIN(basictypes)
                 return py::buffer_info(
                         a.data(),  // pointer to buffer
                         sizeof(int),  // size of scalar
-                        py::format_descriptor<int>::value(),  // python format descriptor
+                        py::format_descriptor<int>::format(),  // python format descriptor
                         1,  // number of dimensions
                         {static_cast<unsigned long int>(a.rows())},  // the dimensions
                         {sizeof(int)}  // strides (in bytes)
@@ -52,7 +52,7 @@ PYBIND11_PLUGIN(basictypes)
                 return py::buffer_info(
                         a.data(),  // pointer to buffer
                         sizeof(double),  // size of scalar
-                        py::format_descriptor<double>::value(),  // python format descriptor
+                        py::format_descriptor<double>::format(),  // python format descriptor
                         2,  // number of dimensions
                         {static_cast<unsigned long int>(a.rows()), static_cast<unsigned long int>(a.cols())},  // the dimensions
                         {sizeof(double), sizeof(double)*a.rows()}  // strides (in bytes)
@@ -65,7 +65,7 @@ PYBIND11_PLUGIN(basictypes)
                 return py::buffer_info(
                         a.data(),  // pointer to buffer
                         sizeof(std::complex<double>),  // size of scalar
-                        py::format_descriptor<std::complex<double>>::value(),  // python format descriptor
+                        py::format_descriptor<std::complex<double>>::format(),  // python format descriptor
                         2,  // number of dimensions
                         {static_cast<unsigned long int>(a.rows()), static_cast<unsigned long int>(a.cols())},  // the dimensions
                         {sizeof(double), sizeof(double)*a.rows()}  // strides (in bytes)
@@ -87,7 +87,7 @@ PYBIND11_PLUGIN(basictypes)
                 return py::buffer_info(
                         &object.r,
                         sizeof(double),
-                        py::format_descriptor<double>::value(),
+                        py::format_descriptor<double>::format(),
                         1,
                         {3},
                         {sizeof(double)}
@@ -139,7 +139,7 @@ PYBIND11_PLUGIN(basictypes)
                 return py::buffer_info(
                         (double*) oc.data(),
                         sizeof(double),
-                        py::format_descriptor<double>::value(),
+                        py::format_descriptor<double>::format(),
                         2,
                         { oc.size(), 3},
                         { sizeof(double) * 3, sizeof(double)}
