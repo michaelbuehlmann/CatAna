@@ -7,7 +7,7 @@
 #include <random>
 #include <catana/io.hpp>
 #include <catana/decomposition.hpp>
-#include <stdlib.h>
+#include <cstdlib>
 
 // Provide a random number generator
 std::random_device rand_dev;
