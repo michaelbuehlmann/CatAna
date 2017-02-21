@@ -1,48 +1,40 @@
-//
-// Created by Michael Bühlmann on 24/02/16.
-//
-
 #include <catana/io/sources/ObjectContainerSource.hpp>
 
-namespace catana{ namespace io {
 
-        ObjectContainerSource::ObjectContainerSource(const ObjectContainer& object_container)
-                :object_container(object_container), current(object_container.begin()) { };
+namespace catana { namespace io {
 
-        long long int ObjectContainerSource::read(ObjectContainer::iterator write_iterator, size_t n)
-        {
-            return read_template(write_iterator, n);
-        }
+  ObjectContainerSource::ObjectContainerSource(const ObjectContainer& object_container)
+      : object_container(object_container), current(object_container.begin()) {};
 
-        long long int ObjectContainerSource::read(Object* write_iterator, size_t n)
-        {
-            return read_template(write_iterator, n);
-        }
+  long long int ObjectContainerSource::read(ObjectContainer::iterator write_iterator, size_t n) {
+    return read_template(write_iterator, n);
+  }
 
-        void ObjectContainerSource::reset()
-        {
-            current = object_container.begin();
-        }
+  long long int ObjectContainerSource::read(Object *write_iterator, size_t n) {
+    return read_template(write_iterator, n);
+  }
 
-        size_t ObjectContainerSource::get_nobjects()
-        {
-            return object_container.size();
-        }
+  void ObjectContainerSource::reset() {
+    current = object_container.begin();
+  }
 
-        template<class ObjectIterator>
-        long long int ObjectContainerSource::read_template(ObjectIterator write_iterator, size_t n)
-        {
-            size_t to_read = std::min(n, static_cast<size_t>(std::distance(current, object_container.end())));
+  size_t ObjectContainerSource::get_nobjects() {
+    return object_container.size();
+  }
 
-            // Abort if nothing to read
-            if (to_read==0) {
-                return -1;
-            }
+  template<class ObjectIterator>
+  long long int ObjectContainerSource::read_template(ObjectIterator write_iterator, size_t n) {
+    size_t to_read = std::min(n, static_cast<size_t>(std::distance(current, object_container.end())));
 
-            for (size_t i = 0; i<to_read; ++i) {
-                *(write_iterator++) = *(current++);
-            }
-            return to_read;
-        }
+    // Abort if nothing to read
+    if(to_read == 0) {
+      return -1;
+    }
+
+    for(size_t i = 0; i < to_read; ++i) {
+      *(write_iterator++) = *(current++);
+    }
+    return to_read;
+  }
 
 }}
