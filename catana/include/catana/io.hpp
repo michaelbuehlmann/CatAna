@@ -1,7 +1,3 @@
-//
-// Created by Michael Bühlmann on 05/02/16.
-//
-
 #ifndef CATANA_APP_IO_HPP
 #define CATANA_APP_IO_HPP
 
@@ -24,5 +20,6 @@
 #include "io/filters/radial_filters.hpp"
 
 #include "io/FilterStream.hpp"
+
 
 #endif //CATANA_APP_IO_HPP

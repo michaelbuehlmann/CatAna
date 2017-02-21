@@ -1,9 +1,4 @@
-//
-// Created by Michael Bühlmann on 14/02/16.
-//
-
 #include <catana/tools/FunctionInterpolator.hpp>
-#include <exception>
 
 
 namespace catana {
