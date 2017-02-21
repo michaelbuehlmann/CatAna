@@ -8,4 +8,6 @@ config.cmake
 *.egg-info
 cmake-build-*
 dist
-.git*
+docs/_build/
+docs/_static/
+docs/_templates/
