@@ -1,10 +1,11 @@
 build
 build_debug
 build_release
-#external
-python_old
 .idea
-test/gtest*
 *.pyc
 *.DS_Store
 config.cmake
+*.egg-info
+cmake-build-*
+dist
+.git*

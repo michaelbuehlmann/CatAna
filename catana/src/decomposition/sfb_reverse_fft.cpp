@@ -79,7 +79,7 @@ namespace catana {
         ring_info_container.reserve(nrings);
 
         // Prepare FFTW plans.
-        for (int i = 0; i<nrings; ++i) {
+        for (unsigned i = 0; i<nrings; ++i) {
             int rstart, rpix;
             bool shifted;
             hp_base.get_ring_info_small(i+1, rstart, rpix, shifted);  // Healpix ring enumeration starts at 1
@@ -142,7 +142,7 @@ namespace catana {
 
                     // Computing Map and its FFT
 #pragma omp for schedule(dynamic, 5)
-                    for (int i = 0; i<nrings; ++i) {
+                    for (unsigned i = 0; i<nrings; ++i) {
                         sfb_ringdecomp_kernel(l, k_n, pix_oc, sph_bessel_l, f_lmn_m_private, &ylm_im(i, 0),
                                 ring_info_container[i]);
 

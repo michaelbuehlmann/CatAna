@@ -3,7 +3,7 @@
 //
 
 #include <catana/objects/PixelizedObjectContainer.hpp>
-#include <cassert>
+#include <exception>
 #include <algorithm>
 #include <numeric>
 
@@ -17,7 +17,9 @@ namespace catana {
     PixelizedObjectContainer::PixelizedObjectContainer(unsigned int nside)
             :hp_base(nside, RING, SET_NSIDE), nside(nside)
     {
-        assert(is_power_of_2(nside));
+        if(!is_power_of_2(nside)) {
+            throw std::invalid_argument("argument (nside) must be a power of 2");
+        }
         resize(hp_base.Npix());
         for (int i = 0; i<hp_base.Npix(); ++i) {
             operator[](i).p = hp_base.pix2ang(i);

@@ -31,8 +31,8 @@ std::random_device rand_dev;
 std::mt19937 rng;
 
 
-PYBIND11_PLUGIN(io_core) {
-    py::module m("io_core", "python binding for in/output of particle positions (part of CatAna)");
+PYBIND11_PLUGIN(io) {
+    py::module m("io", "python binding for in/output of particle positions (part of CatAna)");
 
     // Initialization of random numbers. Once with given seed, once random seed
     m.def("init_random", [&](unsigned int seed){

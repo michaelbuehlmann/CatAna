@@ -1,27 +1,20 @@
-cmake_minimum_required(VERSION 2.8)
-project(catana)
+cmake_minimum_required(VERSION 3.7)
+project(CatAn2)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fPIC")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -Wall -O3")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -Wall -O3")
 
 # Load modules
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules")
+set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_SOURCE_DIR}/cmake/modules")
 message(STATUS "module path: ${CMAKE_MODULE_PATH}")
+include(ExternalProject)
 
 # Load config.cmake
 if(EXISTS "${PROJECT_SOURCE_DIR}/config.cmake")
     message(STATUS "Loaded external config file")
     include(${PROJECT_SOURCE_DIR}/config.cmake)
 endif()
-
-# Load git versioning module
-include(${CMAKE_SOURCE_DIR}/cmake/git_versioning.cmake)
-
-# Load external projects (eigen, pybind11, googletest)
-include(ExternalProject)
-include(${CMAKE_SOURCE_DIR}/cmake/eigen3_external.cmake)
-include(${CMAKE_SOURCE_DIR}/cmake/pybind11_external.cmake)
-include(${CMAKE_SOURCE_DIR}/cmake/googletest_external.cmake)
 
 ################################################################################
 # LOADING LIBRARIES ############################################################
@@ -40,12 +33,9 @@ find_package(GSL REQUIRED)
 include_directories(${GSL_INCLUDES})
 
 # eigen3 Library
+include(${CMAKE_SOURCE_DIR}/cmake/eigen3_external.cmake)
 message(STATUS "Using Eigen Library located at ${EIGEN3_INCLUDE_DIR}")
 include_directories(${EIGEN3_INCLUDE_DIR})
-
-# pybind11 Library
-message(STATUS "Using Pybind11 Library located at ${PYBIND11_INCLUDE_DIR}")
-include_directories(${PYBIND11_INCLUDE_DIR})
 
 # HEALPix Library
 find_package(CFITSIO REQUIRED)
@@ -58,7 +48,6 @@ else()
     include_directories(${HEALPIX_INCLUDE_DIR})
 endif()
 
-
 # OpenMP
 find_package(OpenMP)
 if(OPENMP_FOUND)
@@ -66,26 +55,30 @@ if(OPENMP_FOUND)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif()
 message(STATUS "CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
-# Python
-if(BUILD_PYTHON)
-    find_package(PythonLibs REQUIRED)
-    find_package(PythonInterp REQUIRED)
-endif()
 
 
-# Setting up include files from CatAna
-#if(CATANA_CONFIG_DIR)
+################################################################################
+# CATANA LIBRARY ###############################################################
+################################################################################
 configure_file(catana/include/catana/config.hpp.in catana/include/catana/config.hpp)
 include_directories(catana/include)
 include_directories(${CMAKE_BINARY_DIR}/catana/include)
-
 add_subdirectory(catana)
-add_subdirectory(docs)
 
-if(BUILD_PYTHON)
+
+################################################################################
+# CATANA PYTHON LIBRARY ########################################################
+################################################################################
+if(${BUILD_PYTHON})
+    add_subdirectory(external/pybind11)
     add_subdirectory(python)
 endif()
 
-if(BUILD_TESTS)
+
+################################################################################
+# TESTS ########################################################################
+################################################################################
+
+if(${BUILD_TESTS})
     add_subdirectory(test)
 endif()

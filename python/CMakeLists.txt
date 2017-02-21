@@ -1,39 +1,17 @@
-include_directories(../catana/include)
-include_directories(${PYTHON_INCLUDE_DIR})
+pybind11_add_module(pybasictypes py_basictypes.cpp)
+set_target_properties(pybasictypes PROPERTIES OUTPUT_NAME basictypes)
 
-get_property(LIB_LOCATION_ TARGET catana PROPERTY LOCATION)
-get_filename_component(LIB_LOCATION ${LIB_LOCATION_} DIRECTORY)
-message(STATUS "libraries were build int ${LIB_LOCATION}")
+pybind11_add_module(pybesseltools py_besseltools.cpp)
+set_target_properties(pybesseltools PROPERTIES OUTPUT_NAME besseltools)
 
-set(SETUP_PY_IN ${CMAKE_CURRENT_SOURCE_DIR}/setup.py)
-set(SETUP_PY ${CMAKE_CURRENT_BINARY_DIR}/setup.py)
+pybind11_add_module(pydecomposition py_decomposition.cpp)
+set_target_properties(pydecomposition PROPERTIES OUTPUT_NAME decomposition)
 
-configure_file(${SETUP_PY_IN} ${SETUP_PY})
-configure_file(CatAna/__init__.py  ${CMAKE_CURRENT_BINARY_DIR}/CatAna/__init__.py)
-configure_file(CatAna/io.py        ${CMAKE_CURRENT_BINARY_DIR}/CatAna/io.py)
-configure_file(CatAna/decomp.py    ${CMAKE_CURRENT_BINARY_DIR}/CatAna/decomp.py)
+pybind11_add_module(pyio py_io.cpp)
+set_target_properties(pyio PROPERTIES OUTPUT_NAME io)
 
-### NEW SETUP.PY COMPILATION ###
-set(PYSOURCES
-        py_basictypes.cpp py_besseltools.cpp py_io.cpp py_decomposition.cpp
-        setup.py CatAna/io.py CatAna/decomp.py CatAna/__init__.py)
-#set(DEPENDENCIES eigen besseltools io catana ${PYSOURCES})
-set(DEPENDENCIES catana ${PYSOURCES})
-set(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/build/timestamp)
-add_custom_command(
-        OUTPUT ${OUTPUT}
-        COMMAND ${PYTHON_EXECUTABLE} ${SETUP_PY} build
-        COMMAND ${CMAKE_COMMAND} -E touch ${OUTPUT}
-        DEPENDS ${DEPENDENCIES}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-)
-add_custom_target(python ALL DEPENDS ${OUTPUT})
-install(CODE "execute_process(
-        COMMAND ${PYTHON_EXECUTABLE} ${SETUP_PY} install
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})"
-        )
 
-add_custom_target(python_install
-        make install
-        DEPENDS python
-        )
+target_link_libraries(pybasictypes PRIVATE catana)
+target_link_libraries(pybesseltools PRIVATE catana)
+target_link_libraries(pydecomposition PRIVATE catana)
+target_link_libraries(pyio PRIVATE catana)

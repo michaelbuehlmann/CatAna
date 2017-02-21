@@ -58,17 +58,16 @@ set(decomposition_SOURCES
         src/decomposition/Analyzer.cpp include/catana/decomposition/Analyzer.hpp)
 
 # COMPILE AS STATIC LIBRARY
-#add_library(io STATIC ${io_SOURCES})
-#add_library(besseltools STATIC ${besseltools_SOURCES})
 add_library(catana STATIC
         ${io_SOURCES}
         ${besseltools_SOURCES}
         ${decomposition_SOURCES})
 
-add_executable(catana_exec executable/catana.cpp)
-
 # LINK TOGETHER
-target_link_libraries(catana ${GSL_LIBRARIES} ${CBLAS_LIBRARIES} ${FFTW3_LIBRARIES} ${HEALPIX_LIBRARIES} ${CFITSIO_LIBRARIES})
-target_link_libraries(catana_exec catana)
+target_link_libraries(catana
+        ${GSL_LIBRARIES}
+        ${CBLAS_LIBRARIES}
+        ${FFTW3_LIBRARIES}
+        ${HEALPIX_LIBRARIES}
+        ${CFITSIO_LIBRARIES})
 add_dependencies(catana eigen)
-#add_dependencies(io eigen)
