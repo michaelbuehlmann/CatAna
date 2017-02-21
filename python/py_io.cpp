@@ -31,8 +31,8 @@ std::random_device rand_dev;
 std::mt19937 rng;
 
 
-PYBIND11_PLUGIN(io_core) {
-    py::module m("io_core", "python binding for in/output of particle positions (part of CatAna)");
+PYBIND11_PLUGIN(io) {
+    py::module m("io", "python binding for in/output of particle positions (part of CatAna)");
 
     // Initialization of random numbers. Once with given seed, once random seed
     m.def("init_random", [&](unsigned int seed){
@@ -57,68 +57,68 @@ PYBIND11_PLUGIN(io_core) {
             });
 
     // Add Source classes here
-    py::class_<io::ObjectContainerSource>(m, "ObjectContainerSource", py::base<io::Source>(),
-            "Read positions from ObjectContainer")
+  py::class_<io::ObjectContainerSource, io::Source>(m, "ObjectContainerSource",
+                                                    "Read positions from ObjectContainer")
             .def(py::init<ObjectContainer&>());
-    py::class_<io::GadgetSource>(m, "GadgetSource", py::base<io::Source>(),
-            "Read positions from binary Gadget file")
+  py::class_<io::GadgetSource, io::Source>(m, "GadgetSource",
+                                           "Read positions from binary Gadget file")
             .def(py::init<std::string, bool>(),
                     py::arg("filename"), py::arg("verbose")=true);
-    py::class_<io::TextSource<record_cd>>(m, "TextSource_cartesian", py::base<io::Source>(),
-            "Read from Text File (cartesian coordinates), first 3 columns")
+  py::class_<io::TextSource<record_cd>, io::Source>(m, "TextSource_cartesian",
+                                                    "Read from Text File (cartesian coordinates), first 3 columns")
             .def(py::init<std::string, double, double>(),
                     py::arg("filename"), py::arg("hubble_param")=1., py::arg("box_size")=0.);
-    py::class_<io::TextSource<record_sd>>(m, "TextSource_spherical", py::base<io::Source>(),
-            "Read from Text File (spherical coordinates [r, theta, phi]), first 3 columns")
+  py::class_<io::TextSource<record_sd>, io::Source>(m, "TextSource_spherical",
+                                                    "Read from Text File (spherical coordinates [r, theta, phi]), first 3 columns")
             .def(py::init<std::string, double, double>(),
                     py::arg("filename"), py::arg("hubble_param")=1., py::arg("box_size")=0.);
-    py::class_<io::TextSource<record_sd_3dex>>(m, "TextSource_spherical_3dex", py::base<io::Source>(),
-            "Read from Text File (spherical coordinates, [theta, phi, r]), first 3 columns")
+  py::class_<io::TextSource<record_sd_3dex>, io::Source>(m, "TextSource_spherical_3dex",
+                                                         "Read from Text File (spherical coordinates, [theta, phi, r]), first 3 columns")
             .def(py::init<std::string, double, double>(),
                     py::arg("filename"), py::arg("hubble_param")=1., py::arg("box_size")=0.);
-    py::class_<io::RawBinarySource<record_sf>>(m, "RawBinarySource_float", py::base<io::Source>(),
-            "Read from CatAna binary file (float precision, spherical coordinates)")
+  py::class_<io::RawBinarySource<record_sf>, io::Source>(m, "RawBinarySource_float",
+                                                         "Read from CatAna binary file (float precision, spherical coordinates)")
             .def(py::init<std::string, bool>(),
                     py::arg("filename"), py::arg("verbose")=true);
 
     // Add Sink classes here
-    py::class_<io::ObjectContainerSink>(m, "ObjectContainerSink", py::base<io::Sink>(),
-            "Write data into ObjectContainer")
+  py::class_<io::ObjectContainerSink, io::Sink>(m, "ObjectContainerSink",
+                                                "Write data into ObjectContainer")
             .def(py::init<ObjectContainer&>());
-    py::class_<io::PixelizedObjectContainerSink>(m, "PixelizedObjectContainerSink", py::base<io::Sink>(),
-            "Write data into PixelizedObjectContainer")
+  py::class_<io::PixelizedObjectContainerSink, io::Sink>(m, "PixelizedObjectContainerSink",
+                                                         "Write data into PixelizedObjectContainer")
             .def(py::init<PixelizedObjectContainer&>());
-    py::class_<io::TextSink<record_cd>>(m, "TextSink_cartesian", py::base<io::Sink>(),
-            "Write to Text File (cartesian)")
+  py::class_<io::TextSink<record_cd>, io::Sink>(m, "TextSink_cartesian",
+                                                "Write to Text File (cartesian)")
             .def(py::init<std::string, bool>(),
                     py::arg("filename"), py::arg("verbose")=true);
-    py::class_<io::TextSink<record_sd>>(m, "TextSink_spherical", py::base<io::Sink>(),
-            "Write to Text File (spherical, [r, theta, phi])")
+  py::class_<io::TextSink<record_sd>, io::Sink>(m, "TextSink_spherical",
+                                                "Write to Text File (spherical, [r, theta, phi])")
             .def(py::init<std::string, bool>(),
                     py::arg("filename"), py::arg("verbose")=true);
-    py::class_<io::TextSink<record_sd_3dex>>(m, "TextSink_spherical_3dex", py::base<io::Sink>(),
-            "Write to Text File (spherical, [theta, phi, r] 3dex format)")
+  py::class_<io::TextSink<record_sd_3dex>, io::Sink>(m, "TextSink_spherical_3dex",
+                                                     "Write to Text File (spherical, [theta, phi, r] 3dex format)")
             .def(py::init<std::string, bool>(),
                     py::arg("filename"), py::arg("verbose")=true);
-    py::class_<io::RawBinarySink<record_sf>>(m, "RawBinarySink_float", py::base<io::Sink>(),
-            "Write to CatAna binary file (float precision, spherical coordinates)")
+  py::class_<io::RawBinarySink<record_sf>, io::Sink>(m, "RawBinarySink_float",
+                                                     "Write to CatAna binary file (float precision, spherical coordinates)")
             .def(py::init<std::string, bool, bool>(),
             py::arg("filename"), py::arg("verbose")=true, py::arg("append")=false);
 
     // Add Filter classes here
-    py::class_<io::TophatRadialWindowFunctionFilter>(m, "TophatRadialWindowFunctionFilter", py::base<io::Filter>(),
-            "TopHat Radial WindowFunction Filter")
+  py::class_<io::TophatRadialWindowFunctionFilter, io::Filter>(m, "TophatRadialWindowFunctionFilter",
+                                                               "TopHat Radial WindowFunction Filter")
             .def(py::init<double>(), py::arg("R0"));
-    py::class_<io::GaussianRadialWindowFunctionFilter>(m, "GaussianRadialWindowFunctionFilter", py::base<io::Filter>(),
+  py::class_<io::GaussianRadialWindowFunctionFilter, io::Filter>(m, "GaussianRadialWindowFunctionFilter"
             "Gaussian Radial WindowFunction Filter")
             .def(py::init<double>(), py::arg("R0"));
-    py::class_<io::GenericRadialWindowFunctionFilter>(m, "GenericRadialWindowFunctionFilter", py::base<io::Filter>(),
+  py::class_<io::GenericRadialWindowFunctionFilter, io::Filter>(m, "GenericRadialWindowFunctionFilter"
             "Radial WindowFunction Filter")
             .def(py::init<std::function<double(double)>>(), py::arg("function"))
             .def(py::init<std::function<double(double)>, size_t, double, double>(),
                     py::arg("function"), py::arg("interpolation_points"), py::arg("min"), py::arg("max"));;
-    py::class_<io::AngularMaskFilter>(m, "AngularMaskFilter", py::base<io::Filter>(),
-            "Healpix Angular Mask Filter. 1->keep, 0->delete")
+  py::class_<io::AngularMaskFilter, io::Filter>(m, "AngularMaskFilter",
+                                                "Healpix Angular Mask Filter. 1->keep, 0->delete")
             .def(py::init<std::string>(), py::arg("mask_file"));
 
     // FilterStream

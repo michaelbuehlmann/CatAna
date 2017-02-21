@@ -4,6 +4,7 @@
 
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>
+#include <pybind11/eigen.h>
 #include <pybind11/numpy.h>
 #include <pybind11/complex.h>
 
@@ -20,60 +21,8 @@ PYBIND11_PLUGIN(basictypes)
 {
     py::module m("basictypes", "python bindings of basic types used in CatAna");
 
-    // Binding Eigen array to numpy
-    py::class_<Eigen::ArrayXd>(m, "EigenArrayXd")
-            .def_buffer([](Eigen::ArrayXd &a) -> py::buffer_info{
-                return py::buffer_info(
-                        a.data(),  // pointer to buffer
-                        sizeof(double),  // size of scalar
-                        py::format_descriptor<double>::format(),  // python format descriptor
-                        1,  // number of dimensions
-                        {static_cast<unsigned long int>(a.rows())},  // the dimensions
-                        {sizeof(double)}  // strides (in bytes)
-                );
-            });
-
-    // Binding Eigen array to numpy
-    py::class_<Eigen::ArrayXi>(m, "EigenArrayXi")
-            .def_buffer([](Eigen::ArrayXi &a) -> py::buffer_info{
-                return py::buffer_info(
-                        a.data(),  // pointer to buffer
-                        sizeof(int),  // size of scalar
-                        py::format_descriptor<int>::format(),  // python format descriptor
-                        1,  // number of dimensions
-                        {static_cast<unsigned long int>(a.rows())},  // the dimensions
-                        {sizeof(int)}  // strides (in bytes)
-                );
-            });
-
-    // Binding Eigen array to numpy
-    py::class_<Eigen::ArrayXXd>(m, "EigenArrayXXd")
-            .def_buffer([](Eigen::ArrayXXd &a) -> py::buffer_info{
-                return py::buffer_info(
-                        a.data(),  // pointer to buffer
-                        sizeof(double),  // size of scalar
-                        py::format_descriptor<double>::format(),  // python format descriptor
-                        2,  // number of dimensions
-                        {static_cast<unsigned long int>(a.rows()), static_cast<unsigned long int>(a.cols())},  // the dimensions
-                        {sizeof(double), sizeof(double)*a.rows()}  // strides (in bytes)
-                );
-            });
-
-    // Binding Eigen array to numpy
-    py::class_<Eigen::ArrayXXcd>(m, "EigenArrayXXcd")
-            .def_buffer([](Eigen::ArrayXXcd &a) -> py::buffer_info{
-                return py::buffer_info(
-                        a.data(),  // pointer to buffer
-                        sizeof(std::complex<double>),  // size of scalar
-                        py::format_descriptor<std::complex<double>>::format(),  // python format descriptor
-                        2,  // number of dimensions
-                        {static_cast<unsigned long int>(a.rows()), static_cast<unsigned long int>(a.cols())},  // the dimensions
-                        {sizeof(double), sizeof(double)*a.rows()}  // strides (in bytes)
-                );
-            });
-
     // Binding for the "Object" class, with cartesian and spherical output methods
-    py::class_<Object>(m, "Object")
+    py::class_<Object>(m, "Object", py::buffer_protocol())
             .def(py::init<>())
             .def(py::init<double, double, double>())
             .def("spherical", [](const Object& obj) {
@@ -95,7 +44,7 @@ PYBIND11_PLUGIN(basictypes)
             });
 
     // Binding of the ObjectContainer class
-    py::class_<ObjectContainer>(m, "ObjectContainer")
+    py::class_<ObjectContainer>(m, "ObjectContainer", py::buffer_protocol())
             .def(py::init<>())
             .def("__init__", [](ObjectContainer& oc, py::array_t<double> array, std::string coord_type)
             {

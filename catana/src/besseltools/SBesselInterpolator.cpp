@@ -6,7 +6,9 @@
 #include <catana/besseltools/SphericalBesselZeros.hpp>
 
 #include <gsl/gsl_sf_bessel.h>
+#include <exception>
 #include <cassert>
+
 
 namespace catana { namespace besseltools {
 
@@ -22,7 +24,9 @@ namespace catana { namespace besseltools {
 
     double SBesselInterpolator::operator()(const double& z) const
     {
-        assert(z<x_max);
+        if(z>=x_max) {
+            throw std::domain_error("argument (z) outside of defined range.");
+        }
         double i_approx = z*dx_inv;
         int i = static_cast<int>(i_approx);
         return y_values[i]+(y_values[i+1]-y_values[i])*(i_approx-i);
@@ -53,9 +57,12 @@ namespace catana { namespace besseltools {
 
     double SBesselIFunction::operator()(unsigned int l, double z)
     {
-        assert(l<=interpolators.size()+1);
-        assert(interpolators[l].second);
-
+        if(l>interpolators.size()+1) {
+            throw std::domain_error("argument (l) too large for this instance of SBesselInterpolator");
+        }
+        if(!interpolators[l].second) {
+            throw std::logic_error("interpolator for requested l not initialized");
+        }
         return interpolators[l].first->operator()(z);
     }
 

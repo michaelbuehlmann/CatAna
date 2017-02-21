@@ -72,7 +72,7 @@ namespace catana {
                 // Spherical harmonics decomposition
                 // TODO: save spherical harmonics in external file, load if needed.
 #pragma omp for nowait
-                for (int i = 0; i<npix; ++i) {
+                for (unsigned i = 0; i<npix; ++i) {
                     const pointing& p = pix_oc[i].p;
                     for (unsigned short m = 0; m<=l; ++m) {
                         double gsl_sphPlm = gsl_sf_legendre_sphPlm(l,m,std::cos(p.theta));
@@ -82,7 +82,7 @@ namespace catana {
 
                 // Loop over all pixels and do Bessel decomposition:
 #pragma omp for
-                for (int i = 0; i<npix; ++i) {
+                for (unsigned i = 0; i<npix; ++i) {
                     for (unsigned short n = 0; n<nmax; ++n) {
                         const auto& k = kclkk.k_ln(l, n);
                         for (const auto& r: pix_oc[i]) {
