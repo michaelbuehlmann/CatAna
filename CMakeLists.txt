@@ -7,10 +7,10 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -Wall -O3 -flto")
 
 # If not in DEBUG mode, set LTO and VISIBILITY (to be compatible with pybind11)
 if (NOT ${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -flto")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -flto")
-    set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-    set(CMAKE_C_VISIBILITY_PRESET hidden)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -flto -fvisibility=hidden")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -flto -fvisibility=hidden")
+    #    set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+    #    set(CMAKE_C_VISIBILITY_PRESET hidden)
 endif ()
 
 

@@ -5,6 +5,7 @@
 
 #include <limits>
 #include <iostream>
+#include <cmath>
 
 
 namespace catana { namespace besseltools {

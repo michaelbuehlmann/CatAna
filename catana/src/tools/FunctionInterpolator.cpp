@@ -1,5 +1,5 @@
 #include <catana/tools/FunctionInterpolator.hpp>
-
+#include <stdexcept>
 
 namespace catana {
 
