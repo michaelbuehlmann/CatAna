@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.7)
-project(CatAn2)
+project(CatAna)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -Wall -O3 -flto")
@@ -23,6 +23,9 @@ include(ExternalProject)
 if(EXISTS "${PROJECT_SOURCE_DIR}/config.cmake")
     message(STATUS "Loaded external config file")
     include(${PROJECT_SOURCE_DIR}/config.cmake)
+else ()
+    message(STATUS "No config.cmake provided. Setting BUILD_PYTHON to YES")
+    set(BUILD_PYTHON YES)
 endif()
 
 ################################################################################

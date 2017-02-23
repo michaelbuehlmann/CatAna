@@ -1,0 +1,8 @@
+include *.txt
+recursive-include catana *
+recursive-include cmake *
+recursive-include python *.cpp *.txt
+include external/doctest/doctest/doctest.h
+recursive-include external/eigen/Eigen *
+recursive-include external/healpixmirror/src/cxx *
+recursive-include external/pybind11 *
