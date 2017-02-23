@@ -6,9 +6,9 @@
 #include <set>
 
 
-extern std::mt19937 rng;
-
-namespace catana { namespace io {
+namespace catana {
+  extern std::mt19937 rng;
+  namespace io {
 
   class RandomSubsetFilter : public Filter {
   public:

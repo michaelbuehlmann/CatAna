@@ -1,20 +1,9 @@
-//
-// Created by Michael Bühlmann on 11/02/16.
-//
-
 #include <catana/types.hpp>
 #include <catana/io.hpp>
-
-#include <tuple>
-#include <array>
-#include <algorithm>
-#include <string>
-#include <functional>
-#include <random>
+#include <catana/tools/random.hpp>
 
 #include <pybind11/pybind11.h>
-#include <pybind11/numpy.h>
-#include <pybind11/functional.h>
+
 
 namespace py = pybind11;
 using namespace catana;
@@ -26,23 +15,15 @@ using record_sf = io::SphericalRecord<float>;
 using record_sd = io::SphericalRecord<double>;
 using record_sd_3dex = io::SphericalRecord<double, io::SphericalTextFormat::THREEDEX>;
 
-// Provide a random number generator
-std::random_device rand_dev;
-std::mt19937 rng;
-
 
 PYBIND11_PLUGIN(io) {
     py::module m("io", "python binding for in/output of particle positions (part of CatAna)");
 
     // Initialization of random numbers. Once with given seed, once random seed
-    m.def("init_random", [&](unsigned int seed){
-        rng.seed(seed); },
+  m.def("init_random", py::overload_cast < unsigned
+  int > (&init_random),
         py::arg("seed"));
-    m.def("init_random", [&](){
-        std::array<int, 624> seed_data;
-        std::generate(seed_data.begin(), seed_data.end(), std::ref(rand_dev));
-        std::seed_seq seq(std::begin(seed_data), std::end(seed_data));
-        rng.seed(seq); });
+  m.def("init_random", py::overload_cast<>(&init_random));
 
 
     // Parent classes

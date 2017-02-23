@@ -2,7 +2,8 @@
 set(tools_SOURCES
         include/catana/tools/gsl_function_wrapper.hpp
         include/catana/tools/FunctionInterpolator.hpp src/tools/FunctionInterpolator.cpp
-        include/catana/tools/string_format.hpp)
+        include/catana/tools/string_format.hpp
+        src/tools/random.cpp include/catana/tools/random.hpp)
 
 set(besseltools_SOURCES
         include/catana/besseltools.hpp

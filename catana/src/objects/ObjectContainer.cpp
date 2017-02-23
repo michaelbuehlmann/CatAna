@@ -3,10 +3,10 @@
 #include <cassert>
 
 
-extern std::mt19937 rng;
+
 
 namespace catana {
-
+  extern std::mt19937 rng;
   void create_object_container_subset(ObjectContainer& object_container, const size_t& n) {
     assert(n < object_container.size());
     std::uniform_int_distribution<size_t> dist;  // default: (0, max(numeric type)

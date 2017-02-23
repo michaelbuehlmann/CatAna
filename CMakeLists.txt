@@ -2,8 +2,17 @@ cmake_minimum_required(VERSION 3.7)
 project(CatAn2)
 
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -Wall -O3")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -Wall -O3")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -Wall -O3 -flto")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -Wall -O3 -flto")
+
+# If not in DEBUG mode, set LTO and VISIBILITY (to be compatible with pybind11)
+if (NOT ${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -flto")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -flto")
+    set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+    set(CMAKE_C_VISIBILITY_PRESET hidden)
+endif ()
+
 
 # Load modules
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_SOURCE_DIR}/cmake/modules")
@@ -54,6 +63,13 @@ if(OPENMP_FOUND)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif()
+
+# Python
+if (${BUILD_PYTHON})
+    add_subdirectory(external/pybind11)
+endif ()
+
+
 message(STATUS "CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 
 
@@ -70,7 +86,6 @@ add_subdirectory(catana)
 # CATANA PYTHON LIBRARY ########################################################
 ################################################################################
 if(${BUILD_PYTHON})
-    add_subdirectory(external/pybind11)
     add_subdirectory(python)
 endif()
 
