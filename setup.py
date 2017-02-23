@@ -55,7 +55,7 @@ class CMakeBuild(build_ext):
 
 setup(
     name='catana',
-    version='2.0a0',
+    version='2.0a2',
     author='Michael Buehlmann',
     author_email='michael.buehlmann@oca.eu',
     ext_package='catana',
@@ -63,5 +63,6 @@ setup(
     package_dir = {'': 'python'},
     ext_modules=[CMakeExtension('basictypes'), CMakeExtension('besseltools'), CMakeExtension('decomposition'), CMakeExtension('io')],
     cmdclass=dict(build_ext=CMakeBuild),
-    zip_safe=False
+    zip_safe=False,
+    install_requires=['numpy']
 )
