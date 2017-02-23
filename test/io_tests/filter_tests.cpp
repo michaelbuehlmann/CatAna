@@ -10,10 +10,13 @@
 #include <catana/io.hpp>
 
 
+namespace catana {
+  extern std::mt19937 rng;
+}
+
 using namespace catana;
 
 const std::string test_data_dir(TEST_DATA_DIR);
-extern std::mt19937 rng;
 
 TEST_SUITE("io");
 

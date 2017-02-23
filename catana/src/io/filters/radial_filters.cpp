@@ -1,9 +1,9 @@
 #include <catana/io/filters/radial_filters.hpp>
 
 
-extern std::mt19937 rng;
-
-namespace catana { namespace io {
+namespace catana {
+  extern std::mt19937 rng;
+  namespace io {
 
   GenericRadialWindowFunctionFilter::GenericRadialWindowFunctionFilter(
       std::function<double(double)> window_function)

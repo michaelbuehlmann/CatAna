@@ -10,7 +10,11 @@
 #include <iostream>
 #include <algorithm>
 
-extern std::mt19937 rng;
+
+namespace catana {
+  extern std::mt19937 rng;
+}
+
 using namespace catana;
 
 TEST_CASE ("Testing SBesselLookUp accuracy") {
