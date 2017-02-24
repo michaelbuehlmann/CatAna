@@ -3,6 +3,7 @@ import re
 import sys
 import subprocess
 import platform
+import versioneer
 
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
@@ -53,16 +54,23 @@ class CMakeBuild(build_ext):
         subprocess.check_call(['cmake', ext.sourcedir] + cmake_args, cwd=self.build_temp, env=env)
         subprocess.check_call(['cmake', '--build', '.'] + build_args, cwd=self.build_temp)
 
+
+def get_cmdclass():
+    cmdclass = versioneer.get_cmdclass()
+    cmdclass.update({"build_ext": CMakeBuild})
+    return cmdclass
+
+
 setup(
     name='catana',
-    version='2.0a2',
+    version=versioneer.get_version(),
     author='Michael Buehlmann',
     author_email='michael.buehlmann@oca.eu',
     ext_package='catana',
     packages=['catana'],
     package_dir = {'': 'python'},
     ext_modules=[CMakeExtension('basictypes'), CMakeExtension('besseltools'), CMakeExtension('decomposition'), CMakeExtension('io')],
-    cmdclass=dict(build_ext=CMakeBuild),
+    cmdclass=get_cmdclass(),
     zip_safe=False,
     install_requires=['numpy']
 )

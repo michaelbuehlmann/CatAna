@@ -16,3 +16,9 @@ def init_random(seed=None):
     else:
         decomposition.init_random(seed)
         io.init_random(seed)
+
+
+from ._version import get_versions
+
+__version__ = get_versions()['version']
+del get_versions
