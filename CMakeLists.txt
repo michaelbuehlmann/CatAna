@@ -19,6 +19,11 @@ set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_SOURCE_DIR}/cmake/modules")
 message(STATUS "module path: ${CMAKE_MODULE_PATH}")
 include(ExternalProject)
 
+# Get CatAna version
+include(GetGitRevisionDescription)
+git_describe(VERSION --tags --dirty --always)
+message(STATUS "CatAna Version: ${VERSION}")
+
 # Load config.cmake
 if(EXISTS "${PROJECT_SOURCE_DIR}/config.cmake")
     message(STATUS "Loaded external config file")
