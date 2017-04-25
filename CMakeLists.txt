@@ -29,8 +29,11 @@ if(EXISTS "${PROJECT_SOURCE_DIR}/config.cmake")
     message(STATUS "Loaded external config file")
     include(${PROJECT_SOURCE_DIR}/config.cmake)
 else ()
-    message(STATUS "No config.cmake provided. Setting BUILD_PYTHON to YES")
-    set(BUILD_PYTHON YES)
+    message(STATUS "No config.cmake provided.")
+    #    set(BUILD_PYTHON CACHE BOOL YES)
+    #    set(BUILD_TESTS CACHE BOOL NO)
+    option(BUILD_TESTS "Build the test programs" OFF)
+    option(BUILD_PYTHON "Build the CatAna Python Library" ON)
 endif()
 
 ################################################################################
