@@ -40,7 +40,7 @@ script:
   - cd build
   - export CC=${CC_COMPILER} && export CXX=${CXX_COMPILER}
   - cmake -DBUILD_TESTS=ON -DBUILD_PYTHON=ON ..
-  - make
+  - make VERBOSE=1
   - ./test/TESTS
 
 deploy:

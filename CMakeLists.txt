@@ -1,18 +1,24 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.2)
 project(CatAna)
 
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -Wall -O3 -flto")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -Wall -O3 -flto")
-
-# If not in DEBUG mode, set LTO and VISIBILITY (to be compatible with pybind11)
-if (NOT ${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -flto -fvisibility=hidden")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -flto -fvisibility=hidden")
-    #    set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-    #    set(CMAKE_C_VISIBILITY_PRESET hidden)
+# Load config.cmake
+if (EXISTS "${PROJECT_SOURCE_DIR}/config.cmake")
+    message(STATUS "Loaded external config file")
+    include(${PROJECT_SOURCE_DIR}/config.cmake)
+else ()
+    message(STATUS "No config.cmake provided.")
+    option(BUILD_TESTS "Build the test programs" OFF)
+    option(BUILD_PYTHON "Build the CatAna Python Library" ON)
 endif ()
 
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -Wall -O3")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -Wall -O3")
+
+# Set the correct compiler flags if we build the python modules
+if(${BUILD_PYTHON})
+    add_subdirectory(external/pybind11)
+endif()
 
 # Load modules
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_SOURCE_DIR}/cmake/modules")
@@ -24,17 +30,6 @@ include(GetGitRevisionDescription)
 git_describe(VERSION --tags --dirty --always)
 message(STATUS "CatAna Version: ${VERSION}")
 
-# Load config.cmake
-if(EXISTS "${PROJECT_SOURCE_DIR}/config.cmake")
-    message(STATUS "Loaded external config file")
-    include(${PROJECT_SOURCE_DIR}/config.cmake)
-else ()
-    message(STATUS "No config.cmake provided.")
-    #    set(BUILD_PYTHON CACHE BOOL YES)
-    #    set(BUILD_TESTS CACHE BOOL NO)
-    option(BUILD_TESTS "Build the test programs" OFF)
-    option(BUILD_PYTHON "Build the CatAna Python Library" ON)
-endif()
 
 ################################################################################
 # LOADING LIBRARIES ############################################################
@@ -44,13 +39,13 @@ find_package(FFTW3 REQUIRED)
 include_directories(${FFTW3_INCLUDES})
 
 # CBLAS Library
-find_package(CBLAS REQUIRED)
-include_directories(${CBLAS_INCLUDE_DIR})
-message(STATUS "CBLAS Libraries: ${CBLAS_LIBRARIES}")
+#find_package(CBLAS REQUIRED)
+#include_directories(${CBLAS_INCLUDE_DIR})
+#message(STATUS "CBLAS Libraries: ${CBLAS_LIBRARIES}")
 
 # GSL Library
 find_package(GSL REQUIRED)
-include_directories(${GSL_INCLUDES})
+include_directories(${GSL_INCLUDE_DIRS})
 
 # eigen3 Library
 include(${CMAKE_SOURCE_DIR}/cmake/eigen3_external.cmake)
@@ -75,12 +70,6 @@ if(OPENMP_FOUND)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif()
 
-# Python
-if (${BUILD_PYTHON})
-    add_subdirectory(external/pybind11)
-endif ()
-
-
 message(STATUS "CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 
 
@@ -94,17 +83,17 @@ add_subdirectory(catana)
 
 
 ################################################################################
+# TESTS ########################################################################
+################################################################################
+
+if (${BUILD_TESTS})
+    add_subdirectory(test)
+endif ()
+
+
+################################################################################
 # CATANA PYTHON LIBRARY ########################################################
 ################################################################################
 if(${BUILD_PYTHON})
     add_subdirectory(python)
-endif()
-
-
-################################################################################
-# TESTS ########################################################################
-################################################################################
-
-if(${BUILD_TESTS})
-    add_subdirectory(test)
 endif()
