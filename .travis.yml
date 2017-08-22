@@ -1,5 +1,5 @@
 sudo: false
-dist: precise
+dist: trusty
 language: cpp
 
 addons:
@@ -42,7 +42,12 @@ script:
   - cmake -DBUILD_TESTS=ON -DBUILD_PYTHON=ON ..
   - make VERBOSE=1
   - ./test/TESTS
+  - cd ..
 
+before_deploy:
+  - pip install --user --upgrade setuptools wheel
+  - pwd
+  - ls
 deploy:
   provider: pypi
   user: "mirthlessmarmot"
