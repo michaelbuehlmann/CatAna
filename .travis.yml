@@ -1,0 +1,54 @@
+sudo: false
+dist: precise
+language: cpp
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+      - george-edison55-precise-backports
+    packages:
+      - gcc-5
+      - g++-5
+      - gcc-6
+      - g++-6
+      - cmake
+      - cmake-data
+      - libatlas-base-dev
+      - libfftw3-dev
+      - libgsl0-dev
+      - libcfitsio3-dev
+
+matrix:
+  include:
+    - os: linux
+      compiler: gcc
+      python: "3.6"
+      env:
+        - CXX_COMPILER=g++-5
+        - CC_COMPILER=gcc-5
+
+    - os: linux
+      compiler: gcc
+      python: "3.6"
+      env:
+        - CXX_COMPILER=g++-6
+        - CC_COMPILER=gcc-6
+
+script:
+  - mkdir build
+  - cd build
+  - export CC=${CC_COMPILER} && export CXX=${CXX_COMPILER}
+  - cmake -DBUILD_TESTS=ON -DBUILD_PYTHON=ON ..
+  - make VERBOSE=1
+  - ./test/TESTS
+
+deploy:
+  provider: pypi
+  user: "mirthlessmarmot"
+  password:
+    secure: "LqL5LHxMGh2amaXEoy56scUCKTsfi3jeq1w+mB+4ka7KzKWAup84cHVflPfJowCqWOCQm10vkHg+GAVmOlpBOWhi4YExxnYM+KSSN2HPVqQgb1tzAxTqhtfgKo+q512EB0Jua5oFnfEIgp/Z31wVus08k0cWIlrsJa4PDeQydmH3yMoa+hAxVsYG4XWsVRRsWUDE5Vh6IQS1e6z9OE5IHHH/HyQ0G5MOyeSjOthtlbGzhs2+QqN47uYBd+tluw4TZ4PjNYBSbas7Pw+wypbCrzeGDskAYFZBk/XeI1QZdGsotrlFtabAub2qPopaEC1LcuoK3KlV7AYBA0Hc/zcFLEzQQEqDHZ18HBZTKmPCmODbH+mHrmuMXZF4jbuYufoWm7qgI3d0AHtMzbGVeF8COuv6Zl18hNGjl6uMVSMLZyU6ef5Dd5z3CMwZD7h/dSxrc0UREjl/DXZzUrMtKEKCEuXHOPI/9AHUdE5sHX5pRZeMGEqz9W+Vi3NB5iqIRqCZYcHHcuTleg8ffi30M1Bu94iYtvpka7/FCbbny7fpJLC1x+g4WYnfwamOI++3d9CL5+g+SA6KI6OOMdLfExFaJQcFPcgPy/Yixr61PAHR1f7+5qUIxzMm8SdzaHo93VhZ/VO6yAwO/lmR6jSCLlZzCgMY9QDoz7z6INVqi6NCOAA="
+  on:
+    branch: develop
+  server: "https://testpypi.python.org/pypi"
+  distributions: "sdist bdist_wheel"

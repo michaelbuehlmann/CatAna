@@ -1,5 +1,3 @@
-project(catana_tests)
-
 include_directories("../external/doctest/doctest")
 file(COPY test_data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
