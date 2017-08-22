@@ -19,41 +19,37 @@ addons:
       - libgsl0-dev
       - libcfitsio3-dev
 
-matrix:
+jobs:
   include:
-    - os: linux
-      compiler: gcc
+    - stage: build
       python: "3.6"
-      env:
-        - CXX_COMPILER=g++-5
-        - CC_COMPILER=gcc-5
-
-    - os: linux
-      compiler: gcc
+      script:
+        - mkdir build && cd build
+        - export CC=gcc-6 && export CXX=g++-6
+        - cmake -DBUILD_TESTS=ON -DBUILD_PYTHON=ON ..
+        - make VERBOSE=1
+        - ./test/TESTS
+    - # same stage
       python: "3.6"
-      env:
-        - CXX_COMPILER=g++-6
-        - CC_COMPILER=gcc-6
-
-script:
-  - mkdir build
-  - cd build
-  - export CC=${CC_COMPILER} && export CXX=${CXX_COMPILER}
-  - cmake -DBUILD_TESTS=ON -DBUILD_PYTHON=ON ..
-  - make VERBOSE=1
-  - ./test/TESTS
-  - cd ..
-
-before_deploy:
-  - pip install --user --upgrade setuptools wheel
-  - pwd
-  - ls
-deploy:
-  provider: pypi
-  user: "mirthlessmarmot"
-  password:
-    secure: "LqL5LHxMGh2amaXEoy56scUCKTsfi3jeq1w+mB+4ka7KzKWAup84cHVflPfJowCqWOCQm10vkHg+GAVmOlpBOWhi4YExxnYM+KSSN2HPVqQgb1tzAxTqhtfgKo+q512EB0Jua5oFnfEIgp/Z31wVus08k0cWIlrsJa4PDeQydmH3yMoa+hAxVsYG4XWsVRRsWUDE5Vh6IQS1e6z9OE5IHHH/HyQ0G5MOyeSjOthtlbGzhs2+QqN47uYBd+tluw4TZ4PjNYBSbas7Pw+wypbCrzeGDskAYFZBk/XeI1QZdGsotrlFtabAub2qPopaEC1LcuoK3KlV7AYBA0Hc/zcFLEzQQEqDHZ18HBZTKmPCmODbH+mHrmuMXZF4jbuYufoWm7qgI3d0AHtMzbGVeF8COuv6Zl18hNGjl6uMVSMLZyU6ef5Dd5z3CMwZD7h/dSxrc0UREjl/DXZzUrMtKEKCEuXHOPI/9AHUdE5sHX5pRZeMGEqz9W+Vi3NB5iqIRqCZYcHHcuTleg8ffi30M1Bu94iYtvpka7/FCbbny7fpJLC1x+g4WYnfwamOI++3d9CL5+g+SA6KI6OOMdLfExFaJQcFPcgPy/Yixr61PAHR1f7+5qUIxzMm8SdzaHo93VhZ/VO6yAwO/lmR6jSCLlZzCgMY9QDoz7z6INVqi6NCOAA="
-  on:
-    branch: develop
-  server: "https://testpypi.python.org/pypi"
-  distributions: "sdist bdist_wheel"
+      script:
+        - mkdir build && cd build
+        - export CC=gcc-5 && export CXX=g++-5
+        - cmake -DBUILD_TESTS=ON -DBUILD_PYTHON=ON ..
+        - make VERBOSE=1
+        - ./test/TESTS
+    - stage: deploy
+      script: skip
+      before_deploy:
+        - pip install --user --upgrade setuptools wheel twine
+        - pwd
+        - ls
+        - export CC=gcc-6 && export CXX=g++-6
+      deploy:
+        provider: pypi
+        user: mirthlessmarmot
+        password:
+          secure: "q/JwK15wRzViATJ4RtUmvV6YlVfv6yqPyKzH1W8lrzBvtpygi8zeSsI94dhxrR0vla0rEsjTUafN10UiflGLAwgTBOv80PLfch6miJTpFAazFVQb4bv3Qu59dQm3EYoHtgiMGgtO/gJJE1/jDGp9SiXS9EJMerL4l7kL7NERPFDGV3vwIYtmTsbzw8YKdwR53n6oUus5JY49a2AJH181yMy8iAhHmYpgqoyCnLlJqnvpKJw7svFlAZiaxv+9NoO9jkP/icdKCxnLJCLXhgwD6okXdFi/GrNj3pLG5FYL3Lz3dMv2aqJMkhkUnSrtWnSC1vvc5ZRaF5KcFSQ4QYFx7aRyxIYs7Df0ZsmeUOIGA++nk3YmkEF1UXM/VOa5SkmNzo8OKK88jRj8jxjE8kBiZw13TgjKr0WN4IjRoo8wmJfB3E5o51IUDR3L7YNdgGXglUOIJvkmSCWWw16wAazUX2ndAxMfyBoxP2jtHJHmvuyLHy1WcibXmhWoEbP+uwH0309ajH18LEOxmoqDBUYol4BWKczZQoF85WySLAlkVbpTmCWuIoMqhfISaatnBuVR7fM84q+aHCDUMytWR+55WDcqrM4s/v1QYc2SdXqBqYbu4lhlgIL9nfOEYn4oyQksboP1LBVULpGFuPAlYX3YrLyVZw9nzGubRXXnKdRpBDc="
+        on:
+          branch: develop
+        server: "https://test.pypi.org/legacy/"
+        distributions: sdist bdist_wheel
