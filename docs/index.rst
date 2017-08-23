@@ -10,10 +10,10 @@ Welcome to CatAna's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-      catana
-      catana_besseltools
-      catana_decomp
-      catana_io
+   catana
+   catana_besseltools
+   catana_decomp
+   catana_io
 
 Indices and tables
 ==================

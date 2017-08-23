@@ -1,10 +1,11 @@
 include *.txt
-recursive-include catana *
-recursive-include cmake *
+graft catana
+graft cmake
 recursive-include python *.cpp *.txt
 include external/doctest/doctest/doctest.h
-recursive-include external/eigen/Eigen *
-recursive-include external/healpixmirror/src/cxx *
-recursive-include external/pybind11 *
+graft external/eigen/Eigen
+graft external/healpixmirror/src/cxx
+graft external/pybind11
 include versioneer.py
 include python/catana/_version.py
+include python/catana/__init__.py

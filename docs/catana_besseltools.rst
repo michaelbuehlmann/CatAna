@@ -1,9 +1,11 @@
 Catana Besseltools Module
 =========================
 
+
 .. automodule:: catana.besseltools
+.. currentmodule:: catana.besseltools
 
-.. autoclass:: catana.besseltools.SphericalBesselZeros
-:members:
+.. autoclass:: SphericalBesselZeros
+   :members:
 
-.. autofunction:: catana.besseltools.double_sbessel_integrator
+.. autofunction:: double_sbessel_integrator
