@@ -50,6 +50,7 @@ jobs:
         password:
           secure: "q/JwK15wRzViATJ4RtUmvV6YlVfv6yqPyKzH1W8lrzBvtpygi8zeSsI94dhxrR0vla0rEsjTUafN10UiflGLAwgTBOv80PLfch6miJTpFAazFVQb4bv3Qu59dQm3EYoHtgiMGgtO/gJJE1/jDGp9SiXS9EJMerL4l7kL7NERPFDGV3vwIYtmTsbzw8YKdwR53n6oUus5JY49a2AJH181yMy8iAhHmYpgqoyCnLlJqnvpKJw7svFlAZiaxv+9NoO9jkP/icdKCxnLJCLXhgwD6okXdFi/GrNj3pLG5FYL3Lz3dMv2aqJMkhkUnSrtWnSC1vvc5ZRaF5KcFSQ4QYFx7aRyxIYs7Df0ZsmeUOIGA++nk3YmkEF1UXM/VOa5SkmNzo8OKK88jRj8jxjE8kBiZw13TgjKr0WN4IjRoo8wmJfB3E5o51IUDR3L7YNdgGXglUOIJvkmSCWWw16wAazUX2ndAxMfyBoxP2jtHJHmvuyLHy1WcibXmhWoEbP+uwH0309ajH18LEOxmoqDBUYol4BWKczZQoF85WySLAlkVbpTmCWuIoMqhfISaatnBuVR7fM84q+aHCDUMytWR+55WDcqrM4s/v1QYc2SdXqBqYbu4lhlgIL9nfOEYn4oyQksboP1LBVULpGFuPAlYX3YrLyVZw9nzGubRXXnKdRpBDc="
         on:
-          branch: develop
+          all_branches: true
+          tags: true
         server: "https://test.pypi.org/legacy/"
         distributions: sdist bdist_wheel
