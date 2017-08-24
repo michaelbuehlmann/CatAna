@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to CatAna’s documentation! &mdash; CatAna 2.0a documentation</title>
+  <title>Catana IO Module &mdash; CatAna 2.0a documentation</title>
   
 
   
@@ -35,8 +35,8 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="CatAna 2.0a documentation" href="#"/>
-        <link rel="next" title="Catana" href="catana.html"/> 
+    <link rel="top" title="CatAna 2.0a documentation" href="index.html"/>
+        <link rel="prev" title="Catana Decomposition Module" href="catana_decomp.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -55,7 +55,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> CatAna
+            <a href="index.html" class="icon icon-home"> CatAna
           
 
           
@@ -90,12 +90,12 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="catana.html">Catana</a></li>
 <li class="toctree-l1"><a class="reference internal" href="catana.html#module-catana.basictypes">Catana Objects and Containers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="catana_besseltools.html">Catana Besseltools Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="catana_decomp.html">Catana Decomposition Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="catana_io.html">Catana IO Module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Catana IO Module</a></li>
 </ul>
 
             
@@ -110,7 +110,7 @@
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">CatAna</a>
+          <a href="index.html">CatAna</a>
         
       </nav>
 
@@ -138,15 +138,15 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#">Docs</a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Welcome to CatAna’s documentation!</li>
+      <li>Catana IO Module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/catana_io.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -159,26 +159,40 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="welcome-to-catana-s-documentation">
-<h1>Welcome to CatAna’s documentation!<a class="headerlink" href="#welcome-to-catana-s-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="catana.html">Catana</a></li>
-<li class="toctree-l1"><a class="reference internal" href="catana.html#module-catana.basictypes">Catana Objects and Containers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="catana_besseltools.html">Catana Besseltools Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="catana_decomp.html">Catana Decomposition Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="catana_io.html">Catana IO Module</a></li>
-</ul>
-</div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
-</ul>
+  <div class="section" id="module-catana.io">
+<span id="catana-io-module"></span><h1>Catana IO Module<a class="headerlink" href="#module-catana.io" title="Permalink to this headline">¶</a></h1>
+<p>python binding for in/output of particle positions (part of CatAna)</p>
+<dl class="function">
+<dt id="catana.io.init_random">
+<code class="descclassname">catana.io.</code><code class="descname">init_random</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#catana.io.init_random" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li>init_random(seed: int) -&gt; None</li>
+<li>init_random() -&gt; None</li>
+</ol>
+</dd></dl>
+
+<dl class="class">
+<dt id="catana.io.Source">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">Source</code><a class="headerlink" href="#catana.io.Source" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="catana.io.Sink">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">Sink</code><a class="headerlink" href="#catana.io.Sink" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="catana.io.Filter">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">Filter</code><a class="headerlink" href="#catana.io.Filter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="catana.io.FilterStream">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">FilterStream</code><a class="headerlink" href="#catana.io.FilterStream" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Stream which needs a source and a sink. Can add Filters</p>
+</dd></dl>
+
 </div>
 
 
@@ -191,8 +205,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="catana.html" class="btn btn-neutral float-right" title="Catana" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
+        <a href="catana_decomp.html" class="btn btn-neutral" title="Catana Decomposition Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
