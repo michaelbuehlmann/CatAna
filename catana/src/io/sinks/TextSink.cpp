@@ -2,6 +2,7 @@
 #include <iomanip>
 
 
+
 namespace catana { namespace io {
 
   template<class RecordType>

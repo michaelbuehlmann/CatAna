@@ -1,6 +1,6 @@
+#include <unistd.h>
 #include <catana/decomposition/Analyzer.hpp>
 #include <catana/decomposition/sfb_decomposition.hpp>
-#include <unistd.h>
 
 namespace catana {
   Analyzer::Analyzer(io::Source *source, double window_volume)
