@@ -2,18 +2,21 @@ Catana
 ======
 
 .. automodule:: catana
-.. autofunction:: catana.init_random
+
+.. currentmodule:: catana
+.. autofunction:: init_random
 
 Catana Objects and Containers
 =============================
 
 .. automodule:: catana.basictypes
+.. currentmodule:: catana.basictypes
 
-.. autoclass:: catana.basictypes.Object
-:members:
+.. autoclass:: Object
+   :members:
 
-.. autoclass:: catana.basictypes.ObjectContainer
-:members:
+.. autoclass:: ObjectContainer
+   :members:
 
-.. autoclass:: catana.basictypes.PixelizedObjectContainer
-:members:
+.. autoclass:: PixelizedObjectContainer
+   :members:

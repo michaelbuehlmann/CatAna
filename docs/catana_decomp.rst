@@ -3,12 +3,14 @@ Catana Decomposition Module
 
 .. automodule:: catana.decomposition
 
-.. autofunction:: catana.decomposition.init_random
+.. currentmodule:: catana.decomposition
 
-.. autoclass:: catana.decomposition.KClkk
-:members:
+.. autofunction:: init_random
 
-.. autoclass:: catana.decomposition.Analyzer
-:members:
+.. autoclass:: KClkk
+   :members:
+
+.. autoclass:: Analyzer
+   :members:
 
 .. autofunction:: sfb_decomposition

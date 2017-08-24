@@ -3,12 +3,14 @@ Catana IO Module
 
 .. automodule:: catana.io
 
-.. autofunction:: catana.io.init_random
+.. currentmodule:: catana.io
 
-.. autoclass:: catana.io.Source
+.. autofunction:: init_random
 
-.. autoclass:: catana.io.Sink
+.. autoclass:: Source
 
-.. autoclass:: catana.io.Filter
+.. autoclass:: Sink
 
-.. autoclass:: catana.io.FilterStream
+.. autoclass:: Filter
+
+.. autoclass:: FilterStream
