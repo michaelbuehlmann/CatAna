@@ -1,5 +1,5 @@
-#ifndef CATANA_APP_DECOMP_OBJECTS_HPP
-#define CATANA_APP_DECOMP_OBJECTS_HPP
+#ifndef CATANA_RETURN_TYPES
+#define CATANA_RETURN_TYPES
 
 #include <Eigen/Dense>
 #include <string>
@@ -37,4 +37,4 @@ namespace catana {
     void savetxt(std::string filename_base);
   };
 }
-#endif //CATANA_APP_DECOMP_OBJECTS_HPP
+#endif //CATANA_RETURN_TYPES

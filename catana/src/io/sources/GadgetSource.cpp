@@ -44,7 +44,7 @@ namespace catana { namespace io {
   const int GadgetSource::skipsize = 4;
 
   GadgetSource::GadgetSource(std::string filename, bool verbose)
-      : filename(filename), current_object(0), current_object_file(0), verbose(verbose) {
+      : filename(filename), current_point(0), current_point_file(0), verbose(verbose) {
     load_file(filename, true);
     if(files > 1) {
       // Remove last digit of filename
@@ -66,33 +66,33 @@ namespace catana { namespace io {
     }
   }
 
-  template<class ObjectIterator>
-  long long int GadgetSource::read_template(ObjectIterator write_iterator, size_t n) {
+  template<class PointIterator>
+  long long int GadgetSource::read_template(PointIterator write_iterator, size_t n) {
     CartesianRecord<float> record;
 
     size_t loaded = 0;
-    size_t to_load = std::min(n, n_objects - current_object);
+    size_t to_load = std::min(n, n_points - current_point);
     if(to_load == 0)
       return -1;  // EOF
 
     // Before this loop, reader is guaranteed to be in a readable position (at least one element)
     while(loaded < to_load) {
       fd.read((char *) &record, sizeof(record));
-      *write_iterator = record.object(box_size, hubble_parameter);
+      *write_iterator = record.point(box_size, hubble_parameter);
 
       // Increment tracking variables
       loaded++;
       write_iterator++;
-      current_object++;
-      current_object_file++;
+      current_point++;
+      current_point_file++;
 
       // If at end of file, load new file
       // or break out of loop if nothing left to read
-      if(current_object_file == n_objects_file) {
+      if(current_point_file == n_points_file) {
         if(current_file == files - 1) {
           if(loaded < to_load)
-            std::cout << "WARNING: Did not find as many objects as expected ("
-                      << current_object << " instead of " << n_objects << ")." << std::endl;
+            std::cout << "WARNING: Did not find as many points as expected ("
+                      << current_point << " instead of " << n_points << ")." << std::endl;
           break;
         } else {
           load_file(++current_file);
@@ -102,16 +102,16 @@ namespace catana { namespace io {
     return loaded;
   }
 
-  long long int GadgetSource::read(ObjectContainer::iterator write_iterator, size_t n) {
+  long long int GadgetSource::read(PointContainer::iterator write_iterator, size_t n) {
     return read_template(write_iterator, n);
   }
 
-  long long int GadgetSource::read(Object *write_iterator, size_t n) {
+  long long int GadgetSource::read(Point *write_iterator, size_t n) {
     return read_template(write_iterator, n);
   }
 
-  size_t GadgetSource::get_nobjects() {
-    return n_objects;
+  size_t GadgetSource::get_npoints() {
+    return n_points;
   }
 
   void GadgetSource::load_file(std::string fname, bool initial_file) {
@@ -140,18 +140,18 @@ namespace catana { namespace io {
       // Now we should be at the correct position (Halo Particles)
 
       // Set class variables from header (current file stats)
-      current_object_file = 0;
-      n_objects_file = header.npart[1];
+      current_point_file = 0;
+      n_points_file = header.npart[1];
       current_file = (unsigned int) stoi(fname.substr(fname.find_last_of('.') + 1, std::string::npos));
 
       // Assert that file is large enough
       std::streampos avail_size = size - fd.tellg();
-      assert(avail_size >= 3 * sizeof(float) * n_objects_file);
+      assert(avail_size >= 3 * sizeof(float) * n_points_file);
 
       // If initial_file, also read overall stats
       if(initial_file) {
         files = (unsigned int) header.num_files;
-        n_objects = (unsigned int) header.npartTotal[1];
+        n_points = (unsigned int) header.npartTotal[1];
 
         //Cosmo Parameters
         hubble_parameter = header.HubbleParam;
@@ -171,7 +171,7 @@ namespace catana { namespace io {
     } else {
       load_file(filename);
     }
-    current_object = 0;
+    current_point = 0;
   }
 
 }}

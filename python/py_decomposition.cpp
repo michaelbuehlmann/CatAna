@@ -1,5 +1,4 @@
-#include <catana/io.hpp>
-#include <catana/decomposition.hpp>
+#include <catana/catana.hpp>
 #include <catana/tools/random.hpp>
 
 #include <pybind11/pybind11.h>
@@ -46,21 +45,21 @@ PYBIND11_PLUGIN(decomposition) {
            py::arg("store_flmn") = false, py::arg("verbose") = true);
 
   m.def("sfb_decomposition",
-        [](ObjectContainer& oc, unsigned short lmax, unsigned short nmax, double rmax, double window_volume,
+        [](PointContainer& oc, unsigned short lmax, unsigned short nmax, double rmax, double window_volume,
            bool store_flmn, bool verbose) {
           return sfb_decomposition(oc, lmax, nmax, rmax, window_volume, store_flmn, verbose);
         },
         "compute the C_l(k,k) of the SFB decomposition.",
-        py::arg("ObjectContainer"), py::arg("lmax"), py::arg("nmax"), py::arg("rmax"), py::arg("window_volume"),
+        py::arg("PointContainer"), py::arg("lmax"), py::arg("nmax"), py::arg("rmax"), py::arg("window_volume"),
         py::arg("store_flmn") = false, py::arg("verbose") = true);
 
   m.def("sfb_decomposition",
-        [](PixelizedObjectContainer& pic_oc, unsigned short lmax, unsigned short nmax, double rmax,
+        [](PixelizedPointContainer& pic_oc, unsigned short lmax, unsigned short nmax, double rmax,
            double window_volume, bool store_flmn, bool verbose) {
           return sfb_decomposition(pic_oc, lmax, nmax, rmax, window_volume, store_flmn, verbose);
         },
         "compute the C_l(k,k) of the SFB decomposition.",
-        py::arg("PixelizedObjectContainer"), py::arg("lmax"), py::arg("nmax"), py::arg("rmax"),
+        py::arg("PixelizedPointContainer"), py::arg("lmax"), py::arg("nmax"), py::arg("rmax"),
         py::arg("window_volume"),
         py::arg("store_flmn") = false, py::arg("verbose") = true);
 

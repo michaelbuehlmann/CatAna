@@ -2,12 +2,10 @@
 #include <cmath>
 #include <random>
 
-#include <catana/types.hpp>
-#include "catana/io/Filter.hpp"
+#include <catana/catana.hpp>
 
 // Load data directory
 #include <catana/config.hpp>
-#include <catana/io.hpp>
 
 
 namespace catana {
@@ -21,18 +19,18 @@ const std::string test_data_dir(TEST_DATA_DIR);
 TEST_SUITE("io");
 
 TEST_CASE ("testing tophat filter") {
-  ObjectContainer object_container;
-  object_container.push_back(Object(0, 0, 0.8));
-  object_container.push_back(Object(0, 0, 1.2));
-  object_container.push_back(Object(1, 1, 1));
-  object_container.push_back(Object(0.5, 0.5, 0.5));
-      REQUIRE(4 == object_container.size());
+  PointContainer point_container;
+  point_container.push_back(Point(0, 0, 0.8));
+  point_container.push_back(Point(0, 0, 1.2));
+  point_container.push_back(Point(1, 1, 1));
+  point_container.push_back(Point(0.5, 0.5, 0.5));
+      REQUIRE(4 == point_container.size());
 
   io::TophatRadialWindowFunctionFilter filter(1.);
-  filter(object_container);
-      CHECK(2 == object_container.size());
-      CHECK(doctest::Approx(0.8) == object_container[0].r);
-      CHECK(doctest::Approx(0.8660254038) == object_container[1].r);
+  filter(point_container);
+      CHECK(2 == point_container.size());
+      CHECK(doctest::Approx(0.8) == point_container[0].r);
+      CHECK(doctest::Approx(0.8660254038) == point_container[1].r);
 }
 
 TEST_CASE ("testing gaussian filter") {
@@ -40,25 +38,25 @@ TEST_CASE ("testing gaussian filter") {
   size_t N = (1 << 24);
   size_t N_exp = N;
 
-  ObjectContainer object_container;
-  object_container.reserve(N);
+  PointContainer point_container;
+  point_container.reserve(N);
   for(size_t i = 0; i < N; ++i) {
-    object_container.push_back(Object(dist(rng), dist(rng), dist(rng)));
+    point_container.push_back(Point(dist(rng), dist(rng), dist(rng)));
   }
-      REQUIRE(N_exp == object_container.size());
+      REQUIRE(N_exp == point_container.size());
 
   io::TophatRadialWindowFunctionFilter filter_tophat(1000.);
-  filter_tophat(object_container);
+  filter_tophat(point_container);
 
   N_exp *= 0.5235987756;
-      CHECK(object_container.size() == doctest::Approx(N_exp).epsilon(0.1 * N_exp));
+      CHECK(point_container.size() == doctest::Approx(N_exp).epsilon(0.1 * N_exp));
 
   float R0(100.f);
   io::GaussianRadialWindowFunctionFilter filter_gauss(R0);
-  filter_gauss(object_container);
+  filter_gauss(point_container);
 
   N_exp *= 0.001329340388;
-      CHECK(object_container.size() == doctest::Approx(N_exp).epsilon(0.1 * N_exp));
+      CHECK(point_container.size() == doctest::Approx(N_exp).epsilon(0.1 * N_exp));
 }
 
 TEST_CASE ("testing interpolated gaussian filter") {
@@ -66,32 +64,32 @@ TEST_CASE ("testing interpolated gaussian filter") {
   size_t N = (1 << 24);
   size_t N_exp = N;
 
-  ObjectContainer object_container;
-  object_container.reserve(N);
+  PointContainer point_container;
+  point_container.reserve(N);
   for(size_t i = 0; i < N; ++i) {
-    object_container.push_back(Object(dist(rng), dist(rng), dist(rng)));
+    point_container.push_back(Point(dist(rng), dist(rng), dist(rng)));
   }
-      REQUIRE(N_exp == object_container.size());
+      REQUIRE(N_exp == point_container.size());
 
   io::TophatRadialWindowFunctionFilter filter_tophat(1000.f);
-  filter_tophat(object_container);
+  filter_tophat(point_container);
 
   N_exp *= 0.5235987756;
-      CHECK(object_container.size() == doctest::Approx(N_exp).epsilon(0.1 * N_exp));
+      CHECK(point_container.size() == doctest::Approx(N_exp).epsilon(0.1 * N_exp));
 
   auto window_function = [](double r) { return std::exp(-std::pow(r / 100., 2)); };
   io::GenericRadialWindowFunctionFilter filter_gauss(window_function, 10000, 0, 1000.);
-  filter_gauss(object_container);
+  filter_gauss(point_container);
 
   N_exp *= 0.001329340388;
-      CHECK(object_container.size() == doctest::Approx(N_exp).epsilon(0.1 * N_exp));
+      CHECK(point_container.size() == doctest::Approx(N_exp).epsilon(0.1 * N_exp));
 }
 
 
 TEST_CASE ("testing angular mask filter") {
-  ObjectContainer object_container;
-  object_container.push_back(object_from_spherical_position(1, 0, -1));  // should be accepted
-  object_container.push_back(object_from_spherical_position(1, 0, 1));  // should be removed
+  PointContainer point_container;
+  point_container.push_back(point_from_spherical_position(1, 0, -1));  // should be accepted
+  point_container.push_back(point_from_spherical_position(1, 0, 1));  // should be removed
 
 
 
@@ -100,9 +98,9 @@ TEST_CASE ("testing angular mask filter") {
 
   io::AngularMaskFilter filter(test_data_dir + filename);
 
-  filter(object_container);
-      REQUIRE(1 == object_container.size());
-      CHECK(doctest::Approx(-1.) == object_container[0].p.phi);
+  filter(point_container);
+      REQUIRE(1 == point_container.size());
+      CHECK(doctest::Approx(-1.) == point_container[0].p.phi);
 }
 
 TEST_SUITE_END();

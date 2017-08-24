@@ -6,7 +6,6 @@
 #include "Sink.hpp"
 #include "sinks/RawBinarySink.hpp"
 #include "sources/RawBinarySource.hpp"
-#include "../types.hpp"
 
 #include <memory>
 #include <vector>
@@ -47,7 +46,7 @@ namespace catana { namespace io {
 
     //! Read data from source, filter it and write to sink.
     /*!
-     * @return number of objects written to sink.
+     * @return number of points written to sink.
      */
     size_t run(size_t subsample_size = 0, std::string temp_filename = "tmp.bin");
 
@@ -58,16 +57,16 @@ namespace catana { namespace io {
      * run the "run_fromtemp" function with the number of particles needed.
      *
      * @param temp_filename Path and name of the temporary file
-     * @return number of objects written to temporary file
+     * @return number of points written to temporary file
      */
     size_t run_totemp(std::string temp_filename = "tmp.bin", bool append = true);
 
     //! Run intermediate steps manually: write temporary file to sink (with subsampling)
     /*!
      * @param subsample_size The number of particles which are randomly drawn from the temporary file and moved to
-     * the sink object
+     * the sink point
      * @param temp_filename Path and name of the temporary file
-     * @return number of objects written to sink
+     * @return number of points written to sink
      */
     size_t run_fromtemp(std::string temp_filename = "tmp.bin", size_t subsample_size = 0, bool remove_temp = true);
 
@@ -80,7 +79,7 @@ namespace catana { namespace io {
     Source *source;
     Sink *sink;
     std::vector<Filter *> filters_p;
-    std::unique_ptr<Object[]> buffer;
+    std::unique_ptr<Point[]> buffer;
     size_t buffer_size;
 
     bool verbose;

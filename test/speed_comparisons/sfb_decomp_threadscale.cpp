@@ -18,21 +18,21 @@ using namespace catana;
 
 std::mt19937 rng;
 
-ObjectContainer random_objects(size_t n, double box_size) {
-    ObjectContainer oc(n);
+PointContainer random_points(size_t n, double box_size) {
+    PointContainer oc(n);
     io::TophatRadialWindowFunctionFilter tophat_filter(box_size/2.);
 
 #pragma omp parallel
     {
         std::mt19937 rng_private;
         std::uniform_real_distribution<double> dist(-box_size/2., box_size/2.);
-        Object object;
+        Point point;
 #pragma omp for
         for (size_t i = 0; i<n; ++i) {
             do{
-                object = Object(dist(rng_private), dist(rng_private), dist(rng_private));
-            } while(!tophat_filter.filter(object));
-            oc[i] = object;
+                point = Point(dist(rng_private), dist(rng_private), dist(rng_private));
+            } while(!tophat_filter.filter(point));
+            oc[i] = point;
         }
     }
     return oc;
@@ -51,8 +51,8 @@ int main(int argc, char* argv[]){
 
     int process_id = ::getpid();
 
-    ObjectContainer oc = random_objects(n, 1000.);
-    PixelizedObjectContainer poc(nside, oc);
+    PointContainer oc = random_points(n, 1000.);
+    PixelizedPointContainer poc(nside, oc);
 
     timer::Timer timer;
 

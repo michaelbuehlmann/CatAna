@@ -6,17 +6,17 @@ Catana
 .. currentmodule:: catana
 .. autofunction:: init_random
 
-Catana Objects and Containers
-=============================
+Catana Points and Containers
+============================
 
 .. automodule:: catana.basictypes
 .. currentmodule:: catana.basictypes
 
-.. autoclass:: Object
+.. autoclass:: Point
    :members:
 
-.. autoclass:: ObjectContainer
+.. autoclass:: PointContainer
    :members:
 
-.. autoclass:: PixelizedObjectContainer
+.. autoclass:: PixelizedPointContainer
    :members:

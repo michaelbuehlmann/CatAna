@@ -3,13 +3,13 @@
 
 #include <catana/config.hpp>
 #include "return_types.hpp"
-#include "../types.hpp"
+#include "../points/PointContainer.hpp"
 
 
 namespace catana {
-  //! Do the SFB-decomposition of ObjectContainer (raw, brute-force method)
+  //! Do the SFB-decomposition of PointContainer (raw, brute-force method)
   KClkk _sfb_raw(
-      const ObjectContainer& objects,
+      const PointContainer& points,
       unsigned short lmax, unsigned short nmax,
       double rmax, double window_volume, bool store_flmn = false, bool verbose = true,
       bool parallel = false, bool interpolated = false

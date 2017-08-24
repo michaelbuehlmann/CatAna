@@ -9,7 +9,7 @@
 
 namespace catana { namespace io {
 
-  //! A Sink class for text files. The Objects will be stored in the RecordType Format.
+  //! A Sink class for text files. The Points will be stored in the RecordType Format.
   /*!
    * @tparam RecordType A class defined in the record_types.hpp file. Determines the storage order in the binary
    * file.
@@ -22,21 +22,21 @@ namespace catana { namespace io {
     //! Construct from filename. File with "filename" will be created
     TextSink(std::string filename, bool verbose = true);
 
-    //! write objects within [read_iterator, read_iterator+n) to object_container.
+    //! write points within [read_iterator, read_iterator+n) to point_container.
     /*!
-     * @param read_iterator [read_iterator, read_iterator+n) must be a valid range of objects
-     * @param n number of objects to read from read_iterator and write to sink
-     * @return number of objects written. -1 if failed
+     * @param read_iterator [read_iterator, read_iterator+n) must be a valid range of points
+     * @param n number of points to read from read_iterator and write to sink
+     * @return number of points written. -1 if failed
      */
-    virtual long long int write(ObjectContainer::iterator read_iterator, size_t n) override;
+    virtual long long int write(PointContainer::iterator read_iterator, size_t n) override;
 
-    //! write objects within [read_iterator, read_iterator+n) to object_container.
+    //! write points within [read_iterator, read_iterator+n) to point_container.
     /*!
-     * @param read_iterator [read_iterator, read_iterator+n) must be a valid range of objects
-     * @param n number of objects to read from read_iterator and write to sink
-     * @return number of objects written. -1 if failed
+     * @param read_iterator [read_iterator, read_iterator+n) must be a valid range of points
+     * @param n number of points to read from read_iterator and write to sink
+     * @return number of points written. -1 if failed
      */
-    virtual long long int write(Object *read_iterator, size_t n) override;
+    virtual long long int write(Point *read_iterator, size_t n) override;
 
     //! Close file (can no longer write)
     void close();
@@ -47,8 +47,8 @@ namespace catana { namespace io {
     TextSink& operator=(TextSink const&) = delete;
 
   private:
-    template<class ObjectIterator>
-    long long int write_template(ObjectIterator read_iterator, size_t n);
+    template<class PointIterator>
+    long long int write_template(PointIterator read_iterator, size_t n);
 
   private:
     std::string filename;

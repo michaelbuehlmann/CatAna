@@ -1,16 +1,16 @@
-#include <catana/objects/ObjectContainer.hpp>
+#include <catana/points/PointContainer.hpp>
 #include <random>
 #include <cassert>
 
 
 namespace catana {
   extern std::mt19937 rng;
-  void create_object_container_subset(ObjectContainer& object_container, const size_t& n) {
-    assert(n < object_container.size());
+  void create_point_container_subset(PointContainer& point_container, const size_t& n) {
+    assert(n < point_container.size());
     std::uniform_int_distribution<size_t> dist;  // default: (0, max(numeric type)
 
-    auto current = object_container.begin();
-    size_t obj_remaining = object_container.size();
+    auto current = point_container.begin();
+    size_t obj_remaining = point_container.size();
     size_t obj_toadd = n;
 
     while(obj_toadd--) {
@@ -19,7 +19,7 @@ namespace catana {
       ++current;
       --obj_remaining;
     }
-    object_container.resize(n);
+    point_container.resize(n);
   }
 
 }

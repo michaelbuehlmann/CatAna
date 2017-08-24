@@ -1,5 +1,4 @@
-#include <catana/decomposition/return_types.hpp>
-#include <catana/besseltools.hpp>
+#include <catana/catana.hpp>
 #include <iomanip>
 #include <fstream>
 #include <iostream>

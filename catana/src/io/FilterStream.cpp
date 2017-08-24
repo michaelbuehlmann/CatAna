@@ -33,7 +33,7 @@ namespace catana {
         current = 0;
       }
 
-      virtual bool filter(Object& object) {
+      virtual bool filter(Point& point) {
         return operator()(current++);
       };
 
@@ -46,7 +46,7 @@ namespace catana {
     FilterStream::FilterStream(Source *source, Sink *sink, size_t buffer_size, bool verbose)
         : source(source),
           sink(sink),
-          buffer(new Object[buffer_size]),
+          buffer(new Point[buffer_size]),
           buffer_size(buffer_size),
           verbose(verbose) {}
 
@@ -68,9 +68,9 @@ namespace catana {
     size_t FilterStream::run_fromtemp(std::string temp_filename, size_t subsample_size, bool remove_temp) {
       auto temp_source = new RawBinarySource<SphericalRecord<double>>(temp_filename, verbose);
 
-      size_t n = temp_source->get_nobjects();
+      size_t n = temp_source->get_npoints();
       if(verbose)
-        std::cout << "Temporary file " << temp_filename << " contains " << n << " objects." << std::endl;
+        std::cout << "Temporary file " << temp_filename << " contains " << n << " points." << std::endl;
       std::vector<Filter *> fi_p;
       std::unique_ptr<Filter> random_subset_filter;
       if(subsample_size != 0 && subsample_size < n) {
@@ -107,7 +107,7 @@ namespace catana {
         assert(n <= buffer_size);
         n_read += n;
         if(verbose)
-          std::cout << "\tObjects read: " << std::setw(10) << n << " (" << std::setw(10) << n_read << ")\t";
+          std::cout << "\tPoints read: " << std::setw(10) << n << " (" << std::setw(10) << n_read << ")\t";
         // Apply filters
         for(auto& filter_p: fi_p) {
           n = (*filter_p)(buffer.get(), buffer.get() + n);

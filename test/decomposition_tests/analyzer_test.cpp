@@ -1,6 +1,5 @@
 #include "doctest.h"
-#include <catana/io.hpp>
-#include <catana/decomposition/Analyzer.hpp>
+#include <catana/catana.hpp>
 
 // LOAD TEST_DATA_DIR
 #include <catana/config.hpp>

@@ -1,5 +1,4 @@
-#include <catana/types.hpp>
-#include <catana/io.hpp>
+#include <catana/catana.hpp>
 #include <catana/tools/random.hpp>
 
 #include <pybind11/pybind11.h>
@@ -29,18 +28,18 @@ PYBIND11_PLUGIN(io) {
     // Parent classes
     py::class_<io::Source> (m, "Source")
             .def("reset", &io::Source::reset)
-            .def("get_objectcontainer", &io::Source::get_objectcontainer)
-            .def("get_pixobjectcontainer", &io::Source::get_pixobjectcontainer, py::arg("nside"));
+            .def("get_point_container", &io::Source::get_point_container)
+            .def("get_pixelized_point_container", &io::Source::get_pixelized_point_container, py::arg("nside"));
     py::class_<io::Sink> (m, "Sink");
     py::class_<io::Filter> (m, "Filter")
-            .def("__call__", [&](io::Filter& fi, ObjectContainer& object_container){
-                return fi(object_container);
+            .def("__call__", [&](io::Filter& fi, PointContainer& point_container){
+                return fi(point_container);
             });
 
     // Add Source classes here
-  py::class_<io::ObjectContainerSource, io::Source>(m, "ObjectContainerSource",
-                                                    "Read positions from ObjectContainer")
-            .def(py::init<ObjectContainer&>());
+  py::class_<io::PointContainerSource, io::Source>(m, "PointContainerSource",
+                                                    "Read positions from PointContainer")
+            .def(py::init<PointContainer&>());
   py::class_<io::GadgetSource, io::Source>(m, "GadgetSource",
                                            "Read positions from binary Gadget file")
             .def(py::init<std::string, bool>(),
@@ -63,12 +62,12 @@ PYBIND11_PLUGIN(io) {
                     py::arg("filename"), py::arg("verbose")=true);
 
     // Add Sink classes here
-  py::class_<io::ObjectContainerSink, io::Sink>(m, "ObjectContainerSink",
-                                                "Write data into ObjectContainer")
-            .def(py::init<ObjectContainer&>());
-  py::class_<io::PixelizedObjectContainerSink, io::Sink>(m, "PixelizedObjectContainerSink",
-                                                         "Write data into PixelizedObjectContainer")
-            .def(py::init<PixelizedObjectContainer&>());
+  py::class_<io::PointContainerSink, io::Sink>(m, "PointContainerSink",
+                                                "Write data into PointContainer")
+            .def(py::init<PointContainer&>());
+  py::class_<io::PixelizedPointContainerSink, io::Sink>(m, "PixelizedPointContainerSink",
+                                                         "Write data into PixelizedPointContainer")
+            .def(py::init<PixelizedPointContainer&>());
   py::class_<io::TextSink<record_cd>, io::Sink>(m, "TextSink_cartesian",
                                                 "Write to Text File (cartesian)")
             .def(py::init<std::string, bool>(),

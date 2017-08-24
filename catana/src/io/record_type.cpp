@@ -26,13 +26,13 @@ namespace catana { namespace io {
       :pos_r(r), pos_theta(theta), pos_phi(phi) {}
 
   template<class FLOAT_TYPE>
-  SphericalRecordBase<FLOAT_TYPE>::SphericalRecordBase(const Object& object, const double& box_size,
+  SphericalRecordBase<FLOAT_TYPE>::SphericalRecordBase(const Point& point, const double& box_size,
                                                        const double& hubble_param)
-      :pos_r(object.r * hubble_param), pos_theta(object.p.theta), pos_phi(object.p.phi) {}
+      :pos_r(point.r * hubble_param), pos_theta(point.p.theta), pos_phi(point.p.phi) {}
 
   template<class FLOAT_TYPE>
-  Object SphericalRecordBase<FLOAT_TYPE>::object(const double& box_size, const double& hubble_param) {
-    return object_from_spherical_position(pos_r, pos_theta, pos_phi, hubble_param);
+  Point SphericalRecordBase<FLOAT_TYPE>::point(const double& box_size, const double& hubble_param) {
+    return point_from_spherical_position(pos_r, pos_theta, pos_phi, hubble_param);
   }
 
   ///////////////////////////////////////////////////////////////////////////////
@@ -47,9 +47,9 @@ namespace catana { namespace io {
       :SphericalRecordBase<FLOAT_TYPE>(r, theta, phi) {}
 
   template<class FLOAT_TYPE, SphericalTextFormat FMT>
-  SphericalRecord<FLOAT_TYPE, FMT>::SphericalRecord(const Object& object, const double& box_size,
+  SphericalRecord<FLOAT_TYPE, FMT>::SphericalRecord(const Point& point, const double& box_size,
                                                     const double& hubble_param)
-      :SphericalRecordBase<FLOAT_TYPE>(object, box_size, hubble_param) {}
+      :SphericalRecordBase<FLOAT_TYPE>(point, box_size, hubble_param) {}
 
   template<class FLOAT_TYPE>
   SphericalRecord<FLOAT_TYPE, SphericalTextFormat::THREEDEX>::SphericalRecord()
@@ -61,10 +61,10 @@ namespace catana { namespace io {
       :SphericalRecordBase<FLOAT_TYPE>(r, theta, phi) {}
 
   template<class FLOAT_TYPE>
-  SphericalRecord<FLOAT_TYPE, SphericalTextFormat::THREEDEX>::SphericalRecord(const Object& object,
+  SphericalRecord<FLOAT_TYPE, SphericalTextFormat::THREEDEX>::SphericalRecord(const Point& point,
                                                                               const double& box_size,
                                                                               const double& hubble_param)
-      :SphericalRecordBase<FLOAT_TYPE>(object, box_size, hubble_param) {}
+      :SphericalRecordBase<FLOAT_TYPE>(point, box_size, hubble_param) {}
 
   template<class FLOAT_TYPE, SphericalTextFormat FMT>
   std::ostream& operator<<(std::ostream& os, const SphericalRecord<FLOAT_TYPE, FMT>& rec) {

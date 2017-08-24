@@ -1,6 +1,5 @@
 #include "doctest.h"
-#include <catana/io.hpp>
-#include <catana/types.hpp>
+#include <catana/catana.hpp>
 
 
 using namespace catana;
@@ -8,11 +7,11 @@ using namespace catana;
 TEST_SUITE("io");
 
 TEST_CASE ("testing RawBinary sink and source") {
-  ObjectContainer oc;
-  oc.push_back(object_from_spherical_position(1., 1., 3.));
-  oc.push_back(object_from_spherical_position(2., 0.1, 0.));
-  oc.push_back(object_from_spherical_position(3., 0.2, 1.));
-  oc.push_back(object_from_spherical_position(100., 0.3, 4.));
+  PointContainer oc;
+  oc.push_back(point_from_spherical_position(1., 1., 3.));
+  oc.push_back(point_from_spherical_position(2., 0.1, 0.));
+  oc.push_back(point_from_spherical_position(3., 0.2, 1.));
+  oc.push_back(point_from_spherical_position(100., 0.3, 4.));
 
   std::string filename = "RawIOTest.dat";
   using record_t = io::CartesianRecord<float>;
@@ -39,7 +38,7 @@ TEST_CASE ("testing RawBinary sink and source") {
   }
 
   // Reading
-  ObjectContainer oc2(10 * oc.size());
+  PointContainer oc2(10 * oc.size());
   int read = 0;
   n = 0;
   io::RawBinarySource<record_t> source(filename, false);
@@ -60,9 +59,9 @@ TEST_CASE ("testing RawBinary sink and source") {
 
 
 TEST_CASE ("testing RawBinary sink and source with large data") {
-  ObjectContainer oc;
+  PointContainer oc;
   for(size_t i = 0; i < (1 << 12); ++i) {
-    oc.push_back(object_from_spherical_position(1000. / i, 1., 2.));
+    oc.push_back(point_from_spherical_position(1000. / i, 1., 2.));
   }
 
   std::string filename = "RawIOLargeTest.dat";
@@ -75,7 +74,7 @@ TEST_CASE ("testing RawBinary sink and source with large data") {
 
 
   // Reading
-  Object buffer[100];
+  Point buffer[100];
   size_t read = 0;
   n = 0;
   io::RawBinarySource<record_t> source(filename, false);

@@ -6,26 +6,25 @@ set(CATANA_TOOLS_SOURCES
         src/tools/random.cpp include/catana/tools/random.hpp)
 
 set(CATANA_BESSELTOOLS_SOURCES
-        include/catana/besseltools.hpp
         include/catana/besseltools/SphericalBesselZeros.hpp src/besseltools/SphericalBesselZeros.cpp
         include/catana/besseltools/sbessel_integrator.hpp src/besseltools/sbessel_integrator.cpp
         include/catana/besseltools/SBesselInterpolator.hpp src/besseltools/SBesselInterpolator.cpp)
 
 set(CATANA_BASICTYPES_SOURCES
-        include/catana/objects/Object.hpp src/objects/Object.cpp
-        include/catana/objects/ObjectContainer.hpp src/objects/ObjectContainer.cpp
-        include/catana/objects/PixelizedObjectContainer.hpp src/objects/PixelizedObjectContainer.cpp
+        include/catana/points/Point.hpp src/points/Point.cpp
+        include/catana/points/PointContainer.hpp src/points/PointContainer.cpp
+        include/catana/points/PixelizedPointContainer.hpp src/points/PixelizedPointContainer.cpp
         include/catana/decomposition/return_types.hpp src/decomposition/return_types.cpp)
 
 set(CATANA_IO_SOURCES
         include/catana/io/Source.hpp src/io/Source.cpp
-        include/catana/io/sources/ObjectContainerSource.hpp src/io/sources/ObjectContainerSource.cpp
+        include/catana/io/sources/PointContainerSource.hpp src/io/sources/PointContainerSource.cpp
         include/catana/io/sources/GadgetSource.hpp src/io/sources/GadgetSource.cpp
         include/catana/io/sources/RawBinarySource.hpp src/io/sources/RawBinarySource.cpp
         include/catana/io/sources/TextSource.hpp src/io/sources/TextSource.cpp
         include/catana/io/Sink.hpp
-        include/catana/io/sinks/ObjectContainerSink.hpp
-        include/catana/io/sinks/PixelizedObjectContainerSink.hpp
+        include/catana/io/sinks/PointContainerSink.hpp
+        include/catana/io/sinks/PixelizedPointContainerSink.hpp
         include/catana/io/sinks/RawBinarySink.hpp src/io/sinks/RawBinarySink.cpp
         include/catana/io/sinks/TextSink.hpp src/io/sinks/TextSink.cpp
         include/catana/io/Filter.hpp src/io/Filter.cpp
@@ -43,6 +42,7 @@ set(CATANA_DECOMPOSITION_SOURCES
 
 # COMPILE AS STATIC LIBRARY
 add_library(catana
+        include/catana/catana.hpp
         ${CATANA_TOOLS_SOURCES}
         ${CATANA_BESSELTOOLS_SOURCES}
         ${CATANA_BASICTYPES_SOURCES}

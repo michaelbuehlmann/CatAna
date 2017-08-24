@@ -6,30 +6,30 @@ extern std::mt19937 rng;
 
 namespace catana { namespace io {
 
-  size_t Filter::operator()(ObjectContainer& object_container, bool resize) {
+  size_t Filter::operator()(PointContainer& point_container, bool resize) {
     // end always points behind last element
-    auto end = object_container.end();
+    auto end = point_container.end();
     // current always points at the element currently beeing evaluated
-    auto current = object_container.begin();
+    auto current = point_container.begin();
     while(current != end) {
-      if(filter(*current)) {  // object is accepted
+      if(filter(*current)) {  // point is accepted
         ++current;
-      } else {  // object is rejected
+      } else {  // point is rejected
         std::swap(*current, *(--end));
       }
     }
-    size_t new_size = static_cast<size_t>(std::distance(object_container.begin(), end));
+    size_t new_size = static_cast<size_t>(std::distance(point_container.begin(), end));
     if(resize)
-      object_container.resize(new_size);
+      point_container.resize(new_size);
     return new_size;
   }
 
-  size_t Filter::operator()(Object *begin, Object *end) {
-    Object *current = begin;
+  size_t Filter::operator()(Point *begin, Point *end) {
+    Point *current = begin;
     while(current != end) {
-      if(filter(*current)) {  // object is accepted
+      if(filter(*current)) {  // point is accepted
         ++current;
-      } else {  // object is rejected
+      } else {  // point is rejected
         std::swap(*current, *(--end));
       }
     }

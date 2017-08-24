@@ -14,8 +14,8 @@ namespace catana { namespace io {
   }
 
   template<class RecordType>
-  template<class ObjectIterator>
-  long long int TextSource<RecordType>::read_template(ObjectIterator write_iterator, size_t n) {
+  template<class PointIterator>
+  long long int TextSource<RecordType>::read_template(PointIterator write_iterator, size_t n) {
     size_t i = 0;
     typedef typename record_t::float_t float_t;
     float_t arg1, arg2, arg3;
@@ -26,7 +26,7 @@ namespace catana { namespace io {
         in >> arg1;
         in >> arg2;
         in >> arg3;
-        *(write_iterator++) = record_t(arg1, arg2, arg3).object(box_size, hubble_param);
+        *(write_iterator++) = record_t(arg1, arg2, arg3).point(box_size, hubble_param);
         ++i;
       } else {
         break;
@@ -41,12 +41,12 @@ namespace catana { namespace io {
   }
 
   template<class RecordType>
-  long long int TextSource<RecordType>::read(Object *write_iterator, size_t n) {
+  long long int TextSource<RecordType>::read(Point *write_iterator, size_t n) {
     return read_template(write_iterator, n);
   }
 
   template<class RecordType>
-  long long int TextSource<RecordType>::read(ObjectContainer::iterator write_iterator, size_t n) {
+  long long int TextSource<RecordType>::read(PointContainer::iterator write_iterator, size_t n) {
     return read_template(write_iterator, n);
   }
 
