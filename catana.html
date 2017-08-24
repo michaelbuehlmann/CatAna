@@ -93,7 +93,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Catana</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#module-catana.basictypes">Catana Objects and Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#module-catana.basictypes">Catana Points and Containers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="catana_besseltools.html">Catana Besseltools Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="catana_decomp.html">Catana Decomposition Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="catana_io.html">Catana IO Module</a></li>
@@ -164,39 +164,39 @@
 <span id="catana"></span><h1>Catana<a class="headerlink" href="#module-catana" title="Permalink to this headline">¶</a></h1>
 </div>
 <div class="section" id="module-catana.basictypes">
-<span id="catana-objects-and-containers"></span><h1>Catana Objects and Containers<a class="headerlink" href="#module-catana.basictypes" title="Permalink to this headline">¶</a></h1>
+<span id="catana-points-and-containers"></span><h1>Catana Points and Containers<a class="headerlink" href="#module-catana.basictypes" title="Permalink to this headline">¶</a></h1>
 <p>python bindings of basic types used in CatAna</p>
 <dl class="class">
-<dt id="catana.basictypes.Object">
-<em class="property">class </em><code class="descclassname">catana.basictypes.</code><code class="descname">Object</code><a class="headerlink" href="#catana.basictypes.Object" title="Permalink to this definition">¶</a></dt>
+<dt id="catana.basictypes.Point">
+<em class="property">class </em><code class="descclassname">catana.basictypes.</code><code class="descname">Point</code><a class="headerlink" href="#catana.basictypes.Point" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
-<dt id="catana.basictypes.Object.cartesian">
-<code class="descname">cartesian</code><span class="sig-paren">(</span><em>self: catana.basictypes.Object</em><span class="sig-paren">)</span> &#x2192; Tuple[float, float, float]<a class="headerlink" href="#catana.basictypes.Object.cartesian" title="Permalink to this definition">¶</a></dt>
+<dt id="catana.basictypes.Point.cartesian">
+<code class="descname">cartesian</code><span class="sig-paren">(</span><em>self: catana.basictypes.Point</em><span class="sig-paren">)</span> &#x2192; Tuple[float, float, float]<a class="headerlink" href="#catana.basictypes.Point.cartesian" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="catana.basictypes.Object.spherical">
-<code class="descname">spherical</code><span class="sig-paren">(</span><em>self: catana.basictypes.Object</em><span class="sig-paren">)</span> &#x2192; Tuple[float, float, float]<a class="headerlink" href="#catana.basictypes.Object.spherical" title="Permalink to this definition">¶</a></dt>
+<dt id="catana.basictypes.Point.spherical">
+<code class="descname">spherical</code><span class="sig-paren">(</span><em>self: catana.basictypes.Point</em><span class="sig-paren">)</span> &#x2192; Tuple[float, float, float]<a class="headerlink" href="#catana.basictypes.Point.spherical" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
-<dt id="catana.basictypes.ObjectContainer">
-<em class="property">class </em><code class="descclassname">catana.basictypes.</code><code class="descname">ObjectContainer</code><a class="headerlink" href="#catana.basictypes.ObjectContainer" title="Permalink to this definition">¶</a></dt>
+<dt id="catana.basictypes.PointContainer">
+<em class="property">class </em><code class="descclassname">catana.basictypes.</code><code class="descname">PointContainer</code><a class="headerlink" href="#catana.basictypes.PointContainer" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
-<dt id="catana.basictypes.ObjectContainer.add_object">
-<code class="descname">add_object</code><span class="sig-paren">(</span><em>self: catana.basictypes.ObjectContainer</em>, <em>arg0: catana.basictypes.Object</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.basictypes.ObjectContainer.add_object" title="Permalink to this definition">¶</a></dt>
+<dt id="catana.basictypes.PointContainer.add_point">
+<code class="descname">add_point</code><span class="sig-paren">(</span><em>self: catana.basictypes.PointContainer</em>, <em>arg0: catana.basictypes.Point</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.basictypes.PointContainer.add_point" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
-<dt id="catana.basictypes.PixelizedObjectContainer">
-<em class="property">class </em><code class="descclassname">catana.basictypes.</code><code class="descname">PixelizedObjectContainer</code><a class="headerlink" href="#catana.basictypes.PixelizedObjectContainer" title="Permalink to this definition">¶</a></dt>
+<dt id="catana.basictypes.PixelizedPointContainer">
+<em class="property">class </em><code class="descclassname">catana.basictypes.</code><code class="descname">PixelizedPointContainer</code><a class="headerlink" href="#catana.basictypes.PixelizedPointContainer" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
-<dt id="catana.basictypes.PixelizedObjectContainer.get_countmap">
-<code class="descname">get_countmap</code><span class="sig-paren">(</span><em>self: catana.basictypes.PixelizedObjectContainer</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray[int32[m, 1]]<a class="headerlink" href="#catana.basictypes.PixelizedObjectContainer.get_countmap" title="Permalink to this definition">¶</a></dt>
+<dt id="catana.basictypes.PixelizedPointContainer.get_countmap">
+<code class="descname">get_countmap</code><span class="sig-paren">(</span><em>self: catana.basictypes.PixelizedPointContainer</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray[int32[m, 1]]<a class="headerlink" href="#catana.basictypes.PixelizedPointContainer.get_countmap" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
