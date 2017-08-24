@@ -10,8 +10,7 @@
 
 #include <Eigen/Dense>
 
-#include <catana/types.hpp>
-#include <catana/tools/FunctionInterpolator.hpp>
+#include <catana/catana.hpp>
 
 namespace py = pybind11;
 using namespace catana;
@@ -21,20 +20,20 @@ PYBIND11_PLUGIN(basictypes)
 {
     py::module m("basictypes", "python bindings of basic types used in CatAna");
 
-    // Binding for the "Object" class, with cartesian and spherical output methods
-    py::class_<Object>(m, "Object", py::buffer_protocol())
+    // Binding for the "Point" class, with cartesian and spherical output methods
+    py::class_<Point>(m, "Point", py::buffer_protocol())
             .def(py::init<>())
             .def(py::init<double, double, double>())
-            .def("spherical", [](const Object& obj) {
+            .def("spherical", [](const Point& obj) {
                 return std::make_tuple(obj.r, obj.p.theta, obj.p.phi);
             })
-            .def("cartesian", [](const Object& obj) {
+            .def("cartesian", [](const Point& obj) {
                 vec3 v = obj.p.to_vec3();
                 return std::make_tuple(obj.r*v.x, obj.r*v.y, obj.r*v.z);
             })
-            .def_buffer([](Object& object) -> py::buffer_info {
+            .def_buffer([](Point& point) -> py::buffer_info {
                 return py::buffer_info(
-                        &object.r,
+                        &point.r,
                         sizeof(double),
                         py::format_descriptor<double>::format(),
                         1,
@@ -43,10 +42,10 @@ PYBIND11_PLUGIN(basictypes)
                 );
             });
 
-    // Binding of the ObjectContainer class
-    py::class_<ObjectContainer>(m, "ObjectContainer", py::buffer_protocol())
+    // Binding of the PointContainer class
+    py::class_<PointContainer>(m, "PointContainer", py::buffer_protocol())
             .def(py::init<>())
-            .def("__init__", [](ObjectContainer& oc, py::array_t<double> array, std::string coord_type)
+            .def("__init__", [](PointContainer& oc, py::array_t<double> array, std::string coord_type)
             {
                 bool spherical;
                 if(coord_type==std::string("cartesian"))
@@ -62,29 +61,29 @@ PYBIND11_PLUGIN(basictypes)
                 if(info.shape[1] != 3)
                     throw std::runtime_error("Incompatible number of columns of array (needs 3)");
 
-                new (&oc) ObjectContainer();  //
+                new (&oc) PointContainer();  //
                 double* data_ptr = (double*) info.ptr;  // A pointer to the storage
                 double* data_ptr_end = data_ptr + info.shape[0]*3;  // A pointer behind the storage
 
                 if (info.strides[1] == sizeof(double)){  // Correct data ordering
                     for(double* current_ptr = data_ptr; current_ptr != data_ptr_end; current_ptr+=3){
                         if(spherical)
-                            oc.add_object(object_from_spherical_position(current_ptr, 1));
+                            oc.add_point(point_from_spherical_position(current_ptr, 1));
                         else
-                            oc.add_object(object_from_box_position(current_ptr, 0, 1));
+                            oc.add_point(point_from_box_position(current_ptr, 0, 1));
                     }
                 } else {  // Wrong data ordering
                     throw std::runtime_error("Data ordering of array is ColumnMajor, but RowMajor needed.");
                 }
             })
 
-            .def("__getitem__", [](const ObjectContainer& oc, size_t i)
+            .def("__getitem__", [](const PointContainer& oc, size_t i)
             {
                 return oc[i];
             })
 
-                    // Buffer definition, so that we can call numpy.array(object_container) in python
-            .def_buffer([](ObjectContainer& oc) -> py::buffer_info {
+                    // Buffer definition, so that we can call numpy.array(point_container) in python
+            .def_buffer([](PointContainer& oc) -> py::buffer_info {
                 return py::buffer_info(
                         (double*) oc.data(),
                         sizeof(double),
@@ -94,12 +93,12 @@ PYBIND11_PLUGIN(basictypes)
                         { sizeof(double) * 3, sizeof(double)}
                 );
             })
-            .def("add_object", &ObjectContainer::add_object);
+            .def("add_point", &PointContainer::add_point);
 
-    py::class_<PixelizedObjectContainer>(m, "PixelizedObjectContainer")
+    py::class_<PixelizedPointContainer>(m, "PixelizedPointContainer")
             .def(py::init<unsigned int>())
-            .def(py::init<unsigned int, ObjectContainer>())
-            .def("get_countmap", &PixelizedObjectContainer::get_countmap);
+            .def(py::init<unsigned int, PointContainer>())
+            .def("get_countmap", &PixelizedPointContainer::get_countmap);
 
     py::class_<FunctionInterpolator>(m, "FunctionInterpolator")
             .def("__init__", [](FunctionInterpolator& fi, std::function<double(double)> fct,

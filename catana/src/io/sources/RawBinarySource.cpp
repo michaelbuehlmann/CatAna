@@ -14,7 +14,7 @@ namespace catana { namespace io {
       if(verbose)
         std::cout << "Opened file " << filename << std::endl;
 
-      // Get number of objects (size of file / size of record)
+      // Get number of points (size of file / size of record)
       ntot = static_cast<size_t>(fd.tellg() / sizeof(record_t));
 
       // Move to front
@@ -37,18 +37,18 @@ namespace catana { namespace io {
 //}
 
   template<class RecordType>
-  long long int RawBinarySource<RecordType>::read(ObjectContainer::iterator write_iterator, size_t n) {
+  long long int RawBinarySource<RecordType>::read(PointContainer::iterator write_iterator, size_t n) {
     return read_template(write_iterator, n);
   }
 
   template<class RecordType>
-  long long int RawBinarySource<RecordType>::read(Object *write_iterator, size_t n) {
+  long long int RawBinarySource<RecordType>::read(Point *write_iterator, size_t n) {
     return read_template(write_iterator, n);
   }
 
   template<class RecordType>
-  template<class ObjectIterator>
-  long long int RawBinarySource<RecordType>::read_template(ObjectIterator write_iterator, size_t n) {
+  template<class PointIterator>
+  long long int RawBinarySource<RecordType>::read_template(PointIterator write_iterator, size_t n) {
     if(!fd.is_open())
       return -1;
     record_t record;
@@ -58,7 +58,7 @@ namespace catana { namespace io {
     } else {
       for(size_t i = 0; i < to_read; ++i) {
         fd.read((char *) &record, sizeof(record));
-        *(write_iterator++) = record.object(0, 1.);
+        *(write_iterator++) = record.point(0, 1.);
         ++current_pos;
       }
       return to_read;
@@ -72,7 +72,7 @@ namespace catana { namespace io {
   }
 
   template<class RecordType>
-  size_t RawBinarySource<RecordType>::get_nobjects() {
+  size_t RawBinarySource<RecordType>::get_npoints() {
     return ntot;
   }
 

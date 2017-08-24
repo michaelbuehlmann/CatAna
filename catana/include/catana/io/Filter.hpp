@@ -1,37 +1,38 @@
 #ifndef CATANA_APP_FILTERS_HPP
 #define CATANA_APP_FILTERS_HPP
 
-#include "../types.hpp"
+#include "../points/Point.hpp"
+#include "../points/PointContainer.hpp"
 
 
 namespace catana { namespace io {
 
-  //! Parent class Filter for filtering data of type Object class.
+  //! Parent class Filter for filtering data of type Point class.
   /*!
-   * Child classes need to implement bool filter(Object&), which returns true if
-   * object passes filtering and false if it needs to be removed.
+   * Child classes need to implement bool filter(Point&), which returns true if
+   * point passes filtering and false if it needs to be removed.
    */
   class Filter {
   public:
-    //! Filtering function on Object. Returns true if object passes filter, false otherwise.
-    virtual bool filter(Object& object) = 0;
+    //! Filtering function on Point. Returns true if point passes filter, false otherwise.
+    virtual bool filter(Point& point) = 0;
 
-    //! Run filter on an object_container
+    //! Run filter on an point_container
     /*!
-     * @param object_container object_container on which to apply filter
-     * @param resize if true, resize the object container. if false, the filtered data will be within
-     * [object_container.begin(), object_container.begin()+n), where n is the return value
-     * @return number of objects remaining after filtering (== object_container.size() if resize==true)
+     * @param point_container point_container on which to apply filter
+     * @param resize if true, resize the point container. if false, the filtered data will be within
+     * [point_container.begin(), point_container.begin()+n), where n is the return value
+     * @return number of points remaining after filtering (== point_container.size() if resize==true)
      */
-    size_t operator()(ObjectContainer& object_container, bool resize = true);
+    size_t operator()(PointContainer& point_container, bool resize = true);
 
-    //! Run filter on a C-array of Objects
+    //! Run filter on a C-array of Points
     /*!
-     * Filter objects between [begin, end). Remaining objects will be stored between [begin, begin +n), where
+     * Filter points between [begin, end). Remaining points will be stored between [begin, begin +n), where
      * n is the return value
-     * @return number of objects remaining after filtering.
+     * @return number of points remaining after filtering.
      */
-    virtual size_t operator()(Object *begin, Object *end);
+    virtual size_t operator()(Point *begin, Point *end);
   };
 
 }}

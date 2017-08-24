@@ -1,6 +1,5 @@
 #include "doctest.h"
-#include <catana/io.hpp>
-#include <catana/decomposition.hpp>
+#include <catana/catana.hpp>
 
 using namespace catana;
 
@@ -30,21 +29,21 @@ Eigen::ArrayXXd read_python_cln(int lmax, int nmax) {
 
 
 TEST_CASE ("testing SFB raw method") {
-  ObjectContainer object_container;
+  PointContainer point_container;
   {
     io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt", 1, 0);
-    io::ObjectContainerSink sink(object_container);
+    io::PointContainerSink sink(point_container);
     io::FilterStream fs(&source, &sink, 10000, false);
     fs.run();
   }
-      REQUIRE(445 == object_container.size());
+      REQUIRE(445 == point_container.size());
   int lmax = 10;
   int nmax = 10;
 
   // Compare with Python
   auto python_cln = read_python_cln(lmax, nmax);
 
-  KClkk kclkk = _sfb_raw(object_container, lmax, nmax, 2500, 5535184878.03, false, false, false, false);
+  KClkk kclkk = _sfb_raw(point_container, lmax, nmax, 2500, 5535184878.03, false, false, false, false);
   kclkk.savetxt("sfb_raw");
 
   for(int l = 0; l < lmax; ++l) {
@@ -54,7 +53,7 @@ TEST_CASE ("testing SFB raw method") {
   }
 
   // With interpolation
-  kclkk = _sfb_raw(object_container, lmax, nmax, 2500, 5535184878.03, false, false, false, true);
+  kclkk = _sfb_raw(point_container, lmax, nmax, 2500, 5535184878.03, false, false, false, true);
   kclkk.savetxt("sfb_raw_inter");
 
   for(int l = 0; l < lmax; ++l) {
@@ -65,10 +64,10 @@ TEST_CASE ("testing SFB raw method") {
 }
 
 TEST_CASE ("testing SFB raw method with parallelization") {
-  ObjectContainer object_container;
+  PointContainer point_container;
   {
     io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt", 1, 0);
-    io::ObjectContainerSink sink(object_container);
+    io::PointContainerSink sink(point_container);
     io::FilterStream fs(&source, &sink, 10000, false);
     fs.run();
   }
@@ -79,7 +78,7 @@ TEST_CASE ("testing SFB raw method with parallelization") {
   auto python_cln = read_python_cln(lmax, nmax);
 
 
-  KClkk kclkk = _sfb_raw(object_container, lmax, nmax, 2500, 5535184878.03, false, false, true, false);
+  KClkk kclkk = _sfb_raw(point_container, lmax, nmax, 2500, 5535184878.03, false, false, true, false);
   kclkk.savetxt("sfb_raw_p");
 
   for(int l = 0; l < lmax; ++l) {
@@ -88,7 +87,7 @@ TEST_CASE ("testing SFB raw method with parallelization") {
     }
   }
 
-  kclkk = _sfb_raw(object_container, lmax, nmax, 2500, 5535184878.03, false, false, true, true);
+  kclkk = _sfb_raw(point_container, lmax, nmax, 2500, 5535184878.03, false, false, true, true);
   kclkk.savetxt("sfb_raw_p_inter");
 
   for(int l = 0; l < lmax; ++l) {
@@ -100,10 +99,10 @@ TEST_CASE ("testing SFB raw method with parallelization") {
 
 
 TEST_CASE ("testing SFB reverse method") {
-  PixelizedObjectContainer pix_obj_cont(64);
+  PixelizedPointContainer pix_obj_cont(64);
   {
     io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt", 1, 0);
-    io::PixelizedObjectContainerSink sink(pix_obj_cont);
+    io::PixelizedPointContainerSink sink(pix_obj_cont);
     io::FilterStream fs(&source, &sink, 10000, false);
     fs.run();
   }
@@ -134,10 +133,10 @@ TEST_CASE ("testing SFB reverse method") {
 }
 
 TEST_CASE ("testing SFB reverse method with parallelization") {
-  PixelizedObjectContainer pix_obj_cont(64);
+  PixelizedPointContainer pix_obj_cont(64);
   {
     io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt", 1, 0);
-    io::PixelizedObjectContainerSink sink(pix_obj_cont);
+    io::PixelizedPointContainerSink sink(pix_obj_cont);
     io::FilterStream fs(&source, &sink, 10000, false);
     fs.run();
   }
@@ -168,10 +167,10 @@ TEST_CASE ("testing SFB reverse method with parallelization") {
 }
 
 TEST_CASE ("testing SFB pixelized method") {
-  PixelizedObjectContainer pix_obj_cont(64);
+  PixelizedPointContainer pix_obj_cont(64);
   {
     io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt", 1, 0);
-    io::PixelizedObjectContainerSink sink(pix_obj_cont);
+    io::PixelizedPointContainerSink sink(pix_obj_cont);
     io::FilterStream fs(&source, &sink, 10000, false);
     fs.run();
   }
@@ -202,10 +201,10 @@ TEST_CASE ("testing SFB pixelized method") {
 }
 
 TEST_CASE ("testing SFB pixelized method with parallelization") {
-  PixelizedObjectContainer pix_obj_cont(64);
+  PixelizedPointContainer pix_obj_cont(64);
   {
     io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt", 1, 0);
-    io::PixelizedObjectContainerSink sink(pix_obj_cont);
+    io::PixelizedPointContainerSink sink(pix_obj_cont);
     io::FilterStream fs(&source, &sink, 10000, false);
     fs.run();
   }
@@ -237,19 +236,19 @@ TEST_CASE ("testing SFB pixelized method with parallelization") {
 
 
 TEST_CASE ("testing SFB f_lmn computation") {
-  ObjectContainer object_container;
+  PointContainer point_container;
   {
     io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt", 1, 0);
-    io::ObjectContainerSink sink(object_container);
+    io::PointContainerSink sink(point_container);
     io::FilterStream fs(&source, &sink, 10000, false);
     fs.run();
   }
 
 
-  PixelizedObjectContainer pix_obj_cont(64);
+  PixelizedPointContainer pix_obj_cont(64);
   {
     io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt", 1, 0);
-    io::PixelizedObjectContainerSink sink(pix_obj_cont);
+    io::PixelizedPointContainerSink sink(pix_obj_cont);
     io::FilterStream fs(&source, &sink, 10000, false);
     fs.run();
   }
@@ -257,7 +256,7 @@ TEST_CASE ("testing SFB f_lmn computation") {
   int lmax = 10;
   int nmax = 10;
 
-  auto kclkk_raw = _sfb_raw(object_container, lmax, nmax, 2500, 5535184878.03, true, false, true, true);
+  auto kclkk_raw = _sfb_raw(point_container, lmax, nmax, 2500, 5535184878.03, true, false, true, true);
       REQUIRE(lmax == kclkk_raw.f_lmn.size());
   auto kclkk_rev = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, true, false, true, true);
       REQUIRE(lmax == kclkk_rev.f_lmn.size());

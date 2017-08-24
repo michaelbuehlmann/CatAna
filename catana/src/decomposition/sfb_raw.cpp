@@ -1,5 +1,5 @@
 #include <catana/decomposition/sfb_raw.hpp>
-#include <catana/besseltools.hpp>
+#include <catana/besseltools/SBesselInterpolator.hpp>
 
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_sf_bessel.h>
@@ -11,17 +11,17 @@ namespace catana {
   using complex = std::complex<double_t>;
 
   KClkk _sfb_raw(
-      const ObjectContainer& objects,
+      const PointContainer& points,
       unsigned short lmax, unsigned short nmax,
       double rmax, double window_volume, bool store_flmn, bool verbose, bool parallel, bool interpolated) {
-    size_t container_size = size_t(std::distance(std::begin(objects), std::end(objects)));
+    size_t container_size = size_t(std::distance(std::begin(points), std::end(points)));
     if(verbose) {
       std::cout << "SFB decomposition (raw method):"
                 << " lmax=" << lmax
                 << " nmax=" << nmax
                 << " Rmax=" << rmax
                 << std::endl;
-      std::cout << "Catalog consists of " << container_size << " objects in a volume of " << window_volume
+      std::cout << "Catalog consists of " << container_size << " points in a volume of " << window_volume
                 << std::endl;
     }
 
@@ -59,9 +59,9 @@ namespace catana {
       {
         Eigen::ArrayXXcd f_l_mn_private = Eigen::ArrayXXcd::Zero(l + 1, nmax);
 
-        // Loop over all objects
+        // Loop over all points
 #pragma omp for nowait
-        for(ObjectContainer::const_iterator obj_it = objects.begin(); obj_it < objects.end(); ++obj_it) {
+        for(PointContainer::const_iterator obj_it = points.begin(); obj_it < points.end(); ++obj_it) {
 
           // Compute j_ln for all n
           Eigen::ArrayXd j_l_n(nmax);

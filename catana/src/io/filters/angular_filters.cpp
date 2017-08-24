@@ -8,8 +8,8 @@ namespace catana { namespace io {
     read_Healpix_map_from_fits(healpix_mask, map);
   }
 
-  bool AngularMaskFilter::filter(Object& object) {
-    return (map[map.ang2pix(object.p)] == 1.f);
+  bool AngularMaskFilter::filter(Point& point) {
+    return (map[map.ang2pix(point.p)] == 1.f);
   }
 
 }}

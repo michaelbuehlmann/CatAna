@@ -1,5 +1,5 @@
 #include <catana/decomposition/sfb_reverse_fft.hpp>
-#include <catana/besseltools.hpp>
+#include <catana/besseltools/SBesselInterpolator.hpp>
 
 
 #include <gsl/gsl_errno.h>
@@ -14,7 +14,7 @@ namespace catana {
 
 //! A class holding information of a healpix ring, along with pointers to the actual map, the FFT-map and the FFTW-routine.
   struct RingInfo {
-    RingInfo(int npix, const PixelObjects *const pixelobj1, double *map_i, complex *fft_map_i)
+    RingInfo(int npix, const PixelPoints *const pixelobj1, double *map_i, complex *fft_map_i)
         : npix(npix), start_pixobjs(pixelobj1), phase(pixelobj1->p.phi), costheta(std::cos(pixelobj1->p.theta)),
           map(map_i),
           fft_map(fft_map_i) {
@@ -22,7 +22,7 @@ namespace catana {
     }
 
     const int npix;
-    const PixelObjects *const start_pixobjs;
+    const PixelPoints *const start_pixobjs;
     const double phase;
     const double costheta;
     double *map;
@@ -34,14 +34,14 @@ namespace catana {
 
 //! The main computational part
   inline void sfb_ringdecomp_kernel(const unsigned short& l, double& k_n,
-                                    const PixelizedObjectContainer& pix_oc,
+                                    const PixelizedPointContainer& pix_oc,
                                     const std::function<double(double)>& sbessel_fct, Eigen::MatrixXcd& f_lmn,
                                     const complex *ylm_i,
                                     RingInfo& ring_info);
 
 //! This function initialized and runs through the sfb decomposition using the reverse_fft-method.
   KClkk _sfb_reverse_fft(
-      const PixelizedObjectContainer& pix_oc,
+      const PixelizedPointContainer& pix_oc,
       unsigned short lmax, unsigned short nmax,
       double rmax, double window_volume, bool store_flmn, bool verbose, bool parallel, bool interpolated
   ) {
@@ -49,7 +49,7 @@ namespace catana {
     auto gsl_error_handler_old = gsl_set_error_handler_off();
 
     // Compute normalization factor and set up KClkk
-    double norm_factor = std::sqrt(2 / M_PI) * window_volume / pix_oc.get_nobjects();
+    double norm_factor = std::sqrt(2 / M_PI) * window_volume / pix_oc.get_npoints();
     KClkk kclkk(lmax, nmax, rmax);
 
     auto nside = pix_oc.get_nside();
@@ -63,7 +63,7 @@ namespace catana {
                 << " nmax=" << nmax
                 << " NSide=" << nside
                 << std::endl;
-      std::cout << "Catalog consists of " << pix_oc.get_nobjects() << " objects in a volume of " << window_volume
+      std::cout << "Catalog consists of " << pix_oc.get_npoints() << " points in a volume of " << window_volume
                 << std::endl;
     }
 
@@ -174,7 +174,7 @@ namespace catana {
   }
 
   inline void sfb_ringdecomp_kernel(const unsigned short& l, double& k_n,
-                                    const PixelizedObjectContainer& pix_oc,
+                                    const PixelizedPointContainer& pix_oc,
                                     const std::function<double(double)>& sbessel_fct, Eigen::MatrixXcd& f_lmn,
                                     const complex *y_lm_i,
                                     RingInfo& ring_info) {

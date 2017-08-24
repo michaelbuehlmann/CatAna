@@ -3,7 +3,7 @@
 //
 
 #include "doctest.h"
-#include <catana/besseltools.hpp>
+#include <catana/catana.hpp>
 
 #include <random>
 #include <gsl/gsl_sf_bessel.h>

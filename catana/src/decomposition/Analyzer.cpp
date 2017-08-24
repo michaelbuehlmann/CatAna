@@ -2,7 +2,6 @@
 #include <catana/decomposition/sfb_decomposition.hpp>
 #include <unistd.h>
 
-
 namespace catana {
   Analyzer::Analyzer(io::Source *source, double window_volume)
       : source(source), window_volume(window_volume) {}
@@ -24,9 +23,9 @@ namespace catana {
     // TODO: Location of temporary file
     std::string temp_filename = std::string("tmp_") + std::to_string(::getpid());
     source->reset();
-    ObjectContainer oc;
+    PointContainer oc;
     {
-      io::ObjectContainerSink sink(oc);
+      io::PointContainerSink sink(oc);
       io::FilterStream fs(source, &sink, 1000000, verbose);
       io::TophatRadialWindowFunctionFilter radial_filter(rmax);
       fs.add_filter(&radial_filter);
@@ -42,10 +41,10 @@ namespace catana {
                                         bool store_flmn, bool verbose) {
     std::string temp_filename = std::string("tmp_") + std::to_string(::getpid());
     source->reset();
-    PixelizedObjectContainer pix_oc(nside);
+    PixelizedPointContainer pix_oc(nside);
 
     {
-      io::PixelizedObjectContainerSink sink(pix_oc);
+      io::PixelizedPointContainerSink sink(pix_oc);
       io::FilterStream fs(source, &sink, 1000000, verbose);
       io::TophatRadialWindowFunctionFilter radial_filter(rmax);
       fs.add_filter(&radial_filter);

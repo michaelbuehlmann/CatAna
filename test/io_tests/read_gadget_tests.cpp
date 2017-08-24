@@ -1,6 +1,5 @@
 #include "doctest.h"
-#include <catana/types.hpp>
-#include "catana/io/sources/GadgetSource.hpp"
+#include <catana/catana.hpp>
 
 
 using namespace catana;
@@ -24,9 +23,9 @@ TEST_CASE ("testing GadgetSource with partial data") {
 
   io::GadgetSource input(test_data_dir + filename, false);
 
-  Object objects[20];
+  Point points[20];
   long returned_values;
-  returned_values = input.read(objects, 20);
+  returned_values = input.read(points, 20);
 
       CHECK(20 == returned_values);
 }
@@ -35,24 +34,24 @@ TEST_CASE ("testing GadgetSource with all data") {
   std::string filename = "mock_data_z0p000.0";
   io::GadgetSource input(test_data_dir + filename, false);
 
-  Object tmp_objects[10];
-  ObjectContainer oc;
+  Point tmp_points[10];
+  PointContainer oc;
 
   long returned_values = 0;
   do {
-    std::copy(&tmp_objects[0], &tmp_objects[returned_values], std::back_inserter(oc));
-    returned_values = input.read(tmp_objects, 10);
+    std::copy(&tmp_points[0], &tmp_points[returned_values], std::back_inserter(oc));
+    returned_values = input.read(tmp_points, 10);
   } while(returned_values != -1);
       CHECK(512 == oc.size());
 
 
   filename = "mock_data_z0p000.1";
   io::GadgetSource input2(test_data_dir + filename, false);
-  ObjectContainer oc2;
+  PointContainer oc2;
   returned_values = 0;
   do {
-    std::copy(&tmp_objects[0], &tmp_objects[returned_values], std::back_inserter(oc2));
-    returned_values = input2.read(tmp_objects, 10);
+    std::copy(&tmp_points[0], &tmp_points[returned_values], std::back_inserter(oc2));
+    returned_values = input2.read(tmp_points, 10);
   } while(returned_values != -1);
       CHECK(512 == oc2.size());
 
@@ -69,14 +68,14 @@ TEST_CASE ("testing GadgetSource with all data") {
   }
 
   // Assert that nothing left
-  auto n_objects = input.read(tmp_objects, 10);
-      REQUIRE(-1 == n_objects);
+  auto n_points = input.read(tmp_points, 10);
+      REQUIRE(-1 == n_points);
 
   // Test Reset
-  ObjectContainer oc3(1000);
+  PointContainer oc3(1000);
   input.reset();
-  n_objects = input.read(oc3.begin(), 1000);
-      REQUIRE(512 == n_objects);
+  n_points = input.read(oc3.begin(), 1000);
+      REQUIRE(512 == n_points);
 }
 
 TEST_SUITE_END();

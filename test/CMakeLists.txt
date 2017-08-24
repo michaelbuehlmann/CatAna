@@ -5,7 +5,7 @@ set(TEST_FILES
         main.cpp
         tools_tests/interpolation_tests.cpp
         tools_tests/return_types_test.cpp
-        object_types_tests/object_types_tests.cpp
+        point_types_tests/point_types_tests.cpp
         besseltools_tests/SphericalBesselZeros_test.cpp
         besseltools_tests/SBesselLookUp_test.cpp
         besseltools_tests/sbessel_integrator.cpp

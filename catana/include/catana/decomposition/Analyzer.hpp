@@ -1,8 +1,8 @@
 #ifndef CATANA_ANALYZER_HPP
 #define CATANA_ANALYZER_HPP
 
-#include "catana/io.hpp"
-#include "../types.hpp"
+#include "../io/Source.hpp"
+#include "../io/Filter.hpp"
 #include "return_types.hpp"
 
 #include <memory>

@@ -1,5 +1,5 @@
 #include "doctest.h"
-#include <catana/io.hpp>
+#include <catana/catana.hpp>
 
 #include <catana/config.hpp>
 
@@ -12,11 +12,11 @@ TEST_SUITE("io");
 
 TEST_CASE ("testing TextSource full reading") {
   io::TextSource<io::CartesianRecord<double>> source(test_data_dir + "mock_data.txt");
-  ObjectContainer oc(100);
+  PointContainer oc(100);
   auto n = source.read(oc.begin(), 100);
       CHECK(20 == n);
 
-  ObjectContainer oc2(100);
+  PointContainer oc2(100);
       CHECK(-1 == source.read(oc2.begin(), 100));
   source.reset();
   auto n2 = source.read(oc2.begin(), 100);
@@ -28,7 +28,7 @@ TEST_CASE ("testing TextSource full reading") {
 
 TEST_CASE ("testing TextSource chunck reading") {
   io::TextSource<io::CartesianRecord<double>> source(test_data_dir + "mock_data.txt");
-  ObjectContainer oc(100);
+  PointContainer oc(100);
   int n = 0;
   auto o_ptr = oc.begin();
 
@@ -40,11 +40,11 @@ TEST_CASE ("testing TextSource chunck reading") {
 
 
 TEST_CASE ("testing TextSink with CartesianRecord") {
-  ObjectContainer oc, oc2(100);
-  oc.add_object(Object(1, 2, 3));
-  oc.add_object(Object(0, 0, 2));
-  oc.add_object(Object(-1, -1, -1));
-  oc.add_object(Object(0, 0, 0));
+  PointContainer oc, oc2(100);
+  oc.add_point(Point(1, 2, 3));
+  oc.add_point(Point(0, 0, 2));
+  oc.add_point(Point(-1, -1, -1));
+  oc.add_point(Point(0, 0, 0));
 
   io::TextSink<io::CartesianRecord<double>> sink("test.txt");
   int n = sink.write(oc.begin(), oc.size());
@@ -61,11 +61,11 @@ TEST_CASE ("testing TextSink with CartesianRecord") {
 }
 
 TEST_CASE ("testing TextSink with SphericalRecord") {
-  ObjectContainer oc, oc2(100);
-  oc.add_object(Object(1, 2, 3));
-  oc.add_object(Object(0, 0, 2));
-  oc.add_object(Object(-1, -1, -1));
-  oc.add_object(Object(0, 0, 0));
+  PointContainer oc, oc2(100);
+  oc.add_point(Point(1, 2, 3));
+  oc.add_point(Point(0, 0, 2));
+  oc.add_point(Point(-1, -1, -1));
+  oc.add_point(Point(0, 0, 0));
 
   io::TextSink<io::SphericalRecord<double>> sink("test.txt");
   int n = sink.write(oc.begin(), oc.size());
@@ -82,11 +82,11 @@ TEST_CASE ("testing TextSink with SphericalRecord") {
 }
 
 TEST_CASE ("testing TextSink with threedex record") {
-  ObjectContainer oc, oc2(100);
-  oc.add_object(Object(1, 2, 3));
-  oc.add_object(Object(0, 0, 2));
-  oc.add_object(Object(-1, -1, -1));
-  oc.add_object(Object(0, 0, 0));
+  PointContainer oc, oc2(100);
+  oc.add_point(Point(1, 2, 3));
+  oc.add_point(Point(0, 0, 2));
+  oc.add_point(Point(-1, -1, -1));
+  oc.add_point(Point(0, 0, 0));
 
   io::TextSink<io::SphericalRecord<double, io::SphericalTextFormat::THREEDEX>> sink("test3dex.txt");
   int n = sink.write(oc.begin(), oc.size());
@@ -104,18 +104,18 @@ TEST_CASE ("testing TextSink with threedex record") {
 
 
 // TODO: Move to different place
-TEST_CASE ("testing Source to Objectcontainer conversion") {
+TEST_CASE ("testing Source to Pointcontainer conversion") {
   io::TextSource<io::CartesianRecord<double>> source(test_data_dir + "mock_data.txt");
-  ObjectContainer oc(source.get_objectcontainer());
+  PointContainer oc(source.get_point_container());
       CHECK(20 == oc.size());
       CHECK(doctest::Approx(8.002900041) == oc[0].r);
 }
 
 
-TEST_CASE ("testing Source to PixelizedObjectContainer conversion") {
+TEST_CASE ("testing Source to PixelizedPointContainer conversion") {
   io::TextSource<io::CartesianRecord<double>> source(test_data_dir + "mock_data.txt");
-  PixelizedObjectContainer poc(source.get_pixobjectcontainer(32));
-      CHECK(20 == poc.get_nobjects());
+  PixelizedPointContainer poc(source.get_pixelized_point_container(32));
+      CHECK(20 == poc.get_npoints());
       CHECK(32 * 32 * 12 == poc.size());
 }
 

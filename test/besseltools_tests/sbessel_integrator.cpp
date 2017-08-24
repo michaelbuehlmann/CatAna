@@ -1,6 +1,6 @@
 #include "doctest.h"
 #include <cmath>
-#include <catana/besseltools.hpp>
+#include <catana/catana.hpp>
 
 
 using namespace catana;

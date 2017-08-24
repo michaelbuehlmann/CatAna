@@ -1,5 +1,5 @@
 #include <catana/decomposition/return_types.hpp>
-#include <catana/besseltools.hpp>
+#include <catana/besseltools/SphericalBesselZeros.hpp>
 #include <iomanip>
 #include <fstream>
 #include <iostream>

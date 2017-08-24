@@ -18,8 +18,8 @@ namespace catana {
     this->window_function = [=](double r) { return wfct_interp->operator()(r); };
   }
 
-  bool GenericRadialWindowFunctionFilter::filter(Object& object) {
-    return (window_function(object.r) > random_dist(rng));
+  bool GenericRadialWindowFunctionFilter::filter(Point& point) {
+    return (window_function(point.r) > random_dist(rng));
   }
 
 
@@ -29,8 +29,8 @@ namespace catana {
   TophatRadialWindowFunctionFilter::TophatRadialWindowFunctionFilter(double R0)
       : R0(R0) {}
 
-  bool TophatRadialWindowFunctionFilter::filter(Object& object) {
-    return object.r < R0;
+  bool TophatRadialWindowFunctionFilter::filter(Point& point) {
+    return point.r < R0;
   }
 
 }}

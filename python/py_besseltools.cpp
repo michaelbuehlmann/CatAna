@@ -1,13 +1,9 @@
-//
-// Created by Michael Bühlmann on 29/01/16.
-//
-
 #include <functional>
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>
 #include <pybind11/numpy.h>
 
-#include <catana/besseltools.hpp>
+#include <catana/catana.hpp>
 
 namespace py = pybind11;
 using namespace catana;

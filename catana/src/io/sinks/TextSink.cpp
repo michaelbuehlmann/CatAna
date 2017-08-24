@@ -19,12 +19,12 @@ namespace catana { namespace io {
   }
 
   template<class RecordType>
-  long long int TextSink<RecordType>::write(ObjectContainer::iterator read_iterator, size_t n) {
+  long long int TextSink<RecordType>::write(PointContainer::iterator read_iterator, size_t n) {
     return write_template(read_iterator, n);
   }
 
   template<class RecordType>
-  long long int TextSink<RecordType>::write(Object *read_iterator, size_t n) {
+  long long int TextSink<RecordType>::write(Point *read_iterator, size_t n) {
     return write_template(read_iterator, n);
   }
 
@@ -34,8 +34,8 @@ namespace catana { namespace io {
   }
 
   template<class RecordType>
-  template<class ObjectIterator>
-  long long int TextSink<RecordType>::write_template(ObjectIterator read_iterator, size_t n) {
+  template<class PointIterator>
+  long long int TextSink<RecordType>::write_template(PointIterator read_iterator, size_t n) {
     if(!fd.is_open())
       return -1;
 
