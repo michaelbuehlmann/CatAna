@@ -55,7 +55,7 @@ jobs:
         - set -e
         - export CC=gcc-6 && export CXX=g++-6
         - pip install doctr sphinx sphinx_rtd_theme
-        - pip install .
+        - pip install -vvv .
         - cd docs
         - make html
         - cd ..

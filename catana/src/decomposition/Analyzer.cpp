@@ -1,6 +1,12 @@
 #include <unistd.h>
 #include <catana/decomposition/Analyzer.hpp>
 #include <catana/decomposition/sfb_decomposition.hpp>
+#include <catana/io/sinks/PointContainerSink.hpp>
+#include <catana/io/sinks/PixelizedPointContainerSink.hpp>
+#include <catana/io/FilterStream.hpp>
+#include <catana/io/filters/radial_filters.hpp>
+
+
 
 namespace catana {
   Analyzer::Analyzer(io::Source *source, double window_volume)

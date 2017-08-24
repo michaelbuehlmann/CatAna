@@ -1,6 +1,10 @@
 #ifndef CATANA_POINTCONTAINERSINK_HPP
 #define CATANA_POINTCONTAINERSINK_HPP
 
+
+#include <catana/io/Sink.hpp>
+
+
 namespace catana { namespace io {
 
   //! A wrapper around an PointContainer which lets it act as Sink

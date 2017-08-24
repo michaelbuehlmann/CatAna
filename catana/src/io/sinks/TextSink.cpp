@@ -1,5 +1,6 @@
 #include <catana/io/sinks/TextSink.hpp>
 #include <iomanip>
+#include <limits>
 
 
 
