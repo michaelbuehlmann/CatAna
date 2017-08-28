@@ -2,8 +2,6 @@
 #include <random>
 
 
-extern std::mt19937 rng;
-
 namespace catana { namespace io {
 
   size_t Filter::operator()(PointContainer& point_container, bool resize) {
