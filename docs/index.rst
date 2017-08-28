@@ -14,6 +14,7 @@ Welcome to CatAna's documentation!
    catana_besseltools
    catana_decomp
    catana_io
+   catana_misc
 
 Indices and tables
 ==================
