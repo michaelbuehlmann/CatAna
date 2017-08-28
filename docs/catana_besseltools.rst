@@ -1,5 +1,5 @@
-Catana Besseltools Module
-=========================
+Besseltools Module
+==================
 
 
 .. automodule:: catana.besseltools

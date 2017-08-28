@@ -1,5 +1,5 @@
-Catana IO Module
-================
+IO Module
+=========
 
 .. automodule:: catana.io
 

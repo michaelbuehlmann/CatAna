@@ -1,5 +1,5 @@
-CatAna Points and Containers
-============================
+Points and Containers
+=====================
 
 .. currentmodule:: catana
 

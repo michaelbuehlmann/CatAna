@@ -1,5 +1,5 @@
-Catana Decomposition Module
-===========================
+Decomposition Module
+====================
 
 .. automodule:: catana.decomposition
 

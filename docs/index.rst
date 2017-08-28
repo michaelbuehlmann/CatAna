@@ -1,14 +1,26 @@
-.. CatAna documentation master file, created by
-   sphinx-quickstart on Mon Feb 20 13:52:13 2017.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. code-block:: none
 
-Welcome to CatAna's documentation!
-==================================
+     ___    __   ____   __    _  _    __                                           /\
+    / __)  /__\ (_  _) /__\  ( \( )  /__\  ,--------------------------------------/ vvvvvvvvvvv\
+   ( (__  /(__)\  )(  /(__)\  )  (  /(__)\  "=====================================\^^^^^^^^^^^^'
+    \___)(__)(__)(__)(__)(__)(_)\_)(__)(__)                                        \/
+
+   Catalog Analyzer: A library for Spherical Fourier Bessel (SFB) Decomposition
+
+
+CatAna's documentation
+======================
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Installation and Basic Usage:
+
+   catana_install
+   catana_usage
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Module Reference
 
    catana
    catana_besseltools
@@ -16,8 +28,9 @@ Welcome to CatAna's documentation!
    catana_io
    catana_misc
 
+
 Indices and tables
-==================
+------------------
 
 * :ref:`genindex`
 * :ref:`modindex`
