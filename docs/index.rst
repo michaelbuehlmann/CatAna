@@ -22,11 +22,21 @@ CatAna's documentation
    :maxdepth: 2
    :caption: Module Reference
 
-   catana
-   catana_besseltools
-   catana_decomp
-   catana_io
-   catana_misc
+   python/catana
+   python/catana_besseltools
+   python/catana_decomp
+   python/catana_io
+   python/catana_misc
+
+.. toctree::
+   :maxdepth: 2
+   :caption: C++ Library Reference
+
+   cpp/catana_cpp
+   cpp/catana_cpp_besseltools
+   cpp/catana_cpp_decomp
+   cpp/catana_cpp_io
+   cpp/catana_cpp_misc
 
 
 Indices and tables

@@ -35,12 +35,16 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.mathjax',
     'sphinx.ext.autosummary',
-    'sphinx.ext.napoleon'
+    'sphinx.ext.napoleon',
+    'breathe'
 ]
 
 autosummary_generate = True
 autoclass_content = 'both'
 napoleon_use_rtype = False
+
+breathe_projects = {'catana': './xml/'}
+breathe_default_project = "catana"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

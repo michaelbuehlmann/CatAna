@@ -19,7 +19,11 @@ namespace catana {
 
   //! A HEALPix Map of PixelPoints
   /*!
-   * DO NOT CHANGE SIZE (push_back, resize, etc) of underlying std::vector once constructed!
+   * \verbatim embed:rst:leading-asterisk
+   * .. warning::
+   *
+   *    DO NOT CHANGE SIZE (push_back, resize, etc) of underlying std::vector once constructed!
+   * \endverbatim
    */
   class PixelizedPointContainer : public std::vector<PixelPoints> {
   public:
