@@ -47,9 +47,9 @@ namespace catana { namespace io {
       :SphericalRecordBase<FLOAT_TYPE>(r, theta, phi) {}
 
   template<class FLOAT_TYPE, SphericalTextFormat FMT>
-  SphericalRecord<FLOAT_TYPE, FMT>::SphericalRecord(const Point& point, const double& box_size,
+  SphericalRecord<FLOAT_TYPE, FMT>::SphericalRecord(const Point& point, const double& dummy,
                                                     const double& hubble_param)
-      :SphericalRecordBase<FLOAT_TYPE>(point, box_size, hubble_param) {}
+      :SphericalRecordBase<FLOAT_TYPE>(point, dummy, hubble_param) {}
 
   template<class FLOAT_TYPE>
   SphericalRecord<FLOAT_TYPE, SphericalTextFormat::THREEDEX>::SphericalRecord()

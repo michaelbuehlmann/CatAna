@@ -69,6 +69,7 @@ namespace catana { namespace io {
   template<class PointIterator>
   long long int GadgetSource::read_template(PointIterator write_iterator, size_t n) {
     CartesianRecord<float> record;
+    double shift = -box_size/2.;
 
     size_t loaded = 0;
     size_t to_load = std::min(n, n_points - current_point);
@@ -78,7 +79,7 @@ namespace catana { namespace io {
     // Before this loop, reader is guaranteed to be in a readable position (at least one element)
     while(loaded < to_load) {
       fd.read((char *) &record, sizeof(record));
-      *write_iterator = record.point(box_size, hubble_parameter);
+      *write_iterator = record.point(shift, hubble_parameter);
 
       // Increment tracking variables
       loaded++;

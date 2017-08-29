@@ -16,8 +16,6 @@
 
 #include "../points/Point.hpp"
 
-// TODO: FIX BOX_SIZE (assume box is always [0, box_size]
-
 namespace catana { namespace io {
 
   //! Cartesian Point storage.
@@ -43,33 +41,31 @@ namespace catana { namespace io {
     /*!
      * @param point
      * The point from which the record is constructed
-     * @param box_size
-     * Add box_size/2 to coordinates (if origin of coordinate system shall be at corner of box/cube)
-     * If origin is supposed to be at the center, set box_size=0.
+     * @param shift
+     * Add shift to coordinates to move origin of coordinates. The shift is applied to all axis.
      * @param hubble_param
      * Hubble parameter for conversion Mpc -> Mpc/h. If record coordinates are Mpc, set hubble_param=1.
      */
-    CartesianRecord(const Point& point, const double& box_size, const double& hubble_param) {
+    CartesianRecord(const Point& point, const double& shift, const double& hubble_param) {
       pos_x = pos_y = pos_z = point.r * hubble_param;
       vec3 unit_vec(point.p.to_vec3());
       pos_x *= unit_vec.x;
       pos_y *= unit_vec.y;
       pos_z *= unit_vec.z;
-      pos_x += 0.5 * box_size;
-      pos_y += 0.5 * box_size;
-      pos_z += 0.5 * box_size;
+      pos_x += shift;
+      pos_y += shift;
+      pos_z += shift;
     }
 
     //! Construct Point from record
     /*!
-     * @param box_size
-     * Subtract box_size/2 from coordinates (if origin is located at corner of box). If coordinates are already
-     * centered at box-center, set box_size=0.
+     * @param shift
+     * Add shift to coordinates to move origin. If coordinates are already centered at box-center, set shift=0.
      * @param hubble_param
      * Hubble parameter for conversion Mpc/h -> Mpc. If record coordinates are Mpc, set hubble_param=1.
      */
-    Point point(const double& box_size, const double& hubble_param) {
-      return point_from_box_position(pos_x, pos_y, pos_z, box_size, hubble_param);
+    Point point(const double& shift, const double& hubble_param) {
+      return point_from_box_position(pos_x, pos_y, pos_z, shift, hubble_param);
     }
   };
 
@@ -102,25 +98,25 @@ namespace catana { namespace io {
 
     //! Construct from Point
     /*!
-    * @param point
-    * The point from which the record is constructed
-    * @param box_size
-    * Add box_size/2 to coordinates (if origin of coordinate system shall be at corner of box/cube)
-    * If origin is supposed to be at the center, set box_size=0.
-    * @param hubble_param
-    * Hubble parameter for conversion Mpc -> Mpc/h. If record coordinates are Mpc, set hubble_param=1.
-    */
-    SphericalRecordBase(const Point& point, const double& box_size, const double& hubble_param);
+     * @param point
+     * The point from which the record is constructed
+     * @param dummy
+     * This dummy variable exists so that SphericalRecordBase has the same signature as the cartesian one.
+     * Set to whatever, it will be ignored
+     * @param hubble_param
+     * Hubble parameter for conversion Mpc -> Mpc/h. If record coordinates are Mpc, set hubble_param=1.
+     */
+    SphericalRecordBase(const Point& point, const double& dummy, const double& hubble_param);
 
     //! Construct Point from record
     /*!
-     * @param box_size
-     * Subtract box_size/2 from coordinates (if origin is located at corner of box). If coordinates are already
-     * centered at box-center, set box_size=0.
+     * @param dummy
+     * This dummy variable exists so that SphericalRecordBase has the same signature as the cartesian one.
+     * Set to whatever, it will be ignored
      * @param hubble_param
      * Hubble parameter for conversion Mpc/h -> Mpc. If record coordinates are Mpc, set hubble_param=1.
      */
-    Point point(const double& box_size, const double& hubble_param);
+    Point point(const double& dummy, const double& hubble_param);
   };
 
 
@@ -140,15 +136,15 @@ namespace catana { namespace io {
 
     //! Construct from Point
     /*!
-    * @param point
-    * The point from which the record is constructed
-    * @param box_size
-    * Add box_size/2 to coordinates (if origin of coordinate system shall be at corner of box/cube)
-    * If origin is supposed to be at the center, set box_size=0.
-    * @param hubble_param
-    * Hubble parameter for conversion Mpc -> Mpc/h. If record coordinates are Mpc, set hubble_param=1.
-    */
-    SphericalRecord(const Point& point, const double& box_size, const double& hubble_param);
+     * @param point
+     * The point from which the record is constructed
+     * @param dummy
+     * This dummy variable exists so that SphericalRecordBase has the same signature as the cartesian one.
+     * Set to whatever, it will be ignored
+     * @param hubble_param
+     * Hubble parameter for conversion Mpc -> Mpc/h. If record coordinates are Mpc, set hubble_param=1.
+     */
+    SphericalRecord(const Point& point, const double& dummy, const double& hubble_param);
   };
 
 
@@ -167,13 +163,13 @@ namespace catana { namespace io {
     /*!
     * @param point
     * The point from which the record is constructed
-    * @param box_size
-    * Add box_size/2 to coordinates (if origin of coordinate system shall be at corner of box/cube)
-    * If origin is supposed to be at the center, set box_size=0.
+    * @param dummy
+    * This dummy variable exists so that SphericalRecordBase has the same signature as the cartesian one.
+     * Set to whatever, it will be ignored
     * @param hubble_param
     * Hubble parameter for conversion Mpc -> Mpc/h. If record coordinates are Mpc, set hubble_param=1.
     */
-    SphericalRecord(const Point& point, const double& box_size, const double& hubble_param);
+    SphericalRecord(const Point& point, const double& dummy, const double& hubble_param);
   };
 
 
