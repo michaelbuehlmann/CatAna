@@ -63,6 +63,7 @@ PYBIND11_PLUGIN(io) {
 
   py::class_<io::Filter> (m, "Filter", R"pbdoc(
           (Abstract) parent class for point-filtering implementations.
+
       )pbdoc")
       .def("__call__", [&](io::Filter& fi, PointContainer& point_container){
           return fi(point_container);
@@ -358,6 +359,9 @@ PYBIND11_PLUGIN(io) {
               subsample_size (int): number of points to randomly subsample. Set ``subsample_size=0`` to turn off
                   subsampling.
               temp_filename (str): path to the temporary file (used only for subsampling)
+
+          Returns:
+              int: number of points written to the sink
       )pbdoc", py::arg("subsample_size")=0, py::arg("temp_filename")="tmp.bin")
       .def("run_totemp", &io::FilterStream::run_totemp, R"pbdoc(
           Run first intermediate step: write source to temporary file, apply filters
@@ -366,6 +370,9 @@ PYBIND11_PLUGIN(io) {
               temp_filename (str): path to the temporary file
               append (bool): if ``True``, points will be appended to the end of the file. Else the temporary file will
                   be overwritten.
+
+          Returns:
+              int: number of points written to the temporary file
       )pbdoc", py::arg("temp_filename")="tmp.bin", py::arg("append")=true)
       .def("run_fromtemp", &io::FilterStream::run_fromtemp, R"pbdoc(
           Run second intermediate step: write temporary file to sink (with subsampling)
@@ -374,6 +381,9 @@ PYBIND11_PLUGIN(io) {
               temp_filename (str): path to the temporary file (from previous step)
               subsample_size (int): number of points to randomly subsample. Set to 0 to turn off subsampling
               remove_temp (bool): If ``True`` the temporary file will be deleted once it is read.
+
+          Returns:
+              int: number of points written to the sink
       )pbdoc", py::arg("temp_filename")="tmp.bin", py::arg("subsample_size")=0, py::arg("remove_temp")=true);
 
   return m.ptr();

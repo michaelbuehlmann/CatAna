@@ -9,5 +9,7 @@ Besseltools Module
 
 .. autoclass:: SphericalBesselZeros
    :members:
+   :inherited-members:
+   :special-members: __getitem__
 
 .. autofunction:: double_sbessel_integrator
