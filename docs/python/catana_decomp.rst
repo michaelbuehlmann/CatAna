@@ -2,8 +2,9 @@ Decomposition Module
 ====================
 
 .. automodule:: catana.decomposition
+   :noindex:
 
-.. currentmodule:: catana.decomposition
+.. module:: catana.decomposition
 
 .. autofunction:: init_random
 

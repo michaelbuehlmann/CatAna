@@ -20,7 +20,7 @@ CatAna's documentation
 
 .. toctree::
    :maxdepth: 2
-   :caption: Module Reference
+   :caption: Python Package Reference
 
    python/catana
    python/catana_besseltools

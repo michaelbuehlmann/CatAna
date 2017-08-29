@@ -21,6 +21,8 @@ namespace catana { namespace io {
      */
     AngularMaskFilter(std::string healpix_mask);
 
+    // TODO: Add constructor from a vector / eigen array
+
     //! Filtering function on Point. Returns true if point passes filter, false otherwise.
     bool filter(Point& point) override;
 

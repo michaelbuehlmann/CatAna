@@ -16,6 +16,7 @@
 
 #include "../points/Point.hpp"
 
+// TODO: FIX BOX_SIZE (assume box is always [0, box_size]
 
 namespace catana { namespace io {
 

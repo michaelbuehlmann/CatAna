@@ -3,7 +3,9 @@ Besseltools Module
 
 
 .. automodule:: catana.besseltools
-.. currentmodule:: catana.besseltools
+   :noindex:
+
+.. module:: catana.besseltools
 
 .. autoclass:: SphericalBesselZeros
    :members:

@@ -170,8 +170,8 @@ Parameters:
     py::class_<FunctionInterpolator>(m, "FunctionInterpolator", R"pbdoc(
                 A function sampler and interpolator
 
-                Samples the given function with `interpolation_points` number of equidistantly distributed points between
-                `x_min` and `x_max`. When called at a given position, interpolates linearly from the two closest sample
+                Samples the given function with ``interpolation_points`` number of equidistantly distributed points between
+                ``x_min`` and ``x_max``. When called at a given position, interpolates linearly from the two closest sample
                 points.
 
                 The FunctionInterpolator mainly serves to speed up computations since we do not need to do expensive
