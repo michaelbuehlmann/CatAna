@@ -30,7 +30,7 @@ namespace catana { namespace io {
      * @param n number of points to read from read_iterator and write to sink
      * @return number of points written. -1 if failed
      */
-    virtual long long int write(PointContainer::iterator read_iterator, size_t n) override;
+    virtual long long int write(PointContainer::const_iterator read_iterator, size_t n) override;
 
 
     //! write points within [read_iterator, read_iterator+n) to point_container.
@@ -40,6 +40,8 @@ namespace catana { namespace io {
      * @return number of points written. -1 if failed
      */
     virtual long long int write(Point *read_iterator, size_t n) override;
+
+    using Sink::write;
 
     //! Close file (can no longer write)
     void close();

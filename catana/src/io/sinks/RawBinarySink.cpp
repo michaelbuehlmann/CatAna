@@ -4,7 +4,7 @@
 namespace catana { namespace io {
 
   template<class RecordType>
-  long long int RawBinarySink<RecordType>::write(PointContainer::iterator read_iterator, size_t n) {
+  long long int RawBinarySink<RecordType>::write(PointContainer::const_iterator read_iterator, size_t n) {
     return write_template(read_iterator, n);
   }
 

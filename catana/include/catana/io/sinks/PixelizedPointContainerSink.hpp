@@ -19,7 +19,7 @@ namespace catana { namespace io {
      * @param n number of points to read from read_iterator and write to sink
      * @return number of points written (=n)
      */
-    long long int write(PointContainer::iterator read_iterator, size_t n) {
+    long long int write(PointContainer::const_iterator read_iterator, size_t n) {
       return write_template(read_iterator, n);
     };
 
@@ -30,6 +30,9 @@ namespace catana { namespace io {
      * @return number of points written (=n)
      */
     long long int write(Point *read_iterator, size_t n) { return write_template(read_iterator, n); };
+
+    using Sink::write;
+
   private:
     template<class PointIterator>
     long long int write_template(PointIterator read_iterator, size_t n) {

@@ -19,7 +19,7 @@ namespace catana { namespace io {
      * @param n number of points to read from read_iterator and write to sink
      * @return number of points written. -1 if failed
      */
-    virtual long long int write(PointContainer::iterator read_iterator, size_t n) = 0;
+    virtual long long int write(PointContainer::const_iterator read_iterator, size_t n) = 0;
 
     //! write points within [read_iterator, read_iterator+n) to sink.
     /*!
@@ -30,6 +30,13 @@ namespace catana { namespace io {
     virtual long long int write(Point *read_iterator, size_t n) = 0;
 
     virtual ~Sink() = default;
+
+    //! write entire point_container directly to sink
+    /*!
+     * @param point_container source container to write
+     * @return number of points written. -1 if failed
+     */
+    long long int write(const PointContainer& point_container);
   };
 
 }}
