@@ -8,7 +8,7 @@ Random number generator
 -----------------------
 
 The RNG used internally for random subsets and probability filtering is automatically seeded with a random seed when
-the module is being imported. To manually set the seed, the ``init_random`` function can be used
+the module is being imported. To manually set the seed use the `init_random` function.
 
 .. autofunction:: init_random
 

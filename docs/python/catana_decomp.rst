@@ -6,12 +6,24 @@ Decomposition Module
 
 .. module:: catana.decomposition
 
-.. autofunction:: init_random
+
+Return Type
+-----------
 
 .. autoclass:: KClkk
    :members:
 
+
+sfb_decomposition
+-----------------
+
+.. autofunction:: sfb_decomposition
+
+
+Analyzer
+--------
+
 .. autoclass:: Analyzer
    :members:
 
-.. autofunction:: sfb_decomposition
+

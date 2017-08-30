@@ -13,8 +13,9 @@ CatAna's documentation
 
 .. toctree::
    :maxdepth: 2
-   :caption: Installation and Basic Usage:
+   :caption: Installation and Basic Usage
 
+   self
    catana_install
    catana_usage
 

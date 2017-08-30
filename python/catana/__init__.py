@@ -1,7 +1,7 @@
 from .basictypes import *
 from . import io
 from . import besseltools
-from . import decomposition
+from .decomposition import *
 
 
 def init_random(seed=None):

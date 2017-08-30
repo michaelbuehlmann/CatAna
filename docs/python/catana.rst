@@ -8,11 +8,22 @@ clustering statistics on such points, they have to be gathered in either a :clas
 :class:`PixelizedPointContainer`. Using the :class:`PixelizedPointContainer` provides a major speedup for a small
 trade-off in precision depending on the pixelization resolution.
 
+Point
+-----
+
 .. autoclass:: Point
    :members:
 
+
+PointContainer
+--------------
+
 .. autoclass:: PointContainer
    :members:
+
+
+PixelizedPointContainer
+-----------------------
 
 .. autoclass:: PixelizedPointContainer
    :members:
