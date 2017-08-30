@@ -56,10 +56,19 @@ PYBIND11_PLUGIN(io) {
       )pbdoc", py::arg("nside"));
 
   py::class_<io::Sink> (m, "Sink", R"pbdoc(
-      (Abstract) parent class for Sink implementations
+          (Abstract) parent class for Sink implementations
 
-      These are used to write data of type Point to various targets.
-  )pbdoc");
+          These are used to write data of type Point to various targets.
+      )pbdoc")
+      .def("write", py::overload_cast<const PointContainer&>(&io::Sink::write), R"pbdoc(
+          write entire point_container directly to sink
+
+          Parameters:
+              point_container (PointContainer): source container to write
+
+          Returns:
+              int: number of points written. -1 if it failed
+      )pbdoc", py::arg("point_container"));
 
   py::class_<io::Filter> (m, "Filter", R"pbdoc(
           (Abstract) parent class for point-filtering implementations.

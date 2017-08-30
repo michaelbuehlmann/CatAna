@@ -12,9 +12,9 @@ Return Types
 SFB Decomposition
 -----------------
 
-.. doxygenfunction:: catana::sfb_decomposition(const PixelizedPointContainer&, unsigned short, unsigned short, double, double, bool, bool)
+.. doxygenfunction:: catana::sfb_decomposition(const PixelizedPointContainer&, unsigned short, unsigned short, double, bool, bool)
 
-.. doxygenfunction:: catana::sfb_decomposition(const PointContainer&, unsigned short, unsigned short, double, double, bool, bool)
+.. doxygenfunction:: catana::sfb_decomposition(const PointContainer&, unsigned short, unsigned short, double, bool, bool)
 
 
 Analyzer

@@ -144,7 +144,19 @@ take a look at `catana.io`.
 
 .. code-block:: python
 
-   # (Code snippet to be added...)
+   # Save data so that we can read it again (uses [r theta phi] columns)
+   sink = catana.io.SphericalTextSink("points.txt")
+   sink.write(point_container)
+
+   # Read data from a text file
+   source = catana.io.SphericalTextSource("points.txt")
+   point_container = source.get_point_container()
+
+   # Other supported text sources and sinks:
+   #     - CartesianTextSource / CartesianTextSink
+   #     - SphericalTextSource / SphericalTextSink
+   #     - SphericalTextSource_3dex / SphericalTextSink_3dex (uses [theta phi r] columns)
+   #     - GadgetSource
 
 
 Filtering Data

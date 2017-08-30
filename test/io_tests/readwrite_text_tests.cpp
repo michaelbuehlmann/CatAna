@@ -102,6 +102,27 @@ TEST_CASE ("testing TextSink with threedex record") {
   }
 }
 
+TEST_CASE ("testing TextSink with direct container writing") {
+  PointContainer oc, oc2(100);
+  oc.add_point(Point(1, 2, 3));
+  oc.add_point(Point(0, 0, 2));
+  oc.add_point(Point(-1, -1, -1));
+  oc.add_point(Point(0, 0, 0));
+
+  io::TextSink<io::CartesianRecord<double>> sink("test.txt");
+  int n = sink.write(oc);
+      CHECK(oc.size() == n);
+
+  io::TextSource<io::CartesianRecord<double>> source("test.txt");
+  n = source.read(oc2.begin(), 100);
+      REQUIRE(oc.size() == n);
+  for(int i = 0; i < oc.size(); ++i) {
+        CHECK(doctest::Approx(oc[i].r) == oc2[i].r);
+        CHECK(doctest::Approx(oc[i].p.theta) == oc2[i].p.theta);
+        CHECK(doctest::Approx(oc[i].p.phi) == oc2[i].p.phi);
+  }
+}
+
 
 // TODO: Move to different place
 TEST_CASE ("testing Source to Pointcontainer conversion") {

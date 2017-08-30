@@ -22,7 +22,7 @@ set(CATANA_IO_SOURCES
         include/catana/io/sources/GadgetSource.hpp src/io/sources/GadgetSource.cpp
         include/catana/io/sources/RawBinarySource.hpp src/io/sources/RawBinarySource.cpp
         include/catana/io/sources/TextSource.hpp src/io/sources/TextSource.cpp
-        include/catana/io/Sink.hpp
+        include/catana/io/Sink.hpp src/io/Sink.cpp
         include/catana/io/sinks/PointContainerSink.hpp
         include/catana/io/sinks/PixelizedPointContainerSink.hpp
         include/catana/io/sinks/RawBinarySink.hpp src/io/sinks/RawBinarySink.cpp

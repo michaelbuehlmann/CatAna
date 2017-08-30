@@ -10,8 +10,6 @@
 namespace py = pybind11;
 using namespace catana;
 
-// TODO: REMOVE WINDOW VOLUME FROM COMPUTATION (EVERYWHERE)
-
 PYBIND11_PLUGIN(decomposition) {
   py::module m("decomposition", "python binding for SFB decomposition of particle positions (part of CatAna)");
 
