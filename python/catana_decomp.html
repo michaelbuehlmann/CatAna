@@ -1,0 +1,474 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Decomposition Module &mdash; CatAna 2.0a2+41.gdb4bd3e documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CatAna 2.0a2+41.gdb4bd3e documentation" href="../index.html"/>
+        <link rel="next" title="Input/Output Module" href="catana_io.html"/>
+        <link rel="prev" title="Besseltools Module" href="catana_besseltools.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CatAna
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0a2+41.gdb4bd3e
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Installation and Basic Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">CatAna’s documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../catana_install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../catana_usage.html">Basic Usage</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Python Package Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="catana.html">Points and Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_besseltools.html">Besseltools Module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Decomposition Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#return-type">Return Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sfb-decomposition">sfb_decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analyzer">Analyzer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="catana_io.html">Input/Output Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_misc.html">Miscellaneous</a></li>
+</ul>
+<p class="caption"><span class="caption-text">C++ Library Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp.html">Points and Containers (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_besseltools.html">Besseltools (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_decomp.html">SFB Decomposition (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_io.html">Input / Output (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_misc.html">Miscellaneous (C++)</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CatAna</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Decomposition Module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/python/catana_decomp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="decomposition-module">
+<h1>Decomposition Module<a class="headerlink" href="#decomposition-module" title="Permalink to this headline">¶</a></h1>
+<p>python binding for SFB decomposition of particle positions (part of CatAna)</p>
+<span class="target" id="module-catana.decomposition"></span><div class="section" id="return-type">
+<h2>Return Type<a class="headerlink" href="#return-type" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="catana.decomposition.KClkk">
+<em class="property">class </em><code class="descclassname">catana.decomposition.</code><code class="descname">KClkk</code><a class="headerlink" href="#catana.decomposition.KClkk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return type of SFB decomposition methods</p>
+<dl class="attribute">
+<dt id="catana.decomposition.KClkk.c_ln">
+<code class="descname">c_ln</code><a class="headerlink" href="#catana.decomposition.KClkk.c_ln" title="Permalink to this definition">¶</a></dt>
+<dd><p>contains the C_l(k,k) values</p>
+<p>index 0: 0 &lt; l &lt; lmax
+index 1: 0 &lt; n &lt; nmax</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="catana.decomposition.KClkk.f_lmn">
+<code class="descname">f_lmn</code><a class="headerlink" href="#catana.decomposition.KClkk.f_lmn" title="Permalink to this definition">¶</a></dt>
+<dd><p>contains the f_lm(k,k) values</p>
+<p>index 0: 0 &lt; l &lt; lmax
+index 1: 0 &lt; m &lt;= l
+index 2: 0 &lt; n &lt; nmax</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="catana.decomposition.KClkk.k_ln">
+<code class="descname">k_ln</code><a class="headerlink" href="#catana.decomposition.KClkk.k_ln" title="Permalink to this definition">¶</a></dt>
+<dd><p>contains the k values at which C_l(k,k) is evaluated</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.decomposition.KClkk.savetxt">
+<code class="descname">savetxt</code><span class="sig-paren">(</span><em>self: catana.decomposition.KClkk</em>, <em>filename_base: str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.decomposition.KClkk.savetxt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save k_ln and c_ln to textfile</p>
+<dl class="docutils">
+<dt>This will generate the following files:</dt>
+<dd><ul class="first last simple">
+<li>filename_base + “.k_ln”: the k_ln values (row: l, column: n)</li>
+<li>filename_base + “.c_ln”: the C_ln values (row: l, column: n)</li>
+</ul>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename_base</strong> (<em>str</em>) – base path where the files will be created</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="sfb-decomposition">
+<h2>sfb_decomposition<a class="headerlink" href="#sfb-decomposition" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="catana.decomposition.sfb_decomposition">
+<code class="descclassname">catana.decomposition.</code><code class="descname">sfb_decomposition</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#catana.decomposition.sfb_decomposition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li>sfb_decomposition(point_container: catana.basictypes.PointContainer, lmax: int, nmax: int, rmax: float, store_flmn: bool=False, verbose: bool=True) -&gt; catana.decomposition.KClkk</li>
+</ol>
+<p>compute the SFB transform on the <a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PointContainer</span></code></a></p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This method uses the slow brute-force method. Consider using a <a class="reference internal" href="catana.html#catana.PixelizedPointContainer" title="catana.PixelizedPointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PixelizedPointContainer</span></code></a> instead</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>point_container</strong> (<a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><em>PointContainer</em></a>) – data to analyze</li>
+<li><strong>lmax</strong> (<em>int</em>) – largest multipole to compute</li>
+<li><strong>nmax</strong> (<em>int</em>) – largest k-index to compute</li>
+<li><strong>rmax</strong> (<em>float</em>) – maximal radius of data</li>
+<li><strong>store_flmn</strong> (<em>bool</em>) – if <code class="docutils literal"><span class="pre">True</span></code> the output will contain the f_lmn coefficients, otherwise only the C_ln</li>
+<li><strong>verbose</strong> (<em>bool</em>) – if <code class="docutils literal"><span class="pre">True</span></code> print additional logging information to stdout</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><dl class="docutils">
+<dt>SFB components including the k at which they were computed and the C_l(k). If store_flmn, will also save the</dt>
+<dd><p class="first last">f_lm(k) components</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<ol class="arabic simple" start="2">
+<li>sfb_decomposition(pixelized_point_container: catana.basictypes.PixelizedPointContainer, lmax: int, nmax: int, rmax: float, store_flmn: bool=False, verbose: bool=True) -&gt; catana.decomposition.KClkk</li>
+</ol>
+<p>compute the SFB transform on the <a class="reference internal" href="catana.html#catana.PixelizedPointContainer" title="catana.PixelizedPointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PixelizedPointContainer</span></code></a></p>
+<p>This method makes use of the fast pixelized decomposition scheme.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pixelized_point_container</strong> (<a class="reference internal" href="catana.html#catana.PixelizedPointContainer" title="catana.PixelizedPointContainer"><em>PixelizedPointContainer</em></a>) – data to analyze</li>
+<li><strong>lmax</strong> (<em>int</em>) – largest multipole to compute</li>
+<li><strong>nmax</strong> (<em>int</em>) – largest k-index to compute</li>
+<li><strong>rmax</strong> (<em>float</em>) – maximal radius of data</li>
+<li><strong>store_flmn</strong> (<em>bool</em>) – if <code class="docutils literal"><span class="pre">True</span></code> the output will contain the f_lmn coefficients, otherwise only the C_ln</li>
+<li><strong>verbose</strong> (<em>bool</em>) – if <code class="docutils literal"><span class="pre">True</span></code> print additional logging information to stdout</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><dl class="docutils">
+<dt>SFB components including the k at which they were computed and the C_l(k). If store_flmn, will also save the</dt>
+<dd><p class="first last">f_lm(k) components</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="analyzer">
+<h2>Analyzer<a class="headerlink" href="#analyzer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="catana.decomposition.Analyzer">
+<em class="property">class </em><code class="descclassname">catana.decomposition.</code><code class="descname">Analyzer</code><span class="sig-paren">(</span><em>self: catana.decomposition.Analyzer</em>, <em>source: catana.io.Source</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.decomposition.Analyzer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decomposition workflow which combines I/O and SFB transformation.</p>
+<p>The Analyzer class combines <a class="reference internal" href="catana_io.html#catana.io.Source" title="catana.io.Source"><code class="xref any py py-class docutils literal"><span class="pre">Source</span></code></a> with <a class="reference internal" href="catana_io.html#catana.io.Filter" title="catana.io.Filter"><code class="xref any py py-class docutils literal"><span class="pre">Filter</span></code></a> instances and allows for direct computation of the SFB
+transform.</p>
+<p>Constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>source</strong> (<a class="reference internal" href="catana_io.html#catana.io.Source" title="catana.io.Source"><em>Source</em></a>) – the (file) source from which to read</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="catana.decomposition.Analyzer.add_filter">
+<code class="descname">add_filter</code><span class="sig-paren">(</span><em>self: catana.decomposition.Analyzer</em>, <em>Filter: catana.io.Filter</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.decomposition.Analyzer.add_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a Filter to the pipeline.</p>
+<p>Filters will be applied sequentially in the order that they were added to the Analyzer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.decomposition.Analyzer.compute_sfb">
+<code class="descname">compute_sfb</code><span class="sig-paren">(</span><em>self: catana.decomposition.Analyzer</em>, <em>lmax: int</em>, <em>nmax: int</em>, <em>rmax: float</em>, <em>store_flmn: bool=False</em>, <em>verbose: bool=True</em><span class="sig-paren">)</span> &#x2192; catana.decomposition.KClkk<a class="headerlink" href="#catana.decomposition.Analyzer.compute_sfb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the SFB transform using the brute-force method</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>lmax</strong> (<em>int</em>) – largest multipole to compute</li>
+<li><strong>nmax</strong> (<em>int</em>) – largest k-index to compute</li>
+<li><strong>rmax</strong> (<em>float</em>) – maximal radius of data</li>
+<li><strong>store_flmn</strong> (<em>bool</em>) – if <code class="docutils literal"><span class="pre">True</span></code> the output will contain the f_lmn coefficients, otherwise only the C_ln</li>
+<li><strong>verbose</strong> (<em>bool</em>) – if <code class="docutils literal"><span class="pre">True</span></code> print additional logging information to stdout</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>This will read and filter the source input and compute the Spherical Fourier Bessel decomposition from
+the individual points directly without making use of the speed-up through the pixelization scheme.</p>
+<p class="last">NOT RECOMMENDED!</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.decomposition.Analyzer.compute_sfb_pixelized">
+<code class="descname">compute_sfb_pixelized</code><span class="sig-paren">(</span><em>self: catana.decomposition.Analyzer</em>, <em>lmax: int</em>, <em>nmax: int</em>, <em>rmax: float</em>, <em>nside: int</em>, <em>store_flmn: bool=False</em>, <em>verbose: bool=True</em><span class="sig-paren">)</span> &#x2192; catana.decomposition.KClkk<a class="headerlink" href="#catana.decomposition.Analyzer.compute_sfb_pixelized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the SFB transform using the pixelization method</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>lmax</strong> (<em>int</em>) – largest multipole to compute</li>
+<li><strong>nmax</strong> (<em>int</em>) – largest k-index to compute</li>
+<li><strong>rmax</strong> (<em>float</em>) – maximal radius of data</li>
+<li><strong>nside</strong> (<em>int</em>) – HEALPix resolution, must be a power of 2</li>
+<li><strong>store_flmn</strong> (<em>bool</em>) – if <code class="docutils literal"><span class="pre">True</span></code> the output will contain the f_lmn coefficients, otherwise only the C_ln</li>
+<li><strong>verbose</strong> (<em>bool</em>) – if <code class="docutils literal"><span class="pre">True</span></code> print additional logging information to stdout</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.decomposition.Analyzer.set_source">
+<code class="descname">set_source</code><span class="sig-paren">(</span><em>self: catana.decomposition.Analyzer</em>, <em>source: catana.io.Source</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.decomposition.Analyzer.set_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>reset the source</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.decomposition.Analyzer.set_subsample_size">
+<code class="descname">set_subsample_size</code><span class="sig-paren">(</span><em>self: catana.decomposition.Analyzer</em>, <em>subsample_size: int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.decomposition.Analyzer.set_subsample_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>set the number of points that are randomly sampled</p>
+<p>If not set, all points that pass filtering will be taken into account for analysis. Note that random
+subsampling is done after filtering.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="catana_io.html" class="btn btn-neutral float-right" title="Input/Output Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="catana_besseltools.html" class="btn btn-neutral" title="Besseltools Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Michael Buehlmann.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'2.0a2+41.gdb4bd3e',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

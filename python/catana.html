@@ -1,0 +1,430 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Points and Containers &mdash; CatAna 2.0a2+41.gdb4bd3e documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CatAna 2.0a2+41.gdb4bd3e documentation" href="../index.html"/>
+        <link rel="next" title="Besseltools Module" href="catana_besseltools.html"/>
+        <link rel="prev" title="Basic Usage" href="../catana_usage.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CatAna
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0a2+41.gdb4bd3e
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Installation and Basic Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">CatAna’s documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../catana_install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../catana_usage.html">Basic Usage</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Python Package Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Points and Containers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#point">Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pointcontainer">PointContainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pixelizedpointcontainer">PixelizedPointContainer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="catana_besseltools.html">Besseltools Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_decomp.html">Decomposition Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_io.html">Input/Output Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_misc.html">Miscellaneous</a></li>
+</ul>
+<p class="caption"><span class="caption-text">C++ Library Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp.html">Points and Containers (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_besseltools.html">Besseltools (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_decomp.html">SFB Decomposition (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_io.html">Input / Output (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_misc.html">Miscellaneous (C++)</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CatAna</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Points and Containers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/python/catana.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-catana">
+<span id="points-and-containers"></span><h1>Points and Containers<a class="headerlink" href="#module-catana" title="Permalink to this headline">¶</a></h1>
+<p>Objects in CatAna are points in space given by their angular coordinates and radial distance. To create spherical
+clustering statistics on such points, they have to be gathered in either a <a class="reference internal" href="#catana.PointContainer" title="catana.PointContainer"><code class="xref py py-class docutils literal"><span class="pre">PointContainer</span></code></a> or a
+<a class="reference internal" href="#catana.PixelizedPointContainer" title="catana.PixelizedPointContainer"><code class="xref py py-class docutils literal"><span class="pre">PixelizedPointContainer</span></code></a>. Using the <a class="reference internal" href="#catana.PixelizedPointContainer" title="catana.PixelizedPointContainer"><code class="xref py py-class docutils literal"><span class="pre">PixelizedPointContainer</span></code></a> provides a major speedup for a small
+trade-off in precision depending on the pixelization resolution.</p>
+<div class="section" id="point">
+<h2>Point<a class="headerlink" href="#point" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="catana.Point">
+<em class="property">class </em><code class="descclassname">catana.</code><code class="descname">Point</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#catana.Point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Representation of a particle in 3-dimensional space in spherical coordinates.</p>
+<dl class="docutils">
+<dt><strong>Convention</strong>:</dt>
+<dd><ul class="first last simple">
+<li>longitude phi in (0, 2pi)</li>
+<li>lattitude theta in (0, theta) measured from z-axis.</li>
+</ul>
+</dd>
+</dl>
+<p>(can be converted to numpy array (r, theta, phi) by calling <code class="docutils literal"><span class="pre">np.array(point)</span></code>)</p>
+<p>Overloaded function.</p>
+<ol class="arabic">
+<li><p class="first">__init__(self: catana.basictypes.Point) -&gt; None</p>
+<blockquote>
+<div><p>Default constructor (0,0,0)</p>
+</div></blockquote>
+</li>
+<li><p class="first">__init__(self: catana.basictypes.Point, r: float, theta: float, phi: float) -&gt; None</p>
+<blockquote>
+<div><p>Constructor from spherical coordinates</p>
+</div></blockquote>
+</li>
+</ol>
+<dl class="method">
+<dt id="catana.Point.cartesian">
+<code class="descname">cartesian</code><span class="sig-paren">(</span><em>self: catana.basictypes.Point</em><span class="sig-paren">)</span> &#x2192; Tuple[float, float, float]<a class="headerlink" href="#catana.Point.cartesian" title="Permalink to this definition">¶</a></dt>
+<dd><p>get cartesian point coordinates</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>tuple[float]</em> – cartesian coordinates (x, y, z)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.Point.spherical">
+<code class="descname">spherical</code><span class="sig-paren">(</span><em>self: catana.basictypes.Point</em><span class="sig-paren">)</span> &#x2192; Tuple[float, float, float]<a class="headerlink" href="#catana.Point.spherical" title="Permalink to this definition">¶</a></dt>
+<dd><p>get spherical point coordinates</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>tuple[float]</em> – spherical coordinates (r, theta, phi)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="pointcontainer">
+<h2>PointContainer<a class="headerlink" href="#pointcontainer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="catana.PointContainer">
+<em class="property">class </em><code class="descclassname">catana.</code><code class="descname">PointContainer</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#catana.PointContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collection of <a class="reference internal" href="#catana.Point" title="catana.Point"><code class="xref py py-class docutils literal"><span class="pre">Point</span></code></a> objects</p>
+<p>(can be converted to numpy array with shape (n_points, 3), where each point is of the form
+(r, theta, phi) by calling <code class="docutils literal"><span class="pre">np.array(point_container)</span></code>)</p>
+<p>Overloaded function.</p>
+<ol class="arabic simple">
+<li>__init__(self: catana.basictypes.PointContainer) -&gt; None</li>
+</ol>
+<p>Default constructor (empty container)</p>
+<ol class="arabic simple" start="2">
+<li>__init__(self: catana.basictypes.PointContainer, coordinates: numpy.ndarray[float64], coordinate_type: str=’spherical’) -&gt; None</li>
+</ol>
+<p>Create a PointContainer from a (numpy) array containing the coordinates</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>coordinates</strong> (<em>numpy.ndarray</em><em>[</em><em>float64</em><em>]</em>) – coordinate array of shape (n_points, 3)</li>
+<li><strong>coordinate_type</strong> (<em>str</em>) – coordinate system, either “cartesian” or “spherical”</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">coordinate array has to be in row-major ordering.</p>
+</div>
+<dl class="method">
+<dt id="catana.PointContainer.add_point">
+<code class="descname">add_point</code><span class="sig-paren">(</span><em>self: catana.basictypes.PointContainer</em>, <em>point: catana.basictypes.Point</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.PointContainer.add_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a point to the collection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>point</strong> (<a class="reference internal" href="#catana.Point" title="catana.Point"><em>Point</em></a>) – the point to add</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="pixelizedpointcontainer">
+<h2>PixelizedPointContainer<a class="headerlink" href="#pixelizedpointcontainer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="catana.PixelizedPointContainer">
+<em class="property">class </em><code class="descclassname">catana.</code><code class="descname">PixelizedPointContainer</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#catana.PixelizedPointContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pixelized collection of <a class="reference internal" href="#catana.Point" title="catana.Point"><code class="xref py py-class docutils literal"><span class="pre">Point</span></code></a> objects</p>
+<p>Pixelization occurs along the angular axis according to the HEALPix scheme.
+Radial coordinates remain the same.</p>
+<p>Overloaded function.</p>
+<ol class="arabic simple">
+<li>__init__(self: catana.basictypes.PixelizedPointContainer, nside: int) -&gt; None</li>
+</ol>
+<p>Default constructor (empty container)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nside</strong> (<em>int</em>) – NSide resolution parameter of the HEALPix scheme. Must be a power of 2.</td>
+</tr>
+</tbody>
+</table>
+<ol class="arabic simple" start="2">
+<li>__init__(self: catana.basictypes.PixelizedPointContainer, nside: int, point_container: catana.basictypes.PointContainer) -&gt; None</li>
+</ol>
+<p>Constructor from a <a class="reference internal" href="#catana.PointContainer" title="catana.PointContainer"><code class="xref py py-class docutils literal"><span class="pre">PointContainer</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>nside</strong> (<em>int</em>) – NSide resolution parameter of the HEALPix scheme. Must be a power of 2.</li>
+<li><strong>point_container</strong> (<a class="reference internal" href="#catana.PointContainer" title="catana.PointContainer"><em>PointContainer</em></a>) – A container of <a class="reference internal" href="#catana.Point" title="catana.Point"><code class="xref py py-class docutils literal"><span class="pre">Point</span></code></a> objects</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="catana.PixelizedPointContainer.get_countmap">
+<code class="descname">get_countmap</code><span class="sig-paren">(</span><em>self: catana.basictypes.PixelizedPointContainer</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray[int32[m, 1]]<a class="headerlink" href="#catana.PixelizedPointContainer.get_countmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain a HEALPix count map which contains the number of points which are stored in each pixel.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>numpy.ndarray[int]</em> – HEALPix map with point number counts</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The resulting array can be viewed with healpy.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="catana_besseltools.html" class="btn btn-neutral float-right" title="Besseltools Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../catana_usage.html" class="btn btn-neutral" title="Basic Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Michael Buehlmann.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'2.0a2+41.gdb4bd3e',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

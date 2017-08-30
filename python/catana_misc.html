@@ -1,0 +1,347 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Miscellaneous &mdash; CatAna 2.0a2+41.gdb4bd3e documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CatAna 2.0a2+41.gdb4bd3e documentation" href="../index.html"/>
+        <link rel="next" title="Points and Containers (C++)" href="../cpp/catana_cpp.html"/>
+        <link rel="prev" title="Input/Output Module" href="catana_io.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CatAna
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0a2+41.gdb4bd3e
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Installation and Basic Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">CatAna’s documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../catana_install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../catana_usage.html">Basic Usage</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Python Package Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="catana.html">Points and Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_besseltools.html">Besseltools Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_decomp.html">Decomposition Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_io.html">Input/Output Module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Miscellaneous</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#random-number-generator">Random number generator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#function-interpolator">Function Interpolator</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">C++ Library Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp.html">Points and Containers (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_besseltools.html">Besseltools (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_decomp.html">SFB Decomposition (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_io.html">Input / Output (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_misc.html">Miscellaneous (C++)</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CatAna</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Miscellaneous</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/python/catana_misc.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="miscellaneous">
+<h1>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="random-number-generator">
+<h2>Random number generator<a class="headerlink" href="#random-number-generator" title="Permalink to this headline">¶</a></h2>
+<p>The RNG used internally for random subsets and probability filtering is automatically seeded with a random seed when
+the module is being imported. To manually set the seed use the <a class="reference internal" href="#catana.init_random" title="catana.init_random"><code class="xref any py py-func docutils literal"><span class="pre">init_random</span></code></a> function.</p>
+<dl class="function">
+<dt id="catana.init_random">
+<code class="descclassname">catana.</code><code class="descname">init_random</code><span class="sig-paren">(</span><em>seed=None</em><span class="sig-paren">)</span><a class="headerlink" href="#catana.init_random" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the random seed for the io and decomposition module (used for filtering)</p>
+<p>The catana.io and catana.decomposition module contain their own random number generator. Calling this function will
+initialize both of them and setting the same seed, if seed is not None.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>seed</strong> (<em>unsigned int</em>) – The random seed. If None, will be drawn from a random device.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="function-interpolator">
+<h2>Function Interpolator<a class="headerlink" href="#function-interpolator" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="catana.FunctionInterpolator">
+<em class="property">class </em><code class="descclassname">catana.</code><code class="descname">FunctionInterpolator</code><span class="sig-paren">(</span><em>self: catana.basictypes.FunctionInterpolator, function: Callable[[float], float], interpolation_points: int, x_min: float, x_max: float</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.FunctionInterpolator" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function sampler and interpolator</p>
+<p>Samples the given function with <code class="docutils literal"><span class="pre">interpolation_points</span></code> number of equidistantly distributed points between
+<code class="docutils literal"><span class="pre">x_min</span></code> and <code class="docutils literal"><span class="pre">x_max</span></code>. When called at a given position, interpolates linearly from the two closest sample
+points.</p>
+<p>The FunctionInterpolator mainly serves to speed up computations since we do not need to do expensive
+Python object calls once it is initialized.</p>
+<p>Construct a FunctionInterpolator from a function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>function</strong> (<em>callable object</em>) – the function to be sampled and interpolated</li>
+<li><strong>points</strong> (<em>interpolation</em>) – number of points at which the function needs to be sampled</li>
+<li><strong>x_min</strong> (<em>float</em>) – lower boundary of sample points</li>
+<li><strong>x_max</strong> (<em>float</em>) – upper boundary of sample points</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="catana.FunctionInterpolator.__call__">
+<code class="descname">__call__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#catana.FunctionInterpolator.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li>__call__(self: catana.basictypes.FunctionInterpolator, x: float) -&gt; float</li>
+</ol>
+<p>Evaluate the FunctionInterpolator at the given value x.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">x must be within the boundaries [x_min, x_max] for which the FunctionInterpolator was set up.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> (<em>float</em>) – evaluation point</td>
+</tr>
+</tbody>
+</table>
+<ol class="arabic simple" start="2">
+<li>__call__(self: catana.basictypes.FunctionInterpolator, x: numpy.ndarray[float64]) -&gt; object</li>
+</ol>
+<p>Evaluate the FunctionInterpolator at the given values x.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">each element in x must be within the boundaries [x_min, x_max] for which the FunctionInterpolator
+was set up.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> (<em>numpy.ndarray</em><em>[</em><em>float</em><em>]</em>) – evaluation points</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../cpp/catana_cpp.html" class="btn btn-neutral float-right" title="Points and Containers (C++)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="catana_io.html" class="btn btn-neutral" title="Input/Output Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Michael Buehlmann.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'2.0a2+41.gdb4bd3e',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

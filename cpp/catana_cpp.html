@@ -1,0 +1,490 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Points and Containers (C++) &mdash; CatAna 2.0a2+41.gdb4bd3e documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CatAna 2.0a2+41.gdb4bd3e documentation" href="../index.html"/>
+        <link rel="next" title="Besseltools (C++)" href="catana_cpp_besseltools.html"/>
+        <link rel="prev" title="Miscellaneous" href="../python/catana_misc.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CatAna
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0a2+41.gdb4bd3e
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Installation and Basic Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">CatAna’s documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../catana_install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../catana_usage.html">Basic Usage</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Python Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana.html">Points and Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana_besseltools.html">Besseltools Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana_decomp.html">Decomposition Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana_io.html">Input/Output Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana_misc.html">Miscellaneous</a></li>
+</ul>
+<p class="caption"><span class="caption-text">C++ Library Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Points and Containers (C++)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#point">Point</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Point</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#from-cartesian-coordinates">From cartesian coordinates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#from-spherical-coordinates">From spherical coordinates</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pointcontainer">PointContainer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">PointContainer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subsampling">Subsampling</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pixelizedpointcontainer">PixelizedPointContainer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="catana_cpp_besseltools.html">Besseltools (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_cpp_decomp.html">SFB Decomposition (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_cpp_io.html">Input / Output (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_cpp_misc.html">Miscellaneous (C++)</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CatAna</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Points and Containers (C++)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cpp/catana_cpp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="points-and-containers-c">
+<h1>Points and Containers (C++)<a class="headerlink" href="#points-and-containers-c" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="point">
+<h2>Point<a class="headerlink" href="#point" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Point<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv2N6catana5PointE">
+<span id="catana::Point"></span><span class="target" id="structcatana_1_1Point"></span><em class="property">struct </em><code class="descclassname">catana::</code><code class="descname">Point</code><a class="headerlink" href="#_CPPv2N6catana5PointE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Representation of a particle in 3-dimensional space in spherical coordinates. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana5Point5PointEv">
+<span id="catana::Point::Point"></span><span class="target" id="structcatana_1_1Point_1aad337f10ddd3c6d2dc1d39088b4da4fe"></span><code class="descname">Point</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana5Point5PointEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Default constructor. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana5Point5PointERKdRKdRKd">
+<span id="catana::Point::Point__doubleCR.doubleCR.doubleCR"></span><span class="target" id="structcatana_1_1Point_1a3f17cf29d6ff51d5d4f75e09e7dad882"></span><code class="descname">Point</code><span class="sig-paren">(</span><em class="property">const</em> double &amp;<em>x</em>, <em class="property">const</em> double &amp;<em>y</em>, <em class="property">const</em> double &amp;<em>z</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana5Point5PointERKdRKdRKd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct from cartesian coordinates. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Members</p>
+<dl class="member">
+<dt id="_CPPv2N6catana5Point1rE">
+<span id="catana::Point::r__double"></span><span class="target" id="structcatana_1_1Point_1a4c2bda6e4e7ca3fb444d6008ec868065"></span>double <code class="descname">r</code><a class="headerlink" href="#_CPPv2N6catana5Point1rE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>radius r&gt;0 </p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv2N6catana5Point1pE">
+<span id="catana::Point::p__pointing"></span><span class="target" id="structcatana_1_1Point_1a042f6c5253030793688eee39aaf5bde7"></span>pointing <code class="descname">p</code><a class="headerlink" href="#_CPPv2N6catana5Point1pE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>angular position p (HEALPix pointing) </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="from-cartesian-coordinates">
+<h3>From cartesian coordinates<a class="headerlink" href="#from-cartesian-coordinates" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv2N6catana23point_from_box_positionERKdRKdRKdRKdRKd">
+<span id="catana::point_from_box_position__doubleCR.doubleCR.doubleCR.doubleCR.doubleCR"></span><span class="target" id="namespacecatana_1a26a8715ca5d64a89778b5f954a34d0bc"></span><a class="reference internal" href="#_CPPv2N6catana5PointE" title="catana::Point">Point</a> <code class="descclassname">catana::</code><code class="descname">point_from_box_position</code><span class="sig-paren">(</span><em class="property">const</em> double &amp;<em>pos_x</em>, <em class="property">const</em> double &amp;<em>pos_y</em>, <em class="property">const</em> double &amp;<em>pos_z</em>, <em class="property">const</em> double &amp;<em>shift</em> = 0, <em class="property">const</em> double &amp;<em>hubble_param</em> = 1<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana23point_from_box_positionERKdRKdRKdRKdRKd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Create <a class="reference internal" href="#structcatana_1_1Point"><span class="std std-ref">Point</span></a> from box coordinates (coordinates in [0, boxsize]). Change coordinates from Mpc/h to Mpc. </p>
+<p><dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">pos_x</span></code>: x-coordinate in [0, boxsize] </li>
+<li><code class="docutils literal"><span class="pre">pos_y</span></code>: y-coordinate in [0, boxsize] </li>
+<li><code class="docutils literal"><span class="pre">pos_z</span></code>: z-coordinate in [0, boxsize] </li>
+<li><code class="docutils literal"><span class="pre">shift</span></code>: will be used to shift origin to center of the box (i.e. coordinates will be transformed x -&gt; x+shift). If origin already located at center of box, set shift=0. </li>
+<li><code class="docutils literal"><span class="pre">hubble_param</span></code>: The Hubble parameter h which will be used to convert Mpc/h -&gt; Mpc. If coordinates are already in Mpc, set h=1. </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<em class="property">template </em>&lt;<em class="property">class</em> FLOAT_TYPE&gt;</dt>
+<dt id="_CPPv2N6catana23point_from_box_positionEPK10FLOAT_TYPERKdRKd">
+<span id="catana::point_from_box_position__FLOAT_TYPECP.doubleCR.doubleCR"></span><span class="target" id="namespacecatana_1ad1c33be393eaa0e02115570259efa244"></span><a class="reference internal" href="#_CPPv2N6catana5PointE" title="catana::Point">Point</a> <code class="descclassname">catana::</code><code class="descname">point_from_box_position</code><span class="sig-paren">(</span><em class="property">const</em> FLOAT_TYPE *<em>pos_xyz</em>, <em class="property">const</em> double &amp;<em>shift</em> = 0, <em class="property">const</em> double &amp;<em>hubble_param</em> = 1<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana23point_from_box_positionEPK10FLOAT_TYPERKdRKd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Create <a class="reference internal" href="#structcatana_1_1Point"><span class="std std-ref">Point</span></a> from box coordinates (coordinates in [0, boxsize]). Change coordinates from Mpc/h to Mpc. </p>
+<p><dl class="docutils">
+<dt><strong>Template Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">FLOAT_TYPE</span></code>: the floating point type of the pos_xyz array (float or double) </li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">pos_xyz</span></code>: pointer to C-array of type FLOAT_TYPE with size 3, containing the x, y, z coordinates </li>
+<li><code class="docutils literal"><span class="pre">shift</span></code>: will be used to shift origin to center of the box (i.e. coordinates will be transformed x -&gt; x+shift). If origin already located at center of box, set shift=0. </li>
+<li><code class="docutils literal"><span class="pre">hubble_param</span></code>: The Hubble parameter h which will be used to convert Mpc/h -&gt; Mpc. If coordinates are already in Mpc, set h=1. </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="from-spherical-coordinates">
+<h3>From spherical coordinates<a class="headerlink" href="#from-spherical-coordinates" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv2N6catana29point_from_spherical_positionERKdRKdRKdRKd">
+<span id="catana::point_from_spherical_position__doubleCR.doubleCR.doubleCR.doubleCR"></span><span class="target" id="namespacecatana_1a1036f6f6f15c923a67d0e1c32464e227"></span><a class="reference internal" href="#_CPPv2N6catana5PointE" title="catana::Point">Point</a> <code class="descclassname">catana::</code><code class="descname">point_from_spherical_position</code><span class="sig-paren">(</span><em class="property">const</em> double &amp;<em>pos_r</em>, <em class="property">const</em> double &amp;<em>pos_theta</em>, <em class="property">const</em> double &amp;<em>pos_phi</em>, <em class="property">const</em> double &amp;<em>hubble_param</em> = 1<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana29point_from_spherical_positionERKdRKdRKdRKd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Create <a class="reference internal" href="#structcatana_1_1Point"><span class="std std-ref">Point</span></a> from box spherical coordinates. Change coordinates from Mpc/h to Mpc. </p>
+<p><dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">pos_r</span></code>: radial coordinate pos_r &gt; 0 </li>
+<li><code class="docutils literal"><span class="pre">pos_theta</span></code>: lattitude coordinate 0 &lt;= pos_theta &lt;= pi </li>
+<li><code class="docutils literal"><span class="pre">pos_phi</span></code>: longitude coordinate 0 &lt;= pos_phi &lt;= 2pi </li>
+<li><code class="docutils literal"><span class="pre">hubble_param</span></code>: The Hubble parameter h which will be used to convert Mpc/h -&gt; Mpc. If coordinates are already in Mpc, set h=1. </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<em class="property">template </em>&lt;<em class="property">class</em> FLOAT_TYPE&gt;</dt>
+<dt id="_CPPv2N6catana29point_from_spherical_positionEPK10FLOAT_TYPERKd">
+<span id="catana::point_from_spherical_position__FLOAT_TYPECP.doubleCR"></span><span class="target" id="namespacecatana_1a857c77ee2f47d19f7845c891e1130e0a"></span><a class="reference internal" href="#_CPPv2N6catana5PointE" title="catana::Point">Point</a> <code class="descclassname">catana::</code><code class="descname">point_from_spherical_position</code><span class="sig-paren">(</span><em class="property">const</em> FLOAT_TYPE *<em>pos_rtf</em>, <em class="property">const</em> double &amp;<em>hubble_param</em> = 1<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana29point_from_spherical_positionEPK10FLOAT_TYPERKd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Create <a class="reference internal" href="#structcatana_1_1Point"><span class="std std-ref">Point</span></a> from box spherical coordinates. Change coordinates from Mpc/h to Mpc. </p>
+<p><dl class="docutils">
+<dt><strong>Template Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">FLOAT_TYPE</span></code>: the floating point type of the pos_rtf array (float or double) </li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">pos_rtf</span></code>: pointer to C-array of type FLOAT_TYPE with size 3, containing the r, theta, phi coordinates </li>
+<li><code class="docutils literal"><span class="pre">hubble_param</span></code>: The Hubble parameter h which will be used to convert Mpc/h -&gt; Mpc. If coordinates are already in Mpc, set h=1. </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="pointcontainer">
+<h2>PointContainer<a class="headerlink" href="#pointcontainer" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3>PointContainer<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv2N6catana14PointContainerE">
+<span id="catana::PointContainer"></span><span class="target" id="classcatana_1_1PointContainer"></span><em class="property">class </em><code class="descclassname">catana::</code><code class="descname">PointContainer</code><a class="headerlink" href="#_CPPv2N6catana14PointContainerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Container of <a class="reference internal" href="#structcatana_1_1Point"><span class="std std-ref">Point</span></a>: std::vector&lt;Point&gt; </p>
+<p>Inherits from std::vector&lt; Point &gt;</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana14PointContainer9add_pointERK5Point">
+<span id="catana::PointContainer::add_point__PointCR"></span><span class="target" id="classcatana_1_1PointContainer_1a124e21e6e71edc363d50592039c625e2"></span>void <code class="descname">add_point</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv2N6catana5PointE" title="catana::Point">Point</a> &amp;<em>point</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana14PointContainer9add_pointERK5Point" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Add an point to <a class="reference internal" href="#classcatana_1_1PointContainer"><span class="std std-ref">PointContainer</span></a>. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="subsampling">
+<h3>Subsampling<a class="headerlink" href="#subsampling" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv2N6catana29create_point_container_subsetER14PointContainerRK6size_t">
+<span id="catana::create_point_container_subset__PointContainerR.sCR"></span><span class="target" id="namespacecatana_1a31891e897a69876eb9b721679c6531c1"></span>void <code class="descclassname">catana::</code><code class="descname">create_point_container_subset</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a> &amp;<em>point_container</em>, <em class="property">const</em> size_t &amp;<em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana29create_point_container_subsetER14PointContainerRK6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Creates a random subset of the <a class="reference internal" href="#structcatana_1_1Point"><span class="std std-ref">Point</span></a> Container such that N points remain. </p>
+<p>This is a Fisher-Yates shuffle (stopped after N iterations). See: <a class="reference external" href="https://en.wikipedia.org/wiki/Fisher">https://en.wikipedia.org/wiki/Fisher</a>–Yates_shuffle </p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="pixelizedpointcontainer">
+<h2>PixelizedPointContainer<a class="headerlink" href="#pixelizedpointcontainer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="_CPPv2N6catana23PixelizedPointContainerE">
+<span id="catana::PixelizedPointContainer"></span><span class="target" id="classcatana_1_1PixelizedPointContainer"></span><em class="property">class </em><code class="descclassname">catana::</code><code class="descname">PixelizedPointContainer</code><a class="headerlink" href="#_CPPv2N6catana23PixelizedPointContainerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A HEALPix Map of PixelPoints. </p>
+<p><div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">DO NOT CHANGE SIZE (push_back, resize, etc) of underlying std::vector once constructed!</p>
+</div>
+ </p>
+<p>Inherits from std::vector&lt; PixelPoints &gt;</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana23PixelizedPointContainer23PixelizedPointContainerEj">
+<span id="catana::PixelizedPointContainer::PixelizedPointContainer__unsigned-i"></span><span class="target" id="classcatana_1_1PixelizedPointContainer_1abac5f2f9ec190f42b03ca5cc85849390"></span><code class="descname">PixelizedPointContainer</code><span class="sig-paren">(</span>unsigned int <em>nside</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana23PixelizedPointContainer23PixelizedPointContainerEj" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct for given nside. </p>
+<p>The instance will have size nside2npix(nside) (see HEALPix documentation). Each PixelPoints will have size 0. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana23PixelizedPointContainer23PixelizedPointContainerEjRK14PointContainer">
+<span id="catana::PixelizedPointContainer::PixelizedPointContainer__unsigned-i.PointContainerCR"></span><span class="target" id="classcatana_1_1PixelizedPointContainer_1a7754c7dacb6c0647d74b20c8b684b7e7"></span><code class="descname">PixelizedPointContainer</code><span class="sig-paren">(</span>unsigned int <em>nside</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a> &amp;<em>oc</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana23PixelizedPointContainer23PixelizedPointContainerEjRK14PointContainer" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct for given nside from an existing <a class="reference internal" href="#classcatana_1_1PointContainer"><span class="std std-ref">PointContainer</span></a>. </p>
+<p>The instance will have size nside2npix(nside) (see HEALPix documentation) Each Pixel is assigned the according Points from <a class="reference internal" href="#classcatana_1_1PointContainer"><span class="std std-ref">PointContainer</span></a> </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana23PixelizedPointContainer9add_pointERK5Point">
+<span id="catana::PixelizedPointContainer::add_point__PointCR"></span><span class="target" id="classcatana_1_1PixelizedPointContainer_1a8174ea2eafc1d3e2ed5b51de582463f8"></span>void <code class="descname">add_point</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv2N6catana5PointE" title="catana::Point">Point</a>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana23PixelizedPointContainer9add_pointERK5Point" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Add point to <a class="reference internal" href="#classcatana_1_1PixelizedPointContainer"><span class="std std-ref">PixelizedPointContainer</span></a>. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6catana23PixelizedPointContainer9get_nsideEv">
+<span id="catana::PixelizedPointContainer::get_nsideC"></span><span class="target" id="classcatana_1_1PixelizedPointContainer_1ae0359180a1ebc17cee07e60357d3dba1"></span>unsigned int <code class="descname">get_nside</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6catana23PixelizedPointContainer9get_nsideEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get the NSide. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6catana23PixelizedPointContainer11get_npointsEv">
+<span id="catana::PixelizedPointContainer::get_npointsC"></span><span class="target" id="classcatana_1_1PixelizedPointContainer_1abf89cd744acad18435a762814284fd0b"></span>size_t <code class="descname">get_npoints</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6catana23PixelizedPointContainer11get_npointsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get number of points stored within <a class="reference internal" href="#classcatana_1_1PixelizedPointContainer"><span class="std std-ref">PixelizedPointContainer</span></a> (i.e. sum points over all pixels) </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6catana23PixelizedPointContainer12get_countmapEv">
+<span id="catana::PixelizedPointContainer::get_countmapC"></span><span class="target" id="classcatana_1_1PixelizedPointContainer_1af82c35c1ee6347f78563c345da784ce5"></span>Eigen::ArrayXi <code class="descname">get_countmap</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6catana23PixelizedPointContainer12get_countmapEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get a HEALPix map (RING ordered) with the value of each pixel representing the number of points in it. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6catana23PixelizedPointContainer11get_hp_baseEv">
+<span id="catana::PixelizedPointContainer::get_hp_baseC"></span><span class="target" id="classcatana_1_1PixelizedPointContainer_1af042a4cf8ebd6fd0f8e5530db50182b1"></span><em class="property">const</em> Healpix_Base &amp;<code class="descname">get_hp_base</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6catana23PixelizedPointContainer11get_hp_baseEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get the associated Healpix_Base instance. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="catana_cpp_besseltools.html" class="btn btn-neutral float-right" title="Besseltools (C++)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../python/catana_misc.html" class="btn btn-neutral" title="Miscellaneous" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Michael Buehlmann.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'2.0a2+41.gdb4bd3e',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

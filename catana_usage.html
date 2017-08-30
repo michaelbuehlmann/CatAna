@@ -1,0 +1,378 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Basic Usage &mdash; CatAna 2.0a2+41.gdb4bd3e documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="CatAna 2.0a2+41.gdb4bd3e documentation" href="index.html"/>
+        <link rel="next" title="Points and Containers" href="python/catana.html"/>
+        <link rel="prev" title="Installation" href="catana_install.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> CatAna
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0a2+41.gdb4bd3e
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Installation and Basic Usage</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">CatAna’s documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_install.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Basic Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#points-and-pointcontainers">Points and PointContainers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#computing-the-sfb-transform">Computing the SFB transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reading-data">Reading Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#filtering-data">Filtering Data</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Python Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="python/catana.html">Points and Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/catana_besseltools.html">Besseltools Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/catana_decomp.html">Decomposition Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/catana_io.html">Input/Output Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/catana_misc.html">Miscellaneous</a></li>
+</ul>
+<p class="caption"><span class="caption-text">C++ Library Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cpp/catana_cpp.html">Points and Containers (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpp/catana_cpp_besseltools.html">Besseltools (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpp/catana_cpp_decomp.html">SFB Decomposition (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpp/catana_cpp_io.html">Input / Output (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpp/catana_cpp_misc.html">Miscellaneous (C++)</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CatAna</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Basic Usage</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/catana_usage.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="basic-usage">
+<h1>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="points-and-pointcontainers">
+<h2>Points and PointContainers<a class="headerlink" href="#points-and-pointcontainers" title="Permalink to this headline">¶</a></h2>
+<p>The main objects in CatAna are <a class="reference internal" href="python/catana.html#catana.Point" title="catana.Point"><code class="xref any py py-class docutils literal"><span class="pre">points</span></code></a>, coordinates in 3d space stored in spherical components.
+They can either be directly obtained from python arrays or read from files using the <a class="reference internal" href="python/catana_io.html#module-catana.io" title="catana.io"><code class="xref any py py-mod docutils literal"><span class="pre">catana.io</span></code></a> module.</p>
+<p>Points are collected in <a class="reference internal" href="python/catana.html#catana.PointContainer" title="catana.PointContainer"><code class="xref any py py-class docutils literal"><span class="pre">point</span> <span class="pre">containers</span></code></a>, which can then be given to a spherical Fourier-Bessel
+transform routine to analyze.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">catana</span>
+
+<span class="c1"># Some random particle positions in a 200x200x200 box centered at 0</span>
+<span class="n">python_particles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="p">(</span><span class="mi">100000</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># Load into PointContainer</span>
+<span class="n">point_container</span> <span class="o">=</span> <span class="n">catana</span><span class="o">.</span><span class="n">PointContainer</span><span class="p">(</span><span class="n">python_particles</span><span class="p">,</span> <span class="s1">&#39;cartesian&#39;</span><span class="p">)</span>
+
+<span class="c1"># If we want to retreive a numpy array from the point_container again</span>
+<span class="c1"># (note that the coordinates will be spherical, with columns [r, theta, phi])</span>
+<span class="n">python_particles_spherical</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">point_container</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Computing the SFB transform will be faster if the points are binned in angular pixels. CatAna uses the
+<a class="reference external" href="http://healpix.sourceforge.net/">HEALPix</a> pixelization scheme. The resolution of the angular grid is given by
+the <code class="docutils literal"><span class="pre">nside</span></code> parameter, which determines how many times each base pixel is subdivided and has to be a power of 2.</p>
+<p>CatAna contains a specialized container, the <a class="reference internal" href="python/catana.html#catana.PixelizedPointContainer" title="catana.PixelizedPointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PixelizedPointContainer</span></code></a>. It can be used as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Create a PixelizedPointContainer with nside 64</span>
+<span class="n">pixelized_point_container</span> <span class="o">=</span> <span class="n">catana</span><span class="o">.</span><span class="n">PixelizedPointContainer</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">point_container</span><span class="p">)</span>
+
+<span class="c1"># We can create a HEALPix map with each pixel containing the number of points it contains</span>
+<span class="kn">import</span> <span class="nn">healpy</span> <span class="kn">as</span> <span class="nn">hp</span>
+<span class="n">countmap</span> <span class="o">=</span> <span class="n">pixelized_point_container</span><span class="o">.</span><span class="n">get_countmap</span><span class="p">()</span>
+<span class="n">hp</span><span class="o">.</span><span class="n">mollview</span><span class="p">(</span><span class="n">countmap</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/countmap.png" src="_images/countmap.png" />
+</div>
+<hr class="docutils" />
+<div class="section" id="computing-the-sfb-transform">
+<h2>Computing the SFB transform<a class="headerlink" href="#computing-the-sfb-transform" title="Permalink to this headline">¶</a></h2>
+<p>The SFB decomposition can either be directly done on <a class="reference internal" href="python/catana.html#catana.PointContainer" title="catana.PointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PointContainers</span></code></a> (brute-force) or on
+<a class="reference internal" href="python/catana.html#catana.PixelizedPointContainer" title="catana.PixelizedPointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PixelizedObjectContainers</span></code></a> which is much faster.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Parameters</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;lmax&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>  <span class="c1"># maximum multipole to compute</span>
+    <span class="s1">&#39;nmax&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>  <span class="c1"># maximum k-index to compute</span>
+    <span class="s1">&#39;rmax&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>  <span class="c1"># largest distance to point (field is supposed to be 0 outside this radius)</span>
+    <span class="s1">&#39;store_flmn&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>  <span class="c1"># we&#39;re only interested in the C_ln components here</span>
+    <span class="s1">&#39;verbose&#39;</span><span class="p">:</span> <span class="bp">False</span>
+<span class="p">}</span>
+
+<span class="c1"># brute-force from PointContainer (not recommended, will take a while)</span>
+<span class="o">%</span><span class="n">time</span> <span class="n">kclkk_1</span> <span class="o">=</span> <span class="n">catana</span><span class="o">.</span><span class="n">sfb_decomposition</span><span class="p">(</span><span class="n">point_container</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+<span class="c1"># using the pixelized container, much faster</span>
+<span class="o">%</span><span class="n">time</span> <span class="n">kclkk_2</span> <span class="o">=</span> <span class="n">catana</span><span class="o">.</span><span class="n">sfb_decomposition</span><span class="p">(</span><span class="n">pixelized_point_container</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>On my machine, the recorded times are something like</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>CPU times: user 40min 45s, sys: 7.53 s, total: 40min 53s
+Wall time: 5min 29s
+
+CPU times: user 45.4 s, sys: 1.55 s, total: 46.9 s
+Wall time: 8.93 s
+</pre></div>
+</div>
+<p>As you can see, the speed-up from the fast method is big. We used a very low pixelization resolution (nside),
+hence the errors in the <span class="math">\(f_{lmn}\)</span> coefficients and even in the <span class="math">\(C_{ln}\)</span> coefficients are quite large. Here
+is from the previous example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">]:</span>
+    <span class="n">g</span><span class="p">,</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kclkk_1</span><span class="o">.</span><span class="n">k_ln</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">kclkk_1</span><span class="o">.</span><span class="n">c_ln</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;l={} (brute-force)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kclkk_2</span><span class="o">.</span><span class="n">k_ln</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">kclkk_2</span><span class="o">.</span><span class="n">c_ln</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;l={} (pixel)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">),</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">g</span><span class="o">.</span><span class="n">get_color</span><span class="p">(),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kclkk_1</span><span class="o">.</span><span class="n">k_ln</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">kclkk_2</span><span class="o">.</span><span class="n">c_ln</span><span class="p">[</span><span class="n">l</span><span class="p">]</span><span class="o">/</span><span class="n">kclkk_1</span><span class="o">.</span><span class="n">c_ln</span><span class="p">[</span><span class="n">l</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s1">&#39;l={}&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">g</span><span class="o">.</span><span class="n">get_color</span><span class="p">())</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$C_l(k,k)$&#39;</span><span class="p">,</span> <span class="n">xticklabels</span><span class="o">=</span><span class="p">[])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$k$&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="n">yticks</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="_images/pixel_accuracy.png" src="_images/pixel_accuracy.png" />
+<p>By choosing a larger <code class="docutils literal"><span class="pre">NSide</span></code>, the errors will drop significantly while we can still profit from a significant speed
+increase over the brute-force method.</p>
+<div class="note admonition">
+<p class="first admonition-title">Normalization and shot noise</p>
+<p>The <span class="math">\(f_{lmn}\)</span> components are computed as</p>
+<div class="math">
+\[f_{lmn} = \sqrt{\frac{2}{\pi}} \frac{V}{N} \sum_p k j_l(k r_p) Y_{lm}^{*}(\hat{r}_p),\]</div>
+<p>where <span class="math">\(V=\frac{4}{3} \pi r_{max}^3\)</span> is the volume of the supporting tophat with radius <span class="math">\(r_{max}\)</span>.
+In case the survey window function is not a tophat (e.g. a redshift depending window function or an angular mask)
+you need to normalize the SFB decomposition results by multiplying with the fraction that the true volume occupies in
+the tophat for <span class="math">\(f_{lmn}\)</span> and by the square of it for <span class="math">\(C_{ln}\)</span>.</p>
+<p>Due to the discrete nature of our point objects, we add an additional term to the spherical power spectrum of the
+underlying smooth distribution (<span class="math">\(C_l(k,k)\)</span>), the so-called <em>shot-noise</em> (<span class="math">\(C_l^{sn}(k,k)\)</span>).</p>
+<div class="math">
+\[ \begin{align}\begin{aligned}C_l^d(k, k) = C_l(k, k) + C_l^{sn}(k,k)\\C_l^{sn}(k,k) = \frac{V}{N} \frac{2}{\pi} k^2 \int_0^\infty dr \; r^2 \; w(r) \; j_l(k r)^2\end{aligned}\end{align} \]</div>
+<p class="last">where w(r) is the radial window function. This contribution has to be either computed numerically from a random
+catalog (basically our example above) or analytically. CatAna provides a function to compute these spherical Bessel
+function integrals, see <a class="reference internal" href="python/catana_besseltools.html#catana.besseltools.double_sbessel_integrator" title="catana.besseltools.double_sbessel_integrator"><code class="xref any py py-func docutils literal"><span class="pre">double_sbessel_integrator</span></code></a>.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="reading-data">
+<h2>Reading Data<a class="headerlink" href="#reading-data" title="Permalink to this headline">¶</a></h2>
+<p>The most convenient way to use CatAna in Python is to directly use data from numpy arrays as shown above.
+CatAna can however also deal with files in (space delimited) text files and Gadget files. For detailed documentation
+take a look at <a class="reference internal" href="python/catana_io.html#module-catana.io" title="catana.io"><code class="xref any py py-mod docutils literal"><span class="pre">catana.io</span></code></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># (Code snippet to be added...)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="filtering-data">
+<h2>Filtering Data<a class="headerlink" href="#filtering-data" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># (Code snippet to be added...)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="python/catana.html" class="btn btn-neutral float-right" title="Points and Containers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="catana_install.html" class="btn btn-neutral" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Michael Buehlmann.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'2.0a2+41.gdb4bd3e',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

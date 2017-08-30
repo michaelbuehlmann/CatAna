@@ -1,0 +1,394 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>SFB Decomposition (C++) &mdash; CatAna 2.0a2+41.gdb4bd3e documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CatAna 2.0a2+41.gdb4bd3e documentation" href="../index.html"/>
+        <link rel="next" title="Input / Output (C++)" href="catana_cpp_io.html"/>
+        <link rel="prev" title="Besseltools (C++)" href="catana_cpp_besseltools.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CatAna
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0a2+41.gdb4bd3e
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Installation and Basic Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">CatAna’s documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../catana_install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../catana_usage.html">Basic Usage</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Python Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana.html">Points and Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana_besseltools.html">Besseltools Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana_decomp.html">Decomposition Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana_io.html">Input/Output Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana_misc.html">Miscellaneous</a></li>
+</ul>
+<p class="caption"><span class="caption-text">C++ Library Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="catana_cpp.html">Points and Containers (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_cpp_besseltools.html">Besseltools (C++)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SFB Decomposition (C++)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#return-types">Return Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sfb-decomposition">SFB Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analyzer">Analyzer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="catana_cpp_io.html">Input / Output (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_cpp_misc.html">Miscellaneous (C++)</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CatAna</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>SFB Decomposition (C++)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cpp/catana_cpp_decomp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sfb-decomposition-c">
+<h1>SFB Decomposition (C++)<a class="headerlink" href="#sfb-decomposition-c" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="return-types">
+<h2>Return Types<a class="headerlink" href="#return-types" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="_CPPv2N6catana5KClkkE">
+<span id="catana::KClkk"></span><span class="target" id="structcatana_1_1KClkk"></span><em class="property">struct </em><code class="descclassname">catana::</code><code class="descname">KClkk</code><a class="headerlink" href="#_CPPv2N6catana5KClkkE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Return Type of SFB decomposition methods. </p>
+<p>k_ln contains the k at which C_l(k,k) is evaluated c_ln contains the corresponding C_l(k,k) (index 0: 0&lt;l&lt;lmax, index 1: 0&lt;n&lt;nmax) </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana5KClkk5KClkkEttd">
+<span id="catana::KClkk::KClkk__unsigned-short.unsigned-short.double"></span><span class="target" id="structcatana_1_1KClkk_1a85067e0dc1ed033d8b86bf55764b163f"></span><code class="descname">KClkk</code><span class="sig-paren">(</span>unsigned short <em>lmax</em>, unsigned short <em>nmax</em>, double <em>rmax</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana5KClkk5KClkkEttd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct <a class="reference internal" href="#structcatana_1_1KClkk"><span class="std std-ref">KClkk</span></a> for given lmax and nmax. </p>
+<p>This will initialize k_ln to the Zeros of the spherical bessel functions normalized with rmax. The c_ln and f_lmn will be set to 0. <dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">lmax</span></code>: k_ln and c_ln will contain space for l in [0,lmax) </li>
+<li><code class="docutils literal"><span class="pre">nmax</span></code>: k_ln and c_ln will contain space for n in [0,nmax) </li>
+<li><code class="docutils literal"><span class="pre">rmax</span></code>: the radius at which the boundary condition f(rmax)=0 is assumed. Will normalize the k_ln at which the c_ln are evaluated. </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana5KClkk7savetxtENSt6stringE">
+<span id="catana::KClkk::savetxt__ss"></span><span class="target" id="structcatana_1_1KClkk_1ae0a3d086aae954693fb47063d3f84f6e"></span>void <code class="descname">savetxt</code><span class="sig-paren">(</span>std::string <em>filename_base</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana5KClkk7savetxtENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Save k_ln and c_ln to files ‘{filename_base}.(k_ln/c_ln) respectively. Rows are l, columns are n. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Members</p>
+<dl class="member">
+<dt id="_CPPv2N6catana5KClkk4k_lnE">
+<span id="catana::KClkk::k_ln__Eigen::ArrayXXd"></span><span class="target" id="structcatana_1_1KClkk_1a190c32e50608654c54ae996485ba7137"></span>Eigen::ArrayXXd <code class="descname">k_ln</code><a class="headerlink" href="#_CPPv2N6catana5KClkk4k_lnE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>the k’s at which c_ln are evaluated </p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv2N6catana5KClkk4c_lnE">
+<span id="catana::KClkk::c_ln__Eigen::ArrayXXd"></span><span class="target" id="structcatana_1_1KClkk_1a2f173d12f1072578c3e313a622dac195"></span>Eigen::ArrayXXd <code class="descname">c_ln</code><a class="headerlink" href="#_CPPv2N6catana5KClkk4c_lnE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>the C_l(k_n, k_n) </p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv2N6catana5KClkk5f_lmnE">
+<span id="catana::KClkk::f_lmn__std::vector:Eigen::ArrayXXcd:"></span><span class="target" id="structcatana_1_1KClkk_1a80464e80ad82f96253782075aaaf424a"></span>std::vector&lt;Eigen::ArrayXXcd&gt; <code class="descname">f_lmn</code><a class="headerlink" href="#_CPPv2N6catana5KClkk5f_lmnE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>the coefficients from which the c_ln were computed </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="sfb-decomposition">
+<h2>SFB Decomposition<a class="headerlink" href="#sfb-decomposition" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>doxygenfunction: Unable to resolve multiple matches for function “catana::sfb_decomposition” with arguments (const PixelizedPointContainer&amp;, unsigned short, unsigned short, double, double, bool, bool) in doxygen xml output for project “catana” from directory: ./xml/.
+Potential matches:
+</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">KClkk</span> <span class="n">catana</span><span class="p">::</span><span class="n">sfb_decomposition</span><span class="p">(</span><span class="n">const</span> <span class="n">PixelizedPointContainer</span><span class="o">&amp;</span><span class="p">,</span> <span class="n">unsigned</span> <span class="n">short</span><span class="p">,</span> <span class="n">unsigned</span> <span class="n">short</span><span class="p">,</span> <span class="n">double</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">KClkk</span> <span class="n">catana</span><span class="p">::</span><span class="n">sfb_decomposition</span><span class="p">(</span><span class="n">const</span> <span class="n">PointContainer</span><span class="o">&amp;</span><span class="p">,</span> <span class="n">unsigned</span> <span class="n">short</span><span class="p">,</span> <span class="n">unsigned</span> <span class="n">short</span><span class="p">,</span> <span class="n">double</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>doxygenfunction: Unable to resolve multiple matches for function “catana::sfb_decomposition” with arguments (const PointContainer&amp;, unsigned short, unsigned short, double, double, bool, bool) in doxygen xml output for project “catana” from directory: ./xml/.
+Potential matches:
+</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">KClkk</span> <span class="n">catana</span><span class="p">::</span><span class="n">sfb_decomposition</span><span class="p">(</span><span class="n">const</span> <span class="n">PixelizedPointContainer</span><span class="o">&amp;</span><span class="p">,</span> <span class="n">unsigned</span> <span class="n">short</span><span class="p">,</span> <span class="n">unsigned</span> <span class="n">short</span><span class="p">,</span> <span class="n">double</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">KClkk</span> <span class="n">catana</span><span class="p">::</span><span class="n">sfb_decomposition</span><span class="p">(</span><span class="n">const</span> <span class="n">PointContainer</span><span class="o">&amp;</span><span class="p">,</span> <span class="n">unsigned</span> <span class="n">short</span><span class="p">,</span> <span class="n">unsigned</span> <span class="n">short</span><span class="p">,</span> <span class="n">double</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="analyzer">
+<h2>Analyzer<a class="headerlink" href="#analyzer" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#_CPPv2N6catana8AnalyzerE" title="catana::Analyzer"><code class="xref cpp cpp-class docutils literal"><span class="pre">catana::Analyzer</span></code></a> class is a convenience wrapper combining data input, filtering and analyzing.
+It requires a <a class="reference internal" href="catana_cpp_io.html#_CPPv2N6catana2io6SourceE" title="catana::io::Source"><code class="xref cpp cpp-class docutils literal"><span class="pre">catana::io::Source</span></code></a> and arbitrary <a class="reference internal" href="catana_cpp_io.html#_CPPv2N6catana2io6FilterE" title="catana::io::Filter"><code class="xref cpp cpp-class docutils literal"><span class="pre">catana::io::Filter</span></code></a> instances can be added
+for filtering.</p>
+<dl class="class">
+<dt id="_CPPv2N6catana8AnalyzerE">
+<span id="catana::Analyzer"></span><span class="target" id="classcatana_1_1Analyzer"></span><em class="property">class </em><code class="descclassname">catana::</code><code class="descname">Analyzer</code><a class="headerlink" href="#_CPPv2N6catana8AnalyzerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The <a class="reference internal" href="#classcatana_1_1Analyzer"><span class="std std-ref">Analyzer</span></a> Class combines input (source, filters) and decomposition. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana8Analyzer8AnalyzerEv">
+<span id="catana::Analyzer::Analyzer"></span><span class="target" id="classcatana_1_1Analyzer_1a91bde1a71486afefb02f758ef8aaca34"></span><code class="descname">Analyzer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana8Analyzer8AnalyzerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana8Analyzer8AnalyzerEPN2io6SourceE">
+<span id="catana::Analyzer::Analyzer__io::SourceP"></span><span class="target" id="classcatana_1_1Analyzer_1ac6e4c3572035a27dd44de06c32d2a692"></span><code class="descname">Analyzer</code><span class="sig-paren">(</span>io::<a class="reference internal" href="catana_cpp_io.html#_CPPv2N6catana2io6SourceE" title="catana::io::Source">Source</a> *<em>source</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana8Analyzer8AnalyzerEPN2io6SourceE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct from a child class of source and a window volume for normalization. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana8Analyzer10set_sourceEPN2io6SourceE">
+<span id="catana::Analyzer::set_source__io::SourceP"></span><span class="target" id="classcatana_1_1Analyzer_1aa99ebc7c0084537a46a59c13429a0bed"></span>void <code class="descname">set_source</code><span class="sig-paren">(</span>io::<a class="reference internal" href="catana_cpp_io.html#_CPPv2N6catana2io6SourceE" title="catana::io::Source">Source</a> *<em>source</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana8Analyzer10set_sourceEPN2io6SourceE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Reset source. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana8Analyzer18set_subsample_sizeEj">
+<span id="catana::Analyzer::set_subsample_size__unsigned-i"></span><span class="target" id="classcatana_1_1Analyzer_1a7d1ee576e565f24c336abaf33451bb46"></span>void <code class="descname">set_subsample_size</code><span class="sig-paren">(</span>unsigned int <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana8Analyzer18set_subsample_sizeEj" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>If only a random subset of source shall be decomposed, set subsample size here. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana8Analyzer10add_filterEPN2io6FilterE">
+<span id="catana::Analyzer::add_filter__io::FilterP"></span><span class="target" id="classcatana_1_1Analyzer_1ae743ded7bbcf55b7298c55307e52e3dc"></span>void <code class="descname">add_filter</code><span class="sig-paren">(</span>io::<a class="reference internal" href="catana_cpp_io.html#_CPPv2N6catana2io6FilterE" title="catana::io::Filter">Filter</a> *<em>filter</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana8Analyzer10add_filterEPN2io6FilterE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>If the input source shall be filtered, add filter instances. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana8Analyzer11compute_sfbEttdbb">
+<span id="catana::Analyzer::compute_sfb__unsigned-short.unsigned-short.double.b.b"></span><span class="target" id="classcatana_1_1Analyzer_1ace86e15e1288ccce1d23480449fe654f"></span><a class="reference internal" href="#_CPPv2N6catana5KClkkE" title="catana::KClkk">KClkk</a> <code class="descname">compute_sfb</code><span class="sig-paren">(</span>unsigned short <em>lmax</em>, unsigned short <em>nmax</em>, double <em>rmax</em>, bool <em>store_flmn</em>, bool <em>verbose</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana8Analyzer11compute_sfbEttdbb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Do the decomposition with the raw (brute-force) method. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana8Analyzer21compute_sfb_pixelizedEttdjbb">
+<span id="catana::Analyzer::compute_sfb_pixelized__unsigned-short.unsigned-short.double.unsigned-i.b.b"></span><span class="target" id="classcatana_1_1Analyzer_1a23502b7cd97bfd08d89f4aaab18a8a6d"></span><a class="reference internal" href="#_CPPv2N6catana5KClkkE" title="catana::KClkk">KClkk</a> <code class="descname">compute_sfb_pixelized</code><span class="sig-paren">(</span>unsigned short <em>lmax</em>, unsigned short <em>nmax</em>, double <em>rmax</em>, unsigned int <em>nside</em>, bool <em>store_flmn</em>, bool <em>verbose</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana8Analyzer21compute_sfb_pixelizedEttdjbb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Do the decomposition with the pixelized method using HEALPix and FFTW. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="catana_cpp_io.html" class="btn btn-neutral float-right" title="Input / Output (C++)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="catana_cpp_besseltools.html" class="btn btn-neutral" title="Besseltools (C++)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Michael Buehlmann.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'2.0a2+41.gdb4bd3e',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

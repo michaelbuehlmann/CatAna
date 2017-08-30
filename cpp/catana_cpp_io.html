@@ -1,0 +1,1205 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Input / Output (C++) &mdash; CatAna 2.0a2+41.gdb4bd3e documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CatAna 2.0a2+41.gdb4bd3e documentation" href="../index.html"/>
+        <link rel="next" title="Miscellaneous (C++)" href="catana_cpp_misc.html"/>
+        <link rel="prev" title="SFB Decomposition (C++)" href="catana_cpp_decomp.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CatAna
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0a2+41.gdb4bd3e
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Installation and Basic Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">CatAna’s documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../catana_install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../catana_usage.html">Basic Usage</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Python Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana.html">Points and Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana_besseltools.html">Besseltools Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana_decomp.html">Decomposition Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana_io.html">Input/Output Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana_misc.html">Miscellaneous</a></li>
+</ul>
+<p class="caption"><span class="caption-text">C++ Library Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="catana_cpp.html">Points and Containers (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_cpp_besseltools.html">Besseltools (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_cpp_decomp.html">SFB Decomposition (C++)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Input / Output (C++)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sources">Sources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#source-parent">Source (parent)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#textsource">TextSource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gadgetsource">GadgetSource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rawbinarysource">RawBinarySource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pointcontainersource">PointContainerSource</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sinks">Sinks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sink-parent">Sink (parent)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#textsink">TextSink</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rawbinarysink">RawBinarySink</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pointcontainersink">PointContainerSink</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#filters">Filters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#filter-parent">Filter (parent)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tophatradialwindowfunctionfilter">TophatRadialWindowFunctionFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gaussianradialwindowfunctionfilter">GaussianRadialWindowFunctionFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#genericradialwindowfunctionfilter">GenericRadialWindowFunctionFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#angularmaskfilter">AngularMaskFilter</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#filterstreams">FilterStreams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="catana_cpp_misc.html">Miscellaneous (C++)</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CatAna</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Input / Output (C++)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cpp/catana_cpp_io.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="input-output-c">
+<h1>Input / Output (C++)<a class="headerlink" href="#input-output-c" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="source-parent">
+<h3>Source (parent)<a class="headerlink" href="#source-parent" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv2N6catana2io6SourceE">
+<span id="catana::io::Source"></span><span class="target" id="classcatana_1_1io_1_1Source"></span><em class="property">class </em><code class="descclassname">catana::io::</code><code class="descname">Source</code><a class="headerlink" href="#_CPPv2N6catana2io6SourceE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Parent Class <a class="reference internal" href="#classcatana_1_1io_1_1Source"><span class="std std-ref">Source</span></a> to read data of type <a class="reference internal" href="catana_cpp.html#structcatana_1_1Point"><span class="std std-ref">Point</span></a> class. </p>
+<p>Each child class must implement the two read functions. These must return the number of points which were read (i.e. put into the point array) and -1 if no more Points are available. </p>
+<p>Subclassed by <a class="reference internal" href="#classcatana_1_1io_1_1GadgetSource"><span class="std std-ref">catana::io::GadgetSource</span></a>, <a class="reference internal" href="#classcatana_1_1io_1_1PointContainerSource"><span class="std std-ref">catana::io::PointContainerSource</span></a>, <a class="reference internal" href="#classcatana_1_1io_1_1RawBinarySource"><span class="std std-ref">catana::io::RawBinarySource&lt; RecordType &gt;</span></a>, <a class="reference internal" href="#classcatana_1_1io_1_1TextSource"><span class="std std-ref">catana::io::TextSource&lt; RecordType &gt;</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana2io6Source11get_npointsEv">
+<span id="catana::io::Source::get_npoints"></span><span class="target" id="classcatana_1_1io_1_1Source_1a298e2dae1687f650d21bd1ee530dfa6a"></span><em class="property">virtual</em> size_t <code class="descname">get_npoints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io6Source11get_npointsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Number of points which can be read. Not needed nessessarily. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io6Source4readEN14PointContainer8iteratorE6size_t">
+<span id="catana::io::Source::read__PointContainer::iterator.s"></span><span class="target" id="classcatana_1_1io_1_1Source_1ad732e54e78b86ca850153b280e1a2171"></span><em class="property">virtual</em> long long int <code class="descname">read</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a>::iterator <em>write_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span> = 0<a class="headerlink" href="#_CPPv2N6catana2io6Source4readEN14PointContainer8iteratorE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Read next n points. Returns number of points put into write_iterator. -1 if EOF. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io6Source4readEP5Point6size_t">
+<span id="catana::io::Source::read__PointP.s"></span><span class="target" id="classcatana_1_1io_1_1Source_1a24d4404354d11956266e995ff8135f54"></span><em class="property">virtual</em> long long int <code class="descname">read</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana5PointE" title="catana::Point">Point</a> *<em>write_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span> = 0<a class="headerlink" href="#_CPPv2N6catana2io6Source4readEP5Point6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Read next n points. Returns number of points put into write_iterator. -1 if EOF. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io6Source5resetEv">
+<span id="catana::io::Source::reset"></span><span class="target" id="classcatana_1_1io_1_1Source_1a9d4369ef537ccf7a0dec05aecfdafbfa"></span><em class="property">virtual</em> void <code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span> = 0<a class="headerlink" href="#_CPPv2N6catana2io6Source5resetEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Reset the source, i.e. revert to initial state. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io6SourceD0Ev">
+<span id="catana::io::Source::~Source"></span><span class="target" id="classcatana_1_1io_1_1Source_1a263df437183c1b59fd91e5b6bc797ec1"></span><em class="property">virtual</em> <code class="descname">~Source</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io6SourceD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io6Source19get_point_containerEv">
+<span id="catana::io::Source::get_point_container"></span><span class="target" id="classcatana_1_1io_1_1Source_1a263f092de0e3aa6879ac8e5e4299aeab"></span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a> <code class="descname">get_point_container</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io6Source19get_point_containerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Directly load all data into an <a class="reference internal" href="catana_cpp.html#classcatana_1_1PointContainer"><span class="std std-ref">PointContainer</span></a> (no <a class="reference internal" href="#classcatana_1_1io_1_1FilterStream"><span class="std std-ref">FilterStream</span></a> needed). </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io6Source29get_pixelized_point_containerEj">
+<span id="catana::io::Source::get_pixelized_point_container__unsigned-i"></span><span class="target" id="classcatana_1_1io_1_1Source_1a8d8c3b2d2f4725208d1e553ec154aff2"></span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana23PixelizedPointContainerE" title="catana::PixelizedPointContainer">PixelizedPointContainer</a> <code class="descname">get_pixelized_point_container</code><span class="sig-paren">(</span>unsigned int <em>nside</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io6Source29get_pixelized_point_containerEj" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Directly load all data into a <a class="reference internal" href="catana_cpp.html#classcatana_1_1PixelizedPointContainer"><span class="std std-ref">PixelizedPointContainer</span></a> with given NSide (no <a class="reference internal" href="#classcatana_1_1io_1_1FilterStream"><span class="std std-ref">FilterStream</span></a> needed). </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="textsource">
+<h3>TextSource<a class="headerlink" href="#textsource" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt>
+<span class="target" id="classcatana_1_1io_1_1TextSource"></span><em class="property">template </em>&lt;<em class="property">class</em> RecordType&gt;</dt>
+<dt id="_CPPv2N6catana2io10TextSourceE">
+<span id="catana::io::TextSource"></span><em class="property">class </em><code class="descclassname">catana::io::</code><code class="descname">TextSource</code><a class="headerlink" href="#_CPPv2N6catana2io10TextSourceE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A <a class="reference internal" href="#classcatana_1_1io_1_1Source"><span class="std std-ref">Source</span></a> class for text files. The Points are assumed to be stored in the RecordType Format. </p>
+<p><dl class="docutils">
+<dt><strong>Template Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">RecordType</span></code>: A class defined in the record_types.hpp file. Determines the storage order in the binary file (cartesian, spherical, coordinate order) </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>Inherits from <a class="reference internal" href="#classcatana_1_1io_1_1Source"><span class="std std-ref">catana::io::Source</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana2io10TextSource10TextSourceENSt6stringEdd">
+<span id="catana::io::TextSource::TextSource__ss.double.double"></span><span class="target" id="classcatana_1_1io_1_1TextSource_1a7d731e892d44083e334e61ea794200d6"></span><code class="descname">TextSource</code><span class="sig-paren">(</span>std::string <em>filename</em>, double <em>hubble_param</em> = 1, double <em>box_size</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io10TextSource10TextSourceENSt6stringEdd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct from filename. </p>
+<p><dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">filename</span></code>: filename of the text file </li>
+<li><code class="docutils literal"><span class="pre">hubble_param</span></code>: The Hubble parameter h which will be used to convert Mpc/h -&gt; Mpc. If coordinates are already in Mpc, set h=1. </li>
+<li><code class="docutils literal"><span class="pre">box_size</span></code>: box_size will be used to shift origin to center of the box (i.e. coordinates will be transformed x -&gt; x-box_size/2.). If origin already located at center of box, set box_size=0. </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io10TextSource4readEN14PointContainer8iteratorE6size_t">
+<span id="catana::io::TextSource::read__PointContainer::iterator.s"></span><span class="target" id="classcatana_1_1io_1_1TextSource_1a75f87fe6de52a75ae395b6e4d6f241b7"></span><em class="property">virtual</em> long long int <code class="descname">read</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a>::iterator <em>write_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io10TextSource4readEN14PointContainer8iteratorE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Read next n points from file. Returns number of points put into point_s. -1 if EOF. </p>
+<p><dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">write_iterator</span></code>: iterator of <a class="reference internal" href="catana_cpp.html#classcatana_1_1PointContainer"><span class="std std-ref">PointContainer</span></a> of points. [write_iterator, write_iterator + n] must be a valid range. </li>
+<li><code class="docutils literal"><span class="pre">n</span></code>: number of points to read </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io10TextSource4readEP5Point6size_t">
+<span id="catana::io::TextSource::read__PointP.s"></span><span class="target" id="classcatana_1_1io_1_1TextSource_1a4146533fbfeb291956071171df294c10"></span><em class="property">virtual</em> long long int <code class="descname">read</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana5PointE" title="catana::Point">Point</a> *<em>write_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io10TextSource4readEP5Point6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Read next n points from. Returns number of points put into point_s. -1 if EOF. </p>
+<p><dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">write_iterator</span></code>: pointer to a <a class="reference internal" href="catana_cpp.html#structcatana_1_1Point"><span class="std std-ref">Point</span></a>[] C-array of points. [write_iterator, write_iterator + n] must be a valid range. </li>
+<li><code class="docutils literal"><span class="pre">n</span></code>: number of points to read </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io10TextSource5resetEv">
+<span id="catana::io::TextSource::reset"></span><span class="target" id="classcatana_1_1io_1_1TextSource_1a1812a3f089cff1b4124c20190e3b8ec6"></span>void <code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io10TextSource5resetEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Resets <a class="reference internal" href="#classcatana_1_1io_1_1Source"><span class="std std-ref">Source</span></a> to initial state (everything can be read again) </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="gadgetsource">
+<h3>GadgetSource<a class="headerlink" href="#gadgetsource" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv2N6catana2io12GadgetSourceE">
+<span id="catana::io::GadgetSource"></span><span class="target" id="classcatana_1_1io_1_1GadgetSource"></span><em class="property">class </em><code class="descclassname">catana::io::</code><code class="descname">GadgetSource</code><a class="headerlink" href="#_CPPv2N6catana2io12GadgetSourceE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A <a class="reference internal" href="#classcatana_1_1io_1_1Source"><span class="std std-ref">Source</span></a> class for Binary Gadget files. </p>
+<p>While reading, the coordinates will be automatically transformed from Mpc/h -&gt; Mpc and the origin is moved to the center of the box. </p>
+<p>Inherits from <a class="reference internal" href="#classcatana_1_1io_1_1Source"><span class="std std-ref">catana::io::Source</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana2io12GadgetSource12GadgetSourceENSt6stringEb">
+<span id="catana::io::GadgetSource::GadgetSource__ss.b"></span><span class="target" id="classcatana_1_1io_1_1GadgetSource_1ac7e1999380443923697ab0b0c3588e39"></span><code class="descname">GadgetSource</code><span class="sig-paren">(</span>std::string <em>filename</em>, bool <em>verbose</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io12GadgetSource12GadgetSourceENSt6stringEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct <a class="reference internal" href="#classcatana_1_1io_1_1Source"><span class="std std-ref">Source</span></a> from filename. </p>
+<p><dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">filename</span></code>: Data spread across multiple files will be automatically detected and loaded. Specify any of the files. </li>
+<li><code class="docutils literal"><span class="pre">verbose</span></code>: Set to true for additional output to stdout </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io12GadgetSource4readEN14PointContainer8iteratorE6size_t">
+<span id="catana::io::GadgetSource::read__PointContainer::iterator.s"></span><span class="target" id="classcatana_1_1io_1_1GadgetSource_1a66830ae6fb21643562aedde352f93649"></span>long long int <code class="descname">read</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a>::iterator <em>write_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io12GadgetSource4readEN14PointContainer8iteratorE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Read next n points from file(s). Returns number of points put into point_s. -1 if EOF. </p>
+<p><dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">write_iterator</span></code>: iterator of <a class="reference internal" href="catana_cpp.html#classcatana_1_1PointContainer"><span class="std std-ref">PointContainer</span></a> of Points. [write_iterator, write_iterator + n] must be a valid range. </li>
+<li><code class="docutils literal"><span class="pre">n</span></code>: number of points to read </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io12GadgetSource4readEP5Point6size_t">
+<span id="catana::io::GadgetSource::read__PointP.s"></span><span class="target" id="classcatana_1_1io_1_1GadgetSource_1a21766bf95a1fe15d9741bcd55684e64d"></span>long long int <code class="descname">read</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana5PointE" title="catana::Point">Point</a> *<em>write_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io12GadgetSource4readEP5Point6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Read next n points from file(s). Returns number of points put into point_s. -1 if EOF. </p>
+<p><dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">write_iterator</span></code>: pointer to a <a class="reference internal" href="catana_cpp.html#structcatana_1_1Point"><span class="std std-ref">Point</span></a>[] C-array of Points. [write_iterator, write_iterator + n] must be a valid range. </li>
+<li><code class="docutils literal"><span class="pre">n</span></code>: number of points to read </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io12GadgetSource11get_npointsEv">
+<span id="catana::io::GadgetSource::get_npoints"></span><span class="target" id="classcatana_1_1io_1_1GadgetSource_1a98f66d311fdd679b3db21ce133677147"></span>size_t <code class="descname">get_npoints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io12GadgetSource11get_npointsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Total number of points which can be read. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io12GadgetSource5resetEv">
+<span id="catana::io::GadgetSource::reset"></span><span class="target" id="classcatana_1_1io_1_1GadgetSource_1a1d57cb5ccfee9328ce26a82c380233cf"></span>void <code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io12GadgetSource5resetEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Resets <a class="reference internal" href="#classcatana_1_1io_1_1Source"><span class="std std-ref">Source</span></a> to initial state (everything can be read again) </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Attributes</p>
+<dl class="member">
+<dt id="_CPPv2N6catana2io12GadgetSource8skipsizeE">
+<span id="catana::io::GadgetSource::skipsize__iC"></span><span class="target" id="classcatana_1_1io_1_1GadgetSource_1a9715080adb00ca65c81c6634973d0f58"></span><em class="property">const</em> int <code class="descname">skipsize</code><a class="headerlink" href="#_CPPv2N6catana2io12GadgetSource8skipsizeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The size of the empty elements between blocks in the Gadget file (usually 4 bytes) </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="rawbinarysource">
+<h3>RawBinarySource<a class="headerlink" href="#rawbinarysource" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt>
+<span class="target" id="classcatana_1_1io_1_1RawBinarySource"></span><em class="property">template </em>&lt;<em class="property">class</em> RecordType&gt;</dt>
+<dt id="_CPPv2N6catana2io15RawBinarySourceE">
+<span id="catana::io::RawBinarySource"></span><em class="property">class </em><code class="descclassname">catana::io::</code><code class="descname">RawBinarySource</code><a class="headerlink" href="#_CPPv2N6catana2io15RawBinarySourceE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A <a class="reference internal" href="#classcatana_1_1io_1_1Source"><span class="std std-ref">Source</span></a> class for raw binary files. The Points are assumed to be stored in the RecordType Format. </p>
+<p><dl class="docutils">
+<dt><strong>Template Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">RecordType</span></code>: A class defined in the record_types.hpp file. Determines the storage order in the binary file. </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>Inherits from <a class="reference internal" href="#classcatana_1_1io_1_1Source"><span class="std std-ref">catana::io::Source</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="type">
+<dt id="_CPPv2N6catana2io15RawBinarySource8record_tE">
+<span id="catana::io::RawBinarySource::record_t"></span><span class="target" id="classcatana_1_1io_1_1RawBinarySource_1a5cfcf246466f1be3caab36cf7e129fec"></span><em class="property">typedef </em>RecordType <code class="descname">record_t</code><a class="headerlink" href="#_CPPv2N6catana2io15RawBinarySource8record_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana2io15RawBinarySource15RawBinarySourceENSt6stringEb">
+<span id="catana::io::RawBinarySource::RawBinarySource__ss.b"></span><span class="target" id="classcatana_1_1io_1_1RawBinarySource_1ad21341ee4c4718f2dcab1adfbdcb9060"></span><code class="descname">RawBinarySource</code><span class="sig-paren">(</span>std::string <em>filename</em>, bool <em>verbose</em> = true<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io15RawBinarySource15RawBinarySourceENSt6stringEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct from filename. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io15RawBinarySource4readEN14PointContainer8iteratorE6size_t">
+<span id="catana::io::RawBinarySource::read__PointContainer::iterator.s"></span><span class="target" id="classcatana_1_1io_1_1RawBinarySource_1aeafe789a83cc40d7b8638fb633d6b87d"></span><em class="property">virtual</em> long long int <code class="descname">read</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a>::iterator <em>write_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io15RawBinarySource4readEN14PointContainer8iteratorE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Read next n points from file. Returns number of points put into point_s. -1 if EOF. </p>
+<p><dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">write_iterator</span></code>: iterator of <a class="reference internal" href="catana_cpp.html#classcatana_1_1PointContainer"><span class="std std-ref">PointContainer</span></a> of points. [write_iterator, write_iterator + n] must be a valid range. </li>
+<li><code class="docutils literal"><span class="pre">n</span></code>: number of points to read </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io15RawBinarySource4readEP5Point6size_t">
+<span id="catana::io::RawBinarySource::read__PointP.s"></span><span class="target" id="classcatana_1_1io_1_1RawBinarySource_1ad24810b8564a203857c892863d317436"></span><em class="property">virtual</em> long long int <code class="descname">read</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana5PointE" title="catana::Point">Point</a> *<em>write_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io15RawBinarySource4readEP5Point6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Read next n points from. Returns number of points put into point_s. -1 if EOF. </p>
+<p><dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">write_iterator</span></code>: pointer to a <a class="reference internal" href="catana_cpp.html#structcatana_1_1Point"><span class="std std-ref">Point</span></a>[] C-array of points. [write_iterator, write_iterator + n] must be a valid range. </li>
+<li><code class="docutils literal"><span class="pre">n</span></code>: number of points to read </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io15RawBinarySource11get_npointsEv">
+<span id="catana::io::RawBinarySource::get_npoints"></span><span class="target" id="classcatana_1_1io_1_1RawBinarySource_1a10fb1636e2e79f00b1475554191b9efe"></span>size_t <code class="descname">get_npoints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io15RawBinarySource11get_npointsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Total number of points which can be read (i.e. size of point_container) </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io15RawBinarySource5resetEv">
+<span id="catana::io::RawBinarySource::reset"></span><span class="target" id="classcatana_1_1io_1_1RawBinarySource_1a6810d346cc1164c9d1fc147e1791bd44"></span>void <code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io15RawBinarySource5resetEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Resets <a class="reference internal" href="#classcatana_1_1io_1_1Source"><span class="std std-ref">Source</span></a> to initial state (everything can be read again) </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io15RawBinarySource15RawBinarySourceER15RawBinarySource">
+<span id="catana::io::RawBinarySource::RawBinarySource__RawBinarySourceCR"></span><span class="target" id="classcatana_1_1io_1_1RawBinarySource_1aba107c8e620a89131c7685dc5db042d5"></span><code class="descname">RawBinarySource</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv2N6catana2io15RawBinarySource15RawBinarySourceENSt6stringEb" title="catana::io::RawBinarySource::RawBinarySource">RawBinarySource</a> <em class="property">const</em>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io15RawBinarySource15RawBinarySourceER15RawBinarySource" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io15RawBinarySourceaSER15RawBinarySource">
+<span id="catana::io::RawBinarySource::assign-operator__RawBinarySourceCR"></span><span class="target" id="classcatana_1_1io_1_1RawBinarySource_1af1bf019ca3f44999e1134919e713d74a"></span><a class="reference internal" href="#_CPPv2N6catana2io15RawBinarySourceE" title="catana::io::RawBinarySource">RawBinarySource</a> &amp;<code class="descname">operator=</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv2N6catana2io15RawBinarySourceE" title="catana::io::RawBinarySource">RawBinarySource</a> <em class="property">const</em>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io15RawBinarySourceaSER15RawBinarySource" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="pointcontainersource">
+<h3>PointContainerSource<a class="headerlink" href="#pointcontainersource" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv2N6catana2io20PointContainerSourceE">
+<span id="catana::io::PointContainerSource"></span><span class="target" id="classcatana_1_1io_1_1PointContainerSource"></span><em class="property">class </em><code class="descclassname">catana::io::</code><code class="descname">PointContainerSource</code><a class="headerlink" href="#_CPPv2N6catana2io20PointContainerSourceE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A wrapper around an <a class="reference internal" href="catana_cpp.html#classcatana_1_1PointContainer"><span class="std std-ref">PointContainer</span></a> which lets it act as <a class="reference internal" href="#classcatana_1_1io_1_1Source"><span class="std std-ref">Source</span></a>. </p>
+<p>Inherits from <a class="reference internal" href="#classcatana_1_1io_1_1Source"><span class="std std-ref">catana::io::Source</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana2io20PointContainerSource20PointContainerSourceERK14PointContainer">
+<span id="catana::io::PointContainerSource::PointContainerSource__PointContainerCR"></span><span class="target" id="classcatana_1_1io_1_1PointContainerSource_1a236bb4f0dc4b6d3afff6d3c9fb82a89f"></span><code class="descname">PointContainerSource</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a> &amp;<em>point_container</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io20PointContainerSource20PointContainerSourceERK14PointContainer" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Constructor from <a class="reference internal" href="catana_cpp.html#classcatana_1_1PointContainer"><span class="std std-ref">PointContainer</span></a>. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io20PointContainerSource4readEN14PointContainer8iteratorE6size_t">
+<span id="catana::io::PointContainerSource::read__PointContainer::iterator.s"></span><span class="target" id="classcatana_1_1io_1_1PointContainerSource_1a868e38b41f9fee4e5f9487b6fe0759be"></span>long long int <code class="descname">read</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a>::iterator <em>write_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io20PointContainerSource4readEN14PointContainer8iteratorE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Read next n points from point_container. Returns number of points put into point_s. -1 if EOF. </p>
+<p><dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">write_iterator</span></code>: iterator of <a class="reference internal" href="catana_cpp.html#classcatana_1_1PointContainer"><span class="std std-ref">PointContainer</span></a> of Points. [write_iterator, write_iterator + n] must be a valid range. </li>
+<li><code class="docutils literal"><span class="pre">n</span></code>: number of points to read </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io20PointContainerSource4readEP5Point6size_t">
+<span id="catana::io::PointContainerSource::read__PointP.s"></span><span class="target" id="classcatana_1_1io_1_1PointContainerSource_1aa86fe869040596118e16b02fa11b827a"></span>long long int <code class="descname">read</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana5PointE" title="catana::Point">Point</a> *<em>write_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io20PointContainerSource4readEP5Point6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Read next n points from point_container. Returns number of points put into point_s. -1 if EOF. </p>
+<p><dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">write_iterator</span></code>: pointer to a <a class="reference internal" href="catana_cpp.html#structcatana_1_1Point"><span class="std std-ref">Point</span></a>[] C-array of Points. [write_iterator, write_iterator + n] must be a valid range. </li>
+<li><code class="docutils literal"><span class="pre">n</span></code>: number of points to read </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io20PointContainerSource5resetEv">
+<span id="catana::io::PointContainerSource::reset"></span><span class="target" id="classcatana_1_1io_1_1PointContainerSource_1a639a58b605d2b067543bb66e343514ba"></span>void <code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io20PointContainerSource5resetEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Resets <a class="reference internal" href="#classcatana_1_1io_1_1Source"><span class="std std-ref">Source</span></a> to initial state (everything can be read again) </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io20PointContainerSource11get_npointsEv">
+<span id="catana::io::PointContainerSource::get_npoints"></span><span class="target" id="classcatana_1_1io_1_1PointContainerSource_1a63ea90e10712e24350c0f18adbe1142c"></span>size_t <code class="descname">get_npoints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io20PointContainerSource11get_npointsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Total number of points which can be read (i.e. size of point_container) </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sink-parent">
+<h3>Sink (parent)<a class="headerlink" href="#sink-parent" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv2N6catana2io4SinkE">
+<span id="catana::io::Sink"></span><span class="target" id="classcatana_1_1io_1_1Sink"></span><em class="property">class </em><code class="descclassname">catana::io::</code><code class="descname">Sink</code><a class="headerlink" href="#_CPPv2N6catana2io4SinkE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Parent Class <a class="reference internal" href="#classcatana_1_1io_1_1Sink"><span class="std std-ref">Sink</span></a> to write data of type <a class="reference internal" href="catana_cpp.html#structcatana_1_1Point"><span class="std std-ref">Point</span></a> class. </p>
+<p>Each child class must implement the two write functions. These must return the number of points which were written and -1 if the writing failed. </p>
+<p>Subclassed by catana::io::PixelizedPointContainerSink, <a class="reference internal" href="#classcatana_1_1io_1_1PointContainerSink"><span class="std std-ref">catana::io::PointContainerSink</span></a>, <a class="reference internal" href="#classcatana_1_1io_1_1RawBinarySink"><span class="std std-ref">catana::io::RawBinarySink&lt; RecordType &gt;</span></a>, <a class="reference internal" href="#classcatana_1_1io_1_1TextSink"><span class="std std-ref">catana::io::TextSink&lt; RecordType &gt;</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana2io4Sink5writeEN14PointContainer8iteratorE6size_t">
+<span id="catana::io::Sink::write__PointContainer::iterator.s"></span><span class="target" id="classcatana_1_1io_1_1Sink_1ab8cf5535c9e299d1388e7d8af5de48de"></span><em class="property">virtual</em> long long int <code class="descname">write</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a>::iterator <em>read_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span> = 0<a class="headerlink" href="#_CPPv2N6catana2io4Sink5writeEN14PointContainer8iteratorE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>write points within [read_iterator, read_iterator+n) to sink. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>number of points written. -1 if failed </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">read_iterator</span></code>: [read_iterator, read_iterator+n) must be a valid range of points </li>
+<li><code class="docutils literal"><span class="pre">n</span></code>: number of points to read from read_iterator and write to sink </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io4Sink5writeEP5Point6size_t">
+<span id="catana::io::Sink::write__PointP.s"></span><span class="target" id="classcatana_1_1io_1_1Sink_1a420e9ebac94eb29ba8d1a5f7f018e3f4"></span><em class="property">virtual</em> long long int <code class="descname">write</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana5PointE" title="catana::Point">Point</a> *<em>read_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span> = 0<a class="headerlink" href="#_CPPv2N6catana2io4Sink5writeEP5Point6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>write points within [read_iterator, read_iterator+n) to sink. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>number of points written. -1 if failed </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">read_iterator</span></code>: [read_iterator, read_iterator+n) must be a valid range of points </li>
+<li><code class="docutils literal"><span class="pre">n</span></code>: number of points to read from read_iterator and write to sink </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io4SinkD0Ev">
+<span id="catana::io::Sink::~Sink"></span><span class="target" id="classcatana_1_1io_1_1Sink_1a50c605ff9b64bfa121f8ff459d67c479"></span><em class="property">virtual</em> <code class="descname">~Sink</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io4SinkD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="textsink">
+<h3>TextSink<a class="headerlink" href="#textsink" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt>
+<span class="target" id="classcatana_1_1io_1_1TextSink"></span><em class="property">template </em>&lt;<em class="property">class</em> RecordType&gt;</dt>
+<dt id="_CPPv2N6catana2io8TextSinkE">
+<span id="catana::io::TextSink"></span><em class="property">class </em><code class="descclassname">catana::io::</code><code class="descname">TextSink</code><a class="headerlink" href="#_CPPv2N6catana2io8TextSinkE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A <a class="reference internal" href="#classcatana_1_1io_1_1Sink"><span class="std std-ref">Sink</span></a> class for text files. The Points will be stored in the RecordType Format. </p>
+<p><dl class="docutils">
+<dt><strong>Template Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">RecordType</span></code>: A class defined in the record_types.hpp file. Determines the storage order in the binary file. </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>Inherits from <a class="reference internal" href="#classcatana_1_1io_1_1Sink"><span class="std std-ref">catana::io::Sink</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="type">
+<dt id="_CPPv2N6catana2io8TextSink8record_tE">
+<span id="catana::io::TextSink::record_t"></span><span class="target" id="classcatana_1_1io_1_1TextSink_1a7a01e16a71bdb69f3e004ae683aec132"></span><em class="property">typedef </em>RecordType <code class="descname">record_t</code><a class="headerlink" href="#_CPPv2N6catana2io8TextSink8record_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana2io8TextSink8TextSinkENSt6stringEb">
+<span id="catana::io::TextSink::TextSink__ss.b"></span><span class="target" id="classcatana_1_1io_1_1TextSink_1a149f49fa12e56e87ee6b35151819baab"></span><code class="descname">TextSink</code><span class="sig-paren">(</span>std::string <em>filename</em>, bool <em>verbose</em> = true<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io8TextSink8TextSinkENSt6stringEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct from filename. File with “filename” will be created. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io8TextSink5writeEN14PointContainer8iteratorE6size_t">
+<span id="catana::io::TextSink::write__PointContainer::iterator.s"></span><span class="target" id="classcatana_1_1io_1_1TextSink_1aa4682d3d181a8e156460148535642eb6"></span><em class="property">virtual</em> long long int <code class="descname">write</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a>::iterator <em>read_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io8TextSink5writeEN14PointContainer8iteratorE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>write points within [read_iterator, read_iterator+n) to point_container. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>number of points written. -1 if failed </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">read_iterator</span></code>: [read_iterator, read_iterator+n) must be a valid range of points </li>
+<li><code class="docutils literal"><span class="pre">n</span></code>: number of points to read from read_iterator and write to sink </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io8TextSink5writeEP5Point6size_t">
+<span id="catana::io::TextSink::write__PointP.s"></span><span class="target" id="classcatana_1_1io_1_1TextSink_1a4328b496579b5bbc1868ca985ea5f51f"></span><em class="property">virtual</em> long long int <code class="descname">write</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana5PointE" title="catana::Point">Point</a> *<em>read_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io8TextSink5writeEP5Point6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>write points within [read_iterator, read_iterator+n) to point_container. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>number of points written. -1 if failed </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">read_iterator</span></code>: [read_iterator, read_iterator+n) must be a valid range of points </li>
+<li><code class="docutils literal"><span class="pre">n</span></code>: number of points to read from read_iterator and write to sink </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io8TextSink5closeEv">
+<span id="catana::io::TextSink::close"></span><span class="target" id="classcatana_1_1io_1_1TextSink_1ae312a0deee89e28a6175c0867a785445"></span>void <code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io8TextSink5closeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Close file (can no longer write) </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io8TextSink8TextSinkER8TextSink">
+<span id="catana::io::TextSink::TextSink__TextSinkCR"></span><span class="target" id="classcatana_1_1io_1_1TextSink_1a70fc3e47ed4abb9a05cdefb9806bfa7d"></span><code class="descname">TextSink</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv2N6catana2io8TextSink8TextSinkENSt6stringEb" title="catana::io::TextSink::TextSink">TextSink</a> <em class="property">const</em>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io8TextSink8TextSinkER8TextSink" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io8TextSinkaSER8TextSink">
+<span id="catana::io::TextSink::assign-operator__TextSinkCR"></span><span class="target" id="classcatana_1_1io_1_1TextSink_1af7ef1e6af392fcd7cc7f0a2195dd3ae6"></span><a class="reference internal" href="#_CPPv2N6catana2io8TextSinkE" title="catana::io::TextSink">TextSink</a> &amp;<code class="descname">operator=</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv2N6catana2io8TextSinkE" title="catana::io::TextSink">TextSink</a> <em class="property">const</em>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io8TextSinkaSER8TextSink" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="rawbinarysink">
+<h3>RawBinarySink<a class="headerlink" href="#rawbinarysink" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt>
+<span class="target" id="classcatana_1_1io_1_1RawBinarySink"></span><em class="property">template </em>&lt;<em class="property">class</em> RecordType&gt;</dt>
+<dt id="_CPPv2N6catana2io13RawBinarySinkE">
+<span id="catana::io::RawBinarySink"></span><em class="property">class </em><code class="descclassname">catana::io::</code><code class="descname">RawBinarySink</code><a class="headerlink" href="#_CPPv2N6catana2io13RawBinarySinkE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A <a class="reference internal" href="#classcatana_1_1io_1_1Sink"><span class="std std-ref">Sink</span></a> class for raw binary files. The Points will be stored in the RecordType Format. </p>
+<p><dl class="docutils">
+<dt><strong>Template Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">RecordType</span></code>: A class defined in the record_types.hpp file. Determines the storage order in the binary file. </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>Inherits from <a class="reference internal" href="#classcatana_1_1io_1_1Sink"><span class="std std-ref">catana::io::Sink</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="type">
+<dt id="_CPPv2N6catana2io13RawBinarySink8record_tE">
+<span id="catana::io::RawBinarySink::record_t"></span><span class="target" id="classcatana_1_1io_1_1RawBinarySink_1acabbe05bdf8ce3dc4d40145962893a09"></span><em class="property">typedef </em>RecordType <code class="descname">record_t</code><a class="headerlink" href="#_CPPv2N6catana2io13RawBinarySink8record_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana2io13RawBinarySink13RawBinarySinkENSt6stringEbb">
+<span id="catana::io::RawBinarySink::RawBinarySink__ss.b.b"></span><span class="target" id="classcatana_1_1io_1_1RawBinarySink_1ad36f50ba62625e0ea3571b4908312400"></span><code class="descname">RawBinarySink</code><span class="sig-paren">(</span>std::string <em>filename</em>, bool <em>verbose</em> = true, bool <em>append</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io13RawBinarySink13RawBinarySinkENSt6stringEbb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct from filename. File with “filename” will be created. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io13RawBinarySinkD0Ev">
+<span id="catana::io::RawBinarySink::~RawBinarySink"></span><span class="target" id="classcatana_1_1io_1_1RawBinarySink_1a7d82dd78fb8b487ceb53084825dbe745"></span><code class="descname">~RawBinarySink</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io13RawBinarySinkD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io13RawBinarySink5writeEN14PointContainer8iteratorE6size_t">
+<span id="catana::io::RawBinarySink::write__PointContainer::iterator.s"></span><span class="target" id="classcatana_1_1io_1_1RawBinarySink_1a69cce7e8fe1a523cf1352e39ffeb61c7"></span><em class="property">virtual</em> long long int <code class="descname">write</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a>::iterator <em>read_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io13RawBinarySink5writeEN14PointContainer8iteratorE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>write points within [read_iterator, read_iterator+n) to point_container. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>number of points written. -1 if failed </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">read_iterator</span></code>: [read_iterator, read_iterator+n) must be a valid range of points </li>
+<li><code class="docutils literal"><span class="pre">n</span></code>: number of points to read from read_iterator and write to sink </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io13RawBinarySink5writeEP5Point6size_t">
+<span id="catana::io::RawBinarySink::write__PointP.s"></span><span class="target" id="classcatana_1_1io_1_1RawBinarySink_1a7026ea6b1fc659134e9e7af0fdab808c"></span><em class="property">virtual</em> long long int <code class="descname">write</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana5PointE" title="catana::Point">Point</a> *<em>read_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io13RawBinarySink5writeEP5Point6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>write points within [read_iterator, read_iterator+n) to point_container. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>number of points written. -1 if failed </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">read_iterator</span></code>: [read_iterator, read_iterator+n) must be a valid range of points </li>
+<li><code class="docutils literal"><span class="pre">n</span></code>: number of points to read from read_iterator and write to sink </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io13RawBinarySink5closeEv">
+<span id="catana::io::RawBinarySink::close"></span><span class="target" id="classcatana_1_1io_1_1RawBinarySink_1a3e1ff92f8c21f731fd2ec0669cee9ed7"></span>void <code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io13RawBinarySink5closeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Close file (can no longer write) </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io13RawBinarySink13RawBinarySinkER13RawBinarySink">
+<span id="catana::io::RawBinarySink::RawBinarySink__RawBinarySinkCR"></span><span class="target" id="classcatana_1_1io_1_1RawBinarySink_1abdba9cc04180b49aed85dcfefa1b4942"></span><code class="descname">RawBinarySink</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv2N6catana2io13RawBinarySink13RawBinarySinkENSt6stringEbb" title="catana::io::RawBinarySink::RawBinarySink">RawBinarySink</a> <em class="property">const</em>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io13RawBinarySink13RawBinarySinkER13RawBinarySink" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io13RawBinarySinkaSER13RawBinarySink">
+<span id="catana::io::RawBinarySink::assign-operator__RawBinarySinkCR"></span><span class="target" id="classcatana_1_1io_1_1RawBinarySink_1adc545369d74c5bd687250094214f4a30"></span><a class="reference internal" href="#_CPPv2N6catana2io13RawBinarySinkE" title="catana::io::RawBinarySink">RawBinarySink</a> &amp;<code class="descname">operator=</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv2N6catana2io13RawBinarySinkE" title="catana::io::RawBinarySink">RawBinarySink</a> <em class="property">const</em>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io13RawBinarySinkaSER13RawBinarySink" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="pointcontainersink">
+<h3>PointContainerSink<a class="headerlink" href="#pointcontainersink" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv2N6catana2io18PointContainerSinkE">
+<span id="catana::io::PointContainerSink"></span><span class="target" id="classcatana_1_1io_1_1PointContainerSink"></span><em class="property">class </em><code class="descclassname">catana::io::</code><code class="descname">PointContainerSink</code><a class="headerlink" href="#_CPPv2N6catana2io18PointContainerSinkE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A wrapper around an <a class="reference internal" href="catana_cpp.html#classcatana_1_1PointContainer"><span class="std std-ref">PointContainer</span></a> which lets it act as <a class="reference internal" href="#classcatana_1_1io_1_1Sink"><span class="std std-ref">Sink</span></a>. </p>
+<p>Inherits from <a class="reference internal" href="#classcatana_1_1io_1_1Sink"><span class="std std-ref">catana::io::Sink</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana2io18PointContainerSink18PointContainerSinkER14PointContainer">
+<span id="catana::io::PointContainerSink::PointContainerSink__PointContainerR"></span><span class="target" id="classcatana_1_1io_1_1PointContainerSink_1a7ec14160d52a009799d9aac3b40b4dbc"></span><code class="descname">PointContainerSink</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a> &amp;<em>point_container</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io18PointContainerSink18PointContainerSinkER14PointContainer" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct from <a class="reference internal" href="catana_cpp.html#classcatana_1_1PointContainer"><span class="std std-ref">PointContainer</span></a>. point_container will be filled with data. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io18PointContainerSink5writeEN14PointContainer8iteratorE6size_t">
+<span id="catana::io::PointContainerSink::write__PointContainer::iterator.s"></span><span class="target" id="classcatana_1_1io_1_1PointContainerSink_1a8984f4de4122004a27b43dbea4948a7d"></span>long long int <code class="descname">write</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a>::iterator <em>read_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io18PointContainerSink5writeEN14PointContainer8iteratorE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>write points within [read_iterator, read_iterator+n) to point_container. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>number of points written (=n) </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">read_iterator</span></code>: [read_iterator, read_iterator+n) must be a valid range of points </li>
+<li><code class="docutils literal"><span class="pre">n</span></code>: number of points to read from read_iterator and write to sink </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io18PointContainerSink5writeEP5Point6size_t">
+<span id="catana::io::PointContainerSink::write__PointP.s"></span><span class="target" id="classcatana_1_1io_1_1PointContainerSink_1ae21f5fd9d30a04f391d40d3f858b3e73"></span>long long int <code class="descname">write</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana5PointE" title="catana::Point">Point</a> *<em>read_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io18PointContainerSink5writeEP5Point6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>write points within [read_iterator, read_iterator+n) to point_container. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>number of points written (=n) </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">read_iterator</span></code>: [read_iterator, read_iterator+n) must be a valid range of points </li>
+<li><code class="docutils literal"><span class="pre">n</span></code>: number of points to read from read_iterator and write to sink </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="filters">
+<h2>Filters<a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="filter-parent">
+<h3>Filter (parent)<a class="headerlink" href="#filter-parent" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv2N6catana2io6FilterE">
+<span id="catana::io::Filter"></span><span class="target" id="classcatana_1_1io_1_1Filter"></span><em class="property">class </em><code class="descclassname">catana::io::</code><code class="descname">Filter</code><a class="headerlink" href="#_CPPv2N6catana2io6FilterE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Parent class <a class="reference internal" href="#classcatana_1_1io_1_1Filter"><span class="std std-ref">Filter</span></a> for filtering data of type <a class="reference internal" href="catana_cpp.html#structcatana_1_1Point"><span class="std std-ref">Point</span></a>. </p>
+<p>Child classes need to implement bool <a class="reference internal" href="#classcatana_1_1io_1_1Filter_1a14a046803168f0bb910e465d4ed411f7"><span class="std std-ref">filter(Point&amp;)</span></a>, which returns true if point passes filtering and false if it needs to be removed. </p>
+<p>Subclassed by <a class="reference internal" href="#classcatana_1_1io_1_1AngularMaskFilter"><span class="std std-ref">catana::io::AngularMaskFilter</span></a>, <a class="reference internal" href="#classcatana_1_1io_1_1GenericRadialWindowFunctionFilter"><span class="std std-ref">catana::io::GenericRadialWindowFunctionFilter</span></a>, <a class="reference internal" href="#classcatana_1_1io_1_1TophatRadialWindowFunctionFilter"><span class="std std-ref">catana::io::TophatRadialWindowFunctionFilter</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana2io6Filter6filterER5Point">
+<span id="catana::io::Filter::filter__PointR"></span><span class="target" id="classcatana_1_1io_1_1Filter_1a14a046803168f0bb910e465d4ed411f7"></span><em class="property">virtual</em> bool <code class="descname">filter</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana5PointE" title="catana::Point">Point</a> &amp;<em>point</em><span class="sig-paren">)</span> = 0<a class="headerlink" href="#_CPPv2N6catana2io6Filter6filterER5Point" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Filtering function on <a class="reference internal" href="catana_cpp.html#structcatana_1_1Point"><span class="std std-ref">Point</span></a>. Returns true if point passes filter, false otherwise. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io6FilterclER14PointContainerb">
+<span id="catana::io::Filter::call-operator__PointContainerR.b"></span><span class="target" id="classcatana_1_1io_1_1Filter_1abc9cdbbbc3b7b5027e52ec962af655d5"></span>size_t <code class="descname">operator()</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a> &amp;<em>point_container</em>, bool <em>resize</em> = true<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io6FilterclER14PointContainerb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run filter on an point_container. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>number of points remaining after filtering (== point_container.size() if resize==true) </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">point_container</span></code>: point_container on which to apply filter </li>
+<li><code class="docutils literal"><span class="pre">resize</span></code>: if true, resize the point container. if false, the filtered data will be within [point_container.begin(), point_container.begin()+n), where n is the return value </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io6FilterclEP5PointP5Point">
+<span id="catana::io::Filter::call-operator__PointP.PointP"></span><span class="target" id="classcatana_1_1io_1_1Filter_1af43cc1fd1e8b4879883821354582037f"></span><em class="property">virtual</em> size_t <code class="descname">operator()</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana5PointE" title="catana::Point">Point</a> *<em>begin</em>, <a class="reference internal" href="catana_cpp.html#_CPPv2N6catana5PointE" title="catana::Point">Point</a> *<em>end</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io6FilterclEP5PointP5Point" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run filter on a C-array of Points. </p>
+<p><a class="reference internal" href="#classcatana_1_1io_1_1Filter"><span class="std std-ref">Filter</span></a> points between [begin, end). Remaining points will be stored between [begin, begin +n), where n is the return value <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>number of points remaining after filtering. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="tophatradialwindowfunctionfilter">
+<h3>TophatRadialWindowFunctionFilter<a class="headerlink" href="#tophatradialwindowfunctionfilter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv2N6catana2io32TophatRadialWindowFunctionFilterE">
+<span id="catana::io::TophatRadialWindowFunctionFilter"></span><span class="target" id="classcatana_1_1io_1_1TophatRadialWindowFunctionFilter"></span><em class="property">class </em><code class="descclassname">catana::io::</code><code class="descname">TophatRadialWindowFunctionFilter</code><a class="headerlink" href="#_CPPv2N6catana2io32TophatRadialWindowFunctionFilterE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A radial tophat window function filter, acceptance probability = 1 if r&lt;R0, else 0. </p>
+<p>Inherits from <a class="reference internal" href="#classcatana_1_1io_1_1Filter"><span class="std std-ref">catana::io::Filter</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana2io32TophatRadialWindowFunctionFilter32TophatRadialWindowFunctionFilterEd">
+<span id="catana::io::TophatRadialWindowFunctionFilter::TophatRadialWindowFunctionFilter__double"></span><span class="target" id="classcatana_1_1io_1_1TophatRadialWindowFunctionFilter_1a9df6895f97beec5b2d45d8f7f5eec010"></span><code class="descname">TophatRadialWindowFunctionFilter</code><span class="sig-paren">(</span>double <em>R0</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io32TophatRadialWindowFunctionFilter32TophatRadialWindowFunctionFilterEd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct from scale parameter R0. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io32TophatRadialWindowFunctionFilter6filterER5Point">
+<span id="catana::io::TophatRadialWindowFunctionFilter::filter__PointR"></span><span class="target" id="classcatana_1_1io_1_1TophatRadialWindowFunctionFilter_1ae6143733989b0b036fdbe30abe7dbc66"></span><em class="property">virtual</em> bool <code class="descname">filter</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana5PointE" title="catana::Point">Point</a> &amp;<em>point</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io32TophatRadialWindowFunctionFilter6filterER5Point" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Filtering function on <a class="reference internal" href="catana_cpp.html#structcatana_1_1Point"><span class="std std-ref">Point</span></a>. Returns true if point passes filter, false otherwise. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="gaussianradialwindowfunctionfilter">
+<h3>GaussianRadialWindowFunctionFilter<a class="headerlink" href="#gaussianradialwindowfunctionfilter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv2N6catana2io34GaussianRadialWindowFunctionFilterE">
+<span id="catana::io::GaussianRadialWindowFunctionFilter"></span><span class="target" id="classcatana_1_1io_1_1GaussianRadialWindowFunctionFilter"></span><em class="property">class </em><code class="descclassname">catana::io::</code><code class="descname">GaussianRadialWindowFunctionFilter</code><a class="headerlink" href="#_CPPv2N6catana2io34GaussianRadialWindowFunctionFilterE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A Gaussian window function filter: acceptance probability = exp(-(r/R0)^2) </p>
+<p>Inherits from <a class="reference internal" href="#classcatana_1_1io_1_1GenericRadialWindowFunctionFilter"><span class="std std-ref">catana::io::GenericRadialWindowFunctionFilter</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana2io34GaussianRadialWindowFunctionFilter34GaussianRadialWindowFunctionFilterEd">
+<span id="catana::io::GaussianRadialWindowFunctionFilter::GaussianRadialWindowFunctionFilter__double"></span><span class="target" id="classcatana_1_1io_1_1GaussianRadialWindowFunctionFilter_1abb41fa366fcbfde1bee64cb877e8303f"></span><code class="descname">GaussianRadialWindowFunctionFilter</code><span class="sig-paren">(</span>double <em>R0</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io34GaussianRadialWindowFunctionFilter34GaussianRadialWindowFunctionFilterEd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct from scale parameter R0. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="genericradialwindowfunctionfilter">
+<h3>GenericRadialWindowFunctionFilter<a class="headerlink" href="#genericradialwindowfunctionfilter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv2N6catana2io33GenericRadialWindowFunctionFilterE">
+<span id="catana::io::GenericRadialWindowFunctionFilter"></span><span class="target" id="classcatana_1_1io_1_1GenericRadialWindowFunctionFilter"></span><em class="property">class </em><code class="descclassname">catana::io::</code><code class="descname">GenericRadialWindowFunctionFilter</code><a class="headerlink" href="#_CPPv2N6catana2io33GenericRadialWindowFunctionFilterE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A generic radial window function filter, bases on a function returning the acceptance probability at a given radius. </p>
+<p>Inherits from <a class="reference internal" href="#classcatana_1_1io_1_1Filter"><span class="std std-ref">catana::io::Filter</span></a></p>
+<p>Subclassed by <a class="reference internal" href="#classcatana_1_1io_1_1GaussianRadialWindowFunctionFilter"><span class="std std-ref">catana::io::GaussianRadialWindowFunctionFilter</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana2io33GenericRadialWindowFunctionFilter33GenericRadialWindowFunctionFilterENSt8functionIFddEEE">
+<span class="target" id="classcatana_1_1io_1_1GenericRadialWindowFunctionFilter_1a1189ace6424fcad6a0027efc95ec3038"></span><code class="descname">GenericRadialWindowFunctionFilter</code><span class="sig-paren">(</span>std::function&lt;double<span class="sig-paren">(</span>double<span class="sig-paren">)</span>&gt; <em>window_function</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io33GenericRadialWindowFunctionFilter33GenericRadialWindowFunctionFilterENSt8functionIFddEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct from window_function. </p>
+<p><dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">window_function</span></code>: a function with signature double(double r), where the return value is in [0,1] and gives the probability of an point at distance r passing the filter. </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io33GenericRadialWindowFunctionFilter33GenericRadialWindowFunctionFilterENSt8functionIFddEEE6size_tddb">
+<span class="target" id="classcatana_1_1io_1_1GenericRadialWindowFunctionFilter_1a592a5b3ed111c6ae54b24b35174fb6b5"></span><code class="descname">GenericRadialWindowFunctionFilter</code><span class="sig-paren">(</span>std::function&lt;double<span class="sig-paren">(</span>double<span class="sig-paren">)</span>&gt; <em>window_function</em>, size_t <em>interpolation_points</em>, double <em>min</em>, double <em>max</em>, bool <em>parallel_init</em> = false, <span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io33GenericRadialWindowFunctionFilter33GenericRadialWindowFunctionFilterENSt8functionIFddEEE6size_tddb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct from window_function, with interpolation (good if computation is intensive) </p>
+<p><dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">window_function</span></code>: a function with signature double(double r), where the return value is in [0,1] and gives the probability of an point at distance r passing the filter. </li>
+<li><code class="docutils literal"><span class="pre">interpolation_points</span></code>: number of points which are spaced equidistantly between [min, max] and between which the function will be linearly interpolated </li>
+<li><code class="docutils literal"><span class="pre">min</span></code>: lower bound of interpolation (runtime error if called with radius outside boundaries) </li>
+<li><code class="docutils literal"><span class="pre">max</span></code>: upper bound of interpolation (runtime error if called with radius outside boundaries) </li>
+<li><code class="docutils literal"><span class="pre">parallel_init</span></code>: if true, initialize interpolation points in parallel. Set to false if window_function is a Python point. </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io33GenericRadialWindowFunctionFilter6filterER5Point">
+<span id="catana::io::GenericRadialWindowFunctionFilter::filter__PointR"></span><span class="target" id="classcatana_1_1io_1_1GenericRadialWindowFunctionFilter_1a29a9a2878f1ed958e750f7522e47430c"></span>bool <code class="descname">filter</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana5PointE" title="catana::Point">Point</a> &amp;<em>point</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io33GenericRadialWindowFunctionFilter6filterER5Point" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Filtering function on <a class="reference internal" href="catana_cpp.html#structcatana_1_1Point"><span class="std std-ref">Point</span></a>. Returns true if point passes filter, false otherwise. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="angularmaskfilter">
+<h3>AngularMaskFilter<a class="headerlink" href="#angularmaskfilter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv2N6catana2io17AngularMaskFilterE">
+<span id="catana::io::AngularMaskFilter"></span><span class="target" id="classcatana_1_1io_1_1AngularMaskFilter"></span><em class="property">class </em><code class="descclassname">catana::io::</code><code class="descname">AngularMaskFilter</code><a class="headerlink" href="#_CPPv2N6catana2io17AngularMaskFilterE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Applies an angular mask (float healpix map) </p>
+<p>MASK==1: keep point at this pixel MASK==0: remove point at this pixel </p>
+<p>Inherits from <a class="reference internal" href="#classcatana_1_1io_1_1Filter"><span class="std std-ref">catana::io::Filter</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana2io17AngularMaskFilter17AngularMaskFilterENSt6stringE">
+<span id="catana::io::AngularMaskFilter::AngularMaskFilter__ss"></span><span class="target" id="classcatana_1_1io_1_1AngularMaskFilter_1abc33c2d5758007c44306a06b5faa8966"></span><code class="descname">AngularMaskFilter</code><span class="sig-paren">(</span>std::string <em>healpix_mask</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io17AngularMaskFilter17AngularMaskFilterENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct from HEALPix map FITS file. </p>
+<p><dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">healpix_mask</span></code>: valid HEALPix FITS file, in RING format, with pixel values 1 (passes filter) and 0 (remove points) </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io17AngularMaskFilter6filterER5Point">
+<span id="catana::io::AngularMaskFilter::filter__PointR"></span><span class="target" id="classcatana_1_1io_1_1AngularMaskFilter_1a49c79beb5ffefd50f7411662b84a5256"></span>bool <code class="descname">filter</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana5PointE" title="catana::Point">Point</a> &amp;<em>point</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io17AngularMaskFilter6filterER5Point" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Filtering function on <a class="reference internal" href="catana_cpp.html#structcatana_1_1Point"><span class="std std-ref">Point</span></a>. Returns true if point passes filter, false otherwise. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="filterstreams">
+<h2>FilterStreams<a class="headerlink" href="#filterstreams" title="Permalink to this headline">¶</a></h2>
+<p>To combine a Source -&gt; Filter -&gt; Sink together, we can use a FilterStream</p>
+<dl class="class">
+<dt id="_CPPv2N6catana2io12FilterStreamE">
+<span id="catana::io::FilterStream"></span><span class="target" id="classcatana_1_1io_1_1FilterStream"></span><em class="property">class </em><code class="descclassname">catana::io::</code><code class="descname">FilterStream</code><a class="headerlink" href="#_CPPv2N6catana2io12FilterStreamE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The <a class="reference internal" href="#classcatana_1_1io_1_1FilterStream"><span class="std std-ref">FilterStream</span></a> class combines source, filters and sink to a stream. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana2io12FilterStream12FilterStreamEP6SourceP4Sink6size_tb">
+<span id="catana::io::FilterStream::FilterStream__SourceP.SinkP.s.b"></span><span class="target" id="classcatana_1_1io_1_1FilterStream_1aa643587fc50be71de1dc78ecf12c4c19"></span><code class="descname">FilterStream</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv2N6catana2io6SourceE" title="catana::io::Source">Source</a> *<em>source</em>, <a class="reference internal" href="#_CPPv2N6catana2io4SinkE" title="catana::io::Sink">Sink</a> *<em>sink</em>, size_t <em>buffer_size</em> = 1000000, bool <em>verbose</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io12FilterStream12FilterStreamEP6SourceP4Sink6size_tb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct from <a class="reference internal" href="#classcatana_1_1io_1_1Source"><span class="std std-ref">Source</span></a> and <a class="reference internal" href="#classcatana_1_1io_1_1Sink"><span class="std std-ref">Sink</span></a>. </p>
+<p><dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">source</span></code>: pointer to an instance of <a class="reference internal" href="#classcatana_1_1io_1_1Source"><span class="std std-ref">Source</span></a> </li>
+<li><code class="docutils literal"><span class="pre">sink</span></code>: pointer to an instance of <a class="reference internal" href="#classcatana_1_1io_1_1Sink"><span class="std std-ref">Sink</span></a> </li>
+<li><code class="docutils literal"><span class="pre">buffer_size</span></code>: data will be read, filtered and stored in chuncks of buffer_size </li>
+<li><code class="docutils literal"><span class="pre">subsample_size</span></code>: size of the random subset taken from filtered data which is stored to sink. Set to 0 if no subsampling shall be done. </li>
+<li><code class="docutils literal"><span class="pre">temp_file_name</span></code>: If subsampling is turned on, name the filename of the temporary file to store data before subsampling </li>
+<li><code class="docutils literal"><span class="pre">verbose</span></code>: Set to true for additional output to stdout. </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io12FilterStream10set_sourceEP6Source">
+<span id="catana::io::FilterStream::set_source__SourceP"></span><span class="target" id="classcatana_1_1io_1_1FilterStream_1ab4be2234a13bb07087fa1709cc894194"></span>void <code class="descname">set_source</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv2N6catana2io6SourceE" title="catana::io::Source">Source</a> *<em>source</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io12FilterStream10set_sourceEP6Source" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Set the data source. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io12FilterStream10add_filterEP6Filter">
+<span id="catana::io::FilterStream::add_filter__FilterP"></span><span class="target" id="classcatana_1_1io_1_1FilterStream_1ad644044da65b435081bb5219b6d8e08a"></span>void <code class="descname">add_filter</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv2N6catana2io6FilterE" title="catana::io::Filter">Filter</a> *<em>filter_p</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io12FilterStream10add_filterEP6Filter" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Add filter to the list of filters which will be applied during .<a class="reference internal" href="#classcatana_1_1io_1_1FilterStream_1a6dada73401795384ca60803e5e7848e6"><span class="std std-ref">run()</span></a> </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io12FilterStream3runE6size_tNSt6stringE">
+<span id="catana::io::FilterStream::run__s.ss"></span><span class="target" id="classcatana_1_1io_1_1FilterStream_1a6dada73401795384ca60803e5e7848e6"></span>size_t <code class="descname">run</code><span class="sig-paren">(</span>size_t <em>subsample_size</em> = 0, std::string <em>temp_filename</em> = &quot;tmp.bin&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io12FilterStream3runE6size_tNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Read data from source, filter it and write to sink. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>number of points written to sink. </dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io12FilterStream10run_totempENSt6stringEb">
+<span id="catana::io::FilterStream::run_totemp__ss.b"></span><span class="target" id="classcatana_1_1io_1_1FilterStream_1a5e72ab8e9a3e5f644b239d979a2c100b"></span>size_t <code class="descname">run_totemp</code><span class="sig-paren">(</span>std::string <em>temp_filename</em> = &quot;tmp.bin&quot;, bool <em>append</em> = true<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io12FilterStream10run_totempENSt6stringEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run intermediate steps manually: write source to temporary file, apply filters. </p>
+<p>This function is meant to use if multiple sources need to be combined and then subsampled (e.g. if data is spread across multiple files). Run the “run_totemp” function with the same temporary file for all sources first and then run the “run_fromtemp” function with the number of particles needed.</p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>number of points written to temporary file </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">temp_filename</span></code>: Path and name of the temporary file </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io12FilterStream12run_fromtempENSt6stringE6size_tb">
+<span id="catana::io::FilterStream::run_fromtemp__ss.s.b"></span><span class="target" id="classcatana_1_1io_1_1FilterStream_1a35318911a65b5195c4f541cc451f3785"></span>size_t <code class="descname">run_fromtemp</code><span class="sig-paren">(</span>std::string <em>temp_filename</em> = &quot;tmp.bin&quot;, size_t <em>subsample_size</em> = 0, bool <em>remove_temp</em> = true<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io12FilterStream12run_fromtempENSt6stringE6size_tb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Run intermediate steps manually: write temporary file to sink (with subsampling) </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>number of points written to sink </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">subsample_size</span></code>: The number of particles which are randomly drawn from the temporary file and moved to the sink point </li>
+<li><code class="docutils literal"><span class="pre">temp_filename</span></code>: Path and name of the temporary file </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="catana_cpp_misc.html" class="btn btn-neutral float-right" title="Miscellaneous (C++)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="catana_cpp_decomp.html" class="btn btn-neutral" title="SFB Decomposition (C++)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Michael Buehlmann.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'2.0a2+41.gdb4bd3e',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

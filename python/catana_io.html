@@ -1,0 +1,1041 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Input/Output Module &mdash; CatAna 2.0a2+41.gdb4bd3e documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CatAna 2.0a2+41.gdb4bd3e documentation" href="../index.html"/>
+        <link rel="next" title="Miscellaneous" href="catana_misc.html"/>
+        <link rel="prev" title="Decomposition Module" href="catana_decomp.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CatAna
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0a2+41.gdb4bd3e
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Installation and Basic Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">CatAna’s documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../catana_install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../catana_usage.html">Basic Usage</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Python Package Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="catana.html">Points and Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_besseltools.html">Besseltools Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_decomp.html">Decomposition Module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Input/Output Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sources">Sources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#source">Source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cartesiantextsource">CartesianTextSource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphericaltextsource">SphericalTextSource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gadgetsource">GadgetSource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pointcontainersource">PointContainerSource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rawbinarysource">RawBinarySource</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sinks">Sinks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sink">Sink</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cartesiantextsink">CartesianTextSink</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphericaltextsink">SphericalTextSink</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pointcontainersink">PointContainerSink</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rawbinarysink">RawBinarySink</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#filters">Filters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#filter-abstract-class">Filter (abstract class)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tophatradialwindowfunctionfilter">TophatRadialWindowFunctionFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gaussianradialwindowfunctionfilter">GaussianRadialWindowFunctionFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#genericradialwindowfunctionfilter">GenericRadialWindowFunctionFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#angularmaskfilter">AngularMaskFilter</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#filterstream">FilterStream</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="catana_misc.html">Miscellaneous</a></li>
+</ul>
+<p class="caption"><span class="caption-text">C++ Library Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp.html">Points and Containers (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_besseltools.html">Besseltools (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_decomp.html">SFB Decomposition (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_io.html">Input / Output (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_misc.html">Miscellaneous (C++)</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CatAna</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Input/Output Module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/python/catana_io.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="input-output-module">
+<h1>Input/Output Module<a class="headerlink" href="#input-output-module" title="Permalink to this headline">¶</a></h1>
+<p>python binding for in/output of particle positions (part of CatAna)</p>
+<span class="target" id="module-catana.io"></span><p>The <code class="docutils literal"><span class="pre">catana.io</span></code> module contains functions and classes to read data from files and containers, filters that can be
+applied to objects (points) and facilites to write those points to files and containers. The implementation follows
+a “data-stream” concept, where the data flows from a source through one or multiple filters to a so-called sink.</p>
+<p>The available sources, sinks and filters are listed below. The data-stream pipeline is implemented in the <a class="reference internal" href="#catana.io.FilterStream" title="catana.io.FilterStream"><code class="xref any py py-class docutils literal"><span class="pre">FilterStream</span></code></a>
+class. If only reading from a file to a <a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PointContainer</span></code></a> or <a class="reference internal" href="catana.html#catana.PixelizedPointContainer" title="catana.PixelizedPointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PixelizedPointContainer</span></code></a> is required you can directly use
+the <code class="docutils literal"><span class="pre">Source.get_point_container</span></code> and <code class="docutils literal"><span class="pre">Source.get_pixelized_point_container</span></code> functions.</p>
+<div class="section" id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="source">
+<h3>Source<a class="headerlink" href="#source" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="catana.io.Source">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">Source</code><a class="headerlink" href="#catana.io.Source" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Abstract) parent class for Source implementations.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="cartesiantextsource">
+<h3>CartesianTextSource<a class="headerlink" href="#cartesiantextsource" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="catana.io.CartesianTextSource">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">CartesianTextSource</code><span class="sig-paren">(</span><em>self: catana.io.CartesianTextSource</em>, <em>filename: str</em>, <em>hubble_param: float=1.0</em>, <em>shift: float=0.0</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.CartesianTextSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read positions from Text File (cartesian coordinates)</p>
+<p>Only the first 3 columns are read, remaining columns are ignored.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To convert box coordinates to spherical coordinates, the origin is placed at
+<code class="docutils literal"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">0]</span></code>. If the coordinates are not centered at 0 they can be moved by using the shift parameter
+(e.g. if the coordinates are within [0, L], use <code class="docutils literal"><span class="pre">shift=-L/2</span></code>)</p>
+</div>
+<p>Constructor from a textfile filename.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filename</strong> (<em>str</em>) – path to file containing the positions</li>
+<li><strong>hubble_param</strong> (<em>float</em>) – conversion factor if coordinates are in Mpc/h.</li>
+<li><strong>shift</strong> (<em>float</em>) – a coordinate shift that is applied to each axis</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="catana.io.CartesianTextSource.get_pixelized_point_container">
+<code class="descname">get_pixelized_point_container</code><span class="sig-paren">(</span><em>self: catana.io.Source</em>, <em>nside: int</em><span class="sig-paren">)</span> &#x2192; catana.basictypes.PixelizedPointContainer<a class="headerlink" href="#catana.io.CartesianTextSource.get_pixelized_point_container" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load all data into a PixelizedPointContainer with given NSide</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nside</strong> (<em>int</em>) – HEALPix pixelization resolution, must be a power of 2</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="catana.html#catana.PixelizedPointContainer" title="catana.PixelizedPointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PixelizedPointContainer</span></code></a> – A pixelized point container with all the data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.io.CartesianTextSource.get_point_container">
+<code class="descname">get_point_container</code><span class="sig-paren">(</span><em>self: catana.io.Source</em><span class="sig-paren">)</span> &#x2192; catana.basictypes.PointContainer<a class="headerlink" href="#catana.io.CartesianTextSource.get_point_container" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load all data into an PointContainer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PointContainer</span></code></a> – A PointContainer with all data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.io.CartesianTextSource.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><em>self: catana.io.Source</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.CartesianTextSource.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the source</p>
+<p>This reverts the Source to the initial state and reading from it again should produce the same results</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="sphericaltextsource">
+<h3>SphericalTextSource<a class="headerlink" href="#sphericaltextsource" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="catana.io.SphericalTextSource">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">SphericalTextSource</code><span class="sig-paren">(</span><em>self: catana.io.SphericalTextSource</em>, <em>filename: str</em>, <em>hubble_param: float=1.0</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.SphericalTextSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read from Text File (spherical coordinates [r, theta, phi])</p>
+<p>Only the first 3 columns are read, remaining columns are ignored.</p>
+<p>Constructor from a textfile filename.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filename</strong> (<em>str</em>) – path to file containing the positions</li>
+<li><strong>hubble_param</strong> (<em>float</em>) – conversion factor if coordinates are in Mpc/h.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For 3dex compatible text files with columns [theta, phi, r], use the <code class="xref any docutils literal"><span class="pre">SphericalTextSource_3dex</span></code> class with
+the same functionality and syntax.</p>
+</div>
+<dl class="method">
+<dt id="catana.io.SphericalTextSource.get_pixelized_point_container">
+<code class="descname">get_pixelized_point_container</code><span class="sig-paren">(</span><em>self: catana.io.Source</em>, <em>nside: int</em><span class="sig-paren">)</span> &#x2192; catana.basictypes.PixelizedPointContainer<a class="headerlink" href="#catana.io.SphericalTextSource.get_pixelized_point_container" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load all data into a PixelizedPointContainer with given NSide</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nside</strong> (<em>int</em>) – HEALPix pixelization resolution, must be a power of 2</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="catana.html#catana.PixelizedPointContainer" title="catana.PixelizedPointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PixelizedPointContainer</span></code></a> – A pixelized point container with all the data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.io.SphericalTextSource.get_point_container">
+<code class="descname">get_point_container</code><span class="sig-paren">(</span><em>self: catana.io.Source</em><span class="sig-paren">)</span> &#x2192; catana.basictypes.PointContainer<a class="headerlink" href="#catana.io.SphericalTextSource.get_point_container" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load all data into an PointContainer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PointContainer</span></code></a> – A PointContainer with all data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.io.SphericalTextSource.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><em>self: catana.io.Source</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.SphericalTextSource.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the source</p>
+<p>This reverts the Source to the initial state and reading from it again should produce the same results</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="gadgetsource">
+<h3>GadgetSource<a class="headerlink" href="#gadgetsource" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="catana.io.GadgetSource">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">GadgetSource</code><span class="sig-paren">(</span><em>self: catana.io.GadgetSource</em>, <em>filename: str</em>, <em>verbose: bool=True</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.GadgetSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read positions from binary Gadget file</p>
+<p>This reader will only read particles of type 1 from version 2 binary Gadget files.</p>
+<p>Constructor from a Gadget filename.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filename</strong> (<em>str</em>) – path to the Gadget file</li>
+<li><strong>verbose</strong> (<em>bool</em>) – if <code class="docutils literal"><span class="pre">True</span></code>, print logging information to stdout (might be in terminal for
+jupyter notebooks!)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="catana.io.GadgetSource.get_pixelized_point_container">
+<code class="descname">get_pixelized_point_container</code><span class="sig-paren">(</span><em>self: catana.io.Source</em>, <em>nside: int</em><span class="sig-paren">)</span> &#x2192; catana.basictypes.PixelizedPointContainer<a class="headerlink" href="#catana.io.GadgetSource.get_pixelized_point_container" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load all data into a PixelizedPointContainer with given NSide</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nside</strong> (<em>int</em>) – HEALPix pixelization resolution, must be a power of 2</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="catana.html#catana.PixelizedPointContainer" title="catana.PixelizedPointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PixelizedPointContainer</span></code></a> – A pixelized point container with all the data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.io.GadgetSource.get_point_container">
+<code class="descname">get_point_container</code><span class="sig-paren">(</span><em>self: catana.io.Source</em><span class="sig-paren">)</span> &#x2192; catana.basictypes.PointContainer<a class="headerlink" href="#catana.io.GadgetSource.get_point_container" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load all data into an PointContainer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PointContainer</span></code></a> – A PointContainer with all data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.io.GadgetSource.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><em>self: catana.io.Source</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.GadgetSource.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the source</p>
+<p>This reverts the Source to the initial state and reading from it again should produce the same results</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="pointcontainersource">
+<h3>PointContainerSource<a class="headerlink" href="#pointcontainersource" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="catana.io.PointContainerSource">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">PointContainerSource</code><span class="sig-paren">(</span><em>self: catana.io.PointContainerSource</em>, <em>point_container: catana.basictypes.PointContainer</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.PointContainerSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read positions from a PointContainer</p>
+<p>Mainly used to add a <code class="xref py py-class docutils literal"><span class="pre">PointContainer</span></code> to a <a class="reference internal" href="#catana.io.FilterStream" title="catana.io.FilterStream"><code class="xref py py-class docutils literal"><span class="pre">FilterStream</span></code></a>.</p>
+<p>Constructor from an existing <code class="xref py py-class docutils literal"><span class="pre">PointContainer</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>point_container</strong> (<a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><em>PointContainer</em></a>) – the PointContainer from which to read</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="catana.io.PointContainerSource.get_pixelized_point_container">
+<code class="descname">get_pixelized_point_container</code><span class="sig-paren">(</span><em>self: catana.io.Source</em>, <em>nside: int</em><span class="sig-paren">)</span> &#x2192; catana.basictypes.PixelizedPointContainer<a class="headerlink" href="#catana.io.PointContainerSource.get_pixelized_point_container" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load all data into a PixelizedPointContainer with given NSide</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nside</strong> (<em>int</em>) – HEALPix pixelization resolution, must be a power of 2</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="catana.html#catana.PixelizedPointContainer" title="catana.PixelizedPointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PixelizedPointContainer</span></code></a> – A pixelized point container with all the data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.io.PointContainerSource.get_point_container">
+<code class="descname">get_point_container</code><span class="sig-paren">(</span><em>self: catana.io.Source</em><span class="sig-paren">)</span> &#x2192; catana.basictypes.PointContainer<a class="headerlink" href="#catana.io.PointContainerSource.get_point_container" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load all data into an PointContainer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PointContainer</span></code></a> – A PointContainer with all data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.io.PointContainerSource.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><em>self: catana.io.Source</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.PointContainerSource.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the source</p>
+<p>This reverts the Source to the initial state and reading from it again should produce the same results</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="rawbinarysource">
+<h3>RawBinarySource<a class="headerlink" href="#rawbinarysource" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="catana.io.RawBinarySource">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">RawBinarySource</code><span class="sig-paren">(</span><em>self: catana.io.RawBinarySource</em>, <em>filename: str</em>, <em>verbose: bool=True</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.RawBinarySource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read from CatAna binary file (float precision, spherical coordinates)</p>
+<p>Constructor from a binary file filename.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filename</strong> (<em>str</em>) – path to the binary file</li>
+<li><strong>verbose</strong> (<em>bool</em>) – if <code class="docutils literal"><span class="pre">True</span></code>, print logging information to stdout (might be in terminal for
+jupyter notebooks!)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="catana.io.RawBinarySource.get_pixelized_point_container">
+<code class="descname">get_pixelized_point_container</code><span class="sig-paren">(</span><em>self: catana.io.Source</em>, <em>nside: int</em><span class="sig-paren">)</span> &#x2192; catana.basictypes.PixelizedPointContainer<a class="headerlink" href="#catana.io.RawBinarySource.get_pixelized_point_container" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load all data into a PixelizedPointContainer with given NSide</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nside</strong> (<em>int</em>) – HEALPix pixelization resolution, must be a power of 2</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="catana.html#catana.PixelizedPointContainer" title="catana.PixelizedPointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PixelizedPointContainer</span></code></a> – A pixelized point container with all the data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.io.RawBinarySource.get_point_container">
+<code class="descname">get_point_container</code><span class="sig-paren">(</span><em>self: catana.io.Source</em><span class="sig-paren">)</span> &#x2192; catana.basictypes.PointContainer<a class="headerlink" href="#catana.io.RawBinarySource.get_point_container" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load all data into an PointContainer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PointContainer</span></code></a> – A PointContainer with all data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.io.RawBinarySource.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><em>self: catana.io.Source</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.RawBinarySource.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the source</p>
+<p>This reverts the Source to the initial state and reading from it again should produce the same results</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sink">
+<h3>Sink<a class="headerlink" href="#sink" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="catana.io.Sink">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">Sink</code><a class="headerlink" href="#catana.io.Sink" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Abstract) parent class for Sink implementations</p>
+<p>These are used to write data of type Point to various targets.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="cartesiantextsink">
+<h3>CartesianTextSink<a class="headerlink" href="#cartesiantextsink" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="catana.io.CartesianTextSink">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">CartesianTextSink</code><span class="sig-paren">(</span><em>self: catana.io.CartesianTextSink</em>, <em>filename: str</em>, <em>verbose: bool=True</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.CartesianTextSink" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Sink to write <a class="reference internal" href="catana.html#catana.Point" title="catana.Point"><code class="xref any py py-class docutils literal"><span class="pre">Point</span></code></a> data into a text-file using cartesian coordinates</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The file will be truncated if it already exists</p>
+</div>
+<p>Create Sink text-file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filename</strong> (<em>str</em>) – path to file. Will be overwritten if it already exists.</li>
+<li><strong>verbose</strong> (<em>bool</em>) – output additional logging information if <code class="docutils literal"><span class="pre">True</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="sphericaltextsink">
+<h3>SphericalTextSink<a class="headerlink" href="#sphericaltextsink" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="catana.io.SphericalTextSink">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">SphericalTextSink</code><span class="sig-paren">(</span><em>self: catana.io.SphericalTextSink</em>, <em>filename: str</em>, <em>verbose: bool=True</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.SphericalTextSink" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Sink to write <a class="reference internal" href="catana.html#catana.Point" title="catana.Point"><code class="xref any py py-class docutils literal"><span class="pre">Point</span></code></a> data into a text-file using spherical coordinates [r, theta, phi]</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The file will be truncated if it already exists</p>
+</div>
+<p>Create Sink text-file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filename</strong> (<em>str</em>) – path to file. Will be overwritten if it already exists.</li>
+<li><strong>verbose</strong> (<em>bool</em>) – output additional logging information if <code class="docutils literal"><span class="pre">True</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For 3dex compatible text files with columns [theta, phi, r], use the <code class="xref any docutils literal"><span class="pre">SphericalTextSink_3dex</span></code> class with
+the same functionality and syntax.</p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="pointcontainersink">
+<h3>PointContainerSink<a class="headerlink" href="#pointcontainersink" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="catana.io.PointContainerSink">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">PointContainerSink</code><span class="sig-paren">(</span><em>self: catana.io.PointContainerSink</em>, <em>point_container: catana.basictypes.PointContainer</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.PointContainerSink" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Sink to write <a class="reference internal" href="catana.html#catana.Point" title="catana.Point"><code class="xref any py py-class docutils literal"><span class="pre">Point</span></code></a> data into a <a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PointContainer</span></code></a></p>
+<p>Constructor from an existing <a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PointContainer</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>point_container</strong> (<a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><em>PointContainer</em></a>) – container to write the points to</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="rawbinarysink">
+<h3>RawBinarySink<a class="headerlink" href="#rawbinarysink" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="catana.io.RawBinarySink">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">RawBinarySink</code><span class="sig-paren">(</span><em>self: catana.io.RawBinarySink</em>, <em>filename: str</em>, <em>verbose: bool=True</em>, <em>append: bool=False</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.RawBinarySink" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Sink to write <a class="reference internal" href="catana.html#catana.Point" title="catana.Point"><code class="xref any py py-class docutils literal"><span class="pre">Point</span></code></a> data into a CatAna binary file (float precision, spherical coordinates)</p>
+<p>Create Sink binary-file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filename</strong> (<em>str</em>) – path to file. Will be overwritten if it already exists.</li>
+<li><strong>verbose</strong> (<em>bool</em>) – output additional logging information if <code class="docutils literal"><span class="pre">True</span></code>.</li>
+<li><strong>append</strong> (<em>bool</em>) – if <code class="docutils literal"><span class="pre">True</span></code>, Points will be appended to the file. If <code class="docutils literal"><span class="pre">False</span></code>, file will be truncated.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="filters">
+<h2>Filters<a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="filter-abstract-class">
+<h3>Filter (abstract class)<a class="headerlink" href="#filter-abstract-class" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="catana.io.Filter">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">Filter</code><a class="headerlink" href="#catana.io.Filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Abstract) parent class for point-filtering implementations.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="tophatradialwindowfunctionfilter">
+<h3>TophatRadialWindowFunctionFilter<a class="headerlink" href="#tophatradialwindowfunctionfilter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="catana.io.TophatRadialWindowFunctionFilter">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">TophatRadialWindowFunctionFilter</code><span class="sig-paren">(</span><em>self: catana.io.TophatRadialWindowFunctionFilter</em>, <em>R0: float</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.TophatRadialWindowFunctionFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>TopHat Radial WindowFunction Filter</p>
+<p>Constructs a tophat filter with radius <code class="docutils literal"><span class="pre">R0</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>R0</strong> (<em>float</em>) – radius of tophat</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="catana.io.TophatRadialWindowFunctionFilter.__call__">
+<code class="descname">__call__</code><span class="sig-paren">(</span><em>self: catana.io.Filter</em>, <em>point_container: catana.basictypes.PointContainer</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#catana.io.TophatRadialWindowFunctionFilter.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply filter to a PointContainer</p>
+<p>Runs the filter on all elements in the point_container, removing filtered elements and resizing the
+container.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>point_container</strong> (<a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><em>PointContainer</em></a>) – the container on which the filter is applied.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="gaussianradialwindowfunctionfilter">
+<h3>GaussianRadialWindowFunctionFilter<a class="headerlink" href="#gaussianradialwindowfunctionfilter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="catana.io.GaussianRadialWindowFunctionFilter">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">GaussianRadialWindowFunctionFilter</code><span class="sig-paren">(</span><em>self: catana.io.GaussianRadialWindowFunctionFilter</em>, <em>R0: float</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.GaussianRadialWindowFunctionFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gaussian Radial WindowFunction Filter</p>
+<p>The acceptance probability is p = exp(-(r/R0)^2)</p>
+<p>Constructs a gaussian radial filter with scale factor R0</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>R0</strong> (<em>float</em>) – scale factor</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="catana.io.GaussianRadialWindowFunctionFilter.__call__">
+<code class="descname">__call__</code><span class="sig-paren">(</span><em>self: catana.io.Filter</em>, <em>point_container: catana.basictypes.PointContainer</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#catana.io.GaussianRadialWindowFunctionFilter.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply filter to a PointContainer</p>
+<p>Runs the filter on all elements in the point_container, removing filtered elements and resizing the
+container.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>point_container</strong> (<a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><em>PointContainer</em></a>) – the container on which the filter is applied.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="genericradialwindowfunctionfilter">
+<h3>GenericRadialWindowFunctionFilter<a class="headerlink" href="#genericradialwindowfunctionfilter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="catana.io.GenericRadialWindowFunctionFilter">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">GenericRadialWindowFunctionFilter</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#catana.io.GenericRadialWindowFunctionFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generic Radial WindowFunction Filter</p>
+<p>This filter accepts a generic function f: [0, rmax] -&gt; [0, 1] where the function value is the probability
+that the point with the given radius is accepted.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Using this functionality in Python causes many callback function which are slow. To speed up filtering
+with a generic radial probability function, use the constructor with <code class="docutils literal"><span class="pre">interpolation_points</span></code> in the
+interval [min, max].</p>
+</div>
+<p>Overloaded function.</p>
+<ol class="arabic">
+<li><p class="first">__init__(self: catana.io.GenericRadialWindowFunctionFilter, function: std::function&lt;double (double)&gt;) -&gt; None</p>
+<blockquote>
+<div><p>Constructor from a python callable</p>
+<p>This will cause callbacks which can be very slow for a large <a class="reference internal" href="#catana.io.Source" title="catana.io.Source"><code class="xref any py py-class docutils literal"><span class="pre">Source</span></code></a>!</p>
+<dl class="docutils">
+<dt>Parameters:</dt>
+<dd><p class="first last">function (callable): a function returning the acceptance probability for a given radius</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p class="first">__init__(self: catana.io.GenericRadialWindowFunctionFilter, function: std::function&lt;double (double)&gt;, interpolation_points: int, min: float, max: float) -&gt; None</p>
+<blockquote>
+<div><p>Constructor from a python callable, with interpolation</p>
+<dl class="docutils">
+<dt>Parameters:</dt>
+<dd><dl class="first last docutils">
+<dt>function (callable): a function returning the acceptance probability for a given radius. should be</dt>
+<dd><p class="first last">sufficiently smooth!</p>
+</dd>
+<dt>interpolation_points (int): number of sampling points which will be equidistantly distributed between</dt>
+<dd><p class="first last">[min, max]</p>
+</dd>
+<dt>min (float): lower-bound for interpolation range, should be smaller or equal to the shortest radius to</dt>
+<dd><p class="first last">which the filter is applied</p>
+</dd>
+<dt>max (float): upper-bound for interpolation range, should be larger or equal to the longest radius to</dt>
+<dd><p class="first last">which the filter is applied</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+</ol>
+<dl class="method">
+<dt id="catana.io.GenericRadialWindowFunctionFilter.__call__">
+<code class="descname">__call__</code><span class="sig-paren">(</span><em>self: catana.io.Filter</em>, <em>point_container: catana.basictypes.PointContainer</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#catana.io.GenericRadialWindowFunctionFilter.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply filter to a PointContainer</p>
+<p>Runs the filter on all elements in the point_container, removing filtered elements and resizing the
+container.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>point_container</strong> (<a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><em>PointContainer</em></a>) – the container on which the filter is applied.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="angularmaskfilter">
+<h3>AngularMaskFilter<a class="headerlink" href="#angularmaskfilter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="catana.io.AngularMaskFilter">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">AngularMaskFilter</code><span class="sig-paren">(</span><em>self: catana.io.AngularMaskFilter</em>, <em>mask_file: str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.AngularMaskFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>HEALPix Angular Mask Filter</p>
+<p>Uses a HEALPix map, where each pixel should be either 1 or 0, where 1 corresponds to keep the point if its
+angular coordinates are within the pixel and 0 will remove it.</p>
+<p>Constructor from a HEALPix FITS file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mask_file</strong> (<em>str</em>) – path to the HEALPix mask map.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="catana.io.AngularMaskFilter.__call__">
+<code class="descname">__call__</code><span class="sig-paren">(</span><em>self: catana.io.Filter</em>, <em>point_container: catana.basictypes.PointContainer</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#catana.io.AngularMaskFilter.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply filter to a PointContainer</p>
+<p>Runs the filter on all elements in the point_container, removing filtered elements and resizing the
+container.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>point_container</strong> (<a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><em>PointContainer</em></a>) – the container on which the filter is applied.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="filterstream">
+<h2>FilterStream<a class="headerlink" href="#filterstream" title="Permalink to this headline">¶</a></h2>
+<p>To combine a Source -&gt; Filter -&gt; Sink together, we can use a FilterStream</p>
+<dl class="class">
+<dt id="catana.io.FilterStream">
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">FilterStream</code><span class="sig-paren">(</span><em>self: catana.io.FilterStream</em>, <em>source: catana.io.Source</em>, <em>sink: catana.io.Sink</em>, <em>buffer_size: int=1000000</em>, <em>verbose: bool=True</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.FilterStream" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Stream which connects a <a class="reference internal" href="#catana.io.Source" title="catana.io.Source"><code class="xref any py py-class docutils literal"><span class="pre">Source</span></code></a> to a <a class="reference internal" href="#catana.io.Sink" title="catana.io.Sink"><code class="xref any py py-class docutils literal"><span class="pre">Sink</span></code></a> and applies filters (<a class="reference internal" href="#catana.io.Filter" title="catana.io.Filter"><code class="xref any py py-class docutils literal"><span class="pre">Filter</span></code></a>).</p>
+<p>The FilterStream class is used to move points (<a class="reference internal" href="catana.html#catana.Point" title="catana.Point"><code class="xref any py py-class docutils literal"><span class="pre">Point</span></code></a>) from the source to the sink while applying (multiple) filters
+and buffering the stream to speed up the transfer. Sources, Sinks and Filters can be any objects derrived from
+the <a class="reference internal" href="#catana.io.Source" title="catana.io.Source"><code class="xref any py py-class docutils literal"><span class="pre">Source</span></code></a> , <a class="reference internal" href="#catana.io.Sink" title="catana.io.Sink"><code class="xref any py py-class docutils literal"><span class="pre">Sink</span></code></a> and <a class="reference internal" href="#catana.io.Filter" title="catana.io.Filter"><code class="xref any py py-class docutils literal"><span class="pre">Filter</span></code></a> parent classes.</p>
+<p>Constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>source</strong> (<a class="reference internal" href="#catana.io.Source" title="catana.io.Source"><em>Source</em></a>) – from where the points will be read</li>
+<li><strong>sink</strong> (<a class="reference internal" href="#catana.io.Sink" title="catana.io.Sink"><em>Sink</em></a>) – to where the filtered points are stored</li>
+<li><strong>buffer_size</strong> (<em>int</em>) – size of the buffer (in number of points). Faster if larger, but consumes more memroy.</li>
+<li><strong>verbose</strong> (<em>bool</em>) – if <code class="docutils literal"><span class="pre">True</span></code>, print additional logging information to stdout</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="catana.io.FilterStream.add_filter">
+<code class="descname">add_filter</code><span class="sig-paren">(</span><em>self: catana.io.FilterStream</em>, <em>filter: catana.io.Filter</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.FilterStream.add_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a Filter to the pipeline.</p>
+<p>Filters will be applied sequentially in the order that they were added to the FilterStream.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filter</strong> (<a class="reference internal" href="#catana.io.Filter" title="catana.io.Filter"><em>Filter</em></a>) – A radial or angular Filter instance</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.io.FilterStream.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>self: catana.io.FilterStream</em>, <em>subsample_size: int=0</em>, <em>temp_filename: str='tmp.bin'</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#catana.io.FilterStream.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the pipeline</p>
+<p>If the number of points should be reduced, set <code class="docutils literal"><span class="pre">subsample_size</span></code> to the desired value. If
+<code class="docutils literal"><span class="pre">subsample_size&gt;0</span></code> the process will turn into a 2-step process, where in the first step all the filters will
+be applied and the filtered points will be stored in a temporary file. In the second step the remaining points
+in the temporary file will be randomly subsampled and stored to the sink.</p>
+<p>The 2 steps can also be executed manually, using the <a class="reference internal" href="#catana.io.FilterStream.run_totemp" title="catana.io.FilterStream.run_totemp"><code class="xref any py py-meth docutils literal"><span class="pre">run_totemp</span></code></a> and <a class="reference internal" href="#catana.io.FilterStream.run_fromtemp" title="catana.io.FilterStream.run_fromtemp"><code class="xref any py py-meth docutils literal"><span class="pre">run_fromtemp</span></code></a> functions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>subsample_size</strong> (<em>int</em>) – number of points to randomly subsample. Set <code class="docutils literal"><span class="pre">subsample_size=0</span></code> to turn off
+subsampling.</li>
+<li><strong>temp_filename</strong> (<em>str</em>) – path to the temporary file (used only for subsampling)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>int</em> – number of points written to the sink</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.io.FilterStream.run_fromtemp">
+<code class="descname">run_fromtemp</code><span class="sig-paren">(</span><em>self: catana.io.FilterStream</em>, <em>temp_filename: str='tmp.bin'</em>, <em>subsample_size: int=0</em>, <em>remove_temp: bool=True</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#catana.io.FilterStream.run_fromtemp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run second intermediate step: write temporary file to sink (with subsampling)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>temp_filename</strong> (<em>str</em>) – path to the temporary file (from previous step)</li>
+<li><strong>subsample_size</strong> (<em>int</em>) – number of points to randomly subsample. Set to 0 to turn off subsampling</li>
+<li><strong>remove_temp</strong> (<em>bool</em>) – If <code class="docutils literal"><span class="pre">True</span></code> the temporary file will be deleted once it is read.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>int</em> – number of points written to the sink</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.io.FilterStream.run_totemp">
+<code class="descname">run_totemp</code><span class="sig-paren">(</span><em>self: catana.io.FilterStream</em>, <em>temp_filename: str='tmp.bin'</em>, <em>append: bool=True</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#catana.io.FilterStream.run_totemp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run first intermediate step: write source to temporary file, apply filters</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>temp_filename</strong> (<em>str</em>) – path to the temporary file</li>
+<li><strong>append</strong> (<em>bool</em>) – if <code class="docutils literal"><span class="pre">True</span></code>, points will be appended to the end of the file. Else the temporary file will
+be overwritten.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>int</em> – number of points written to the temporary file</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.io.FilterStream.set_source">
+<code class="descname">set_source</code><span class="sig-paren">(</span><em>self: catana.io.FilterStream</em>, <em>source: catana.io.Source</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.FilterStream.set_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the source to a new source</p>
+<p>Can be used to read from multiple sources to the same sink. To do that, use the <code class="docutils literal"><span class="pre">run_totemp</span></code> function with
+<code class="docutils literal"><span class="pre">append=True</span></code> instead of the <a class="reference internal" href="#catana.io.FilterStream.run" title="catana.io.FilterStream.run"><code class="xref any py py-meth docutils literal"><span class="pre">run</span></code></a> method (for all sources). Then call the <code class="docutils literal"><span class="pre">run_fromtemp</span></code> function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>source</strong> (<a class="reference internal" href="#catana.io.Source" title="catana.io.Source"><em>Source</em></a>) – a source instance</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="catana_misc.html" class="btn btn-neutral float-right" title="Miscellaneous" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="catana_decomp.html" class="btn btn-neutral" title="Decomposition Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Michael Buehlmann.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'2.0a2+41.gdb4bd3e',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

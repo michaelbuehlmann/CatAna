@@ -1,0 +1,288 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Besseltools (C++) &mdash; CatAna 2.0a2+41.gdb4bd3e documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CatAna 2.0a2+41.gdb4bd3e documentation" href="../index.html"/>
+        <link rel="next" title="SFB Decomposition (C++)" href="catana_cpp_decomp.html"/>
+        <link rel="prev" title="Points and Containers (C++)" href="catana_cpp.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CatAna
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0a2+41.gdb4bd3e
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Installation and Basic Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">CatAna’s documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../catana_install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../catana_usage.html">Basic Usage</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Python Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana.html">Points and Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana_besseltools.html">Besseltools Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana_decomp.html">Decomposition Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana_io.html">Input/Output Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python/catana_misc.html">Miscellaneous</a></li>
+</ul>
+<p class="caption"><span class="caption-text">C++ Library Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="catana_cpp.html">Points and Containers (C++)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Besseltools (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_cpp_decomp.html">SFB Decomposition (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_cpp_io.html">Input / Output (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_cpp_misc.html">Miscellaneous (C++)</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CatAna</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Besseltools (C++)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cpp/catana_cpp_besseltools.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="besseltools-c">
+<h1>Besseltools (C++)<a class="headerlink" href="#besseltools-c" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_CPPv2N6catana11besseltools20SphericalBesselZerosE">
+<span id="catana::besseltools::SphericalBesselZeros"></span><span class="target" id="classcatana_1_1besseltools_1_1SphericalBesselZeros"></span><em class="property">class </em><code class="descclassname">catana::besseltools::</code><code class="descname">SphericalBesselZeros</code><a class="headerlink" href="#_CPPv2N6catana11besseltools20SphericalBesselZerosE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv2N6catana11besseltools20SphericalBesselZeros20SphericalBesselZerosEj">
+<span id="catana::besseltools::SphericalBesselZeros::SphericalBesselZeros__unsigned-i"></span><span class="target" id="classcatana_1_1besseltools_1_1SphericalBesselZeros_1ae752f37ddf6856a47d4d17cf33b832a4"></span><code class="descname">SphericalBesselZeros</code><span class="sig-paren">(</span>unsigned int <em>l</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana11besseltools20SphericalBesselZeros20SphericalBesselZerosEj" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana11besseltools20SphericalBesselZerosixEj">
+<span id="catana::besseltools::SphericalBesselZeros::subscript-operator__unsigned-i"></span><span class="target" id="classcatana_1_1besseltools_1_1SphericalBesselZeros_1acf271f04073753d359bbd5cde2e30dcc"></span>double <code class="descname">operator[]</code><span class="sig-paren">(</span>unsigned int <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana11besseltools20SphericalBesselZerosixEj" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana11besseltools20SphericalBesselZeros13compute_up_toEd">
+<span id="catana::besseltools::SphericalBesselZeros::compute_up_to__double"></span><span class="target" id="classcatana_1_1besseltools_1_1SphericalBesselZeros_1afc5d020d211d67eef89649ab3aedafee"></span>void <code class="descname">compute_up_to</code><span class="sig-paren">(</span>double <em>z_max</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana11besseltools20SphericalBesselZeros13compute_up_toEd" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana11besseltools20SphericalBesselZeros9next_zeroEd">
+<span id="catana::besseltools::SphericalBesselZeros::next_zero__double"></span><span class="target" id="classcatana_1_1besseltools_1_1SphericalBesselZeros_1a96e6ee8b15846e7ea23e598436daf3e9"></span>unsigned int <code class="descname">next_zero</code><span class="sig-paren">(</span>double <em>z</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana11besseltools20SphericalBesselZeros9next_zeroEd" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana11besseltools25double_sbessel_integratorENSt8functionIFddEEERKjRKddd">
+<span class="target" id="namespacecatana_1_1besseltools_1a6d5d26bcc43821a3de8397312197425c"></span>double <code class="descclassname">catana::besseltools::</code><code class="descname">double_sbessel_integrator</code><span class="sig-paren">(</span>std::function&lt;double<span class="sig-paren">(</span>double<span class="sig-paren">)</span>&gt; <em>f</em>, <em class="property">const</em> unsigned int &amp;<em>l</em>, <em class="property">const</em> double &amp;<em>Rmax</em>, double <em>k1</em>, double <em>k2</em>, <span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana11besseltools25double_sbessel_integratorENSt8functionIFddEEERKjRKddd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Computes the integral over f(r)*j_l(k1*r)*j_l(k2*r) between [0,Rmax]. </p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="catana_cpp_decomp.html" class="btn btn-neutral float-right" title="SFB Decomposition (C++)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="catana_cpp.html" class="btn btn-neutral" title="Points and Containers (C++)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Michael Buehlmann.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'2.0a2+41.gdb4bd3e',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

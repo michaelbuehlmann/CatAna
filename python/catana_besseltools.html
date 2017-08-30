@@ -1,0 +1,359 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Besseltools Module &mdash; CatAna 2.0a2+41.gdb4bd3e documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CatAna 2.0a2+41.gdb4bd3e documentation" href="../index.html"/>
+        <link rel="next" title="Decomposition Module" href="catana_decomp.html"/>
+        <link rel="prev" title="Points and Containers" href="catana.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CatAna
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0a2+41.gdb4bd3e
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Installation and Basic Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">CatAna’s documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../catana_install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../catana_usage.html">Basic Usage</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Python Package Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="catana.html">Points and Containers</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Besseltools Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sphericalbesselzeros">SphericalBesselZeros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#spherical-bessel-integrator">Spherical Bessel Integrator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="catana_decomp.html">Decomposition Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_io.html">Input/Output Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catana_misc.html">Miscellaneous</a></li>
+</ul>
+<p class="caption"><span class="caption-text">C++ Library Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp.html">Points and Containers (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_besseltools.html">Besseltools (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_decomp.html">SFB Decomposition (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_io.html">Input / Output (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/catana_cpp_misc.html">Miscellaneous (C++)</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CatAna</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Besseltools Module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/python/catana_besseltools.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="besseltools-module">
+<h1>Besseltools Module<a class="headerlink" href="#besseltools-module" title="Permalink to this headline">¶</a></h1>
+<p>python binding to besseltools library (part of CatAna)</p>
+<span class="target" id="module-catana.besseltools"></span><div class="section" id="sphericalbesselzeros">
+<h2>SphericalBesselZeros<a class="headerlink" href="#sphericalbesselzeros" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="catana.besseltools.SphericalBesselZeros">
+<em class="property">class </em><code class="descclassname">catana.besseltools.</code><code class="descname">SphericalBesselZeros</code><span class="sig-paren">(</span><em>self: catana.besseltools.SphericalBesselZeros</em>, <em>l: int</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.besseltools.SphericalBesselZeros" title="Permalink to this definition">¶</a></dt>
+<dd><p>A root generator for spherical Bessel functions.</p>
+<p>The class is initialized for a specific multipole l. The zeros are computed iteratively and the results
+are stored so that they only have to be computed once. I.e if the n-th zero is requested and it has not
+been computed before, start at the highest computed zero and compute all zeros up to the n-th.</p>
+<p>Constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>l</strong> (<em>int</em>) – multipole of the spherical Bessel function</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="catana.besseltools.SphericalBesselZeros.__getitem__">
+<code class="descname">__getitem__</code><span class="sig-paren">(</span><em>self: catana.besseltools.SphericalBesselZeros</em>, <em>n: int</em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#catana.besseltools.SphericalBesselZeros.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>return n-th zero</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>int</em>) – index of zero crossing</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>float</em> – n-th root of the spherical Bessel function with multipole l</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="catana.besseltools.SphericalBesselZeros.compute_up_to">
+<code class="descname">compute_up_to</code><span class="sig-paren">(</span><em>self: catana.besseltools.SphericalBesselZeros</em>, <em>n: float</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.besseltools.SphericalBesselZeros.compute_up_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>precompute first n zeros</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>int</em>) – number of zeros to compute</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="spherical-bessel-integrator">
+<h2>Spherical Bessel Integrator<a class="headerlink" href="#spherical-bessel-integrator" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="catana.besseltools.double_sbessel_integrator">
+<code class="descclassname">catana.besseltools.</code><code class="descname">double_sbessel_integrator</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#catana.besseltools.double_sbessel_integrator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li>double_sbessel_integrator(w: Callable[[float], float], l: int, r_max: float, k1: numpy.ndarray[float64], k2: numpy.ndarray[float64]) -&gt; object</li>
+</ol>
+<p>Compute an integral containing 2 spherical Bessel functions with the same multipole.</p>
+<p>Computes <span class="math">\(\int_0^{r_{max}} \; w(r) \; j_l(k_1 r) \; j_l(k_2 r) \;\; dr\)</span></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>w</strong> (<em>callable</em>) – function to integrate (see equation)</li>
+<li><strong>l</strong> (<em>int</em>) – multipole of the spherical Bessel functions</li>
+<li><strong>r_max</strong> (<em>float</em>) – upper boundary of integration</li>
+<li><strong>k1</strong> (<em>float</em>) – frequency of one spherical Bessel function</li>
+<li><strong>k2</strong> (<em>float</em>) – frequency of other spherical Bessel function</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<ol class="arabic simple" start="2">
+<li>double_sbessel_integrator(w: catana.basictypes.FunctionInterpolator, l: int, r_max: float, k1: numpy.ndarray[float64], k2: numpy.ndarray[float64]) -&gt; object</li>
+</ol>
+<p>Compute an integral containing 2 spherical Bessel functions with the same multipole, using a <a class="reference internal" href="catana_misc.html#catana.FunctionInterpolator" title="catana.FunctionInterpolator"><code class="xref any py py-class docutils literal"><span class="pre">FunctionInterpolator</span></code></a></p>
+<p>Computes <span class="math">\(\int_0^{r_{max}} \; w(r) \; j_l(k_1 r) \; j_l(k_2 r) \;\; dr\)</span></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fi</strong> (<a class="reference internal" href="catana_misc.html#catana.FunctionInterpolator" title="catana.FunctionInterpolator"><em>FunctionInterpolator</em></a>) – function to integrate (see equation, fi(r) is an interpolator of w(r))</li>
+<li><strong>l</strong> (<em>int</em>) – multipole of the spherical Bessel functions</li>
+<li><strong>r_max</strong> (<em>float</em>) – upper boundary of integration</li>
+<li><strong>k1</strong> (<em>float</em>) – frequency of one spherical Bessel function</li>
+<li><strong>k2</strong> (<em>float</em>) – frequency of other spherical Bessel function</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="catana_decomp.html" class="btn btn-neutral float-right" title="Decomposition Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="catana.html" class="btn btn-neutral" title="Points and Containers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Michael Buehlmann.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'2.0a2+41.gdb4bd3e',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
