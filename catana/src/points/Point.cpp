@@ -10,11 +10,11 @@ namespace catana {
   }
 
   Point point_from_box_position(const double& pos_x, const double& pos_y, const double& pos_z,
-                                const double& boxsize, const double& hubble_param) {
+                                const double& shift, const double& hubble_param) {
     Point obj(
-        (pos_x - 0.5 * boxsize),
-        (pos_y - 0.5 * boxsize),
-        (pos_z - 0.5 * boxsize)
+        (pos_x + shift),
+        (pos_y + shift),
+        (pos_z + shift)
     );
     obj.r /= hubble_param;
     return obj;

@@ -43,7 +43,7 @@ TEST_CASE ("testing SFB raw method") {
   // Compare with Python
   auto python_cln = read_python_cln(lmax, nmax);
 
-  KClkk kclkk = _sfb_raw(point_container, lmax, nmax, 2500, 5535184878.03, false, false, false, false);
+  KClkk kclkk = _sfb_raw(point_container, lmax, nmax, 2500, false, false, false, false);
   kclkk.savetxt("sfb_raw");
 
   for(int l = 0; l < lmax; ++l) {
@@ -53,7 +53,7 @@ TEST_CASE ("testing SFB raw method") {
   }
 
   // With interpolation
-  kclkk = _sfb_raw(point_container, lmax, nmax, 2500, 5535184878.03, false, false, false, true);
+  kclkk = _sfb_raw(point_container, lmax, nmax, 2500, false, false, false, true);
   kclkk.savetxt("sfb_raw_inter");
 
   for(int l = 0; l < lmax; ++l) {
@@ -78,7 +78,7 @@ TEST_CASE ("testing SFB raw method with parallelization") {
   auto python_cln = read_python_cln(lmax, nmax);
 
 
-  KClkk kclkk = _sfb_raw(point_container, lmax, nmax, 2500, 5535184878.03, false, false, true, false);
+  KClkk kclkk = _sfb_raw(point_container, lmax, nmax, 2500, false, false, true, false);
   kclkk.savetxt("sfb_raw_p");
 
   for(int l = 0; l < lmax; ++l) {
@@ -87,7 +87,7 @@ TEST_CASE ("testing SFB raw method with parallelization") {
     }
   }
 
-  kclkk = _sfb_raw(point_container, lmax, nmax, 2500, 5535184878.03, false, false, true, true);
+  kclkk = _sfb_raw(point_container, lmax, nmax, 2500, false, false, true, true);
   kclkk.savetxt("sfb_raw_p_inter");
 
   for(int l = 0; l < lmax; ++l) {
@@ -113,7 +113,7 @@ TEST_CASE ("testing SFB reverse method") {
   // Compare with Python
   auto python_cln = read_python_cln(lmax, nmax);
 
-  KClkk kclkk = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, false, false);
+  KClkk kclkk = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, false, false, false, false);
   kclkk.savetxt("sfb_reverse");
 
   for(int l = 0; l < lmax; ++l) {
@@ -122,7 +122,7 @@ TEST_CASE ("testing SFB reverse method") {
     }
   }
 
-  kclkk = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, false, true);
+  kclkk = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, false, false, false, true);
   kclkk.savetxt("sfb_reverse_inter");
 
   for(int l = 0; l < lmax; ++l) {
@@ -147,7 +147,7 @@ TEST_CASE ("testing SFB reverse method with parallelization") {
   // Compare with Python
   auto python_cln = read_python_cln(lmax, nmax);
 
-  KClkk kclkk = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, true, false);
+  KClkk kclkk = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, false, false, true, false);
   kclkk.savetxt("sfb_reverse_p");
 
   for(int l = 0; l < lmax; ++l) {
@@ -156,7 +156,7 @@ TEST_CASE ("testing SFB reverse method with parallelization") {
     }
   }
 
-  kclkk = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, true, true);
+  kclkk = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, false, false, true, true);
   kclkk.savetxt("sfb_reverse_p_inter");
 
   for(int l = 0; l < lmax; ++l) {
@@ -181,7 +181,7 @@ TEST_CASE ("testing SFB pixelized method") {
   // Compare with Python
   auto python_cln = read_python_cln(lmax, nmax);
 
-  KClkk kclkk = _sfb_reverse_fft(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, false, false);
+  KClkk kclkk = _sfb_reverse_fft(pix_obj_cont, lmax, nmax, 2500, false, false, false, false);
   kclkk.savetxt("sfb_reverse_fft");
 
   for(int l = 0; l < lmax; ++l) {
@@ -190,7 +190,7 @@ TEST_CASE ("testing SFB pixelized method") {
     }
   }
 
-  kclkk = _sfb_reverse_fft(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, false, true);
+  kclkk = _sfb_reverse_fft(pix_obj_cont, lmax, nmax, 2500, false, false, false, true);
   kclkk.savetxt("sfb_reverse_fft_inter");
 
   for(int l = 0; l < lmax; ++l) {
@@ -215,7 +215,7 @@ TEST_CASE ("testing SFB pixelized method with parallelization") {
   // Compare with Python
   auto python_cln = read_python_cln(lmax, nmax);
 
-  KClkk kclkk = _sfb_reverse_fft(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, true, false);
+  KClkk kclkk = _sfb_reverse_fft(pix_obj_cont, lmax, nmax, 2500, false, false, true, false);
   kclkk.savetxt("sfb_reverse_fft_p");
 
   for(int l = 0; l < lmax; ++l) {
@@ -224,7 +224,7 @@ TEST_CASE ("testing SFB pixelized method with parallelization") {
     }
   }
 
-  kclkk = _sfb_reverse_fft(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, false, false, true, true);
+  kclkk = _sfb_reverse_fft(pix_obj_cont, lmax, nmax, 2500, false, false, true, true);
   kclkk.savetxt("sfb_reverse_fft_p_inter");
 
   for(int l = 0; l < lmax; ++l) {
@@ -256,11 +256,11 @@ TEST_CASE ("testing SFB f_lmn computation") {
   int lmax = 10;
   int nmax = 10;
 
-  auto kclkk_raw = _sfb_raw(point_container, lmax, nmax, 2500, 5535184878.03, true, false, true, true);
+  auto kclkk_raw = _sfb_raw(point_container, lmax, nmax, 2500, true, false, true, true);
       REQUIRE(lmax == kclkk_raw.f_lmn.size());
-  auto kclkk_rev = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, true, false, true, true);
+  auto kclkk_rev = _sfb_reverse(pix_obj_cont, lmax, nmax, 2500, true, false, true, true);
       REQUIRE(lmax == kclkk_rev.f_lmn.size());
-  auto kclkk_rev_fft = _sfb_reverse_fft(pix_obj_cont, lmax, nmax, 2500, 5535184878.03, true, false, true, true);
+  auto kclkk_rev_fft = _sfb_reverse_fft(pix_obj_cont, lmax, nmax, 2500, true, false, true, true);
       REQUIRE(lmax == kclkk_rev_fft.f_lmn.size());
 
   for(int l = 0; l < lmax; ++l) {

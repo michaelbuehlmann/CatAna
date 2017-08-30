@@ -24,28 +24,28 @@ namespace catana {
    * @param pos_x x-coordinate in [0, boxsize]
    * @param pos_y y-coordinate in [0, boxsize]
    * @param pos_z z-coordinate in [0, boxsize]
-   * @param boxsize will be used to shift origin to center of the box (i.e. coordinates will be transformed x ->
-   * x-box_size/2.). If origin already located at center of box, set box_size=0.
+   * @param shift will be used to shift origin to center of the box (i.e. coordinates will be transformed x ->
+   * x+shift). If origin already located at center of box, set shift=0.
    * @param hubble_param The Hubble parameter h which will be used to convert Mpc/h -> Mpc. If coordinates are already
    * in Mpc, set h=1.
    */
   Point point_from_box_position(const double& pos_x, const double& pos_y, const double& pos_z,
-                                const double& boxsize = 0, const double& hubble_param = 1);
+                                const double& shift = 0, const double& hubble_param = 1);
 
 
   //! Create Point from box coordinates (coordinates in [0, boxsize]). Change coordinates from Mpc/h to Mpc.
   /*!
    * @tparam FLOAT_TYPE the floating point type of the pos_xyz array (float or double)
    * @param pos_xyz pointer to C-array of type FLOAT_TYPE with size 3, containing the x, y, z coordinates
-   * @param boxsize will be used to shift origin to center of the box (i.e. coordinates will be transformed x ->
-   * x-box_size/2.). If origin already located at center of box, set box_size=0.
+   * @param shift will be used to shift origin to center of the box (i.e. coordinates will be transformed x ->
+   * x+shift). If origin already located at center of box, set shift=0.
    * @param hubble_param The Hubble parameter h which will be used to convert Mpc/h -> Mpc. If coordinates are already
    * in Mpc, set h=1.
    */
   template<class FLOAT_TYPE>
-  Point point_from_box_position(const FLOAT_TYPE *pos_xyz, const double& boxsize = 0,
+  Point point_from_box_position(const FLOAT_TYPE *pos_xyz, const double& shift = 0,
                                   const double& hubble_param = 1) {
-    return point_from_box_position(pos_xyz[0], pos_xyz[1], pos_xyz[2], boxsize, hubble_param);
+    return point_from_box_position(pos_xyz[0], pos_xyz[1], pos_xyz[2], shift, hubble_param);
   }
 
 

@@ -7,7 +7,7 @@
 
 namespace catana { namespace io {
 
-  //! Parent class Filter for filtering data of type Point class.
+  //! Parent class Filter for filtering data of type Point.
   /*!
    * Child classes need to implement bool filter(Point&), which returns true if
    * point passes filtering and false if it needs to be removed.

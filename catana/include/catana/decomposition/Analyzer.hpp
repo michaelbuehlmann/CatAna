@@ -16,7 +16,7 @@ namespace catana {
     Analyzer() = default;
 
     //! Construct from a child class of source and a window volume for normalization
-    Analyzer(io::Source *source, double window_volume);
+    Analyzer(io::Source *source);
 
     //! Reset source
     void set_source(io::Source *source);
@@ -38,7 +38,6 @@ namespace catana {
   private:
     io::Source *source;
     std::vector<io::Filter *> filters;
-    double window_volume;
     unsigned int subsample_size = 0;
   };
 
