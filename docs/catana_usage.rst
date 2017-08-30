@@ -183,4 +183,17 @@ additional functionality to filter `PointContainers <PointContainer>` which are 
 
 .. code-block:: python
 
-   # Add example
+   # Angular mask from HEALPix map
+   mask = np.zeros(12)
+   mask[3] = 1
+   filt_mask = catana.io.AngularMaskFilter(mask)
+   filt_mask(point_container_2)
+
+   pixelized_point_container_2 = catana.PixelizedPointContainer(64, point_container_2)
+   hp.mollview(pixelized_point_container_2.get_countmap())
+
+.. image:: figures/countmap_angmask.png
+
+.. note::
+
+   For more filters, take a look at :ref:`filters`.

@@ -2,6 +2,7 @@
 #include <catana/tools/random.hpp>
 
 #include <pybind11/pybind11.h>
+#include <pybind11/eigen.h>
 
 
 namespace py = pybind11;
@@ -313,11 +314,17 @@ PYBIND11_PLUGIN(io) {
           angular coordinates are within the pixel and 0 will remove it.
       )pbdoc")
       .def(py::init<std::string>(), R"pbdoc(
-          Constructor from a HEALPix FITS file
+Constructor from a HEALPix FITS file
 
-          Parameters:
-              mask_file (str): path to the HEALPix mask map.
-      )pbdoc", py::arg("mask_file"));
+Parameters:
+    mask_file (str): path to the HEALPix mask map.
+      )pbdoc", py::arg("mask_file"))
+      .def(py::init<const Eigen::ArrayXf&>(), R"pbdoc(
+Constructor from a HEALPix map array
+
+Parameters:
+    map (numpy.ndarray[float32]): valid HEALPix map, in RING format, containing only 1 and 0 pixel values
+      )pbdoc", py::arg("map"));
 
 
   // FilterStream

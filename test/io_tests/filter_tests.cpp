@@ -28,9 +28,9 @@ TEST_CASE ("testing tophat filter") {
 
   io::TophatRadialWindowFunctionFilter filter(1.);
   filter(point_container);
-      CHECK(2 == point_container.size());
-      CHECK(doctest::Approx(0.8) == point_container[0].r);
-      CHECK(doctest::Approx(0.8660254038) == point_container[1].r);
+  CHECK(2 == point_container.size());
+  CHECK(doctest::Approx(0.8) == point_container[0].r);
+  CHECK(doctest::Approx(0.8660254038) == point_container[1].r);
 }
 
 TEST_CASE ("testing gaussian filter") {
@@ -43,20 +43,20 @@ TEST_CASE ("testing gaussian filter") {
   for(size_t i = 0; i < N; ++i) {
     point_container.push_back(Point(dist(rng), dist(rng), dist(rng)));
   }
-      REQUIRE(N_exp == point_container.size());
+  REQUIRE(N_exp == point_container.size());
 
   io::TophatRadialWindowFunctionFilter filter_tophat(1000.);
   filter_tophat(point_container);
 
   N_exp *= 0.5235987756;
-      CHECK(point_container.size() == doctest::Approx(N_exp).epsilon(0.1 * N_exp));
+  CHECK(point_container.size() == doctest::Approx(N_exp).epsilon(0.1 * N_exp));
 
   float R0(100.f);
   io::GaussianRadialWindowFunctionFilter filter_gauss(R0);
   filter_gauss(point_container);
 
   N_exp *= 0.001329340388;
-      CHECK(point_container.size() == doctest::Approx(N_exp).epsilon(0.1 * N_exp));
+  CHECK(point_container.size() == doctest::Approx(N_exp).epsilon(0.1 * N_exp));
 }
 
 TEST_CASE ("testing interpolated gaussian filter") {
@@ -69,38 +69,55 @@ TEST_CASE ("testing interpolated gaussian filter") {
   for(size_t i = 0; i < N; ++i) {
     point_container.push_back(Point(dist(rng), dist(rng), dist(rng)));
   }
-      REQUIRE(N_exp == point_container.size());
+  REQUIRE(N_exp == point_container.size());
 
   io::TophatRadialWindowFunctionFilter filter_tophat(1000.f);
   filter_tophat(point_container);
 
   N_exp *= 0.5235987756;
-      CHECK(point_container.size() == doctest::Approx(N_exp).epsilon(0.1 * N_exp));
+  CHECK(point_container.size() == doctest::Approx(N_exp).epsilon(0.1 * N_exp));
 
   auto window_function = [](double r) { return std::exp(-std::pow(r / 100., 2)); };
   io::GenericRadialWindowFunctionFilter filter_gauss(window_function, 10000, 0, 1000.);
   filter_gauss(point_container);
 
   N_exp *= 0.001329340388;
-      CHECK(point_container.size() == doctest::Approx(N_exp).epsilon(0.1 * N_exp));
+  CHECK(point_container.size() == doctest::Approx(N_exp).epsilon(0.1 * N_exp));
 }
 
 
-TEST_CASE ("testing angular mask filter") {
+TEST_CASE ("testing angular mask filter (from file)") {
   PointContainer point_container;
   point_container.push_back(point_from_spherical_position(1, 0, -1));  // should be accepted
   point_container.push_back(point_from_spherical_position(1, 0, 1));  // should be removed
 
-
-
   // Map is true almost everywhere, false in the region around (theta=0, phi=1)
   std::string filename = "testmap.fits";
-
   io::AngularMaskFilter filter(test_data_dir + filename);
 
   filter(point_container);
-      REQUIRE(1 == point_container.size());
-      CHECK(doctest::Approx(-1.) == point_container[0].p.phi);
+  REQUIRE(1 == point_container.size());
+  CHECK(doctest::Approx(-1.) == point_container[0].p.phi);
+}
+
+TEST_CASE ("testing angular mask filter (wrong map size)") {
+  Eigen::ArrayXf mask = Eigen::ArrayXf::Zero(200);
+  REQUIRE_THROWS(io::AngularMaskFilter filter(mask));
+}
+
+TEST_CASE ("testing angular mask filter (from array)") {
+  PointContainer point_container;
+  point_container.push_back(point_from_spherical_position(1, 0, -1));  // should be accepted
+  point_container.push_back(point_from_spherical_position(1, 0, 1));  // should be removed
+
+  // Map is true almost everywhere, false in the region around (theta=0, phi=1)
+  Eigen::ArrayXf mask(12);
+  mask << 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1;
+  io::AngularMaskFilter filter(mask);
+
+  filter(point_container);
+  REQUIRE(1 == point_container.size());
+  CHECK(doctest::Approx(-1.) == point_container[0].p.phi);
 }
 
 TEST_SUITE_END();

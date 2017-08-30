@@ -3,6 +3,7 @@
 
 #include "../Filter.hpp"
 #include <healpix_map.h>
+#include <Eigen/Dense>
 
 
 namespace catana { namespace io {
@@ -19,9 +20,14 @@ namespace catana { namespace io {
      * @param healpix_mask valid HEALPix FITS file, in RING format, with pixel values 1 (passes filter)
      * and 0 (remove points)
      */
-    AngularMaskFilter(std::string healpix_mask);
+    explicit AngularMaskFilter(std::string healpix_mask);
 
-    // TODO: Add constructor from a vector / eigen array
+    //! Construct from HEALPix map array
+    /*!
+     * @param healpix_map valid HEALPix map, in RING format, with pixel values 1 (passes filter)
+     * and 0 (remove points)
+     */
+    AngularMaskFilter(const Eigen::ArrayXf& healpix_map);
 
     //! Filtering function on Point. Returns true if point passes filter, false otherwise.
     bool filter(Point& point) override;
