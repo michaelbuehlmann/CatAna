@@ -162,6 +162,25 @@ take a look at `catana.io`.
 Filtering Data
 --------------
 
+Masking and removing points prior to decomposition can be done directly on the data array. CatAna provides some
+additional functionality to filter `PointContainers <PointContainer>` which are illustrated below.
+
 .. code-block:: python
 
-   # (Code snippet to be added...)
+   # Gaussian Filter with scale factor 20
+   gaussian_filter = catana.io.GaussianRadialWindowFunctionFilter(50)
+
+   # Apply to our point_container
+   gaussian_filter(point_container_2)
+
+   # Plot point radii histogram normalized by the surface at the given radii
+   radii = np.array(point_container_2)[:,0]
+   fig, ax = plt.subplots(1, 1, figsize=(6,4))
+   ax.hist(radii, weights=1/radii**2, bins=20, normed=True)
+   ax.set(yticks=[], xlabel='r')
+
+.. image:: figures/gaussian_filter_hist.png
+
+.. code-block:: python
+
+   # Add example
