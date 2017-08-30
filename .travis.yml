@@ -67,6 +67,7 @@ jobs:
     - stage: deploy
       script: skip
       before_deploy:
+        - deactivate
         - pip install --upgrade setuptools wheel twine
         - pwd
         - ls
