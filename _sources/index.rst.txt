@@ -8,6 +8,8 @@
    Catalog Analyzer: A library for Spherical Fourier Bessel (SFB) Decomposition
 
 
+The code is hosted on `GitHub <https://github.com/michaelbuehlmann/CatAna>`_
+
 CatAna's documentation
 ======================
 
