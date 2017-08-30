@@ -3,7 +3,6 @@ PROJECT_NAME = CatAna
 INPUT += ../catana/include
 
 FILE_PATTERNS = *.cpp *.hpp
-FILTER_PATTERNS = *.py=@CMAKE_CURRENT_SOURCE_DIR@/py_filter
 
 BUILTIN_STL_SUPPORT = YES
 RECURSIVE = YES

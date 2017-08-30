@@ -25,6 +25,7 @@ addons:
       - libcfitsio3-dev
       - python3.5
       - python3.5-dev
+      - doxygen
 
 before_install:
   - python3 -m venv .venv
@@ -54,15 +55,14 @@ jobs:
       script:
         - set -e
         - export CC=gcc-6 && export CXX=g++-6
-        - pip install doctr sphinx sphinx_rtd_theme
+        - pip install doctr sphinx sphinx_rtd_theme breathe
         - pip install -vvv .
         - cd docs
+        - doxygen Doxyfile
         - make html
         - cd ..
         - doctr deploy . --built-docs docs/_build/html --no-require-master
         # TODO: remove no-require-master
-#      after_success:
-#        ./docs/make_and_deploy_docs.sh
 
     - stage: deploy
       script: skip
