@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Input / Output (C++) &mdash; CatAna 2.0a2+41.gdb4bd3e documentation</title>
+  <title>Input / Output (C++) &mdash; CatAna 2.0.0a3 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="CatAna 2.0a2+41.gdb4bd3e documentation" href="../index.html"/>
+    <link rel="top" title="CatAna 2.0.0a3 documentation" href="../index.html"/>
         <link rel="next" title="Miscellaneous (C++)" href="catana_cpp_misc.html"/>
         <link rel="prev" title="SFB Decomposition (C++)" href="catana_cpp_decomp.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                2.0a2+41.gdb4bd3e
+                2.0.0a3
               </div>
             
           
@@ -579,8 +579,8 @@
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Public Functions</p>
 <dl class="function">
-<dt id="_CPPv2N6catana2io4Sink5writeEN14PointContainer8iteratorE6size_t">
-<span id="catana::io::Sink::write__PointContainer::iterator.s"></span><span class="target" id="classcatana_1_1io_1_1Sink_1ab8cf5535c9e299d1388e7d8af5de48de"></span><em class="property">virtual</em> long long int <code class="descname">write</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a>::iterator <em>read_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span> = 0<a class="headerlink" href="#_CPPv2N6catana2io4Sink5writeEN14PointContainer8iteratorE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv2N6catana2io4Sink5writeEN14PointContainer14const_iteratorE6size_t">
+<span id="catana::io::Sink::write__PointContainer::const_iterator.s"></span><span class="target" id="classcatana_1_1io_1_1Sink_1ae062c35d7476167283e45cc05719fe6d"></span><em class="property">virtual</em> long long int <code class="descname">write</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a>::const_iterator <em>read_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span> = 0<a class="headerlink" href="#_CPPv2N6catana2io4Sink5writeEN14PointContainer14const_iteratorE6size_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>write points within [read_iterator, read_iterator+n) to sink. </p>
 <p><dl class="docutils">
 <dt><strong>Return</strong></dt>
@@ -616,6 +616,22 @@
 <dt id="_CPPv2N6catana2io4SinkD0Ev">
 <span id="catana::io::Sink::~Sink"></span><span class="target" id="classcatana_1_1io_1_1Sink_1a50c605ff9b64bfa121f8ff459d67c479"></span><em class="property">virtual</em> <code class="descname">~Sink</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io4SinkD0Ev" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6catana2io4Sink5writeERK14PointContainer">
+<span id="catana::io::Sink::write__PointContainerCR"></span><span class="target" id="classcatana_1_1io_1_1Sink_1a0cbc4178469e579576a6a222c34b5925"></span>long long int <code class="descname">write</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a> &amp;<em>point_container</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io4Sink5writeERK14PointContainer" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>write entire point_container directly to sink </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>number of points written. -1 if failed </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">point_container</span></code>: source container to write </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
 
 </div>
 </dd></dl>
@@ -655,8 +671,8 @@
 </dd></dl>
 
 <dl class="function">
-<dt id="_CPPv2N6catana2io8TextSink5writeEN14PointContainer8iteratorE6size_t">
-<span id="catana::io::TextSink::write__PointContainer::iterator.s"></span><span class="target" id="classcatana_1_1io_1_1TextSink_1aa4682d3d181a8e156460148535642eb6"></span><em class="property">virtual</em> long long int <code class="descname">write</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a>::iterator <em>read_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io8TextSink5writeEN14PointContainer8iteratorE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv2N6catana2io8TextSink5writeEN14PointContainer14const_iteratorE6size_t">
+<span id="catana::io::TextSink::write__PointContainer::const_iterator.s"></span><span class="target" id="classcatana_1_1io_1_1TextSink_1ac99d8184443a364e05ff7cc24ccaf2c7"></span><em class="property">virtual</em> long long int <code class="descname">write</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a>::const_iterator <em>read_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io8TextSink5writeEN14PointContainer14const_iteratorE6size_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>write points within [read_iterator, read_iterator+n) to point_container. </p>
 <p><dl class="docutils">
 <dt><strong>Return</strong></dt>
@@ -747,8 +763,8 @@
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="_CPPv2N6catana2io13RawBinarySink5writeEN14PointContainer8iteratorE6size_t">
-<span id="catana::io::RawBinarySink::write__PointContainer::iterator.s"></span><span class="target" id="classcatana_1_1io_1_1RawBinarySink_1a69cce7e8fe1a523cf1352e39ffeb61c7"></span><em class="property">virtual</em> long long int <code class="descname">write</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a>::iterator <em>read_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io13RawBinarySink5writeEN14PointContainer8iteratorE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv2N6catana2io13RawBinarySink5writeEN14PointContainer14const_iteratorE6size_t">
+<span id="catana::io::RawBinarySink::write__PointContainer::const_iterator.s"></span><span class="target" id="classcatana_1_1io_1_1RawBinarySink_1a33c15bd176807bc5767649a6c07a0db1"></span><em class="property">virtual</em> long long int <code class="descname">write</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a>::const_iterator <em>read_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io13RawBinarySink5writeEN14PointContainer14const_iteratorE6size_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>write points within [read_iterator, read_iterator+n) to point_container. </p>
 <p><dl class="docutils">
 <dt><strong>Return</strong></dt>
@@ -816,8 +832,8 @@
 </dd></dl>
 
 <dl class="function">
-<dt id="_CPPv2N6catana2io18PointContainerSink5writeEN14PointContainer8iteratorE6size_t">
-<span id="catana::io::PointContainerSink::write__PointContainer::iterator.s"></span><span class="target" id="classcatana_1_1io_1_1PointContainerSink_1a8984f4de4122004a27b43dbea4948a7d"></span>long long int <code class="descname">write</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a>::iterator <em>read_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io18PointContainerSink5writeEN14PointContainer8iteratorE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv2N6catana2io18PointContainerSink5writeEN14PointContainer14const_iteratorE6size_t">
+<span id="catana::io::PointContainerSink::write__PointContainer::const_iterator.s"></span><span class="target" id="classcatana_1_1io_1_1PointContainerSink_1a1f2382d879d0b7df2350f8deedf781ea"></span>long long int <code class="descname">write</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana14PointContainerE" title="catana::PointContainer">PointContainer</a>::const_iterator <em>read_iterator</em>, size_t <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io18PointContainerSink5writeEN14PointContainer14const_iteratorE6size_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>write points within [read_iterator, read_iterator+n) to point_container. </p>
 <p><dl class="docutils">
 <dt><strong>Return</strong></dt>
@@ -1025,6 +1041,20 @@
 </dd></dl>
 
 <dl class="function">
+<dt id="_CPPv2N6catana2io17AngularMaskFilter17AngularMaskFilterERKN5Eigen7ArrayXfE">
+<span id="catana::io::AngularMaskFilter::AngularMaskFilter__Eigen::ArrayXfCR"></span><span class="target" id="classcatana_1_1io_1_1AngularMaskFilter_1a236d9307e86c5c8642dd8d6549b51ebf"></span><code class="descname">AngularMaskFilter</code><span class="sig-paren">(</span><em class="property">const</em> Eigen::ArrayXf &amp;<em>healpix_map</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io17AngularMaskFilter17AngularMaskFilterERKN5Eigen7ArrayXfE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct from HEALPix map array. </p>
+<p><dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">healpix_map</span></code>: valid HEALPix map, in RING format, with pixel values 1 (passes filter) and 0 (remove points) </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="_CPPv2N6catana2io17AngularMaskFilter6filterER5Point">
 <span id="catana::io::AngularMaskFilter::filter__PointR"></span><span class="target" id="classcatana_1_1io_1_1AngularMaskFilter_1a49c79beb5ffefd50f7411662b84a5256"></span>bool <code class="descname">filter</code><span class="sig-paren">(</span><a class="reference internal" href="catana_cpp.html#_CPPv2N6catana5PointE" title="catana::Point">Point</a> &amp;<em>point</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io17AngularMaskFilter6filterER5Point" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Filtering function on <a class="reference internal" href="catana_cpp.html#structcatana_1_1Point"><span class="std std-ref">Point</span></a>. Returns true if point passes filter, false otherwise. </p>
@@ -1173,7 +1203,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.0a2+41.gdb4bd3e',
+            VERSION:'2.0.0a3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

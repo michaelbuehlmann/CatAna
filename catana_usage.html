@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Basic Usage &mdash; CatAna 2.0a2+41.gdb4bd3e documentation</title>
+  <title>Basic Usage &mdash; CatAna 2.0.0a3 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="CatAna 2.0a2+41.gdb4bd3e documentation" href="index.html"/>
+    <link rel="top" title="CatAna 2.0.0a3 documentation" href="index.html"/>
         <link rel="next" title="Points and Containers" href="python/catana.html"/>
         <link rel="prev" title="Installation" href="catana_install.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                2.0a2+41.gdb4bd3e
+                2.0.0a3
               </div>
             
           
@@ -290,14 +290,54 @@ function integrals, see <a class="reference internal" href="python/catana_bessel
 <p>The most convenient way to use CatAna in Python is to directly use data from numpy arrays as shown above.
 CatAna can however also deal with files in (space delimited) text files and Gadget files. For detailed documentation
 take a look at <a class="reference internal" href="python/catana_io.html#module-catana.io" title="catana.io"><code class="xref any py py-mod docutils literal"><span class="pre">catana.io</span></code></a>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># (Code snippet to be added...)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Save data so that we can read it again (uses [r theta phi] columns)</span>
+<span class="n">sink</span> <span class="o">=</span> <span class="n">catana</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">SphericalTextSink</span><span class="p">(</span><span class="s2">&quot;points.txt&quot;</span><span class="p">)</span>
+<span class="n">sink</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">point_container</span><span class="p">)</span>
+
+<span class="c1"># Read data from a text file</span>
+<span class="n">source</span> <span class="o">=</span> <span class="n">catana</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">SphericalTextSource</span><span class="p">(</span><span class="s2">&quot;points.txt&quot;</span><span class="p">)</span>
+<span class="n">point_container</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">get_point_container</span><span class="p">()</span>
+
+<span class="c1"># Other supported text sources and sinks:</span>
+<span class="c1">#     - CartesianTextSource / CartesianTextSink</span>
+<span class="c1">#     - SphericalTextSource / SphericalTextSink</span>
+<span class="c1">#     - SphericalTextSource_3dex / SphericalTextSink_3dex (uses [theta phi r] columns)</span>
+<span class="c1">#     - GadgetSource</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="filtering-data">
 <h2>Filtering Data<a class="headerlink" href="#filtering-data" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># (Code snippet to be added...)</span>
+<p>Masking and removing points prior to decomposition can be done directly on the data array. CatAna provides some
+additional functionality to filter <a class="reference internal" href="python/catana.html#catana.PointContainer" title="catana.PointContainer"><code class="xref any py py-class docutils literal"><span class="pre">PointContainers</span></code></a> which are illustrated below.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Gaussian Filter with scale factor 20</span>
+<span class="n">gaussian_filter</span> <span class="o">=</span> <span class="n">catana</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">GaussianRadialWindowFunctionFilter</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># Apply to our point_container</span>
+<span class="n">gaussian_filter</span><span class="p">(</span><span class="n">point_container_2</span><span class="p">)</span>
+
+<span class="c1"># Plot point radii histogram normalized by the surface at the given radii</span>
+<span class="n">radii</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">point_container_2</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">radii</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">radii</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">yticks</span><span class="o">=</span><span class="p">[],</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
 </pre></div>
+</div>
+<img alt="_images/gaussian_filter_hist.png" src="_images/gaussian_filter_hist.png" />
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Angular mask from HEALPix map</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">mask</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">filt_mask</span> <span class="o">=</span> <span class="n">catana</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">AngularMaskFilter</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+<span class="n">filt_mask</span><span class="p">(</span><span class="n">point_container_2</span><span class="p">)</span>
+
+<span class="n">pixelized_point_container_2</span> <span class="o">=</span> <span class="n">catana</span><span class="o">.</span><span class="n">PixelizedPointContainer</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">point_container_2</span><span class="p">)</span>
+<span class="n">hp</span><span class="o">.</span><span class="n">mollview</span><span class="p">(</span><span class="n">pixelized_point_container_2</span><span class="o">.</span><span class="n">get_countmap</span><span class="p">())</span>
+</pre></div>
+</div>
+<img alt="_images/countmap_angmask.png" src="_images/countmap_angmask.png" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For more filters, take a look at <a class="reference internal" href="python/catana_io.html#filters"><span class="std std-ref">Filters</span></a>.</p>
 </div>
 </div>
 </div>
@@ -346,7 +386,7 @@ take a look at <a class="reference internal" href="python/catana_io.html#module-
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.0a2+41.gdb4bd3e',
+            VERSION:'2.0.0a3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

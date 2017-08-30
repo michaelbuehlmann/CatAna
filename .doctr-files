@@ -1,4 +1,6 @@
 ./_images/countmap.png
+./_images/countmap_angmask.png
+./_images/gaussian_filter_hist.png
 ./_images/pixel_accuracy.png
 ./_sources/catana_install.rst.txt
 ./_sources/catana_usage.rst.txt

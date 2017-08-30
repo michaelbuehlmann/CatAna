@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Input/Output Module &mdash; CatAna 2.0a2+41.gdb4bd3e documentation</title>
+  <title>Input/Output Module &mdash; CatAna 2.0.0a3 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="CatAna 2.0a2+41.gdb4bd3e documentation" href="../index.html"/>
+    <link rel="top" title="CatAna 2.0.0a3 documentation" href="../index.html"/>
         <link rel="next" title="Miscellaneous" href="catana_misc.html"/>
         <link rel="prev" title="Decomposition Module" href="catana_decomp.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                2.0a2+41.gdb4bd3e
+                2.0.0a3
               </div>
             
           
@@ -568,6 +568,22 @@ jupyter notebooks!)</li>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="catana.io.CartesianTextSink.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>self: catana.io.Sink</em>, <em>point_container: catana.basictypes.PointContainer</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#catana.io.CartesianTextSink.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>write entire point_container directly to sink</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>point_container</strong> (<a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><em>PointContainer</em></a>) – source container to write</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>int</em> – number of points written. -1 if it failed</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -599,6 +615,22 @@ jupyter notebooks!)</li>
 <p class="last">For 3dex compatible text files with columns [theta, phi, r], use the <code class="xref any docutils literal"><span class="pre">SphericalTextSink_3dex</span></code> class with
 the same functionality and syntax.</p>
 </div>
+<dl class="method">
+<dt id="catana.io.SphericalTextSink.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>self: catana.io.Sink</em>, <em>point_container: catana.basictypes.PointContainer</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#catana.io.SphericalTextSink.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>write entire point_container directly to sink</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>point_container</strong> (<a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><em>PointContainer</em></a>) – source container to write</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>int</em> – number of points written. -1 if it failed</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -617,6 +649,22 @@ the same functionality and syntax.</p>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="catana.io.PointContainerSink.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>self: catana.io.Sink</em>, <em>point_container: catana.basictypes.PointContainer</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#catana.io.PointContainerSink.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>write entire point_container directly to sink</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>point_container</strong> (<a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><em>PointContainer</em></a>) – source container to write</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>int</em> – number of points written. -1 if it failed</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -640,13 +688,29 @@ the same functionality and syntax.</p>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="catana.io.RawBinarySink.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>self: catana.io.Sink</em>, <em>point_container: catana.basictypes.PointContainer</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#catana.io.RawBinarySink.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>write entire point_container directly to sink</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>point_container</strong> (<a class="reference internal" href="catana.html#catana.PointContainer" title="catana.PointContainer"><em>PointContainer</em></a>) – source container to write</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>int</em> – number of points written. -1 if it failed</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
-</div>
-</div>
+</dd></dl>
+
 <hr class="docutils" />
+</div>
+</div>
 <div class="section" id="filters">
-<h2>Filters<a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>Filters<a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="filter-abstract-class">
 <h3>Filter (abstract class)<a class="headerlink" href="#filter-abstract-class" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
@@ -799,16 +863,32 @@ container.</p>
 <h3>AngularMaskFilter<a class="headerlink" href="#angularmaskfilter" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="catana.io.AngularMaskFilter">
-<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">AngularMaskFilter</code><span class="sig-paren">(</span><em>self: catana.io.AngularMaskFilter</em>, <em>mask_file: str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.AngularMaskFilter" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">AngularMaskFilter</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#catana.io.AngularMaskFilter" title="Permalink to this definition">¶</a></dt>
 <dd><p>HEALPix Angular Mask Filter</p>
 <p>Uses a HEALPix map, where each pixel should be either 1 or 0, where 1 corresponds to keep the point if its
 angular coordinates are within the pixel and 0 will remove it.</p>
+<p>Overloaded function.</p>
+<ol class="arabic simple">
+<li>__init__(self: catana.io.AngularMaskFilter, mask_file: str) -&gt; None</li>
+</ol>
 <p>Constructor from a HEALPix FITS file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mask_file</strong> (<em>str</em>) – path to the HEALPix mask map.</td>
+</tr>
+</tbody>
+</table>
+<ol class="arabic simple" start="2">
+<li>__init__(self: catana.io.AngularMaskFilter, map: numpy.ndarray[float32[m, 1]]) -&gt; None</li>
+</ol>
+<p>Constructor from a HEALPix map array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>map</strong> (<em>numpy.ndarray</em><em>[</em><em>float32</em><em>]</em>) – valid HEALPix map, in RING format, containing only 1 and 0 pixel values</td>
 </tr>
 </tbody>
 </table>
@@ -1009,7 +1089,7 @@ be overwritten.</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.0a2+41.gdb4bd3e',
+            VERSION:'2.0.0a3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
