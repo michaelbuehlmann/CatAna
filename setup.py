@@ -63,9 +63,13 @@ def get_cmdclass():
 
 setup(
     name='catana',
-    version=versioneer.get_version(),
+    description='A library for Spherical Fourier Bessel (SFB) Decomposition',
+    license='GPLv2',
     author='Michael Buehlmann',
     author_email='michael.buehlmann@oca.eu',
+    url='https://github.com/michaelbuehlmann/CatAna',
+    keywords='SFB spherical Fourier Bessel transformation decomposition cosmology',
+    version=versioneer.get_version(),
     ext_package='catana',
     packages=['catana'],
     package_dir = {'': 'python'},
