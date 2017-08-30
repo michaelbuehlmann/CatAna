@@ -40,16 +40,15 @@ namespace catana {
                                     RingInfo& ring_info);
 
 //! This function initialized and runs through the sfb decomposition using the reverse_fft-method.
-  KClkk _sfb_reverse_fft(
-      const PixelizedPointContainer& pix_oc,
-      unsigned short lmax, unsigned short nmax,
-      double rmax, double window_volume, bool store_flmn, bool verbose, bool parallel, bool interpolated
-  ) {
+  KClkk _sfb_reverse_fft(const PixelizedPointContainer& pix_oc, unsigned short lmax, unsigned short nmax, double rmax,
+                         bool store_flmn, bool verbose, bool parallel, bool interpolated) {
     // Turn off GSL Error handler
     auto gsl_error_handler_old = gsl_set_error_handler_off();
 
     // Compute normalization factor and set up KClkk
-    double norm_factor = std::sqrt(2 / M_PI) * window_volume / pix_oc.get_npoints();
+    double norm_factor = std::sqrt(2. / M_PI) * (4./3.) * M_PI;
+    norm_factor *= rmax*rmax*rmax / pix_oc.get_npoints();
+
     KClkk kclkk(lmax, nmax, rmax);
 
     auto nside = pix_oc.get_nside();
@@ -63,8 +62,7 @@ namespace catana {
                 << " nmax=" << nmax
                 << " NSide=" << nside
                 << std::endl;
-      std::cout << "Catalog consists of " << pix_oc.get_npoints() << " points in a volume of " << window_volume
-                << std::endl;
+      std::cout << "Catalog consists of " << pix_oc.get_npoints() << " points." << std::endl;
     }
 
     double *map = (double *) fftw_malloc(sizeof(double) * npix);

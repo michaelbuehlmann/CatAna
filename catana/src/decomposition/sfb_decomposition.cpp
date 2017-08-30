@@ -12,18 +12,17 @@ namespace catana {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-  KClkk sfb_decomposition(const PointContainer& points, unsigned short lmax, unsigned short nmax, double rmax,
-                          double window_volume, bool store_flmn, bool verbose) {
+  KClkk sfb_decomposition(const PointContainer& points, unsigned short lmax, unsigned short nmax, double rmax, bool store_flmn,
+                            bool verbose) {
     bool interpolated = (points.size() > BESSELINTERPOLATIONPOINTS_PER_ZERO);
-    return _sfb_raw(points, lmax, nmax, rmax, window_volume, store_flmn, verbose, true, interpolated);
+    return _sfb_raw(points, lmax, nmax, rmax, store_flmn, verbose, true, interpolated);
   }
 
 
-  KClkk sfb_decomposition(const PixelizedPointContainer& pix_obj_cont, unsigned short lmax, unsigned short nmax,
-                          double rmax,
-                          double window_volume, bool store_flmn, bool verbose) {
+  KClkk sfb_decomposition(const PixelizedPointContainer& pix_obj_cont, unsigned short lmax, unsigned short nmax, double rmax,
+                            bool store_flmn, bool verbose) {
     bool interpolated = (pix_obj_cont.get_npoints() > BESSELINTERPOLATIONPOINTS_PER_ZERO);
-    return _sfb_reverse_fft(pix_obj_cont, lmax, nmax, rmax, window_volume, store_flmn, verbose, true, interpolated);
+    return _sfb_reverse_fft(pix_obj_cont, lmax, nmax, rmax, store_flmn, verbose, true, interpolated);
   }
 
 }

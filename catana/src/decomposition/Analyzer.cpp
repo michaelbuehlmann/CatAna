@@ -9,8 +9,8 @@
 
 
 namespace catana {
-  Analyzer::Analyzer(io::Source *source, double window_volume)
-      : source(source), window_volume(window_volume) {}
+  Analyzer::Analyzer(io::Source *source)
+      : source(source) {}
 
   void Analyzer::set_source(io::Source *source) {
     this->source = source;
@@ -40,7 +40,7 @@ namespace catana {
       }
       fs.run(subsample_size, temp_filename);
     }
-    return sfb_decomposition(oc, lmax, nmax, rmax, window_volume, store_flmn, verbose);
+    return sfb_decomposition(oc, lmax, nmax, rmax, store_flmn, verbose);
   }
 
   KClkk Analyzer::compute_sfb_pixelized(unsigned short lmax, unsigned short nmax, double rmax, unsigned int nside,
@@ -59,7 +59,7 @@ namespace catana {
       }
       fs.run(subsample_size, temp_filename);
     }
-    return sfb_decomposition(pix_oc, lmax, nmax, rmax, window_volume, store_flmn, verbose);
+    return sfb_decomposition(pix_oc, lmax, nmax, rmax, store_flmn, verbose);
   }
 
 }

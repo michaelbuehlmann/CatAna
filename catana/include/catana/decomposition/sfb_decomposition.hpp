@@ -20,16 +20,14 @@ namespace catana {
    * @param lmax largest multipole to compute
    * @param nmax largest k-index to compute
    * @param rmax maximal radius of data
-   * @param window_volume window volume (DEPRECATED)
    * @param store_flmn if ``true`` the output will contain the f_lmn coefficients, otherwise only the C_ln
    * @param verbose if ``true`` print additional logging information to stdout
    *
    * @return SFB components including the k at which they were computed and the C_l(k). If store_flmn, will also save the
    *     f_lm(k) components
    */
-  KClkk sfb_decomposition(const PointContainer& points,
-                          unsigned short lmax, unsigned short nmax,
-                          double rmax, double window_volume, bool store_flmn = false, bool verbose = true);
+  KClkk sfb_decomposition(const PointContainer& points, unsigned short lmax, unsigned short nmax, double rmax, bool store_flmn,
+                            bool verbose);
 
   //! compute the SFB transform on a PixelizedPointContainer
   /*!
@@ -39,16 +37,14 @@ namespace catana {
    * @param lmax largest multipole to compute
    * @param nmax largest k-index to compute
    * @param rmax maximal radius of data
-   * @param window_volume window volume (DEPRECATED)
    * @param store_flmn if ``true`` the output will contain the f_lmn coefficients, otherwise only the C_ln
    * @param verbose if ``true`` print additional logging information to stdout
    *
    * @return SFB components including the k at which they were computed and the C_l(k). If store_flmn, will also save the
    *     f_lm(k) components
    */
-  KClkk sfb_decomposition(const PixelizedPointContainer& pix_obj_cont,
-                          unsigned short lmax, unsigned short nmax,
-                          double rmax, double window_volume, bool store_flmn = false, bool verbose = true);
+  KClkk sfb_decomposition(const PixelizedPointContainer& pix_obj_cont, unsigned short lmax, unsigned short nmax, double rmax,
+                            bool store_flmn, bool verbose);
 
 ////////////////////////////////////////////////////////////////////////////////
 }

@@ -60,13 +60,12 @@ PYBIND11_PLUGIN(decomposition) {
           The Analyzer class combines `Source` with `Filter` instances and allows for direct computation of the SFB
           transform.
       )pbdoc")
-      .def(py::init<io::Source *, double>(), R"pbdoc(
+      .def(py::init<io::Source *>(), R"pbdoc(
           Constructor
 
           Parameters:
               source (Source): the (file) source from which to read
-              window_volume (float): window volume for normalization (deprecated)
-      )pbdoc", py::arg("source"), py::arg("window_volume")=1)
+      )pbdoc", py::arg("source"))
       .def("set_source", &Analyzer::set_source, R"pbdoc(
           reset the source
       )pbdoc", py::arg("source"))
@@ -112,7 +111,8 @@ PYBIND11_PLUGIN(decomposition) {
            py::arg("lmax"), py::arg("nmax"), py::arg("rmax"), py::arg("nside"),
            py::arg("store_flmn") = false, py::arg("verbose") = true);
 
-  m.def("sfb_decomposition", py::overload_cast<const PointContainer&, unsigned short, unsigned short, double, double, bool, bool>(&sfb_decomposition), R"pbdoc(
+  m.def("sfb_decomposition", py::overload_cast<const PointContainer&, unsigned short, unsigned short, double, bool, bool>(
+      &sfb_decomposition), R"pbdoc(
 compute the SFB transform on the `PointContainer`
 
 Warning:
@@ -123,7 +123,6 @@ Parameters:
     lmax (int): largest multipole to compute
     nmax (int): largest k-index to compute
     rmax (float): maximal radius of data
-    window_volume (float): window volume (DEPRECATED)
     store_flmn (bool): if ``True`` the output will contain the f_lmn coefficients, otherwise only the C_ln
     verbose (bool): if ``True`` print additional logging information to stdout
 
@@ -131,9 +130,10 @@ Returns:
     SFB components including the k at which they were computed and the C_l(k). If store_flmn, will also save the
         f_lm(k) components
 )pbdoc", py::arg("point_container"), py::arg("lmax"), py::arg("nmax"), py::arg("rmax"),
-        py::arg("window_volume"), py::arg("store_flmn") = false, py::arg("verbose") = true);
+        py::arg("store_flmn") = false, py::arg("verbose") = true);
 
-  m.def("sfb_decomposition", py::overload_cast<const PixelizedPointContainer&, unsigned short, unsigned short, double, double, bool, bool>(&sfb_decomposition), R"pbdoc(
+  m.def("sfb_decomposition", py::overload_cast<const PixelizedPointContainer&, unsigned short, unsigned short, double, bool, bool>(
+      &sfb_decomposition), R"pbdoc(
 compute the SFB transform on the `PixelizedPointContainer`
 
 This method makes use of the fast pixelized decomposition scheme.
@@ -143,7 +143,6 @@ Parameters:
     lmax (int): largest multipole to compute
     nmax (int): largest k-index to compute
     rmax (float): maximal radius of data
-    window_volume (float): window volume (DEPRECATED)
     store_flmn (bool): if ``True`` the output will contain the f_lmn coefficients, otherwise only the C_ln
     verbose (bool): if ``True`` print additional logging information to stdout
 
@@ -151,7 +150,7 @@ Returns:
     SFB components including the k at which they were computed and the C_l(k). If store_flmn, will also save the
         f_lm(k) components
 )pbdoc", py::arg("pixelized_point_container"), py::arg("lmax"), py::arg("nmax"), py::arg("rmax"),
-        py::arg("window_volume"), py::arg("store_flmn") = false, py::arg("verbose") = true);
+        py::arg("store_flmn") = false, py::arg("verbose") = true);
 
   return m.ptr();
 }

@@ -10,10 +10,8 @@
 namespace catana {
   using complex = std::complex<double>;
 
-  KClkk _sfb_reverse(const PixelizedPointContainer& pix_oc,
-                     unsigned short lmax, unsigned short nmax,
-                     double rmax, double window_volume, bool store_flmn, bool verbose, bool parallel,
-                     bool interpolated) {
+  KClkk _sfb_reverse(const PixelizedPointContainer& pix_oc, unsigned short lmax, unsigned short nmax, double rmax,
+                       bool store_flmn, bool verbose, bool parallel, bool interpolated) {
     auto nside = pix_oc.get_nside();
     auto npix = pix_oc.size();
 
@@ -23,15 +21,16 @@ namespace catana {
                 << " nmax=" << nmax
                 << " NSide=" << nside
                 << std::endl;
-      std::cout << "Catalog consists of " << pix_oc.get_npoints() << " points in a volume of " << window_volume
-                << std::endl;
+      std::cout << "Catalog consists of " << pix_oc.get_npoints() << " points." << std::endl;
     }
 
     // Turn off GSL Error handler
     auto gsl_error_handler_old = gsl_set_error_handler_off();
 
     // Compute normalization factor and set up KClkk
-    double_t norm_factor = std::sqrt(2 / M_PI) * window_volume / pix_oc.get_npoints();
+    double norm_factor = std::sqrt(2. / M_PI) * (4./3.) * M_PI;
+    norm_factor *= rmax*rmax*rmax / pix_oc.get_npoints();
+
     KClkk kclkk(lmax, nmax, rmax);
 
     // This will be a nullptr if !interpolated, otherwise we will assign it within the l-for loop
