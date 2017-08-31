@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Points and Containers &mdash; CatAna 2.0.0a4+2.g7339399 documentation</title>
+  <title>Points and Containers &mdash; CatAna 2.0.0a4+6.ga0a9ad5 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="CatAna 2.0.0a4+2.g7339399 documentation" href="../index.html"/>
+    <link rel="top" title="CatAna 2.0.0a4+6.ga0a9ad5 documentation" href="../index.html"/>
         <link rel="next" title="Besseltools Module" href="catana_besseltools.html"/>
         <link rel="prev" title="Basic Usage" href="../catana_usage.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                2.0.0a4+2.g7339399
+                2.0.0a4+6.ga0a9ad5
               </div>
             
           
@@ -207,9 +207,9 @@ trade-off in precision depending on the pixelization resolution.</p>
 <div><p>Default constructor (0,0,0)</p>
 </div></blockquote>
 </li>
-<li><p class="first">__init__(self: catana.basictypes.Point, r: float, theta: float, phi: float) -&gt; None</p>
+<li><p class="first">__init__(self: catana.basictypes.Point, x: float, y: float, z: float) -&gt; None</p>
 <blockquote>
-<div><p>Constructor from spherical coordinates</p>
+<div><p>Constructor from cartesian coordinates</p>
 </div></blockquote>
 </li>
 </ol>
@@ -277,6 +277,11 @@ trade-off in precision depending on the pixelization resolution.</p>
 <p class="first admonition-title">Note</p>
 <p class="last">coordinate array has to be in row-major ordering.</p>
 </div>
+<dl class="method">
+<dt id="catana.PointContainer.__getitem__">
+<code class="descname">__getitem__</code><span class="sig-paren">(</span><em>self: catana.basictypes.PointContainer</em>, <em>arg0: int</em><span class="sig-paren">)</span> &#x2192; catana.basictypes.Point<a class="headerlink" href="#catana.PointContainer.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="catana.PointContainer.add_point">
 <code class="descname">add_point</code><span class="sig-paren">(</span><em>self: catana.basictypes.PointContainer</em>, <em>point: catana.basictypes.Point</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.PointContainer.add_point" title="Permalink to this definition">¶</a></dt>
@@ -398,7 +403,7 @@ Radial coordinates remain the same.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.0.0a4+2.g7339399',
+            VERSION:'2.0.0a4+6.ga0a9ad5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

@@ -20,6 +20,7 @@ PointContainer
 
 .. autoclass:: PointContainer
    :members:
+   :special-members: __getitem__
 
 
 PixelizedPointContainer
