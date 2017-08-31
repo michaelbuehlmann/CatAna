@@ -34,8 +34,8 @@ PYBIND11_PLUGIN(basictypes)
                 Default constructor (0,0,0)
             )pbdoc")
             .def(py::init<double, double, double>(), R"pbdoc(
-                Constructor from spherical coordinates
-            )pbdoc", py::arg("r"), py::arg("theta"), py::arg("phi"))
+                Constructor from cartesian coordinates
+            )pbdoc", py::arg("x"), py::arg("y"), py::arg("z"))
             .def("spherical", [](const Point& obj) {
                 return std::make_tuple(obj.r, obj.p.theta, obj.p.phi);
             }, R"pbdoc(
@@ -117,7 +117,9 @@ Note:
 
             .def("__getitem__", [](const PointContainer& oc, size_t i)
             {
-                return oc[i];
+              if(i >= oc.size())
+                throw pybind11::index_error("index out of bounds!");
+              return oc[i];
             })
 
                     // Buffer definition, so that we can call numpy.array(point_container) in python

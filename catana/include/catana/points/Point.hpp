@@ -9,7 +9,7 @@ namespace catana {
   //! Representation of a particle in 3-dimensional space in spherical coordinates
   struct Point {
     //! Default constructor
-    Point() = default;
+    Point();
 
     //! Construct from cartesian coordinates
     Point(const double& x, const double& y, const double& z);
