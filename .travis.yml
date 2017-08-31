@@ -1,6 +1,6 @@
 sudo: false
 dist: trusty
-language: cpp
+language: generic
 
 env:
   global:
@@ -35,28 +35,35 @@ before_install:
 jobs:
   include:
     - stage: build
+      env:
+        - CC=gcc-6
+        - CXX=g++-6
       script:
         - mkdir build && cd build
-        - export CC=gcc-6 && export CXX=g++-6
         - cmake -DBUILD_TESTS=ON -DBUILD_PYTHON=ON ..
         - make VERBOSE=1
         - ./test/TESTS
     - # same stage
+      env:
+        - CC=gcc-5
+        - CXX=g++-5
       script:
         - mkdir build && cd build
-        - export CC=gcc-5 && export CXX=g++-5
         - cmake -DBUILD_TESTS=ON -DBUILD_PYTHON=ON ..
         - make VERBOSE=1
         - ./test/TESTS
-    - stage: docs
+
+    - stage: python_n_docs
       env:
-        global:
-          - secure: "q2oqY0BnXInnLb9Vuq4pI7rJkXzn9HnCZygqpng/9oTdeFEGA5V5j0eQRca5ui7/oL2grhr/bhujTUNb5t3XEWc3dgPx9Z2HDgiR+oyepUEZn3fZA8asErMlgTAYSdycwgAGzUvTbET2ojy0B8ebxEAR3VGWilSkOcbG5EOeIWeHNxdKBrPCmZZztmlVP8z4fM8C9KYEmkG0u86NdtoKFRGU8Lu0W4qhQ3axX/UDFiWxU7tQ2Y8YKSemBxuOY4POIdBhjcv37RFs/zBSs2p0ZVX06fuCqR/v0Z1Y0N/5W2dQNBzhL/BfWJMuf15/HrP3/CFAz6QS0sM+Oy3xwXbVD7V8Hoc4pagq/GNcQxcd07NIsR7L5tWD9GYKYT17wdgN21W5A8IuQEmfyKIyr9A0DSX/Fo43dUFrohuieJr/S0/FrPLL132iCJdAFeZRqJ+jjYY0xnHG1uSNgdnLfAUBvamnM/FwV+AsbrZ2U4HhvqwS+4dsXiSRpHAKG2+vraeUGm5I5zwxOCGrDbPt1aFYce7e3DVoX36ZX58tI/SxLm4FusWNGunEftaEsMqsUxqzF3q0lhnH1XQiaipw4XUo+6bJfP6aZirIQHjbLyd5tbobaUQZQZ7mFO3F0nph+PExmlcVmWnQbv65ytia0Dm21n/zPbHnykQlHkPioKu+1sk="
+        - CC=gcc-6
+        - CXX=g++-6
+        - secure: "q2oqY0BnXInnLb9Vuq4pI7rJkXzn9HnCZygqpng/9oTdeFEGA5V5j0eQRca5ui7/oL2grhr/bhujTUNb5t3XEWc3dgPx9Z2HDgiR+oyepUEZn3fZA8asErMlgTAYSdycwgAGzUvTbET2ojy0B8ebxEAR3VGWilSkOcbG5EOeIWeHNxdKBrPCmZZztmlVP8z4fM8C9KYEmkG0u86NdtoKFRGU8Lu0W4qhQ3axX/UDFiWxU7tQ2Y8YKSemBxuOY4POIdBhjcv37RFs/zBSs2p0ZVX06fuCqR/v0Z1Y0N/5W2dQNBzhL/BfWJMuf15/HrP3/CFAz6QS0sM+Oy3xwXbVD7V8Hoc4pagq/GNcQxcd07NIsR7L5tWD9GYKYT17wdgN21W5A8IuQEmfyKIyr9A0DSX/Fo43dUFrohuieJr/S0/FrPLL132iCJdAFeZRqJ+jjYY0xnHG1uSNgdnLfAUBvamnM/FwV+AsbrZ2U4HhvqwS+4dsXiSRpHAKG2+vraeUGm5I5zwxOCGrDbPt1aFYce7e3DVoX36ZX58tI/SxLm4FusWNGunEftaEsMqsUxqzF3q0lhnH1XQiaipw4XUo+6bJfP6aZirIQHjbLyd5tbobaUQZQZ7mFO3F0nph+PExmlcVmWnQbv65ytia0Dm21n/zPbHnykQlHkPioKu+1sk="
       script:
         - set -e
-        - export CC=gcc-6 && export CXX=g++-6
-        - pip install doctr sphinx sphinx_rtd_theme breathe
-        - pip install -vvv .
+        - pip install numpy doctr sphinx sphinx_rtd_theme breathe
+        - python setup.py build
+        - python setup.py test
+        - python setup.py install
         - cd docs
         - doxygen Doxyfile
         - make html
@@ -64,21 +71,16 @@ jobs:
         - doctr deploy . --built-docs docs/_build/html --no-require-master
         # TODO: remove no-require-master
 
-    - stage: deploy
-      script: skip
-      before_deploy:
-        - deactivate
-        - pip install --upgrade setuptools wheel twine
+    - stage: pypi_deploy
+      env:
+        - CC=gcc-6
+        - CXX=g++-6
+        - secure: "cEGT3jj7NFUKhDmTCEqLtJvR5jBXD9E/MfjN+0Qqn/uuaib2iD9IUKfr2iuimG8AwtN8Ihf/NwOuICdKb0e+kUnpBOq710S+UeyXLjzp6ezsGIZTtYOXO8EpDcdD2aULHA4laGJ9EsqCY3jFQI60jRuCEJnh00UX9JcaGymmGcwuY7yyGY121igFDYPbseApUIlTA9ISRdg2fHFercWmGHnHa6oxi9eAbLNISvaxIbbdVWiOPBp1PX6p90VI3Okdk3+MLdblFoWuZD5vF7jYxa72+/RoOrnEJ6oAnIVlEFs/XlSqjNmomINVEkEo8QQbshbxOMVYHW1otFbbJiwaRqnkvbtKC00uAn0P1zAjeekxLw+PxMfTPn64HyxQoUN8sjXX04w3FhwFZbsZPoVc0/RZXwcOto9mTTPygCL7pvfkvkGU+XDwkhbtWBrqgUuIsPDuvGtAUoeHWTZD5grP9QFaxZuG8J5if3p2CpSKg9BW6itA1qu5pdW6xDaUX0stS4pga2s4yb9kt8RybvbZx7aeMzbj4L21YHMbcJZiojvaG9eR3l2f8ORx23fu4b1uhtY8nZGQ89jmzCxpgqE5pb1jiCqI3sfTJYOCj+NYI0CHWlTdX8Xw8eyD7cXjfPaqvEwArmu//NukHvqta9ic3oNWnOokBggtiJgLjUkrbf4="
+        - TWINE_USERNAME=mirthlessmarmot
+      script:
+        - pip install --upgrade numpy setuptools wheel twine
         - pwd
         - ls
-        - export CC=gcc-6 && export CXX=g++-6
-      deploy:
-        - provider: pypi
-          user: mirthlessmarmot
-          password:
-            secure: "q/JwK15wRzViATJ4RtUmvV6YlVfv6yqPyKzH1W8lrzBvtpygi8zeSsI94dhxrR0vla0rEsjTUafN10UiflGLAwgTBOv80PLfch6miJTpFAazFVQb4bv3Qu59dQm3EYoHtgiMGgtO/gJJE1/jDGp9SiXS9EJMerL4l7kL7NERPFDGV3vwIYtmTsbzw8YKdwR53n6oUus5JY49a2AJH181yMy8iAhHmYpgqoyCnLlJqnvpKJw7svFlAZiaxv+9NoO9jkP/icdKCxnLJCLXhgwD6okXdFi/GrNj3pLG5FYL3Lz3dMv2aqJMkhkUnSrtWnSC1vvc5ZRaF5KcFSQ4QYFx7aRyxIYs7Df0ZsmeUOIGA++nk3YmkEF1UXM/VOa5SkmNzo8OKK88jRj8jxjE8kBiZw13TgjKr0WN4IjRoo8wmJfB3E5o51IUDR3L7YNdgGXglUOIJvkmSCWWw16wAazUX2ndAxMfyBoxP2jtHJHmvuyLHy1WcibXmhWoEbP+uwH0309ajH18LEOxmoqDBUYol4BWKczZQoF85WySLAlkVbpTmCWuIoMqhfISaatnBuVR7fM84q+aHCDUMytWR+55WDcqrM4s/v1QYc2SdXqBqYbu4lhlgIL9nfOEYn4oyQksboP1LBVULpGFuPAlYX3YrLyVZw9nzGubRXXnKdRpBDc="
-          on:
-            all_branches: true
-            tags: true
-          server: "https://test.pypi.org/legacy/"
-          distributions: sdist
+        - python setup.py sdist
+        - if [ -n "$TRAVIS_TAG" ]; then twine upload -r "https://test.pypi.org/legacy/" dist/*; else echo "package _not_ uploaded to testpypi"; fi
+        - if [ "$TRAVIS_BRANCH" = "master" -a -n "$TRAVIS_TAG" ]; then twine upload dist/*; else echo "package _not_ uploaded to pypi"; fi

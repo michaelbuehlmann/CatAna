@@ -76,5 +76,7 @@ setup(
     ext_modules=[CMakeExtension('basictypes'), CMakeExtension('besseltools'), CMakeExtension('decomposition'), CMakeExtension('io')],
     cmdclass=get_cmdclass(),
     zip_safe=False,
-    install_requires=['numpy']
+    install_requires=['numpy'],
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest']
 )
