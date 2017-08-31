@@ -10,8 +10,8 @@
 namespace py = pybind11;
 using namespace catana;
 
-PYBIND11_PLUGIN(decomposition) {
-  py::module m("decomposition", "python binding for SFB decomposition of particle positions (part of CatAna)");
+PYBIND11_MODULE(decomposition, m) {
+  m.doc() = "python binding for SFB decomposition of particle positions (part of CatAna)";
 
   // Initialization of random numbers. Once with given seed, once random seed
   m.def("init_random", py::overload_cast<unsigned int>(&init_random), R"pbdoc(
@@ -151,6 +151,4 @@ Returns:
         f_lm(k) components
 )pbdoc", py::arg("pixelized_point_container"), py::arg("lmax"), py::arg("nmax"), py::arg("rmax"),
         py::arg("store_flmn") = false, py::arg("verbose") = true);
-
-  return m.ptr();
 }

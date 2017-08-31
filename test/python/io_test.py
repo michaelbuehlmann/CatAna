@@ -3,9 +3,11 @@ import catana
 import pytest
 import os
 
+
 @pytest.fixture
 def datadir():
     return os.path.join(os.path.dirname(__file__), '..', 'test_data')
+
 
 class TestText(object):
     def test_source(self, datadir):

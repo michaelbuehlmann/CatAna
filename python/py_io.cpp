@@ -16,8 +16,8 @@ using record_sd = io::SphericalRecord<double>;
 using record_sd_3dex = io::SphericalRecord<double, io::SphericalTextFormat::THREEDEX>;
 
 
-PYBIND11_PLUGIN(io) {
-  py::module m("io", "python binding for in/output of particle positions (part of CatAna)");
+PYBIND11_MODULE(io, m) {
+  m.doc() = "python binding for in/output of particle positions (part of CatAna)";
 
   // Initialization of random numbers. Once with given seed, once random seed
   m.def("init_random", py::overload_cast<unsigned int> (&init_random), R"pbdoc(
@@ -343,8 +343,8 @@ Parameters:
               sink (Sink): to where the filtered points are stored
               buffer_size (int): size of the buffer (in number of points). Faster if larger, but consumes more memroy.
               verbose (bool): if ``True``, print additional logging information to stdout
-      )pbdoc", py::arg("source"), py::arg("sink"), py::arg("buffer_size")=1000000, py::arg("verbose")=true,
-      py::keep_alive<1, 2>(), py::keep_alive<1, 3>())
+      )pbdoc", py::arg("source"), py::arg("sink"), py::arg("buffer_size")=1000000, py::arg("verbose")=true)
+//      py::keep_alive<1, 2>(), py::keep_alive<1, 3>())  TODO: add keep_alive back in (removed because of SIGSEGV)
       .def("add_filter", &io::FilterStream::add_filter, R"pbdoc(
           Add a Filter to the pipeline.
 
@@ -361,7 +361,7 @@ Parameters:
 
           Parameters:
               source (Source): a source instance
-      )pbdoc", py::arg("source"), py::keep_alive<1, 2>())
+      )pbdoc") //, py::arg("source"), py::keep_alive<1, 2>())  // TODO: add keep_alive back in
       .def("run", &io::FilterStream::run, R"pbdoc(
           Run the pipeline
 
@@ -402,6 +402,4 @@ Parameters:
           Returns:
               int: number of points written to the sink
       )pbdoc", py::arg("temp_filename")="tmp.bin", py::arg("subsample_size")=0, py::arg("remove_temp")=true);
-
-  return m.ptr();
 };

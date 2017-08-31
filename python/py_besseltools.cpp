@@ -9,8 +9,8 @@ namespace py = pybind11;
 using namespace catana;
 
 
-PYBIND11_PLUGIN(besseltools) {
-    py::module m("besseltools", "python binding to besseltools library (part of CatAna)");
+PYBIND11_MODULE(besseltools, m) {
+    m.doc() = "python binding to besseltools library (part of CatAna)";
 
     py::class_<besseltools::SphericalBesselZeros>(m, "SphericalBesselZeros", R"pbdoc(
             A root generator for spherical Bessel functions.
@@ -82,6 +82,4 @@ Parameters:
     k2 (float): frequency of other spherical Bessel function
         )pbdoc", py::arg("w"), py::arg("l"), py::arg("r_max"), py::arg("k1"), py::arg("k2")
     );
-
-    return m.ptr();
 }

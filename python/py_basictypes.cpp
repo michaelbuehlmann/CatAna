@@ -16,9 +16,9 @@ namespace py = pybind11;
 using namespace catana;
 
 
-PYBIND11_PLUGIN(basictypes)
+PYBIND11_MODULE(basictypes, m)
 {
-    py::module m("basictypes", "python bindings of basic types used in CatAna");
+    m.doc() = "python bindings of basic types used in CatAna";
 
     // Binding for the "Point" class, with cartesian and spherical output methods
     py::class_<Point>(m, "Point", py::buffer_protocol(), R"pbdoc(
@@ -125,11 +125,11 @@ Note:
                 // Buffer definition, so that we can call numpy.array(point_container) in python
         .def_buffer([](PointContainer& oc) -> py::buffer_info {
             return py::buffer_info(
-                    (double*) oc.data(),
+                    &(oc.data()->r),
                     sizeof(double),
                     py::format_descriptor<double>::format(),
                     2,
-                    { oc.size(), 3},
+                    std::array<long int, 2>{static_cast<long int>(oc.size()), 3},
                     { sizeof(double) * 3, sizeof(double)}
             );
         })
@@ -215,6 +215,4 @@ Warning:
 Parameters:
     x (numpy.ndarray[float]): evaluation points
         )pbdoc", py::arg("x"));
-
-    return m.ptr();
 }
