@@ -9,6 +9,9 @@ namespace catana {
     p.normalize();
   }
 
+  Point::Point()
+    : r(0), p(0, 0) {}
+
   Point point_from_box_position(const double& pos_x, const double& pos_y, const double& pos_z,
                                 const double& shift, const double& hubble_param) {
     Point obj(

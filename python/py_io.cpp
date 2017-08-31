@@ -343,7 +343,8 @@ Parameters:
               sink (Sink): to where the filtered points are stored
               buffer_size (int): size of the buffer (in number of points). Faster if larger, but consumes more memroy.
               verbose (bool): if ``True``, print additional logging information to stdout
-      )pbdoc", py::arg("source"), py::arg("sink"), py::arg("buffer_size")=1000000, py::arg("verbose")=true)
+      )pbdoc", py::arg("source"), py::arg("sink"), py::arg("buffer_size")=1000000, py::arg("verbose")=true,
+      py::keep_alive<1, 2>(), py::keep_alive<1, 3>())
       .def("add_filter", &io::FilterStream::add_filter, R"pbdoc(
           Add a Filter to the pipeline.
 
@@ -351,7 +352,7 @@ Parameters:
 
           Parameters:
               filter (Filter): A radial or angular Filter instance
-      )pbdoc", py::arg("filter"))
+      )pbdoc", py::arg("filter"), py::keep_alive<1, 2>())
       .def("set_source", &io::FilterStream::set_source, R"pbdoc(
           Reset the source to a new source
 
@@ -360,7 +361,7 @@ Parameters:
 
           Parameters:
               source (Source): a source instance
-      )pbdoc", py::arg("source"))
+      )pbdoc", py::arg("source"), py::keep_alive<1, 2>())
       .def("run", &io::FilterStream::run, R"pbdoc(
           Run the pipeline
 
