@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Input / Output (C++) &mdash; CatAna 2.0.0a5 documentation</title>
+  <title>Input / Output (C++) &mdash; CatAna 2.0.0a6 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="CatAna 2.0.0a5 documentation" href="../index.html"/>
+    <link rel="top" title="CatAna 2.0.0a6 documentation" href="../index.html"/>
         <link rel="next" title="Miscellaneous (C++)" href="catana_cpp_misc.html"/>
         <link rel="prev" title="SFB Decomposition (C++)" href="catana_cpp_decomp.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                2.0.0a5
+                2.0.0a6
               </div>
             
           
@@ -280,15 +280,14 @@
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Public Functions</p>
 <dl class="function">
-<dt id="_CPPv2N6catana2io10TextSource10TextSourceENSt6stringEdd">
-<span id="catana::io::TextSource::TextSource__ss.double.double"></span><span class="target" id="classcatana_1_1io_1_1TextSource_1a7d731e892d44083e334e61ea794200d6"></span><code class="descname">TextSource</code><span class="sig-paren">(</span>std::string <em>filename</em>, double <em>hubble_param</em> = 1, double <em>box_size</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io10TextSource10TextSourceENSt6stringEdd" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv2N6catana2io10TextSource10TextSourceENSt6stringEd">
+<span id="catana::io::TextSource::TextSource__ss.double"></span><span class="target" id="classcatana_1_1io_1_1TextSource_1a5919ec490acc863439a2e91381704f1e"></span><code class="descname">TextSource</code><span class="sig-paren">(</span>std::string <em>filename</em>, double <em>shift</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6catana2io10TextSource10TextSourceENSt6stringEd" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Construct from filename. </p>
 <p><dl class="docutils">
 <dt><strong>Parameters</strong></dt>
 <dd><ul class="breatheparameterlist first last simple">
 <li><code class="docutils literal"><span class="pre">filename</span></code>: filename of the text file </li>
-<li><code class="docutils literal"><span class="pre">hubble_param</span></code>: The Hubble parameter h which will be used to convert Mpc/h -&gt; Mpc. If coordinates are already in Mpc, set h=1. </li>
-<li><code class="docutils literal"><span class="pre">box_size</span></code>: box_size will be used to shift origin to center of the box (i.e. coordinates will be transformed x -&gt; x-box_size/2.). If origin already located at center of box, set box_size=0. </li>
+<li><code class="docutils literal"><span class="pre">shift</span></code>: shift coordinates along all axis (coordinates will be transformed x -&gt; x+shift) </li>
 </ul>
 </dd>
 </dl>
@@ -1203,7 +1202,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.0.0a5',
+            VERSION:'2.0.0a6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

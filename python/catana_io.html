@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Input/Output Module &mdash; CatAna 2.0.0a5 documentation</title>
+  <title>Input/Output Module &mdash; CatAna 2.0.0a6 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="CatAna 2.0.0a5 documentation" href="../index.html"/>
+    <link rel="top" title="CatAna 2.0.0a6 documentation" href="../index.html"/>
         <link rel="next" title="Miscellaneous" href="catana_misc.html"/>
         <link rel="prev" title="Decomposition Module" href="catana_decomp.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                2.0.0a5
+                2.0.0a6
               </div>
             
           
@@ -226,7 +226,7 @@ the <code class="docutils literal"><span class="pre">Source.get_point_container<
 <h3>CartesianTextSource<a class="headerlink" href="#cartesiantextsource" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="catana.io.CartesianTextSource">
-<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">CartesianTextSource</code><span class="sig-paren">(</span><em>self: catana.io.CartesianTextSource</em>, <em>filename: str</em>, <em>hubble_param: float=1.0</em>, <em>shift: float=0.0</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.CartesianTextSource" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">CartesianTextSource</code><span class="sig-paren">(</span><em>self: catana.io.CartesianTextSource</em>, <em>filename: str</em>, <em>shift: float=0.0</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.CartesianTextSource" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read positions from Text File (cartesian coordinates)</p>
 <p>Only the first 3 columns are read, remaining columns are ignored.</p>
 <div class="admonition note">
@@ -242,7 +242,6 @@ the <code class="docutils literal"><span class="pre">Source.get_point_container<
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>filename</strong> (<em>str</em>) – path to file containing the positions</li>
-<li><strong>hubble_param</strong> (<em>float</em>) – conversion factor if coordinates are in Mpc/h.</li>
 <li><strong>shift</strong> (<em>float</em>) – a coordinate shift that is applied to each axis</li>
 </ul>
 </td>
@@ -293,7 +292,7 @@ the <code class="docutils literal"><span class="pre">Source.get_point_container<
 <h3>SphericalTextSource<a class="headerlink" href="#sphericaltextsource" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="catana.io.SphericalTextSource">
-<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">SphericalTextSource</code><span class="sig-paren">(</span><em>self: catana.io.SphericalTextSource</em>, <em>filename: str</em>, <em>hubble_param: float=1.0</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.SphericalTextSource" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">catana.io.</code><code class="descname">SphericalTextSource</code><span class="sig-paren">(</span><em>self: catana.io.SphericalTextSource</em>, <em>filename: str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#catana.io.SphericalTextSource" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read from Text File (spherical coordinates [r, theta, phi])</p>
 <p>Only the first 3 columns are read, remaining columns are ignored.</p>
 <p>Constructor from a textfile filename.</p>
@@ -301,11 +300,7 @@ the <code class="docutils literal"><span class="pre">Source.get_point_container<
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>filename</strong> (<em>str</em>) – path to file containing the positions</li>
-<li><strong>hubble_param</strong> (<em>float</em>) – conversion factor if coordinates are in Mpc/h.</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) – path to file containing the positions</td>
 </tr>
 </tbody>
 </table>
@@ -1089,7 +1084,7 @@ be overwritten.</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.0.0a5',
+            VERSION:'2.0.0a6',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
