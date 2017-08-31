@@ -174,7 +174,8 @@ Parameters:
 
                 Samples the given function with ``interpolation_points`` number of equidistantly distributed points between
                 ``x_min`` and ``x_max``. When called at a given position, interpolates linearly from the two closest sample
-                points.
+                points. Note that evaluating the function for values ``x >= x_max`` and ``x < x_min`` raises a
+                ValueError.
 
                 The FunctionInterpolator mainly serves to speed up computations since we do not need to do expensive
                 Python object calls once it is initialized.
@@ -195,7 +196,7 @@ Parameters:
 Evaluate the FunctionInterpolator at the given value x.
 
 Warning:
-    x must be within the boundaries [x_min, x_max] for which the FunctionInterpolator was set up.
+    x must be within the boundaries [x_min, x_max) for which the FunctionInterpolator was set up.
 
 Parameters:
     x (float): evaluation point
@@ -207,7 +208,7 @@ Parameters:
 Evaluate the FunctionInterpolator at the given values x.
 
 Warning:
-    each element in x must be within the boundaries [x_min, x_max] for which the FunctionInterpolator
+    each element in x must be within the boundaries [x_min, x_max) for which the FunctionInterpolator
     was set up.
 
 Parameters:
