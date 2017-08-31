@@ -31,7 +31,7 @@ Eigen::ArrayXXd read_python_cln(int lmax, int nmax) {
 TEST_CASE ("testing SFB raw method") {
   PointContainer point_container;
   {
-    io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt", 1, 0);
+    io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt");
     io::PointContainerSink sink(point_container);
     io::FilterStream fs(&source, &sink, 10000, false);
     fs.run();
@@ -66,7 +66,7 @@ TEST_CASE ("testing SFB raw method") {
 TEST_CASE ("testing SFB raw method with parallelization") {
   PointContainer point_container;
   {
-    io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt", 1, 0);
+    io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt");
     io::PointContainerSink sink(point_container);
     io::FilterStream fs(&source, &sink, 10000, false);
     fs.run();
@@ -101,7 +101,7 @@ TEST_CASE ("testing SFB raw method with parallelization") {
 TEST_CASE ("testing SFB reverse method") {
   PixelizedPointContainer pix_obj_cont(64);
   {
-    io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt", 1, 0);
+    io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt");
     io::PixelizedPointContainerSink sink(pix_obj_cont);
     io::FilterStream fs(&source, &sink, 10000, false);
     fs.run();
@@ -135,7 +135,7 @@ TEST_CASE ("testing SFB reverse method") {
 TEST_CASE ("testing SFB reverse method with parallelization") {
   PixelizedPointContainer pix_obj_cont(64);
   {
-    io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt", 1, 0);
+    io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt");
     io::PixelizedPointContainerSink sink(pix_obj_cont);
     io::FilterStream fs(&source, &sink, 10000, false);
     fs.run();
@@ -169,7 +169,7 @@ TEST_CASE ("testing SFB reverse method with parallelization") {
 TEST_CASE ("testing SFB pixelized method") {
   PixelizedPointContainer pix_obj_cont(64);
   {
-    io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt", 1, 0);
+    io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt");
     io::PixelizedPointContainerSink sink(pix_obj_cont);
     io::FilterStream fs(&source, &sink, 10000, false);
     fs.run();
@@ -203,7 +203,7 @@ TEST_CASE ("testing SFB pixelized method") {
 TEST_CASE ("testing SFB pixelized method with parallelization") {
   PixelizedPointContainer pix_obj_cont(64);
   {
-    io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt", 1, 0);
+    io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt");
     io::PixelizedPointContainerSink sink(pix_obj_cont);
     io::FilterStream fs(&source, &sink, 10000, false);
     fs.run();
@@ -238,7 +238,7 @@ TEST_CASE ("testing SFB pixelized method with parallelization") {
 TEST_CASE ("testing SFB f_lmn computation") {
   PointContainer point_container;
   {
-    io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt", 1, 0);
+    io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt");
     io::PointContainerSink sink(point_container);
     io::FilterStream fs(&source, &sink, 10000, false);
     fs.run();
@@ -247,7 +247,7 @@ TEST_CASE ("testing SFB f_lmn computation") {
 
   PixelizedPointContainer pix_obj_cont(64);
   {
-    io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt", 1, 0);
+    io::TextSource<io::CartesianRecord<float>> source(test_data_dir + "gaussian_catalog.txt");
     io::PixelizedPointContainerSink sink(pix_obj_cont);
     io::FilterStream fs(&source, &sink, 10000, false);
     fs.run();

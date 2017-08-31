@@ -1,13 +1,12 @@
 //! \file record_types.hpp
 //! \brief The record classes defined here map out the memory layout of binary files (Gadget, RawBinary) and ordering in Text Files
 /*! \file
- * All classes must define a member function  which returns a Point
- * and a constructor from an Point and box_size, hubble_param.
+ * All classes must define a member function  which returns a Point and a constructor from an Point (and shift)
  *
  * Add these members:
  *      CartesianRecord()
- *      CartesianRecord(const Point&, const double& box_size, const double& hubble_param)
- *      Point point(box_size, hubble_param)
+ *      CartesianRecord(const Point&, const double& shift)
+ *      Point point(shift)
  */
 
 
@@ -43,11 +42,9 @@ namespace catana { namespace io {
      * The point from which the record is constructed
      * @param shift
      * Add shift to coordinates to move origin of coordinates. The shift is applied to all axis.
-     * @param hubble_param
-     * Hubble parameter for conversion Mpc -> Mpc/h. If record coordinates are Mpc, set hubble_param=1.
      */
-    CartesianRecord(const Point& point, const double& shift, const double& hubble_param) {
-      pos_x = pos_y = pos_z = point.r * hubble_param;
+    CartesianRecord(const Point& point, const double& shift) {
+      pos_x = pos_y = pos_z = point.r;
       vec3 unit_vec(point.p.to_vec3());
       pos_x *= unit_vec.x;
       pos_y *= unit_vec.y;
@@ -61,11 +58,9 @@ namespace catana { namespace io {
     /*!
      * @param shift
      * Add shift to coordinates to move origin. If coordinates are already centered at box-center, set shift=0.
-     * @param hubble_param
-     * Hubble parameter for conversion Mpc/h -> Mpc. If record coordinates are Mpc, set hubble_param=1.
      */
-    Point point(const double& shift, const double& hubble_param) {
-      return point_from_box_position(pos_x, pos_y, pos_z, shift, hubble_param);
+    Point point(const double& shift) {
+      return point_from_box_position(pos_x, pos_y, pos_z, shift);
     }
   };
 
@@ -103,20 +98,16 @@ namespace catana { namespace io {
      * @param dummy
      * This dummy variable exists so that SphericalRecordBase has the same signature as the cartesian one.
      * Set to whatever, it will be ignored
-     * @param hubble_param
-     * Hubble parameter for conversion Mpc -> Mpc/h. If record coordinates are Mpc, set hubble_param=1.
      */
-    SphericalRecordBase(const Point& point, const double& dummy, const double& hubble_param);
+    SphericalRecordBase(const Point& point, const double& dummy);
 
     //! Construct Point from record
     /*!
      * @param dummy
      * This dummy variable exists so that SphericalRecordBase has the same signature as the cartesian one.
      * Set to whatever, it will be ignored
-     * @param hubble_param
-     * Hubble parameter for conversion Mpc/h -> Mpc. If record coordinates are Mpc, set hubble_param=1.
      */
-    Point point(const double& dummy, const double& hubble_param);
+    Point point(const double& dummy);
   };
 
 
@@ -141,10 +132,8 @@ namespace catana { namespace io {
      * @param dummy
      * This dummy variable exists so that SphericalRecordBase has the same signature as the cartesian one.
      * Set to whatever, it will be ignored
-     * @param hubble_param
-     * Hubble parameter for conversion Mpc -> Mpc/h. If record coordinates are Mpc, set hubble_param=1.
      */
-    SphericalRecord(const Point& point, const double& dummy, const double& hubble_param);
+    SphericalRecord(const Point& point, const double& dummy);
   };
 
 
@@ -166,10 +155,8 @@ namespace catana { namespace io {
     * @param dummy
     * This dummy variable exists so that SphericalRecordBase has the same signature as the cartesian one.
      * Set to whatever, it will be ignored
-    * @param hubble_param
-    * Hubble parameter for conversion Mpc -> Mpc/h. If record coordinates are Mpc, set hubble_param=1.
     */
-    SphericalRecord(const Point& point, const double& dummy, const double& hubble_param);
+    SphericalRecord(const Point& point, const double& dummy);
   };
 
 

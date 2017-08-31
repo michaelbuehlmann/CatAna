@@ -58,7 +58,7 @@ namespace catana { namespace io {
     } else {
       for(size_t i = 0; i < to_read; ++i) {
         fd.read((char *) &record, sizeof(record));
-        *(write_iterator++) = record.point(0, 1.);
+        *(write_iterator++) = record.point(0);
         ++current_pos;
       }
       return to_read;

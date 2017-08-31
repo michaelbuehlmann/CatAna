@@ -53,7 +53,7 @@ namespace catana { namespace io {
 
     record_t record;
     for(size_t i = 0; i < n; ++i) {
-      record = record_t(*read_iterator++, 0, 1);
+      record = record_t(*read_iterator++, 0);
       fd.write((char *) &record, sizeof(record_t));
     }
     fd.flush();

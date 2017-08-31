@@ -21,13 +21,9 @@ namespace catana { namespace io {
     //! Construct from filename.
     /*!
      * @param filename filename of the text file
-     * @param hubble_param The Hubble parameter h which will be used to convert Mpc/h -> Mpc. If coordinates
-     * are already in Mpc, set h=1.
-     * @param box_size box_size will be used to shift origin to center of the box (i.e. coordinates
-     * will be transformed x -> x-box_size/2.). If origin already located at center of box, set box_size=0.
+     * @param shift shift coordinates along all axis (coordinates will be transformed x -> x+shift)
      */
-    TextSource(std::string filename,
-               double hubble_param = 1, double box_size = 0);
+    TextSource(std::string filename, double shift = 0);
 
     //! Read next n points from file. Returns number of points put into point_s. -1 if EOF.
     /*!
@@ -54,8 +50,7 @@ namespace catana { namespace io {
 
   private:
     std::string filename;
-    double hubble_param;
-    double box_size;
+    double shift;
     std::ifstream fs;
   };
 

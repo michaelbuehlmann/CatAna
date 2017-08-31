@@ -5,8 +5,8 @@
 namespace catana { namespace io {
 
   template<class RecordType>
-  TextSource<RecordType>::TextSource(std::string filename, double hubble_param, double box_size)
-      :filename(filename), hubble_param(hubble_param), box_size(box_size) {
+  TextSource<RecordType>::TextSource(std::string filename, double shift)
+      :filename(filename), shift(shift) {
     fs.open(filename, std::fstream::in);
     if(!fs.is_open()) {
       std::cout << "WARNING: Could not open file " << filename << std::endl;
@@ -26,7 +26,7 @@ namespace catana { namespace io {
         in >> arg1;
         in >> arg2;
         in >> arg3;
-        *(write_iterator++) = record_t(arg1, arg2, arg3).point(box_size, hubble_param);
+        *(write_iterator++) = record_t(arg1, arg2, arg3).point(shift);
         ++i;
       } else {
         break;

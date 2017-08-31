@@ -97,9 +97,9 @@ Default constructor (empty container)
             if (info.strides[1] == sizeof(double)){  // Correct data ordering
                 for(double* current_ptr = data_ptr; current_ptr != data_ptr_end; current_ptr+=3){
                     if(spherical)
-                        oc.add_point(point_from_spherical_position(current_ptr, 1));
+                        oc.add_point(point_from_spherical_position(current_ptr));
                     else
-                        oc.add_point(point_from_box_position(current_ptr, 0, 1));
+                        oc.add_point(point_from_box_position(current_ptr, 0));
                 }
             } else {  // Wrong data ordering
                 throw std::runtime_error("Data ordering of array is ColumnMajor, but RowMajor needed.");

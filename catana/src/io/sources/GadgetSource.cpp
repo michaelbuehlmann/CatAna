@@ -79,7 +79,7 @@ namespace catana { namespace io {
     // Before this loop, reader is guaranteed to be in a readable position (at least one element)
     while(loaded < to_load) {
       fd.read((char *) &record, sizeof(record));
-      *write_iterator = record.point(shift, hubble_parameter);
+      *write_iterator = record.point(shift);
 
       // Increment tracking variables
       loaded++;

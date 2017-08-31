@@ -56,13 +56,13 @@ TEST_CASE ("testing GadgetSource with all data") {
       CHECK(512 == oc2.size());
 
   for(int i = 0; i < test_positions.size(); ++i) {
-        CHECK(doctest::Approx(test_radius[i]) == oc[test_positions[i]].r);
+        CHECK(doctest::Approx(test_radius[i]*0.7) == oc[test_positions[i]].r);
         CHECK(doctest::Approx(test_theta[i]) == oc[test_positions[i]].p.theta);
         CHECK(doctest::Approx(test_phi[i]) == oc[test_positions[i]].p.phi);
   }
 
   for(int i = 0; i < test_positions.size(); ++i) {
-        CHECK(doctest::Approx(test_radius[i]) == oc2[test_positions[i]].r);
+        CHECK(doctest::Approx(test_radius[i]*0.7) == oc2[test_positions[i]].r);
         CHECK(doctest::Approx(test_theta[i]) == oc2[test_positions[i]].p.theta);
         CHECK(doctest::Approx(test_phi[i]) == oc2[test_positions[i]].p.phi);
   }

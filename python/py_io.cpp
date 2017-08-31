@@ -125,40 +125,37 @@ PYBIND11_MODULE(io, m) {
               ``[0, 0, 0]``. If the coordinates are not centered at 0 they can be moved by using the shift parameter
               (e.g. if the coordinates are within [0, L], use ``shift=-L/2``)
       )pbdoc")
-      .def(py::init<std::string, double, double>(), R"pbdoc(
+      .def(py::init<std::string, double>(), R"pbdoc(
           Constructor from a textfile filename.
 
           Parameters:
              filename (str): path to file containing the positions
-             hubble_param (float): conversion factor if coordinates are in Mpc/h.
              shift (float): a coordinate shift that is applied to each axis
-      )pbdoc", py::arg("filename"), py::arg("hubble_param")=1., py::arg("shift")=0.);
+      )pbdoc", py::arg("filename"), py::arg("shift")=0.);
 
   py::class_<io::TextSource<record_sd>, io::Source>(m, "SphericalTextSource", R"pbdoc(
           Read from Text File (spherical coordinates [r, theta, phi])
 
           Only the first 3 columns are read, remaining columns are ignored.
       )pbdoc")
-      .def(py::init<std::string, double>(), R"pbdoc(
+      .def(py::init<std::string>(), R"pbdoc(
           Constructor from a textfile filename.
 
           Parameters:
              filename (str): path to file containing the positions
-             hubble_param (float): conversion factor if coordinates are in Mpc/h.
-      )pbdoc", py::arg("filename"), py::arg("hubble_param")=1.);
+      )pbdoc", py::arg("filename"));
 
   py::class_<io::TextSource<record_sd_3dex>, io::Source>(m, "SphericalTextSource_3dex", R"pbdoc(
           Read from Text File (spherical coordinates, [theta, phi, r])
 
           Only the first 3 columns are read, remaining columns are ignored.
       )pbdoc")
-      .def(py::init<std::string, double>(),R"pbdoc(
+      .def(py::init<std::string>(),R"pbdoc(
           Constructor from a textfile filename.
 
           Parameters:
              filename (str): path to file containing the positions
-             hubble_param (float): conversion factor if coordinates are in Mpc/h.
-      )pbdoc",  py::arg("filename"), py::arg("hubble_param")=1.);
+      )pbdoc",  py::arg("filename"));
 
   py::class_<io::RawBinarySource<record_sf>, io::Source>(m, "RawBinarySource", R"pbdoc(
           Read from CatAna binary file (float precision, spherical coordinates)
