@@ -1,3 +1,4 @@
+include README.rst
 include *.txt
 graft catana
 graft cmake

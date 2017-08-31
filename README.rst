@@ -1,3 +1,18 @@
+.. image:: https://img.shields.io/github/release/michaelbuehlmann/CatAna/all.svg?style=flat-square
+   :target: https://github.com/michaelbuehlmann/CatAna
+
+.. image:: https://img.shields.io/pypi/v/catana.svg?style=flat-square
+   :target: https://pypi.python.org
+
+.. image:: https://img.shields.io/github/tag/michaelbuehlmann/CatAna.svg?style=flat-square
+   :target: https://github.com/michaelbuehlmann/CatAna
+
+.. image:: https://img.shields.io/travis/michaelbuehlmann/CatAna/master.svg?style=flat-square
+   :target: https://travis-ci.org/michaelbuehlmann/CatAna
+
+.. image:: https://img.shields.io/github/license/michaelbuehlmann/CatAna.svg?style=flat-square
+   :target: https://github.com/michaelbuehlmann/CatAna
+
 .. code-block:: none
 
      ___    __   ____   __    _  _    __                                                /\
