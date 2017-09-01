@@ -48,7 +48,7 @@ For the following steps make sure that your ``CC`` and ``CXX`` variables are set
 Installation
 ============
 
-.. code-block: bash
+.. code-block:: bash
 
    pip install catana
 
