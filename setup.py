@@ -60,10 +60,14 @@ def get_cmdclass():
     cmdclass.update({"build_ext": CMakeBuild})
     return cmdclass
 
+def readme():
+    with open('README.rst') as f:
+        return f.read()
 
 setup(
     name='catana',
     description='A library for Spherical Fourier Bessel (SFB) Decomposition',
+    long_description=readme(),
     license='GPLv2',
     author='Michael Buehlmann',
     author_email='michael.buehlmann@oca.eu',

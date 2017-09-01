@@ -68,7 +68,11 @@ jobs:
         - doxygen Doxyfile
         - make html
         - cd ..
-        - doctr deploy . --built-docs docs/_build/html
+        - if [ -n "$TRAVIS_TAG" ]; then
+             doctr deploy . --built-docs docs/_build/html --no-require-master || travis_terminate 1;
+          else
+             doctr deploy . --built-docs docs/_build/html --no-require-master --no-push || travis_terminate 1;
+          fi
 
     - stage: pypi_deploy
       env:
@@ -81,5 +85,9 @@ jobs:
         - pwd
         - ls
         - python setup.py sdist
-        - if [ -n "$TRAVIS_TAG" ]; then twine upload --repository-url "https://test.pypi.org/legacy/" dist/*; else echo "package _not_ uploaded to testpypi"; fi
-        - if [ "$TRAVIS_BRANCH" = "master" -a -n "$TRAVIS_TAG" ]; then twine upload dist/*; else echo "package _not_ uploaded to pypi"; fi
+#        - if [ -n "$TRAVIS_TAG" ]; then twine upload --repository-url "https://test.pypi.org/legacy/" dist/*; else echo "package _not_ uploaded to testpypi"; fi
+        - if [ -n "$TRAVIS_TAG" ]; then
+             twine upload dist/* || travis_terminate 1;
+          else
+             echo "package _not_ uploaded to pypi";
+          fi
