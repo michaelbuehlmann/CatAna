@@ -1,38 +1,23 @@
-# #######################
-# GOOGLE TEST LIBRARY ###
-# #######################
-project(catana_tests)
-
-# Moving test data for IO Tests
+include_directories("../external/doctest/doctest")
 file(COPY test_data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-add_subdirectory(${GOOGLETEST_DIR} ${CMAKE_CURRENT_BINARY_DIR}/googletest)
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+set(TEST_FILES
+        main.cpp
+        tools_tests/interpolation_tests.cpp
+        tools_tests/return_types_test.cpp
+        point_types_tests/point_types_tests.cpp
+        besseltools_tests/SphericalBesselZeros_test.cpp
+        besseltools_tests/SBesselLookUp_test.cpp
+        besseltools_tests/sbessel_integrator.cpp
+        decomposition_tests/analyzer_test.cpp
+        decomposition_tests/sfb_test.cpp
+        io_tests/filter_stream_test.cpp
+        io_tests/filter_tests.cpp
+        io_tests/pixelized_oc_sink_test.cpp
+        io_tests/read_gadget_tests.cpp
+        io_tests/readwrite_rawdata_tests.cpp
+        io_tests/readwrite_text_tests.cpp
+        )
 
-# Google Tests subdirectories
-#add_subdirectory(besseltools_tests)
-#add_subdirectory(tools_tests)
-#add_subdirectory(io_tests)
-#add_subdirectory(object_types_tests)
-#add_subdirectory(decomposition_tests)
-
-# Timing subdirectories
-add_subdirectory(speed_comparisons)
-
-
-#####################
-# ALL TESTS IN ONE: #
-file(GLOB TEST_SOURCES
-        /besseltools_tests/*.cpp
-        object_types_tests/*.cpp
-        tools_tests/*.cpp
-        field_test/*.cpp
-        io_tests/*.cpp
-        decomposition_tests/*.cpp)
-add_executable(GTESTS main.cpp ${TEST_SOURCES})
-target_compile_definitions(GTESTS PRIVATE "-DALL_TESTS" )
-target_link_libraries(GTESTS
-        gtest gtest_main
-#        io catana besseltools
-        catana
-        ${CBLAS_LIBRARIES} ${HEALPIX_LIB})
+add_executable(TESTS ${TEST_FILES})
+target_link_libraries(TESTS catana)

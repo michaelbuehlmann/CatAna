@@ -15,21 +15,21 @@ using namespace catana;
 
 std::mt19937 rng;
 
-ObjectContainer random_objects(size_t n, double box_size) {
-    ObjectContainer oc(n);
+PointContainer random_points(size_t n, double box_size) {
+    PointContainer oc(n);
     io::TophatRadialWindowFunctionFilter tophat_filter(box_size/2.);
 
 #pragma omp parallel
     {
         std::mt19937 rng_private;
         std::uniform_real_distribution<double> dist(-box_size/2., box_size/2.);
-        Object object;
+        Point point;
 #pragma omp for
         for (size_t i = 0; i<n; ++i) {
             do{
-                object = Object(dist(rng_private), dist(rng_private), dist(rng_private));
-            } while(!tophat_filter.filter(object));
-            oc[i] = object;
+                point = Point(dist(rng_private), dist(rng_private), dist(rng_private));
+            } while(!tophat_filter.filter(point));
+            oc[i] = point;
         }
     }
     return oc;
@@ -135,7 +135,7 @@ int main(int argc, char* argv[]) {
     }
     internal_runs = std::max(internal_runs, 1.);
 
-    std::cout << "# Within tophat: " << run_args.n << " objects. Number of runs to average time over: " << int(internal_runs) << std::endl;
+    std::cout << "# Within tophat: " << run_args.n << " points. Number of runs to average time over: " << int(internal_runs) << std::endl;
     std::cout << "# Analyzing method: " << argv[6] << std::endl;
 
     KClkk kclkk(run_args.lmax, run_args.nmax, box_size/2.);
@@ -155,10 +155,10 @@ int main(int argc, char* argv[]) {
         break;
     }
 
-    ObjectContainer oc(random_objects(run_args.n, box_size));
-    PixelizedObjectContainer pix_oc(run_args.nside, oc);
+    PointContainer oc(random_points(run_args.n, box_size));
+    PixelizedPointContainer pix_oc(run_args.nside, oc);
     timer.stop();
-    std::cout << "# Time for objectcontainer creation: " << timer.duration() << std::endl;
+    std::cout << "# Time for pointcontainer creation: " << timer.duration() << std::endl;
 
     timer.start();
     for(int i=0; i<internal_runs; ++i) {

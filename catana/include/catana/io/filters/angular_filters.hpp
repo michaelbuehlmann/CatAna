@@ -1,35 +1,40 @@
-//
-// Created by Michael Bühlmann on 15/02/16.
-//
-
 #ifndef CATANA_ANGULAR_FILTERS_HPP
 #define CATANA_ANGULAR_FILTERS_HPP
 
 #include "../Filter.hpp"
 #include <healpix_map.h>
+#include <Eigen/Dense>
+
 
 namespace catana { namespace io {
 
-    //! Applies an angular mask (float healpix map)
+  //! Applies an angular mask (float healpix map)
+  /*!
+   * MASK==1: keep point at this pixel
+   * MASK==0: remove point at this pixel
+   */
+  class AngularMaskFilter : public Filter {
+  public:
+    //! Construct from HEALPix map FITS file
     /*!
-     * MASK==1: keep object at this pixel
-     * MASK==0: remove object at this pixel
+     * @param healpix_mask valid HEALPix FITS file, in RING format, with pixel values 1 (passes filter)
+     * and 0 (remove points)
      */
-    class AngularMaskFilter : public Filter {
-    public:
-        //! Construct from HEALPix map FITS file
-        /*!
-         * @param healpix_mask valid HEALPix FITS file, in RING format, with pixel values 1 (passes filter)
-         * and 0 (remove objects)
-         */
-        AngularMaskFilter(std::string healpix_mask);
+    explicit AngularMaskFilter(std::string healpix_mask);
 
-        //! Filtering function on Object. Returns true if object passes filter, false otherwise.
-        bool filter(Object& object) override;
+    //! Construct from HEALPix map array
+    /*!
+     * @param healpix_map valid HEALPix map, in RING format, with pixel values 1 (passes filter)
+     * and 0 (remove points)
+     */
+    AngularMaskFilter(const Eigen::ArrayXf& healpix_map);
 
-    private:
-        Healpix_Map<float> map;
-    };
+    //! Filtering function on Point. Returns true if point passes filter, false otherwise.
+    bool filter(Point& point) override;
+
+  private:
+    Healpix_Map<float> map;
+  };
 
 }}
 #endif //CATANA_ANGULAR_FILTERS_HPP

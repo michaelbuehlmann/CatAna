@@ -1,10 +1,3 @@
-//
-// Created by Michael Bühlmann on 09/02/16.
-//
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
-#include "gtest/gtest.h"
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    int ret = RUN_ALL_TESTS();
-    return ret;
-}
+#include <doctest.h>

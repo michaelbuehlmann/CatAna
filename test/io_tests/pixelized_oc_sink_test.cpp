@@ -1,23 +1,23 @@
-//
-// Created by Michael Bühlmann on 15/02/16.
-//
+#include "doctest.h"
+#include <catana/catana.hpp>
 
-#include <gtest/gtest.h>
-#include <catana/types.hpp>
-#include <catana/io.hpp>
 
 using namespace catana;
 
-TEST(ObjectContainerSink, Pixelized) {
-    ObjectContainer oc;
-    for(size_t i=1; i<(1<<12); ++i){
-        oc.push_back(object_from_spherical_position(1., 3./i, 6./i));
-    }
+TEST_SUITE("io");
 
-    PixelizedObjectContainer pix_oc(256);
+TEST_CASE ("testing PixelizedPointContainerSink") {
+  PointContainer oc;
+  for(size_t i = 1; i < (1 << 12); ++i) {
+    oc.push_back(point_from_spherical_position(1., 3. / i, 6. / i));
+  }
 
-    io::PixelizedObjectContainerSink pix_sink(pix_oc);
-    long int n = pix_sink.write(oc.begin(), oc.size());
-    EXPECT_EQ(oc.size(), n);
-    EXPECT_EQ(oc.size(), pix_oc.get_nobjects());
+  PixelizedPointContainer pix_oc(256);
+
+  io::PixelizedPointContainerSink pix_sink(pix_oc);
+  long int n = pix_sink.write(oc.begin(), oc.size());
+      CHECK(oc.size() == n);
+      CHECK(oc.size() == pix_oc.get_npoints());
 }
+
+TEST_SUITE_END();

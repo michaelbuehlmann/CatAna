@@ -1,0 +1,85 @@
+sudo: false
+dist: trusty
+language: generic
+
+env:
+  global:
+    - secure: "q2oqY0BnXInnLb9Vuq4pI7rJkXzn9HnCZygqpng/9oTdeFEGA5V5j0eQRca5ui7/oL2grhr/bhujTUNb5t3XEWc3dgPx9Z2HDgiR+oyepUEZn3fZA8asErMlgTAYSdycwgAGzUvTbET2ojy0B8ebxEAR3VGWilSkOcbG5EOeIWeHNxdKBrPCmZZztmlVP8z4fM8C9KYEmkG0u86NdtoKFRGU8Lu0W4qhQ3axX/UDFiWxU7tQ2Y8YKSemBxuOY4POIdBhjcv37RFs/zBSs2p0ZVX06fuCqR/v0Z1Y0N/5W2dQNBzhL/BfWJMuf15/HrP3/CFAz6QS0sM+Oy3xwXbVD7V8Hoc4pagq/GNcQxcd07NIsR7L5tWD9GYKYT17wdgN21W5A8IuQEmfyKIyr9A0DSX/Fo43dUFrohuieJr/S0/FrPLL132iCJdAFeZRqJ+jjYY0xnHG1uSNgdnLfAUBvamnM/FwV+AsbrZ2U4HhvqwS+4dsXiSRpHAKG2+vraeUGm5I5zwxOCGrDbPt1aFYce7e3DVoX36ZX58tI/SxLm4FusWNGunEftaEsMqsUxqzF3q0lhnH1XQiaipw4XUo+6bJfP6aZirIQHjbLyd5tbobaUQZQZ7mFO3F0nph+PExmlcVmWnQbv65ytia0Dm21n/zPbHnykQlHkPioKu+1sk="
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+      - george-edison55-precise-backports
+      - deadsnakes
+    packages:
+      - gcc-5
+      - g++-5
+      - gcc-6
+      - g++-6
+      - cmake
+      - cmake-data
+      - libatlas-base-dev
+      - libfftw3-dev
+      - libgsl0-dev
+      - libcfitsio3-dev
+      - python3.5
+      - python3.5-dev
+      - doxygen
+
+before_install:
+  - python3 -m venv .venv
+  - source .venv/bin/activate
+  - pip install --upgrade pip setuptools
+
+jobs:
+  include:
+    - stage: build
+      env:
+        - CC=gcc-6
+        - CXX=g++-6
+      script:
+        - mkdir build && cd build
+        - cmake -DBUILD_TESTS=ON -DBUILD_PYTHON=ON ..
+        - make VERBOSE=1
+        - ./test/TESTS
+    - # same stage
+      env:
+        - CC=gcc-5
+        - CXX=g++-5
+      script:
+        - mkdir build && cd build
+        - cmake -DBUILD_TESTS=ON -DBUILD_PYTHON=ON ..
+        - make VERBOSE=1
+        - ./test/TESTS
+
+    - stage: python_n_docs
+      env:
+        - CC=gcc-6
+        - CXX=g++-6
+        - secure: "q2oqY0BnXInnLb9Vuq4pI7rJkXzn9HnCZygqpng/9oTdeFEGA5V5j0eQRca5ui7/oL2grhr/bhujTUNb5t3XEWc3dgPx9Z2HDgiR+oyepUEZn3fZA8asErMlgTAYSdycwgAGzUvTbET2ojy0B8ebxEAR3VGWilSkOcbG5EOeIWeHNxdKBrPCmZZztmlVP8z4fM8C9KYEmkG0u86NdtoKFRGU8Lu0W4qhQ3axX/UDFiWxU7tQ2Y8YKSemBxuOY4POIdBhjcv37RFs/zBSs2p0ZVX06fuCqR/v0Z1Y0N/5W2dQNBzhL/BfWJMuf15/HrP3/CFAz6QS0sM+Oy3xwXbVD7V8Hoc4pagq/GNcQxcd07NIsR7L5tWD9GYKYT17wdgN21W5A8IuQEmfyKIyr9A0DSX/Fo43dUFrohuieJr/S0/FrPLL132iCJdAFeZRqJ+jjYY0xnHG1uSNgdnLfAUBvamnM/FwV+AsbrZ2U4HhvqwS+4dsXiSRpHAKG2+vraeUGm5I5zwxOCGrDbPt1aFYce7e3DVoX36ZX58tI/SxLm4FusWNGunEftaEsMqsUxqzF3q0lhnH1XQiaipw4XUo+6bJfP6aZirIQHjbLyd5tbobaUQZQZ7mFO3F0nph+PExmlcVmWnQbv65ytia0Dm21n/zPbHnykQlHkPioKu+1sk="
+      script:
+        - set -e
+        - pip install numpy doctr sphinx sphinx_rtd_theme breathe
+        - python setup.py build
+        - python setup.py test
+        - python setup.py install
+        - cd docs
+        - doxygen Doxyfile
+        - make html
+        - cd ..
+        - doctr deploy . --built-docs docs/_build/html
+
+    - stage: pypi_deploy
+      env:
+        - CC=gcc-6
+        - CXX=g++-6
+        - secure: "cEGT3jj7NFUKhDmTCEqLtJvR5jBXD9E/MfjN+0Qqn/uuaib2iD9IUKfr2iuimG8AwtN8Ihf/NwOuICdKb0e+kUnpBOq710S+UeyXLjzp6ezsGIZTtYOXO8EpDcdD2aULHA4laGJ9EsqCY3jFQI60jRuCEJnh00UX9JcaGymmGcwuY7yyGY121igFDYPbseApUIlTA9ISRdg2fHFercWmGHnHa6oxi9eAbLNISvaxIbbdVWiOPBp1PX6p90VI3Okdk3+MLdblFoWuZD5vF7jYxa72+/RoOrnEJ6oAnIVlEFs/XlSqjNmomINVEkEo8QQbshbxOMVYHW1otFbbJiwaRqnkvbtKC00uAn0P1zAjeekxLw+PxMfTPn64HyxQoUN8sjXX04w3FhwFZbsZPoVc0/RZXwcOto9mTTPygCL7pvfkvkGU+XDwkhbtWBrqgUuIsPDuvGtAUoeHWTZD5grP9QFaxZuG8J5if3p2CpSKg9BW6itA1qu5pdW6xDaUX0stS4pga2s4yb9kt8RybvbZx7aeMzbj4L21YHMbcJZiojvaG9eR3l2f8ORx23fu4b1uhtY8nZGQ89jmzCxpgqE5pb1jiCqI3sfTJYOCj+NYI0CHWlTdX8Xw8eyD7cXjfPaqvEwArmu//NukHvqta9ic3oNWnOokBggtiJgLjUkrbf4="
+        - TWINE_USERNAME=mirthlessmarmot
+      script:
+        - pip install --upgrade numpy setuptools wheel twine
+        - pwd
+        - ls
+        - python setup.py sdist
+        - if [ -n "$TRAVIS_TAG" ]; then twine upload --repository-url "https://test.pypi.org/legacy/" dist/*; else echo "package _not_ uploaded to testpypi"; fi
+        - if [ "$TRAVIS_BRANCH" = "master" -a -n "$TRAVIS_TAG" ]; then twine upload dist/*; else echo "package _not_ uploaded to pypi"; fi
