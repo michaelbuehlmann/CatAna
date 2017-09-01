@@ -1,0 +1,9 @@
+{
+  "n": 4000000,
+  "lmax": 40,
+  "nmax": 100,
+  "nside": [8, 16, 32, 64, 128, 256, 512],
+  "nruns": [64, 32, 32, 16, 16, 8, 4],
+  "compute_method": "rev",
+  "interp_method": "on"
+}

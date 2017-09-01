@@ -1,5 +1,6 @@
 include_directories("../external/doctest/doctest")
 file(COPY test_data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY speed_comparisons/sfb_decomp_time_paramscale.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 set(TEST_FILES
         main.cpp
@@ -21,3 +22,18 @@ set(TEST_FILES
 
 add_executable(TESTS ${TEST_FILES})
 target_link_libraries(TESTS catana)
+
+
+set(TIMER_FILES
+        speed_comparisons/timer.hpp speed_comparisons/timer.cpp)
+
+add_executable(SPEED_threadscale
+        speed_comparisons/sfb_decomp_threadscale.cpp
+        ${TIMER_FILES})
+target_link_libraries(SPEED_threadscale catana)
+
+add_executable(SPEED_paramscale
+        speed_comparisons/sfb_decomp_time_paramscale.cpp
+        ${TIMER_FILES}
+        speed_comparisons/json.hpp)
+target_link_libraries(SPEED_paramscale catana)
