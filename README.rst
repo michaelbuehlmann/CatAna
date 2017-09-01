@@ -23,9 +23,11 @@
    Catalog Analyzer: A library for Spherical Fourier Bessel (SFB) Decomposition
    ==================================================================================================
 
-CatAna is a C++ library and Python package to perform fast spherical Fourier Bessel transformation (Fourier transformation in spherical coordinates) on discrete, point-like datasets.
+CatAna is a C++ library and Python package to perform fast spherical Fourier Bessel transformation (Fourier
+transformation in spherical coordinates) on discrete, point-like datasets.
 
-The code is hosted on `GitHub <https://github.com/michaelbuehlmann/CatAna>`_. Please contact the author if you have any questions, find bugs or have ideas to improve CatAna.
+The code is hosted on `GitHub <https://github.com/michaelbuehlmann/CatAna>`_. Please contact the author if you have any
+questions, find bugs or have ideas to improve CatAna.
 
 
 Requirements
