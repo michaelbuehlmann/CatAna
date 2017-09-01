@@ -68,8 +68,7 @@ jobs:
         - doxygen Doxyfile
         - make html
         - cd ..
-        - doctr deploy . --built-docs docs/_build/html --no-require-master
-        # TODO: remove no-require-master
+        - doctr deploy . --built-docs docs/_build/html
 
     - stage: pypi_deploy
       env:
