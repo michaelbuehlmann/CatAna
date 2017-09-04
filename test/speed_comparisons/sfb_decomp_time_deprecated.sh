@@ -1,9 +1,5 @@
 #!/bin/bash
 
-PARTITION=dphys_compute
-OUTPUT_DIR=~/MT/sfb_decomp_timing
-TIME=05:00:00
-
 # A: PARAM_SCALING
 if [ "$1" = "A" ]; then
     A_LMAX=( 5 10 20 50 )
