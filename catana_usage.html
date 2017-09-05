@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Basic Usage &mdash; CatAna 2.0.0b3 documentation</title>
+  <title>Basic Usage &mdash; CatAna 2.0.0b4 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="CatAna 2.0.0b3 documentation" href="index.html"/>
+    <link rel="top" title="CatAna 2.0.0b4 documentation" href="index.html"/>
         <link rel="next" title="Points and Containers" href="python/catana.html"/>
         <link rel="prev" title="Installation" href="catana_install.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                2.0.0b3
+                2.0.0b4
               </div>
             
           
@@ -191,8 +191,9 @@ transform routine to analyze.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">catana</span>
 
-<span class="c1"># Some random particle positions in a 200x200x200 box centered at 0</span>
-<span class="n">python_particles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="p">(</span><span class="mi">100000</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="c1"># Some random particle positions in a sphere with radius 100</span>
+<span class="n">python_particles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">,(</span><span class="mi">400000</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">python_particles</span> <span class="o">=</span> <span class="n">python_particles</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">python_particles</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="o">**</span><span class="mi">2</span><span class="p">]</span>
 
 <span class="c1"># Load into PointContainer</span>
 <span class="n">point_container</span> <span class="o">=</span> <span class="n">catana</span><span class="o">.</span><span class="n">PointContainer</span><span class="p">(</span><span class="n">python_particles</span><span class="p">,</span> <span class="s1">&#39;cartesian&#39;</span><span class="p">)</span>
@@ -386,7 +387,7 @@ additional functionality to filter <a class="reference internal" href="python/ca
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.0.0b3',
+            VERSION:'2.0.0b4',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

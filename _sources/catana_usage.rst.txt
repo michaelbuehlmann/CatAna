@@ -15,8 +15,9 @@ transform routine to analyze.
    import numpy as np
    import catana
 
-   # Some random particle positions in a 200x200x200 box centered at 0
-   python_particles = np.random.uniform(-100, 100, (100000, 3))
+   # Some random particle positions in a sphere with radius 100
+   python_particles = np.random.uniform(-100,100,(400000,3))
+   python_particles = python_particles[np.sum(python_particles**2, axis=1) <= 100**2]
 
    # Load into PointContainer
    point_container = catana.PointContainer(python_particles, 'cartesian')
